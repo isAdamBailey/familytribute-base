@@ -1,10 +1,6 @@
 <template>
     <app-layout title="Dashboard">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
-            </h2>
-        </template>
+        <template #header> Dashboard </template>
 
         <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
             <div class="flex items-baseline">

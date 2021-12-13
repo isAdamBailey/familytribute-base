@@ -3,9 +3,7 @@
         title="People"
         :description="`The people of ${$inertia.page.props.siteName}`"
     >
-        <template #header>
-            <h2 class="font-semibold text-gray-800 leading-tight">People</h2>
-        </template>
+        <template #header> People </template>
 
         <div class="md:mt-5 mb-5 md:mb-0 flex justify-between items-center">
             <div class="text-2xl">People</div>
