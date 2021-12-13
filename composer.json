@@ -13,15 +13,19 @@
         "laravel/jetstream": "^2.4",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "spatie/laravel-sluggable": "^3.1",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "laravel/sail": "^1.0.1",
+        "laravel/sail": "^1.12",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
-        "phpunit/phpunit": "^9.5.10"
+        "phpunit/phpunit": "^9.5.10",
+        "friendsofphp/php-cs-fixer": "^3.3",
+        "smknstd/fakerphp-picsum-images": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -48,6 +52,12 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "lint": [
+            "./vendor/bin/php-cs-fixer fix -vvv --dry-run --show-progress=dots"
+        ],
+        "format": [
+            "./vendor/bin/php-cs-fixer fix -vvv --show-progress=dots"
         ]
     },
     "extra": {

@@ -6,9 +6,9 @@
 </template>
 
 <script>
-    import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
-    export default defineComponent({
-        props: ['value']
-    })
+export default defineComponent({
+    props: ["value"],
+});
 </script>

@@ -15,14 +15,14 @@
 </template>
 
 <script>
-    import { defineComponent } from 'vue'
-    import AppLayout from '@/Layouts/AppLayout.vue'
-    import CreateTeamForm from '@/Pages/Teams/Partials/CreateTeamForm.vue'
+import { defineComponent } from "vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import CreateTeamForm from "@/Pages/Teams/Partials/CreateTeamForm.vue";
 
-    export default defineComponent({
-        components: {
-            AppLayout,
-            CreateTeamForm,
-        },
-    })
+export default defineComponent({
+    components: {
+        AppLayout,
+        CreateTeamForm,
+    },
+});
 </script>
