@@ -1,5 +1,5 @@
 <template>
-    <Head title="Secure Area" />
+    <app-head title="Secure Area" />
 
     <jet-authentication-card>
         <template #logo>
@@ -28,13 +28,13 @@
             </div>
 
             <div class="flex justify-end mt-4">
-                <jet-button
+                <base-button
                     class="ml-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Confirm
-                </jet-button>
+                </base-button>
             </div>
         </form>
     </jet-authentication-card>
@@ -42,20 +42,18 @@
 
 <script>
 import { defineComponent } from "vue";
-import { Head } from "@inertiajs/inertia-vue3";
-import JetAuthenticationCard from "@/Jetstream/AuthenticationCard.vue";
-import JetAuthenticationCardLogo from "@/Jetstream/AuthenticationCardLogo.vue";
-import JetButton from "@/Jetstream/Button.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetLabel from "@/Jetstream/Label.vue";
-import JetValidationErrors from "@/Jetstream/ValidationErrors.vue";
+import JetAuthenticationCard from "@/Base/AuthenticationCard.vue";
+import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
+import JetInput from "@/Base/Input.vue";
+import JetLabel from "@/Base/Label.vue";
+import JetValidationErrors from "@/Base/ValidationErrors.vue";
+import AppHead from "@/Layouts/AppHead";
 
 export default defineComponent({
     components: {
-        Head,
+        AppHead,
         JetAuthenticationCard,
         JetAuthenticationCardLogo,
-        JetButton,
         JetInput,
         JetLabel,
         JetValidationErrors,

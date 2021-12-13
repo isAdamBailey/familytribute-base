@@ -1,5 +1,5 @@
 <template>
-    <Head title="Email Verification" />
+    <app-head title="Email Verification" />
 
     <jet-authentication-card>
         <template #logo>
@@ -22,12 +22,12 @@
 
         <form @submit.prevent="submit">
             <div class="mt-4 flex items-center justify-between">
-                <jet-button
+                <base-button
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Resend Verification Email
-                </jet-button>
+                </base-button>
 
                 <Link
                     :href="route('logout')"
@@ -43,18 +43,15 @@
 
 <script>
 import { defineComponent } from "vue";
-import JetAuthenticationCard from "@/Jetstream/AuthenticationCard.vue";
-import JetAuthenticationCardLogo from "@/Jetstream/AuthenticationCardLogo.vue";
-import JetButton from "@/Jetstream/Button.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import JetAuthenticationCard from "@/Base/AuthenticationCard.vue";
+import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
+import AppHead from "@/Layouts/AppHead";
 
 export default defineComponent({
     components: {
-        Head,
+        AppHead,
         JetAuthenticationCard,
         JetAuthenticationCardLogo,
-        JetButton,
-        Link,
     },
 
     props: {

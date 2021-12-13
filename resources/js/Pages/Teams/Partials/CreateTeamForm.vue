@@ -52,11 +52,11 @@
 
 <script>
 import { defineComponent } from "vue";
-import JetButton from "@/Jetstream/Button.vue";
-import JetFormSection from "@/Jetstream/FormSection.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetLabel from "@/Jetstream/Label.vue";
+import JetButton from "@/Base/Button.vue";
+import JetFormSection from "@/Base/FormSection.vue";
+import JetInput from "@/Base/Input.vue";
+import JetInputError from "@/Base/InputError.vue";
+import JetLabel from "@/Base/Label.vue";
 
 export default defineComponent({
     components: {

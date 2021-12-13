@@ -60,12 +60,12 @@
 
 <script>
 import { defineComponent } from "vue";
-import JetActionMessage from "@/Jetstream/ActionMessage";
-import JetButton from "@/Jetstream/Button";
-import JetFormSection from "@/Jetstream/FormSection";
-import JetInput from "@/Jetstream/Input";
-import JetInputError from "@/Jetstream/InputError";
-import JetLabel from "@/Jetstream/Label";
+import JetActionMessage from "@/Base/ActionMessage";
+import JetButton from "@/Base/Button";
+import JetFormSection from "@/Base/FormSection";
+import JetInput from "@/Base/Input";
+import JetInputError from "@/Base/InputError";
+import JetLabel from "@/Base/Label";
 
 export default defineComponent({
     components: {

@@ -1,5 +1,5 @@
 <template>
-    <Head title="Log in" />
+    <app-head title="Log in" />
 
     <jet-authentication-card>
         <template #logo>
@@ -56,13 +56,13 @@
                     Forgot your password?
                 </Link>
 
-                <jet-button
+                <base-button
                     class="ml-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Log in
-                </jet-button>
+                </base-button>
             </div>
         </form>
     </jet-authentication-card>
@@ -70,26 +70,23 @@
 
 <script>
 import { defineComponent } from "vue";
-import JetAuthenticationCard from "@/Jetstream/AuthenticationCard.vue";
-import JetAuthenticationCardLogo from "@/Jetstream/AuthenticationCardLogo.vue";
-import JetButton from "@/Jetstream/Button.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetCheckbox from "@/Jetstream/Checkbox.vue";
-import JetLabel from "@/Jetstream/Label.vue";
-import JetValidationErrors from "@/Jetstream/ValidationErrors.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import JetAuthenticationCard from "@/Base/AuthenticationCard.vue";
+import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
+import JetInput from "@/Base/Input.vue";
+import JetCheckbox from "@/Base/Checkbox.vue";
+import JetLabel from "@/Base/Label.vue";
+import JetValidationErrors from "@/Base/ValidationErrors.vue";
+import AppHead from "@/Layouts/AppHead";
 
 export default defineComponent({
     components: {
-        Head,
+        AppHead,
         JetAuthenticationCard,
         JetAuthenticationCardLogo,
-        JetButton,
         JetInput,
         JetCheckbox,
         JetLabel,
         JetValidationErrors,
-        Link,
     },
 
     props: {

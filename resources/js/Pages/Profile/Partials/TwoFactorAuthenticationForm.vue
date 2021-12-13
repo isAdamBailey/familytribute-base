@@ -66,13 +66,13 @@
                     <jet-confirms-password
                         @confirmed="enableTwoFactorAuthentication"
                     >
-                        <jet-button
+                        <base-button
                             type="button"
                             :class="{ 'opacity-25': enabling }"
                             :disabled="enabling"
                         >
                             Enable
-                        </jet-button>
+                        </base-button>
                     </jet-confirms-password>
                 </div>
 
@@ -113,16 +113,14 @@
 
 <script>
 import { defineComponent } from "vue";
-import JetActionSection from "@/Jetstream/ActionSection.vue";
-import JetButton from "@/Jetstream/Button.vue";
-import JetConfirmsPassword from "@/Jetstream/ConfirmsPassword.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetActionSection from "@/Base/ActionSection.vue";
+import JetConfirmsPassword from "@/Base/ConfirmsPassword.vue";
+import JetDangerButton from "@/Base/DangerButton.vue";
+import JetSecondaryButton from "@/Base/SecondaryButton.vue";
 
 export default defineComponent({
     components: {
         JetActionSection,
-        JetButton,
         JetConfirmsPassword,
         JetDangerButton,
         JetSecondaryButton,
@@ -178,7 +176,7 @@ export default defineComponent({
         },
 
         regenerateRecoveryCodes() {
-            axios.post("/user/two-factor-recovery-codes").then((response) => {
+            axios.post("/user/two-factor-recovery-codes").then(() => {
                 this.showRecoveryCodes();
             });
         },

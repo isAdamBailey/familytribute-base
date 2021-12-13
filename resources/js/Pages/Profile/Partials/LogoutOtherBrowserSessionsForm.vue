@@ -87,9 +87,9 @@
             </div>
 
             <div class="flex items-center mt-5">
-                <jet-button @click="confirmLogout">
+                <base-button @click="confirmLogout">
                     Log Out Other Browser Sessions
-                </jet-button>
+                </base-button>
 
                 <jet-action-message :on="form.recentlySuccessful" class="ml-3">
                     Done.
@@ -127,14 +127,14 @@
                         Cancel
                     </jet-secondary-button>
 
-                    <jet-button
+                    <base-button
                         class="ml-2"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
                         @click="logoutOtherBrowserSessions"
                     >
                         Log Out Other Browser Sessions
-                    </jet-button>
+                    </base-button>
                 </template>
             </jet-dialog-modal>
         </template>
@@ -143,26 +143,25 @@
 
 <script>
 import { defineComponent } from "vue";
-import JetActionMessage from "@/Jetstream/ActionMessage.vue";
-import JetActionSection from "@/Jetstream/ActionSection.vue";
-import JetButton from "@/Jetstream/Button.vue";
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import JetActionMessage from "@/Base/ActionMessage.vue";
+import JetActionSection from "@/Base/ActionSection.vue";
+import JetDialogModal from "@/Base/DialogModal.vue";
+import JetInput from "@/Base/Input.vue";
+import JetInputError from "@/Base/InputError.vue";
+import JetSecondaryButton from "@/Base/SecondaryButton.vue";
 
 export default defineComponent({
-
     components: {
         JetActionMessage,
         JetActionSection,
-        JetButton,
         JetDialogModal,
         JetInput,
         JetInputError,
         JetSecondaryButton,
     },
-    props: ["sessions"],
+    props: {
+        sessions: Array,
+    },
 
     data() {
         return {

@@ -1,0 +1,221 @@
+<template>
+    <jet-dialog-modal :show="open" @close="closeModal()">
+        <template #title> Edit Obituary </template>
+
+        <template #content>
+            <div class="col-span-6 sm:col-span-4">
+                <input
+                    ref="photo"
+                    type="file"
+                    class="hidden"
+                    @change="updatePhotoPreview"
+                />
+
+                <jet-label for="photo" value="Headstone Photo" />
+
+                <div v-show="!photoPreview" class="mt-2">
+                    <img
+                        :src="person.obituary.headstone_url"
+                        :alt="person.full_name"
+                        class="rounded-full h-20 w-20 object-cover"
+                    />
+                </div>
+
+                <div v-show="photoPreview" class="mt-2">
+                    <span
+                        class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
+                        :style="
+                            'background-image: url(\'' + photoPreview + '\');'
+                        "
+                    >
+                    </span>
+                </div>
+
+                <jet-secondary-button
+                    class="mt-2 mr-2"
+                    type="button"
+                    @click.prevent="selectNewPhoto"
+                >
+                    Select A New Headstone Photo
+                </jet-secondary-button>
+
+                <jet-input-error :message="form.errors.photo" class="mt-2" />
+            </div>
+
+            <div class="mt-3 col-span-6 sm:col-span-4">
+                <div class="flex flex-wrap -mx-3">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <jet-label for="first_name" value="First Name" />
+                        <jet-input
+                            id="first_name"
+                            v-model="form.first_name"
+                            type="text"
+                            class="mt-1 w-full"
+                            autocomplete="first_name"
+                        />
+                        <jet-input-error
+                            :message="form.errors.first_name"
+                            class="mt-2"
+                        />
+                    </div>
+                    <div class="w-full md:w-1/2 px-3">
+                        <jet-label for="last_name" value="Last Name" />
+                        <jet-input
+                            id="last_name"
+                            v-model="form.last_name"
+                            type="text"
+                            class="mt-1 w-full"
+                            autocomplete="last_name"
+                        />
+                        <jet-input-error
+                            :message="form.errors.last_name"
+                            class="mt-2"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3 col-span-6 sm:col-span-4">
+                <div class="flex flex-wrap -mx-3">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <jet-label for="birth_date" value="Birth Date" />
+                        <date-picker v-model="form.birth_date" />
+                        <jet-input-error
+                            :message="form.errors.birth_date"
+                            class="mt-2"
+                        />
+                    </div>
+                    <div class="w-full md:w-1/2 px-3">
+                        <jet-label for="death_date" value="Death Date" />
+                        <date-picker v-model="form.death_date" />
+                        <jet-input-error
+                            :message="form.errors.death_date"
+                            class="mt-2"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3 col-span-6 sm:col-span-4">
+                <jet-label for="content" value="Obituary" />
+                <wysiwyg v-model="form.content" />
+                <jet-input-error :message="form.errors.content" class="mt-2" />
+            </div>
+        </template>
+
+        <template #footer>
+            <jet-secondary-button @click="closeModal()">
+                Nevermind
+            </jet-secondary-button>
+
+            <base-button
+                class="ml-2"
+                :class="{ 'opacity-25': form.processing }"
+                :disabled="form.processing"
+                @click="updateObituary"
+            >
+                Update Obituary
+            </base-button>
+        </template>
+    </jet-dialog-modal>
+</template>
+
+<script>
+import { defineComponent } from "vue";
+import { parseISO } from "date-fns";
+import JetDialogModal from "@/Base/DialogModal";
+import JetSecondaryButton from "@/Base/SecondaryButton";
+import JetInput from "@/Base/Input.vue";
+import JetInputError from "@/Base/InputError.vue";
+import JetLabel from "@/Base/Label.vue";
+import DatePicker from "@/Base/DatePicker";
+import Wysiwyg from "@/Base/Wysiwyg";
+
+export default defineComponent({
+    components: {
+        Wysiwyg,
+        JetDialogModal,
+        JetSecondaryButton,
+        JetInput,
+        JetInputError,
+        JetLabel,
+        DatePicker,
+    },
+
+    props: {
+        open: {
+            type: Boolean,
+            default: false,
+        },
+        person: {
+            type: Object,
+            required: true,
+        },
+    },
+    emits: ["close"],
+
+    data() {
+        return {
+            form: this.$inertia.form({
+                _method: "PUT",
+                first_name: this.person.first_name,
+                last_name: this.person.last_name,
+                content: this.person.obituary.content,
+                birth_date: parseISO(this.person.obituary.birth_date),
+                death_date: parseISO(this.person.obituary.death_date),
+                photo: null,
+            }),
+
+            photoPreview: null,
+        };
+    },
+
+    methods: {
+        updateObituary() {
+            if (this.$refs.photo) {
+                this.form.photo = this.$refs.photo.files[0];
+            }
+
+            this.form.post(
+                route("obituaries.update", this.person.obituary.id),
+                {
+                    errorBag: "updateObituary",
+                    onSuccess: () => this.closeModal(),
+                }
+            );
+        },
+
+        selectNewPhoto() {
+            this.$refs.photo.click();
+        },
+
+        updatePhotoPreview() {
+            const photo = this.$refs.photo.files[0];
+
+            if (!photo) return;
+
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.photoPreview = e.target.result;
+            };
+
+            reader.readAsDataURL(photo);
+        },
+
+        clearPhotoFileInput() {
+            if (this.$refs.photo?.value) {
+                this.$refs.photo.value = null;
+            }
+        },
+
+        closeModal() {
+            this.photoPreview = null;
+            this.clearPhotoFileInput();
+            this.form.reset();
+            this.form.clearErrors();
+            this.$emit("close", true);
+        },
+    },
+});
+</script>

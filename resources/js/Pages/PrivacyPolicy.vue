@@ -20,14 +20,15 @@
 <script>
 import { defineComponent } from "vue";
 import { Head } from "@inertiajs/inertia-vue3";
-import JetAuthenticationCardLogo from "@/Jetstream/AuthenticationCardLogo.vue";
+import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
 
 export default defineComponent({
-
     components: {
         Head,
         JetAuthenticationCardLogo,
     },
-    props: ["policy"],
+    props: {
+        policy: String,
+    },
 });
 </script>

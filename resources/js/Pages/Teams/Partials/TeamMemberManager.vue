@@ -396,18 +396,18 @@
 
 <script>
 import { defineComponent } from "vue";
-import JetActionMessage from "@/Jetstream/ActionMessage.vue";
-import JetActionSection from "@/Jetstream/ActionSection.vue";
-import JetButton from "@/Jetstream/Button.vue";
-import JetConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
-import JetDangerButton from "@/Jetstream/DangerButton.vue";
-import JetDialogModal from "@/Jetstream/DialogModal.vue";
-import JetFormSection from "@/Jetstream/FormSection.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetLabel from "@/Jetstream/Label.vue";
-import JetSecondaryButton from "@/Jetstream/SecondaryButton.vue";
-import JetSectionBorder from "@/Jetstream/SectionBorder.vue";
+import JetActionMessage from "@/Base/ActionMessage.vue";
+import JetActionSection from "@/Base/ActionSection.vue";
+import JetButton from "@/Base/Button.vue";
+import JetConfirmationModal from "@/Base/ConfirmationModal.vue";
+import JetDangerButton from "@/Base/DangerButton.vue";
+import JetDialogModal from "@/Base/DialogModal.vue";
+import JetFormSection from "@/Base/FormSection.vue";
+import JetInput from "@/Base/Input.vue";
+import JetInputError from "@/Base/InputError.vue";
+import JetLabel from "@/Base/Label.vue";
+import JetSecondaryButton from "@/Base/SecondaryButton.vue";
+import JetSectionBorder from "@/Base/SectionBorder.vue";
 
 export default defineComponent({
     components: {
