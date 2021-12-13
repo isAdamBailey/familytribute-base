@@ -116,7 +116,6 @@
 
 <script>
 import { defineComponent } from "vue";
-import JetButton from "@/Base/Button.vue";
 import JetFormSection from "@/Base/FormSection.vue";
 import JetInput from "@/Base/Input.vue";
 import JetInputError from "@/Base/InputError.vue";
@@ -131,7 +130,6 @@ export default defineComponent({
         Wysiwyg,
         DatePicker,
         JetActionMessage,
-        JetButton,
         JetFormSection,
         JetInput,
         JetInputError,

@@ -425,7 +425,11 @@ export default defineComponent({
         JetSectionBorder,
     },
 
-    props: ["team", "availableRoles", "userPermissions"],
+    props: {
+        team: Object,
+        availableRoles: Array,
+        userPermissions: Object,
+    },
 
     data() {
         return {

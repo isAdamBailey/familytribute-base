@@ -66,7 +66,9 @@ export default defineComponent({
         JetDangerButton,
         JetSecondaryButton,
     },
-    props: ["team"],
+    props: {
+        team: Object,
+    },
 
     data() {
         return {

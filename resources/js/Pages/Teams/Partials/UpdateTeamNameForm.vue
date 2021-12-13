@@ -77,7 +77,10 @@ export default defineComponent({
         JetLabel,
     },
 
-    props: ["team", "permissions"],
+    props: {
+        team: Object,
+        permissions: Object,
+    },
 
     data() {
         return {

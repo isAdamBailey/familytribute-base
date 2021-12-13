@@ -104,7 +104,6 @@
 <script>
 import { defineComponent } from "vue";
 import Multiselect from "@vueform/multiselect";
-import JetButton from "@/Base/Button.vue";
 import JetFormSection from "@/Base/FormSection.vue";
 import JetInput from "@/Base/Input.vue";
 import JetInputError from "@/Base/InputError.vue";
@@ -116,7 +115,6 @@ import Wysiwyg from "@/Base/Wysiwyg";
 export default defineComponent({
     components: {
         JetActionMessage,
-        JetButton,
         JetFormSection,
         JetInput,
         JetInputError,

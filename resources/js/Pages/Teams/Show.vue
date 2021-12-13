@@ -48,6 +48,10 @@ export default defineComponent({
         TeamMemberManager,
         UpdateTeamNameForm,
     },
-    props: ["team", "availableRoles", "permissions"],
+    props: {
+        team: Object,
+        availableRoles: Array,
+        permissions: Object,
+    },
 });
 </script>
