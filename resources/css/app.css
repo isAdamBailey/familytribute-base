@@ -1,3 +1,15 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+@layer base {
+    .html-content a, .ProseMirror a{
+        @apply text-sky-500 font-bold underline underline-offset-1 decoration-sky-500 hover:decoration-2 transition;
+    }
+}
+
+@layer utilities {
+    .card-text-gradient {
+        @apply bg-gradient-to-tl from-pink-200 via-violet-200;
+    }
+}
