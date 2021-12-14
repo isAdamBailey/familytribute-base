@@ -9,11 +9,11 @@
                     :href="route('login')"
                     class="text-sm text-gray-700 underline"
                 >
-                    Log in
+                  <base-button> Log In </base-button>
                 </Link>
 
                 <Link :href="route('register')" class="ml-4">
-                    <base-button> Register </base-button>
+                    Register
                 </Link>
             </div>
             <div

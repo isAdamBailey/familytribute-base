@@ -61,7 +61,7 @@ class CreateNewUser implements CreatesNewUsers
         } else {
             $user->ownedTeams()->create(
                 [
-                    'name' => config('app.name')."'s Team",
+                    'name' => config('app.name'),
                     'personal_team' => true, // allows user to delete the team in the UI
                 ]
             );

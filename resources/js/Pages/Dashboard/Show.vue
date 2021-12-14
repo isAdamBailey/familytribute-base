@@ -16,7 +16,13 @@
             </div>
 
             <div class="mt-6 text-gray-500">
-                Here you can add new stories, photos, obituaries and more!
+              <p>Here you can add new stories, photos, obituaries and more!</p>
+              <p>If nothing has been added to the site yet, <strong>this is where you start!</strong></p>
+              <p>
+                If you would like to tag photos to a person, we suggest starting by adding
+                <a class="text-sky-500 font-bold underline underline-offset-1 decoration-sky-500 hover:decoration-2 transition" href="#new-obituary">an obituary</a> first.
+              </p>
+
             </div>
         </div>
 
@@ -27,7 +33,7 @@
             <store-story-form :people-options="peopleOptions" />
             <jet-section-border />
 
-            <store-obituary-form />
+            <store-obituary-form id="new-obituary"/>
         </div>
     </app-layout>
 </template>
