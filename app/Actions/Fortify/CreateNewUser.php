@@ -56,6 +56,8 @@ class CreateNewUser implements CreatesNewUsers
         if ($team) {
             // first one to log in is administrator, the rest are editors
             $team->users()->attach($user, ['role' => 'editor']);
+
+            $user->switchTeam($team);
         } else {
             $user->ownedTeams()->create(
                 [
@@ -63,16 +65,6 @@ class CreateNewUser implements CreatesNewUsers
                     'personal_team' => true, // allows user to delete the team in the UI
                 ]
             );
-
-//            $team->users()->attach($user, ['role' => 'admin']);
         }
-
-        $user->switchTeam($team);
-
-//        $user->ownedTeams()->save(Team::forceCreate([
-//            'user_id' => $user->id,
-//            'name' => explode(' ', $user->name, 2)[0]."'s Team",
-//            'personal_team' => true,
-//        ]));
     }
 }
