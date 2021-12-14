@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
 
@@ -18,9 +19,10 @@ class CreateNewUser implements CreatesNewUsers
      * Create a newly registered user.
      *
      * @param  array  $input
-     * @return \App\Models\User
+     * @return User
+     * @throws ValidationException
      */
-    public function create(array $input)
+    public function create(array $input): User
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
@@ -43,15 +45,34 @@ class CreateNewUser implements CreatesNewUsers
     /**
      * Create a personal team for the user.
      *
-     * @param  \App\Models\User  $user
+     * @param  User  $user
      * @return void
      */
     protected function createTeam(User $user)
     {
-        $user->ownedTeams()->save(Team::forceCreate([
-            'user_id' => $user->id,
-            'name' => explode(' ', $user->name, 2)[0]."'s Team",
-            'personal_team' => true,
-        ]));
+        $team = Team::first();
+
+        // if they are the first user to register to the site, then they are the administrator of the only team.
+        if ($team) {
+            // first one to log in is administrator, the rest are editors
+            $team->users()->attach($user, ['role' => 'editor']);
+        } else {
+            $user->ownedTeams()->create(
+                [
+                    'name' => config('app.name')."'s Team",
+                    'personal_team' => true, // allows user to delete the team in the UI
+                ]
+            );
+
+//            $team->users()->attach($user, ['role' => 'admin']);
+        }
+
+        $user->switchTeam($team);
+
+//        $user->ownedTeams()->save(Team::forceCreate([
+//            'user_id' => $user->id,
+//            'name' => explode(' ', $user->name, 2)[0]."'s Team",
+//            'personal_team' => true,
+//        ]));
     }
 }

@@ -3,7 +3,8 @@
 @import "tailwindcss/utilities";
 
 @layer base {
-    .html-content a, .ProseMirror a{
+    .html-content a,
+    .ProseMirror a {
         @apply text-sky-500 font-bold underline underline-offset-1 decoration-sky-500 hover:decoration-2 transition;
     }
 }

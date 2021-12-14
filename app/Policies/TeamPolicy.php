@@ -41,7 +41,7 @@ class TeamPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return false;
     }
 
     /**
@@ -65,7 +65,7 @@ class TeamPolicy
      */
     public function addTeamMember(User $user, Team $team)
     {
-        return $user->ownsTeam($team);
+        return true;
     }
 
     /**

@@ -37,7 +37,10 @@
 
                     <!-- Role -->
                     <div
-                        v-if="availableRoles.length > 0"
+                        v-if="
+                            availableRoles.length > 0 &&
+                            userPermissions.canRemoveTeamMembers
+                        "
                         class="col-span-6 lg:col-span-4"
                     >
                         <jet-label for="roles" value="Role" />
@@ -58,7 +61,7 @@
                                     'border-t border-gray-200 rounded-t-none':
                                         i > 0,
                                     'rounded-b-none':
-                                        i !=
+                                        i !==
                                         Object.keys(availableRoles).length - 1,
                                 }"
                                 @click="addTeamMemberForm.role = role.key"
@@ -67,7 +70,7 @@
                                     :class="{
                                         'opacity-50':
                                             addTeamMemberForm.role &&
-                                            addTeamMemberForm.role != role.key,
+                                            addTeamMemberForm.role !== role.key,
                                     }"
                                 >
                                     <!-- Role Name -->
@@ -76,7 +79,7 @@
                                             class="text-sm text-gray-600"
                                             :class="{
                                                 'font-semibold':
-                                                    addTeamMemberForm.role ==
+                                                    addTeamMemberForm.role ===
                                                     role.key,
                                             }"
                                         >
@@ -85,7 +88,7 @@
 
                                         <svg
                                             v-if="
-                                                addTeamMemberForm.role ==
+                                                addTeamMemberForm.role ===
                                                 role.key
                                             "
                                             class="ml-2 h-5 w-5 text-green-400"
@@ -119,14 +122,14 @@
                         :on="addTeamMemberForm.recentlySuccessful"
                         class="mr-3"
                     >
-                        Added.
+                        Invite sent.
                     </jet-action-message>
 
                     <jet-button
                         :class="{ 'opacity-25': addTeamMemberForm.processing }"
                         :disabled="addTeamMemberForm.processing"
                     >
-                        Add
+                        Invite
                     </jet-button>
                 </template>
             </jet-form-section>
@@ -211,6 +214,7 @@
                                 <button
                                     v-if="
                                         userPermissions.canAddTeamMembers &&
+                                        userPermissions.canRemoveTeamMembers &&
                                         availableRoles.length
                                     "
                                     class="ml-2 text-sm text-gray-400 underline"
@@ -435,7 +439,7 @@ export default defineComponent({
         return {
             addTeamMemberForm: this.$inertia.form({
                 email: "",
-                role: null,
+                role: "editor",
             }),
 
             updateRoleForm: this.$inertia.form({

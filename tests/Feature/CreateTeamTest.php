@@ -20,5 +20,10 @@ class CreateTeamTest extends TestCase
 
         $this->assertCount(2, $user->fresh()->ownedTeams);
         $this->assertEquals('Test Team', $user->fresh()->ownedTeams()->latest('id')->first()->name);
+
+        // since only one team can be created, the creator is always the first admin
+        $this->assertTrue($user->fresh()->hasTeamRole(
+            $user->currentTeam->fresh(), 'admin'
+        ));
     }
 }

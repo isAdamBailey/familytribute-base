@@ -12,11 +12,8 @@
                     Log in
                 </Link>
 
-                <Link
-                    :href="route('register')"
-                    class="ml-4 text-sm text-gray-700 underline"
-                >
-                    Register
+                <Link :href="route('register')" class="ml-4">
+                    <base-button> Register </base-button>
                 </Link>
             </div>
             <div
@@ -26,9 +23,9 @@
                     <p class="text-sm font-bold mb-2">
                         © {{ new Date().getFullYear() }} by
                         <a
-                            class="text-purple-700 hover:text-purple-800"
-                            href="https://historyfam.com"
-                            >HistoryFam</a
+                            class="text-indigo-700 hover:text-indigo-800 hover:underline decoration-indigo-800"
+                            href="https://familytribute.org"
+                            >FamilyTribute</a
                         >
                     </p>
                 </div>
