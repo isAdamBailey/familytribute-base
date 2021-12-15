@@ -42,8 +42,11 @@
             v-html="person.obituary.content"
         />
 
-        <div v-if="person.pictures.length">
-            <pictures-grid :items="person.pictures" />
+        <div
+            v-if="person.pictures.length"
+            class="flex snap-x space-x-8 overflow-x-scroll py-7"
+        >
+            <picture-container :items="person.pictures" :fixed="true" />
         </div>
 
         <div v-if="person.stories.length" class="mt-3 md:mt-0">
@@ -72,9 +75,11 @@ import PicturesGrid from "@/Components/PicturesGrid.vue";
 import StoriesGrid from "../Components/StoriesGrid";
 import ObituaryDeleteModal from "@/Modals/ObituaryDeleteModal";
 import JetDangerButton from "@/Base/DangerButton";
+import PictureContainer from "../Components/PictureContainer";
 
 export default defineComponent({
     components: {
+        PictureContainer,
         JetDangerButton,
         ObituaryDeleteModal,
         StoriesGrid,
