@@ -44,13 +44,16 @@
 
         <div
             v-if="person.pictures.length"
-            class="flex snap-x space-x-8 overflow-x-scroll py-7"
+            class="flex snap-x space-x-8 overflow-x-scroll pb-10 px-5"
         >
-            <picture-container :items="person.pictures" :fixed="true" />
+            <pictures-container :items="person.pictures" :fixed-width="true" />
         </div>
 
-        <div v-if="person.stories.length" class="mt-3 md:mt-0">
-            <stories-grid :items="person.stories" />
+        <div
+            v-if="person.stories.length"
+            class="flex snap-x space-x-8 overflow-x-scroll mt-5 pb-10 px-5"
+        >
+            <stories-container :items="person.stories" :fixed-width="true" />
         </div>
     </app-layout>
 
@@ -71,19 +74,17 @@ import { defineComponent } from "vue";
 import { format, parseISO } from "date-fns";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import ObituaryEditModal from "@/Modals/ObituaryEditModal";
-import PicturesGrid from "@/Components/PicturesGrid.vue";
-import StoriesGrid from "../Components/StoriesGrid";
 import ObituaryDeleteModal from "@/Modals/ObituaryDeleteModal";
 import JetDangerButton from "@/Base/DangerButton";
-import PictureContainer from "../Components/PictureContainer";
+import PicturesContainer from "@/Components/PicturesContainer";
+import StoriesContainer from "@/Components/StoriesContainer";
 
 export default defineComponent({
     components: {
-        PictureContainer,
+        StoriesContainer,
+        PicturesContainer,
         JetDangerButton,
         ObituaryDeleteModal,
-        StoriesGrid,
-        PicturesGrid,
         AppLayout,
         ObituaryEditModal,
     },

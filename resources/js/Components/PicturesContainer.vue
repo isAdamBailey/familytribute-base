@@ -3,7 +3,7 @@
         v-for="(picture, index) in items"
         :key="index"
         :href="route('pictures.show', picture)"
-        :class="fixed ? 'w-60' : ''"
+        :class="fixedWidth ? 'w-48 md:w-60' : ''"
         class="snap-center bg-white shadow-xl shadow-indigo-200/50 rounded-lg hover:shadow-2xl hover:shadow-indigo-400/50 transition"
     >
         <img
@@ -31,7 +31,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
     props: {
         items: Array,
-        fixed: {
+        fixedWidth: {
             type: Boolean,
             default: false,
         },

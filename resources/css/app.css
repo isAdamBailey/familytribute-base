@@ -11,6 +11,6 @@
 
 @layer utilities {
     .card-text-gradient {
-        @apply bg-gradient-to-tl from-pink-200 via-violet-200;
+        @apply bg-gradient-to-tl from-indigo-200 via-violet-200;
     }
 }
