@@ -19,6 +19,7 @@ class TeamInvitation extends Mailable
      * @var TeamInvitationModel
      */
     public $invitation;
+
     public string $secret;
 
     /**

@@ -44,6 +44,9 @@
             <jet-section-border />
 
             <store-obituary-form id="new-obituary" />
+            <jet-section-border />
+
+            <update-settings-form :settings="settings" />
         </div>
     </app-layout>
 </template>
@@ -56,9 +59,11 @@ import JetSectionBorder from "@/Base/SectionBorder.vue";
 import StorePictureForm from "@/Pages/Dashboard/Partials/StorePictureForm";
 import StoreObituaryForm from "@/Pages/Dashboard/Partials/StoreObituaryForm";
 import StoreStoryForm from "@/Pages/Dashboard/Partials/StoreStoryForm";
+import UpdateSettingsForm from "@/Pages/Dashboard/Partials/UpdateSettingsForm";
 
 export default defineComponent({
     components: {
+        UpdateSettingsForm,
         AppLayout,
         JetApplicationMark,
         JetSectionBorder,
@@ -69,6 +74,7 @@ export default defineComponent({
 
     props: {
         people: Array,
+        settings: Object,
     },
 
     computed: {

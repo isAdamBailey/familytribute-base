@@ -12,7 +12,13 @@
                     <base-button> Log In </base-button>
                 </Link>
 
-                <Link :href="route('register')" class="ml-4"> Register </Link>
+                <Link
+                    v-if="$inertia.page.props.registration"
+                    :href="route('register')"
+                    class="ml-4"
+                >
+                    Register
+                </Link>
             </div>
             <div
                 class="mt-16 border-t-2 border-gray-300 flex flex-col items-center"

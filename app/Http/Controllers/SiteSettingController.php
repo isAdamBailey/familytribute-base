@@ -3,83 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\SiteSetting;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class SiteSettingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function update(Request $request, $id): RedirectResponse
     {
-        //
-    }
+        $request->validate([
+            'registration_secret' => 'string|max:100',
+            'registration' => 'boolean',
+        ]);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        $settings = SiteSetting::find($id);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        if (isset($request->registration_secret)) {
+            $settings->registration_secret = $request->registration_secret;
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\SiteSetting  $siteSetting
-     * @return \Illuminate\Http\Response
-     */
-    public function show(SiteSetting $siteSetting)
-    {
-        //
-    }
+        if (isset($request->registration)) {
+            $settings->registration = $request->registration;
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\SiteSetting  $siteSetting
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(SiteSetting $siteSetting)
-    {
-        //
-    }
+        $settings->save();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SiteSetting  $siteSetting
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, SiteSetting $siteSetting)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\SiteSetting  $siteSetting
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(SiteSetting $siteSetting)
-    {
-        //
+        return redirect(route('dashboard'))
+            ->with('flash.banner', 'Settings successfully updated!');
     }
 }

@@ -25,6 +25,7 @@ class DashboardTest extends TestCase
                     ->component('Dashboard/Show')
                     ->url('/dashboard')
                     ->has('people', 5)
+                    ->has('settings')
             );
     }
 }

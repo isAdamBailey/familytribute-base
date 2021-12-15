@@ -3,9 +3,10 @@
 use App\Http\Controllers\ObituaryController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\PictureController;
+use App\Http\Controllers\SiteSettingController;
 use App\Http\Controllers\StoryController;
 use App\Models\Person;
-use Illuminate\Foundation\Application;
+use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -25,6 +26,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/Show', [
             'people' => Person::all(),
+            'settings' => SiteSetting::first()->only('id', 'registration', 'registration_secret'),
         ]);
     })->name('dashboard');
 
@@ -39,6 +41,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/stories', [StoryController::class, 'store'])->name('stories.store');
     Route::put('/stories/{story}', [StoryController::class, 'update'])->name('stories.update');
     Route::delete('/stories/{story}', [StoryController::class, 'destroy'])->name('stories.destroy');
+
+    Route::put('/site-settings/{id}', [SiteSettingController::class, 'update'])->name('site-settings.update');
 });
 
 Route::get('/{person}', [PersonController::class, 'show'])->name('people.show');
