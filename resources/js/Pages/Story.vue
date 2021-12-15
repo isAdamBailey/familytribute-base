@@ -29,6 +29,8 @@
             v-html="story.content"
         />
 
+        <social-share />
+
         <tagged-people :people="story.people" title="People in this story" />
     </app-layout>
 
@@ -53,9 +55,11 @@ import StoryEditModal from "@/Modals/StoryEditModal";
 import TaggedPeople from "@/Components/TaggedPeople";
 import StoryDeleteModal from "@/Modals/StoryDeleteModal";
 import JetDangerButton from "@/Base/DangerButton";
+import SocialShare from "@/Components/SocialShare";
 
 export default defineComponent({
     components: {
+        SocialShare,
         JetDangerButton,
         StoryDeleteModal,
         AppLayout,

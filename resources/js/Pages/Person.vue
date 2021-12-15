@@ -32,11 +32,14 @@
         </div>
         <div class="flex justify-center">
             <img
-                class="md:w-1/3 object-cover rounded-lg"
+                class="md:w-2/3 object-cover rounded-full"
                 :src="person.obituary.headstone_url"
                 :alt="`${person.full_name}'s headstone`"
             />
         </div>
+
+        <social-share />
+
         <div
             class="html-content my-6 prose max-w-none"
             v-html="person.obituary.content"
@@ -78,9 +81,11 @@ import ObituaryDeleteModal from "@/Modals/ObituaryDeleteModal";
 import JetDangerButton from "@/Base/DangerButton";
 import PicturesContainer from "@/Components/PicturesContainer";
 import StoriesContainer from "@/Components/StoriesContainer";
+import SocialShare from "@/Components/SocialShare";
 
 export default defineComponent({
     components: {
+        SocialShare,
         StoriesContainer,
         PicturesContainer,
         JetDangerButton,

@@ -32,6 +32,9 @@
             :src="picture.url"
             :alt="picture.title"
         />
+
+        <social-share />
+
         <div
             class="html-content mt-6 prose max-w-none"
             v-html="picture.description"
@@ -64,9 +67,11 @@ import PictureEditModal from "@/Modals/PictureEditModal";
 import PictureDeleteModal from "@/Modals/PictureDeleteModal";
 import TaggedPeople from "@/Components/TaggedPeople";
 import JetDangerButton from "@/Base/DangerButton";
+import SocialShare from "@/Components/SocialShare";
 
 export default defineComponent({
     components: {
+        SocialShare,
         JetDangerButton,
         PictureDeleteModal,
         PictureEditModal,

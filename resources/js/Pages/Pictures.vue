@@ -10,10 +10,10 @@
 
             <search-input route-name="pictures.index" />
 
-            <jet-dropdown width="48" arrow-trigger-title="Filter Pictures">
+            <jet-dropdown width="48" arrow-trigger-title="Sort Pictures">
                 <template #content>
                     <div class="block px-4 py-2 text-xs text-gray-400">
-                        Filter By:
+                        Sort By:
                     </div>
                     <jet-dropdown-link
                         :href="

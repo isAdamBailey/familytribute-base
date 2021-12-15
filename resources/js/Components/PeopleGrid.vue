@@ -13,7 +13,7 @@
                 :src="person.obituary.headstone_url"
                 :alt="`${person.full_name}'s headstone`"
             />
-            <div class="card-text-gradient to-blue-300 px-3 py-2 rounded-b-lg">
+            <div class="card-text-gradient px-3 py-2 rounded-b-lg">
                 <p class="font-bold truncate">
                     {{ person.full_name }}
                 </p>

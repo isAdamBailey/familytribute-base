@@ -10,10 +10,10 @@
 
             <search-input route-name="people.index" />
 
-            <jet-dropdown width="48" arrow-trigger-title="Filter People">
+            <jet-dropdown width="48" arrow-trigger-title="Sort People">
                 <template #content>
                     <div class="block px-4 py-2 text-xs text-gray-400">
-                        Filter By:
+                        Sort By:
                     </div>
                     <jet-dropdown-link
                         :href="
