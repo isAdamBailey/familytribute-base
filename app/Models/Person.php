@@ -59,7 +59,7 @@ class Person extends Model
     public function pictures(): BelongsToMany
     {
         return $this->belongsToMany(Picture::class)
-            ->select(['slug', 'url', 'title', 'description'])
+            ->select(['slug', 'url', 'title', 'description', 'year'])
             ->orderBy('year');
     }
 

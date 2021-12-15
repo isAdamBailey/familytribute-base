@@ -85,6 +85,7 @@ class PersonTest extends TestCase
                         ->where('slug', $picture->slug)
                         ->where('title', $picture->title)
                         ->where('url', $picture->url)
+                        ->where('year', (int) $picture->year)
                         ->etc()
                     )
                     ->has('person.stories.0', fn (Assert $page) => $page

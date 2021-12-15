@@ -39,6 +39,7 @@ class PictureController extends Controller
             'pictures' => $pictures->through(fn ($picture) => [
                 'slug' => $picture->slug,
                 'title' => $picture->title,
+                'year' => $picture->year,
                 'url' => $picture->url,
                 'description' => $picture->description,
             ]),
@@ -55,6 +56,7 @@ class PictureController extends Controller
                 'slug',
                 'title',
                 'url',
+                'year',
                 'description',
                 'people',
                 'person_ids'

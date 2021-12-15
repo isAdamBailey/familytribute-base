@@ -33,6 +33,7 @@ class PicturesTest extends TestCase
                 ->has('pictures.data.0.description')
                 ->has('pictures.data.0.url')
                 ->has('pictures.data.0.title')
+                ->has('pictures.data.0.year')
             );
     }
 
@@ -58,6 +59,7 @@ class PicturesTest extends TestCase
                     ->where('title', $picture->title)
                     ->where('description', $picture->description)
                     ->where('url', $picture->url)
+                    ->where('year', (int) $picture->year)
                     ->etc()
                 )
         );
@@ -75,6 +77,7 @@ class PicturesTest extends TestCase
                 ->has('picture.title')
                 ->has('picture.description')
                 ->has('picture.url')
+                ->has('picture.year')
                 ->has('picture.people')
                 ->has('picture.person_ids')
                 ->has('people')
