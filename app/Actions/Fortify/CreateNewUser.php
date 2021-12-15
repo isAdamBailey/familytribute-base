@@ -2,11 +2,13 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\SiteSetting;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
@@ -29,7 +31,15 @@ class CreateNewUser implements CreatesNewUsers
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
-        ])->validate();
+        ])->after(function ($validator) use ($input) {
+            $settings = SiteSetting::first();
+            if (! $settings->registration) {
+                $validator->errors()->add('registration', __('Registration is not enabled.'));
+            }
+            if (! isset($input['registration_secret']) || ! Str::is($input['registration_secret'], $settings->registration_secret)) {
+                $validator->errors()->add('registration_secret', __('The provided registration secret is not valid.'));
+            }
+        })->validate();
 
         return DB::transaction(function () use ($input) {
             return tap(User::create([

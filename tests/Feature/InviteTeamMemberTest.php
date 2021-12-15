@@ -2,10 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Mail\TeamInvitation;
+use App\Models\SiteSetting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
-use Laravel\Jetstream\Mail\TeamInvitation;
 use Tests\TestCase;
 
 class InviteTeamMemberTest extends TestCase
@@ -23,7 +24,11 @@ class InviteTeamMemberTest extends TestCase
             'role' => 'admin',
         ]);
 
-        Mail::assertSent(TeamInvitation::class);
+        Mail::assertSent(function (TeamInvitation $mail) {
+            $settings = SiteSetting::first();
+
+            return $mail->secret === $settings->registration_secret;
+        });
 
         $this->assertCount(1, $user->currentTeam->fresh()->teamInvitations);
     }

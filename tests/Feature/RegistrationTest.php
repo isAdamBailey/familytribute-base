@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\SiteSetting;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Fortify\Features;
@@ -40,15 +41,46 @@ class RegistrationTest extends TestCase
             return $this->markTestSkipped('Registration support is not enabled.');
         }
 
+        $settings = SiteSetting::first();
+
         $response = $this->post('/register', [
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
+            'registration_secret' => $settings->registration_secret,
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature(),
         ]);
 
         $this->assertAuthenticated();
         $response->assertRedirect(RouteServiceProvider::HOME);
+    }
+
+    public function test_new_users_cannot_register_if_registration_is_disabled()
+    {
+        if (! Features::enabled(Features::registration())) {
+            return $this->markTestSkipped('Registration support is not enabled.');
+        }
+
+        $settings = SiteSetting::first();
+        $settings->update(['registration' => false]);
+
+        $request = [
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+            'registration_secret' => $settings->registration_secret,
+            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature(),
+        ];
+
+        $this->post('/register', $request)
+            ->assertSessionHasErrors(['registration'])
+            ->assertStatus(302);
+
+        $this->assertDatabaseMissing('users', [
+            'name' => $request['name'],
+            'email' => $request['email'],
+        ]);
     }
 }

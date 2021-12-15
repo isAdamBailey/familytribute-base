@@ -60,6 +60,17 @@
                 />
             </div>
 
+          <div class="mt-4">
+            <jet-label for="registration_secret" value="Registration Secret" />
+            <jet-input
+                id="registration_secret"
+                v-model="form.registration_secret"
+                type="text"
+                class="mt-1 block w-full"
+                required
+            />
+          </div>
+
             <div
                 v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature"
                 class="mt-4"
@@ -140,6 +151,7 @@ export default defineComponent({
                 email: "",
                 password: "",
                 password_confirmation: "",
+                registration_secret: "",
                 terms: false,
             }),
         };
