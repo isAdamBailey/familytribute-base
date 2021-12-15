@@ -15,12 +15,12 @@
         <meta
             head-key="twitter:site"
             name="twitter:site"
-            content="@historyfam1"
+            content="@FamilyTribute"
         />
         <meta
             head-key="twitter:creator"
             name="twitter:creator"
-            content="@historyfam1"
+            content="@isAdamBailey"
         />
         <meta
             head-key="twitter:description"
@@ -33,11 +33,7 @@
             content="summary_large_image"
         />
 
-        <meta
-            head-key="og:url"
-            property="og:url"
-            :content="$inertia.page.props.siteUrl"
-        />
+        <meta head-key="og:url" property="og:url" :content="currentPage" />
         <meta head-key="og:title" property="og:title" :content="headTitle" />
         <meta
             head-key="og:description"
@@ -77,6 +73,9 @@ export default {
             return (
                 this.keywords || "history,genealogy,obituaries,family history"
             );
+        },
+        currentPage() {
+            return window.location.href;
         },
     },
 };

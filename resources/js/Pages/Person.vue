@@ -38,7 +38,7 @@
             />
         </div>
 
-        <social-share />
+        <social-share :title="`${person.full_name}'s obituary`" />
 
         <div
             class="html-content my-6 prose max-w-none"
