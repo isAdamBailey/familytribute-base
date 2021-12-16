@@ -6,7 +6,7 @@
         </template>
 
         <div class="flex flex-wrap-reverse justify-between mt-8 mb-3">
-            <h1 class="text-xl md:text-4xl">{{ picture.title }}</h1>
+            <h1 class="font-header text-3xl md:text-6xl">{{ picture.title }}</h1>
 
             <div v-if="$page.props.user">
                 <jet-danger-button
@@ -24,7 +24,7 @@
                 </base-button>
             </div>
         </div>
-        <div class="mb-3 text-l md:text-xl">
+        <div class="mb-3 text-sm font-semibold">
             {{ picture.year }}
         </div>
         <div class="relative">

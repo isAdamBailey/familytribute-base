@@ -12,7 +12,8 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Nunito", ...defaultTheme.fontFamily.sans],
+                sans: ["Montserrat", ...defaultTheme.fontFamily.sans],
+                header: ["Gwendolyn", ...defaultTheme.fontFamily.sans],
             },
         },
     },

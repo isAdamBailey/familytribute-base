@@ -6,7 +6,7 @@
         <template #header> People </template>
 
         <div class="md:mt-5 mb-5 md:mb-0 flex justify-between items-center">
-            <div class="text-2xl">People</div>
+            <div class="font-header text-3xl md:text-5xl">People</div>
 
             <search-input route-name="people.index" />
 

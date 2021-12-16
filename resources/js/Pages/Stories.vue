@@ -6,7 +6,7 @@
         <template #header> Stories </template>
 
         <div class="md:mt-5 mb-5 md:mb-0 flex justify-between items-center">
-            <div class="text-2xl">Stories</div>
+            <div class="font-header text-3xl md:text-5xl">Stories</div>
             <search-input route-name="stories.index" />
         </div>
 

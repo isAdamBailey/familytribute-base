@@ -9,7 +9,7 @@
         </template>
 
         <div class="flex flex-wrap-reverse justify-between mt-8 mb-3">
-            <h1 class="text-xl md:text-4xl">{{ person.full_name }}</h1>
+            <h1 class="font-header text-3xl md:text-6xl">{{ person.full_name }}</h1>
             <div v-if="$page.props.user">
                 <jet-danger-button
                     class="mr-3"
@@ -26,7 +26,7 @@
                 </base-button>
             </div>
         </div>
-        <div class="mb-3 font-bold">
+        <div class="mb-3 text-sm font-semibold">
             {{ formatDate(person.obituary.birth_date) }} -
             {{ formatDate(person.obituary.death_date) }}
         </div>

@@ -10,7 +10,7 @@
                         :href="route('home')"
                     >
                         <jet-application-mark class="block h-9 w-auto" />
-                        <div class="text-3xl md:text-5xl font-bold">
+                        <div class="font-header text-3xl md:text-5xl font-bold">
                             {{ $page.props.siteName }}
                         </div>
                     </Link>

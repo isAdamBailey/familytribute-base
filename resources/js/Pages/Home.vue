@@ -2,7 +2,7 @@
     <home-layout title="Home">
         <div class="flex flex-col-reverse mb-5 md:mb-7 lg:flex-row">
             <div>
-                <div class="font-bold text-2xl md:text-5xl">
+                <div class="font-header font-bold text-4xl md:text-6xl">
                     Welcome to {{ $inertia.page.props.siteName }}
                 </div>
                 <div class="mt-6 text-gray-500 text-l md:text-2xl">
