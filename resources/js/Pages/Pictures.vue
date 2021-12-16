@@ -35,6 +35,16 @@
                     >
                         Year Ascending
                     </jet-dropdown-link>
+                    <jet-dropdown-link
+                        :href="
+                              route('pictures.index', {
+                                  sort: 'featured',
+                                  order: 'desc',
+                              })
+                          "
+                    >
+                      Featured
+                    </jet-dropdown-link>
                 </template>
             </jet-dropdown>
         </div>

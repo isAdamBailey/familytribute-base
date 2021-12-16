@@ -88,6 +88,23 @@
                 />
                 <jet-input-error :message="form.errors.year" class="mt-2" />
             </div>
+
+          <div class="mt-2 col-span-6 sm:col-span-4">
+            <jet-label for="featured" value="Featured" />
+            <div class="flex items-center text-sm text-indigo-600">
+              <i class="ri-information-line mr-1"></i>
+              Featured images are displayed on the home page
+            </div>
+            <checkbox
+                id="featured"
+                v-model:checked="form.featured"
+                name="featured"
+            />
+            <jet-input-error
+                :message="form.errors.featured"
+                class="mt-2"
+            />
+          </div>
         </template>
 
         <template #footer>
@@ -116,9 +133,11 @@ import JetInput from "@/Base/Input.vue";
 import JetInputError from "@/Base/InputError.vue";
 import JetLabel from "@/Base/Label.vue";
 import Wysiwyg from "@/Base/Wysiwyg";
+import Checkbox from "../Base/Checkbox";
 
 export default defineComponent({
     components: {
+      Checkbox,
         Wysiwyg,
         JetDialogModal,
         JetSecondaryButton,
@@ -151,6 +170,7 @@ export default defineComponent({
                 title: this.picture.title,
                 description: this.picture.description,
                 year: this.picture.year,
+                featured: Boolean(this.picture.featured),
                 photo: null,
                 person_ids: this.picture.person_ids,
             }),

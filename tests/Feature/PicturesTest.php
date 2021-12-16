@@ -34,6 +34,7 @@ class PicturesTest extends TestCase
                 ->has('pictures.data.0.url')
                 ->has('pictures.data.0.title')
                 ->has('pictures.data.0.year')
+                ->has('pictures.data.0.featured')
             );
     }
 
@@ -60,6 +61,7 @@ class PicturesTest extends TestCase
                     ->where('description', $picture->description)
                     ->where('url', $picture->url)
                     ->where('year', (int) $picture->year)
+                    ->where('featured', (int) $picture->featured)
                     ->etc()
                 )
         );

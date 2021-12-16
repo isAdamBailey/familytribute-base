@@ -41,6 +41,7 @@ class PictureController extends Controller
                 'title' => $picture->title,
                 'year' => $picture->year,
                 'url' => $picture->url,
+                'featured' => $picture->featured,
                 'description' => $picture->description,
             ]),
             'sort' => $sort,
@@ -75,7 +76,7 @@ class PictureController extends Controller
             'title' => 'required|string|max:100',
             'description' => 'required|string',
             'year' => 'required|digits:4',
-            'featured' => 'required|integer',
+            'featured' => 'required|boolean',
             'photo' => 'required|file',
             'person_ids' => 'array|nullable',
         ]);
@@ -101,7 +102,7 @@ class PictureController extends Controller
             'title' => 'string|max:100',
             'description' => 'string',
             'year' => 'digits:4',
-            'featured' => 'integer',
+            'featured' => 'boolean',
             'photo' => 'file',
             'person_ids' => 'array|nullable',
         ]);

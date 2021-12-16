@@ -27,11 +27,16 @@
         <div class="mb-3 text-l md:text-xl">
             {{ picture.year }}
         </div>
-        <img
-            class="w-full object-cover rounded-lg"
-            :src="picture.url"
-            :alt="picture.title"
-        />
+        <div class="relative">
+          <img
+              class="w-full object-cover rounded-lg"
+              :src="picture.url"
+              :alt="picture.title"
+          />
+          <div v-if="picture.featured" class="absolute pl-0.5 top-0 inset-x-0 text-white text-sm">
+            <i class="ri-star-fill"></i>
+          </div>
+        </div>
 
         <social-share :title="picture.title" />
 

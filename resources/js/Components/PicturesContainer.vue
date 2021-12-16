@@ -4,13 +4,16 @@
         :key="index"
         :href="route('pictures.show', picture)"
         :class="fixedWidth ? 'w-48 md:w-60' : ''"
-        class="snap-center bg-white shadow-xl shadow-indigo-200/50 rounded-lg hover:shadow-2xl hover:shadow-indigo-400/50 transition"
+        class="relative snap-center bg-white shadow-xl shadow-indigo-200/50 rounded-lg hover:shadow-2xl hover:shadow-indigo-400/50 transition"
     >
         <img
             class="w-full h-48 object-cover rounded-t-lg"
             :src="picture.url"
             :alt="picture.title"
         />
+        <div v-if="picture.featured" class="absolute pl-0.5 top-0 inset-x-0 text-white text-sm">
+          <i class="ri-star-fill"></i>
+        </div>
         <div class="card-text-gradient p-3 rounded-b">
             <div class="flex justify-between">
                 <p class="text-sm font-bold truncate">
