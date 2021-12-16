@@ -10,43 +10,45 @@
 
             <search-input route-name="pictures.index" />
 
-            <jet-dropdown width="48" arrow-trigger-title="Sort Pictures">
-                <template #content>
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                        Sort By:
-                    </div>
-                    <jet-dropdown-link
-                        :href="
-                            route('pictures.index', {
-                                sort: 'year',
-                                order: 'desc',
-                            })
-                        "
-                    >
-                        Year Descending
-                    </jet-dropdown-link>
-                    <jet-dropdown-link
-                        :href="
-                            route('pictures.index', {
-                                sort: 'year',
-                                order: 'asc',
-                            })
-                        "
-                    >
-                        Year Ascending
-                    </jet-dropdown-link>
-                    <jet-dropdown-link
-                        :href="
-                              route('pictures.index', {
-                                  sort: 'featured',
-                                  order: 'desc',
-                              })
-                          "
-                    >
-                      Featured
-                    </jet-dropdown-link>
-                </template>
-            </jet-dropdown>
+            <sort-dropdown>
+                <jet-dropdown-link
+                    :href="
+                        route('pictures.index', {
+                            sort: 'year',
+                            order: 'desc',
+                        })
+                    "
+                >
+                    <i class="ri-calendar-fill"></i>
+                    <i class="ri-arrow-down-line"></i>
+                    Year DESC
+                </jet-dropdown-link>
+                <jet-dropdown-link
+                    :href="
+                        route('pictures.index', {
+                            sort: 'year',
+                            order: 'asc',
+                        })
+                    "
+                >
+                    <i class="ri-calendar-fill"></i>
+                    <i class="ri-arrow-up-line"></i>
+                    Year ASC
+                </jet-dropdown-link>
+                <jet-dropdown-link
+                    :href="
+                        route('pictures.index', {
+                            sort: 'featured',
+                            order: 'desc',
+                        })
+                    "
+                >
+                    <i class="ri-star-fill"></i> Featured
+                </jet-dropdown-link>
+                <jet-dropdown-link :href="route('pictures.index')">
+                    <i class="ri-filter-off-fill"></i> Clear
+                </jet-dropdown-link>
+            </sort-dropdown>
         </div>
 
         <section-border />
@@ -62,18 +64,18 @@
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import InfiniteScroll from "@/Components/InfiniteScroll.vue";
-import JetDropdown from "@/Base/Dropdown.vue";
 import JetDropdownLink from "@/Base/DropdownLink.vue";
 import SearchInput from "@/Base/SearchInput";
 import SectionBorder from "@/Base/SectionBorder";
+import SortDropdown from "@/Components/SortDropdown";
 
 export default defineComponent({
     components: {
+        SortDropdown,
         SectionBorder,
         SearchInput,
         AppLayout,
         InfiniteScroll,
-        JetDropdown,
         JetDropdownLink,
     },
 

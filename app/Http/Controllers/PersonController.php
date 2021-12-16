@@ -12,22 +12,22 @@ class PersonController extends Controller
 {
     public function index(Request $request): Response
     {
-        $sort = $request->input('sort') ?: 'death_date';
-        $order = $request->input('order') ?: 'desc';
-        $search = $request->input('search');
+        $sort = $request->sort;
+        $order = $request->order;
+        $search = $request->search;
 
         $people = Person::with('obituary')
             ->when($search,
                 fn ($query) => $query->where('first_name', 'LIKE', '%'.$search.'%')
                         ->orWhere('last_name', 'LIKE', '%'.$search.'%')
             )
-            ->when(in_array($sort, ['death_date', 'birth_date']),
+            ->when(! $sort || in_array($sort, ['death_date', 'birth_date']),
                 fn ($query) => $query->orderBy(
-                    Obituary::select($sort)
+                    Obituary::select($sort ?: 'death_date')
                         ->whereColumn('obituaries.person_id', 'people.id'),
-                    $order
+                    $order ?: 'desc'
                 ),
-                fn ($query) => $query->orderBy($sort, $order)
+                fn ($query) => $query->orderBy($sort, $order ?: 'desc')
             )
             ->paginate();
 
@@ -43,8 +43,8 @@ class PersonController extends Controller
                 'full_name' => $person->full_name,
                 'obituary' => $person->obituary,
             ]),
-            'sort' => $sort,
-            'order' => $order,
+            'sort' => ucwords(str_replace('_', ' ', $sort)),
+            'order' => strtoupper($order),
             'search' => $search,
         ]);
     }

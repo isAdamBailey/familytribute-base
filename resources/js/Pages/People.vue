@@ -10,53 +10,59 @@
 
             <search-input route-name="people.index" />
 
-            <jet-dropdown width="48" arrow-trigger-title="Sort People">
-                <template #content>
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                        Sort By:
-                    </div>
-                    <jet-dropdown-link
-                        :href="
-                            route('people.index', {
-                                sort: 'last_name',
-                                order: 'desc',
-                            })
-                        "
-                    >
-                        Last Name Descending
-                    </jet-dropdown-link>
-                    <jet-dropdown-link
-                        :href="
-                            route('people.index', {
-                                sort: 'last_name',
-                                order: 'asc',
-                            })
-                        "
-                    >
-                        Last Name Ascending
-                    </jet-dropdown-link>
-                    <jet-dropdown-link
-                        :href="
-                            route('people.index', {
-                                sort: 'death_date',
-                                order: 'desc',
-                            })
-                        "
-                    >
-                        Death Date Descending
-                    </jet-dropdown-link>
-                    <jet-dropdown-link
-                        :href="
-                            route('people.index', {
-                                sort: 'death_date',
-                                order: 'asc',
-                            })
-                        "
-                    >
-                        Death Date Ascending
-                    </jet-dropdown-link>
-                </template>
-            </jet-dropdown>
+            <sort-dropdown>
+                <jet-dropdown-link
+                    :href="
+                        route('people.index', {
+                            sort: 'last_name',
+                            order: 'desc',
+                        })
+                    "
+                >
+                    <i class="ri-empathize-fill"></i>
+                    <i class="ri-arrow-down-line"></i>
+                    Last Name DESC
+                </jet-dropdown-link>
+                <jet-dropdown-link
+                    :href="
+                        route('people.index', {
+                            sort: 'last_name',
+                            order: 'asc',
+                        })
+                    "
+                >
+                    <i class="ri-empathize-fill"></i>
+                    <i class="ri-arrow-up-line"></i>
+                    Last Name ASC
+                </jet-dropdown-link>
+                <jet-dropdown-link
+                    :href="
+                        route('people.index', {
+                            sort: 'death_date',
+                            order: 'desc',
+                        })
+                    "
+                >
+                    <i class="ri-calendar-fill"></i>
+                    <i class="ri-arrow-down-line"></i>
+                    Death Date DESC
+                </jet-dropdown-link>
+                <jet-dropdown-link
+                    :href="
+                        route('people.index', {
+                            sort: 'death_date',
+                            order: 'asc',
+                        })
+                    "
+                >
+                    <i class="ri-calendar-fill"></i>
+                    <i class="ri-arrow-up-line"></i>
+                    Death Date ASC
+                </jet-dropdown-link>
+                <jet-dropdown-link :href="route('people.index')">
+                    <i class="ri-filter-off-fill"></i> Clear
+                </jet-dropdown-link>
+            </sort-dropdown>
         </div>
 
         <section-border />
@@ -71,19 +77,19 @@
 <script>
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import JetDropdown from "@/Base/Dropdown.vue";
 import JetDropdownLink from "@/Base/DropdownLink.vue";
 import InfiniteScroll from "@/Components/InfiniteScroll";
 import SearchInput from "@/Base/SearchInput";
 import SectionBorder from "@/Base/SectionBorder";
+import SortDropdown from "@/Components/SortDropdown";
 
 export default defineComponent({
     components: {
+        SortDropdown,
         SectionBorder,
         SearchInput,
         AppLayout,
         InfiniteScroll,
-        JetDropdown,
         JetDropdownLink,
     },
 

@@ -89,22 +89,19 @@
                 <jet-input-error :message="form.errors.year" class="mt-2" />
             </div>
 
-          <div class="mt-2 col-span-6 sm:col-span-4">
-            <jet-label for="featured" value="Featured" />
-            <div class="flex items-center text-sm text-indigo-600">
-              <i class="ri-information-line mr-1"></i>
-              Featured images are displayed on the home page
+            <div class="mt-2 col-span-6 sm:col-span-4">
+                <jet-label for="featured" value="Featured" />
+                <div class="flex items-center text-sm text-indigo-600">
+                    <i class="ri-information-line mr-1"></i>
+                    Featured images are displayed on the home page
+                </div>
+                <checkbox
+                    id="featured"
+                    v-model:checked="form.featured"
+                    name="featured"
+                />
+                <jet-input-error :message="form.errors.featured" class="mt-2" />
             </div>
-            <checkbox
-                id="featured"
-                v-model:checked="form.featured"
-                name="featured"
-            />
-            <jet-input-error
-                :message="form.errors.featured"
-                class="mt-2"
-            />
-          </div>
         </template>
 
         <template #footer>
@@ -137,7 +134,7 @@ import Checkbox from "../Base/Checkbox";
 
 export default defineComponent({
     components: {
-      Checkbox,
+        Checkbox,
         Wysiwyg,
         JetDialogModal,
         JetSecondaryButton,

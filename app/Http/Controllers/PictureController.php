@@ -16,9 +16,9 @@ class PictureController extends Controller
 {
     public function index(Request $request): Response
     {
-        $sort = $request->input('sort') ?: 'year';
-        $order = $request->input('order') ?: 'asc';
-        $search = $request->input('search');
+        $sort = $request->sort;
+        $order = $request->order;
+        $search = $request->search;
 
         $pictures = Picture::query()
             ->when($search,
@@ -26,7 +26,7 @@ class PictureController extends Controller
                     ->orWhere('description', 'LIKE', '%'.$search.'%')
                     ->orWhere('year', 'LIKE', '%'.$search.'%')
             )
-            ->orderBy($sort, $order)
+            ->orderBy($sort ?: 'year', $order ?: 'asc')
             ->paginate();
 
         $pictures->appends([
@@ -44,8 +44,8 @@ class PictureController extends Controller
                 'featured' => $picture->featured,
                 'description' => $picture->description,
             ]),
-            'sort' => $sort,
-            'order' => $order,
+            'sort' => ucwords(str_replace('_', ' ', $sort)),
+            'order' => strtoupper($order),
             'search' => $search,
         ]);
     }

@@ -11,8 +11,11 @@
             :src="picture.url"
             :alt="picture.title"
         />
-        <div v-if="picture.featured" class="absolute pl-0.5 top-0 inset-x-0 text-white text-sm">
-          <i class="ri-star-fill"></i>
+        <div
+            v-if="picture.featured"
+            class="absolute pl-0.5 top-0 inset-x-0 text-white text-sm"
+        >
+            <i class="ri-star-fill"></i>
         </div>
         <div class="card-text-gradient p-3 rounded-b">
             <div class="flex justify-between">
