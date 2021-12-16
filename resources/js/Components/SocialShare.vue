@@ -1,11 +1,16 @@
 <template>
-    <div class="my-3 w-60 flex justify-between items-center">
-        <div class="font-semibold text-xl">Share:</div>
-        <ShareNetwork network="facebook" :title="title" :url="currentPage">
+    <div class="my-5 md:w-96 flex justify-between items-center">
+        <ShareNetwork
+            network="facebook"
+            :quote="title"
+            :title="title"
+            :description="description"
+            :url="currentPage"
+        >
             <i
                 role="button"
                 aria-label="Share on Facebook"
-                class="ri-facebook-circle-fill text-5xl text-indigo-500 hover:text-indigo-700"
+                class="ri-facebook-circle-fill text-3xl md:text-4xl text-indigo-500 hover:text-indigo-700"
             ></i>
         </ShareNetwork>
         <ShareNetwork
@@ -17,14 +22,33 @@
             <i
                 role="button"
                 aria-label="Share on Twitter"
-                class="ri-twitter-fill text-5xl text-indigo-500 hover:text-indigo-700"
+                class="ri-twitter-fill text-3xl md:text-4xl text-indigo-500 hover:text-indigo-700"
             ></i>
         </ShareNetwork>
-        <i
-            role="button"
-            aria-label="Share on email"
-            class="ri-mail-fill text-5xl text-indigo-500 hover:text-indigo-700"
-        ></i>
+        <ShareNetwork
+            network="email"
+            :title="title"
+            :url="currentPage"
+            :description="description"
+        >
+            <i
+                role="button"
+                aria-label="Share on email"
+                class="ri-mail-fill text-3xl md:text-4xl text-indigo-500 hover:text-indigo-700"
+            ></i>
+        </ShareNetwork>
+        <ShareNetwork
+            network="sms"
+            :title="title"
+            :url="currentPage"
+            :description="description"
+        >
+            <i
+                role="button"
+                aria-label="Share SMS message"
+                class="ri-message-2-fill text-3xl md:text-4xl text-indigo-500 hover:text-indigo-700"
+            ></i>
+        </ShareNetwork>
     </div>
 </template>
 
@@ -38,6 +62,9 @@ export default defineComponent({
     computed: {
         currentPage() {
             return window.location.href;
+        },
+        description() {
+            return `See ${this.title} on ${this.$inertia.page.props.siteName} FamilyTribute`;
         },
     },
 });

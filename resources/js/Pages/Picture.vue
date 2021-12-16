@@ -33,7 +33,7 @@
             :alt="picture.title"
         />
 
-        <social-share />
+        <social-share :title="picture.title" />
 
         <div
             class="html-content mt-6 prose max-w-none"

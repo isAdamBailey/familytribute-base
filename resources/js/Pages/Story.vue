@@ -29,7 +29,7 @@
             v-html="story.content"
         />
 
-        <social-share />
+        <social-share :title="story.title" />
 
         <tagged-people :people="story.people" title="People in this story" />
     </app-layout>
