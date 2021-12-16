@@ -6,12 +6,19 @@ use App\Http\Controllers\PictureController;
 use App\Http\Controllers\SiteSettingController;
 use App\Http\Controllers\StoryController;
 use App\Models\Person;
+use App\Models\Picture;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Home');
+    return Inertia::render('Home', [
+        'pictures' => Picture::inRandomOrder()->limit(5)->get()->map(fn ($picture) => [
+            'url' => $picture->url,
+            'title' => $picture->title,
+            'description' => $picture->description,
+        ]),
+    ]);
 })->name('home');
 
 Route::get('/pictures', [PictureController::class, 'index'])->name('pictures.index');
