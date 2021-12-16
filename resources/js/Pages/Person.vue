@@ -32,7 +32,7 @@
         </div>
         <div class="flex justify-center">
             <img
-                class="md:w-2/3 object-cover rounded-full"
+                class="md:w-2/3 object-cover rounded-xl"
                 :src="person.obituary.headstone_url"
                 :alt="`${person.full_name}'s headstone`"
             />

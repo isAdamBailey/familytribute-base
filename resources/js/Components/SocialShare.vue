@@ -1,5 +1,5 @@
 <template>
-    <div class="my-5 md:w-96 flex justify-between items-center">
+    <div class="my-5 md:w-60 flex justify-between items-center">
         <ShareNetwork
             network="facebook"
             :quote="title"
@@ -9,6 +9,7 @@
         >
             <i
                 role="button"
+                title="Share on Facebook"
                 aria-label="Share on Facebook"
                 class="ri-facebook-circle-fill text-3xl md:text-4xl text-indigo-500 hover:text-indigo-700"
             ></i>
@@ -21,6 +22,7 @@
         >
             <i
                 role="button"
+                title="Share on Twitter"
                 aria-label="Share on Twitter"
                 class="ri-twitter-fill text-3xl md:text-4xl text-indigo-500 hover:text-indigo-700"
             ></i>
@@ -33,6 +35,7 @@
         >
             <i
                 role="button"
+                title="Share on email"
                 aria-label="Share on email"
                 class="ri-mail-fill text-3xl md:text-4xl text-indigo-500 hover:text-indigo-700"
             ></i>
@@ -45,6 +48,7 @@
         >
             <i
                 role="button"
+                title="Share SMS message"
                 aria-label="Share SMS message"
                 class="ri-message-2-fill text-3xl md:text-4xl text-indigo-500 hover:text-indigo-700"
             ></i>

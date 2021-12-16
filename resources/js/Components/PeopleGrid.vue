@@ -17,7 +17,7 @@
                 <p class="font-bold truncate">
                     {{ person.full_name }}
                 </p>
-                <p class="text-sm font-bold truncate">
+                <p class="text-xs font-semibold truncate">
                     {{ formatDate(person.obituary.birth_date) }} -
                     {{ formatDate(person.obituary.death_date) }}
                 </p>
