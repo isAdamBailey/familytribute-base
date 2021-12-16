@@ -6,13 +6,13 @@
             <primary-nav />
             <!-- Page Content -->
             <main>
-                <div class="py-5 md:py-12">
+                <div class="md:py-12">
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div
                             class="bg-white shadow-xl shadow-indigo-200/50 rounded-lg overflow-hidden"
                         >
                             <div
-                                class="p-6 pb-20 sm:px-20 bg-white border-b border-gray-200"
+                                class="p-2 pb-20 sm:px-20 bg-white border-b border-gray-200"
                             >
                                 <slot></slot>
                             </div>

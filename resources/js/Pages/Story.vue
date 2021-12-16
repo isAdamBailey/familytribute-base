@@ -24,6 +24,8 @@
             </div>
         </div>
 
+        <div class="italic mt-6 prose max-w-none" v-html="story.excerpt" />
+
         <div
             class="html-content mt-6 prose max-w-none"
             v-html="story.content"
