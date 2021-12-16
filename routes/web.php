@@ -13,7 +13,7 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Home', [
-        'pictures' => Picture::inRandomOrder()->limit(5)->get()->map(fn ($picture) => [
+        'pictures' => Picture::where('featured', 1)->inRandomOrder()->limit(5)->get()->map(fn ($picture) => [
             'url' => $picture->url,
             'title' => $picture->title,
             'description' => $picture->description,

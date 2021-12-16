@@ -78,6 +78,7 @@ class PicturesTest extends TestCase
                 ->has('picture.description')
                 ->has('picture.url')
                 ->has('picture.year')
+                ->has('picture.featured')
                 ->has('picture.people')
                 ->has('picture.person_ids')
                 ->has('people')
@@ -98,6 +99,7 @@ class PicturesTest extends TestCase
             'title' => $this->faker->words(2, true),
             'description' => $this->faker->sentences(4, true),
             'year' => $this->faker->year(),
+            'featured' => $this->faker->numberBetween(0, 1),
             'person_ids' => $people->modelKeys(),
         ];
 
@@ -113,6 +115,7 @@ class PicturesTest extends TestCase
         $this->assertEquals(strtolower($picture->title), $request['title']);
         $this->assertEquals($picture->description, $request['description']);
         $this->assertEquals($picture->year, $request['year']);
+        $this->assertEquals($picture->featured, (int) $request['featured']);
         $this->assertCount($personCount, $picture->people->toArray());
     }
 
@@ -131,6 +134,7 @@ class PicturesTest extends TestCase
             'title' => $this->faker->words(2, true),
             'description' => $this->faker->sentences(4, true),
             'year' => $this->faker->year(),
+            'featured' => $this->faker->numberBetween(0, 1),
             'person_ids' => $people->modelKeys(),
         ];
 
@@ -147,6 +151,7 @@ class PicturesTest extends TestCase
         $this->assertEquals(strtolower($picture->title), $request['title']);
         $this->assertEquals($picture->description, $request['description']);
         $this->assertEquals($picture->year, $request['year']);
+        $this->assertEquals($picture->featured, $request['featured']);
         $this->assertCount($personCount, $picture->people->toArray());
     }
 

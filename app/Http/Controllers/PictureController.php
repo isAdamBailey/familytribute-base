@@ -57,6 +57,7 @@ class PictureController extends Controller
                 'title',
                 'url',
                 'year',
+                'featured',
                 'description',
                 'people',
                 'person_ids'
@@ -74,19 +75,21 @@ class PictureController extends Controller
             'title' => 'required|string|max:100',
             'description' => 'required|string',
             'year' => 'required|digits:4',
+            'featured' => 'required|integer',
             'photo' => 'required|file',
             'person_ids' => 'array|nullable',
         ]);
 
         $picture = Picture::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'year' => $request->input('year'),
+            'title' => $request->title,
+            'description' => $request->description,
+            'year' => $request->year,
+            'featured' => $request->featured,
             'url' => $request->file('photo')->storePublicly('pictures'),
         ]);
 
-        if ($request->input('person_ids')) {
-            $picture->people()->sync($request->input('person_ids'));
+        if (! empty($request->person_ids)) {
+            $picture->people()->sync($request->person_ids);
         }
 
         return back()->with('flash.banner', 'Picture successfully created!');
@@ -98,22 +101,27 @@ class PictureController extends Controller
             'title' => 'string|max:100',
             'description' => 'string',
             'year' => 'digits:4',
+            'featured' => 'integer',
             'photo' => 'file',
             'person_ids' => 'array|nullable',
         ]);
 
         $picture = Picture::where('slug', $slug)->first();
 
-        if ($request->input('title')) {
-            $picture->title = $request->input('title');
+        if ($request->title) {
+            $picture->title = $request->title;
         }
 
-        if ($request->input('description')) {
-            $picture->description = $request->input('description');
+        if ($request->description) {
+            $picture->description = $request->description;
         }
 
-        if ($request->input('year')) {
-            $picture->year = $request->input('year');
+        if ($request->year) {
+            $picture->year = $request->year;
+        }
+
+        if (isset($request->featured)) {
+            $picture->featured = $request->featured;
         }
 
         if ($request->file('photo')) {
@@ -121,8 +129,8 @@ class PictureController extends Controller
             $picture->url = $request->file('photo')->storePublicly('pictures');
         }
 
-        if ($request->input('person_ids')) {
-            $picture->people()->sync($request->input('person_ids'));
+        if (! empty($request->person_ids)) {
+            $picture->people()->sync($request->person_ids);
         }
 
         $picture->save();

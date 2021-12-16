@@ -20,6 +20,7 @@ class Picture extends Model
         'description',
         'url',
         'year',
+        'featured',
     ];
 
     protected $appends = ['person_ids'];

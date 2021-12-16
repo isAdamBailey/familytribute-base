@@ -20,6 +20,7 @@ class CreatePicturesTable extends Migration
             $table->string('slug');
             $table->string('url');
             $table->integer('year');
+            $table->integer('featured');
             $table->timestamps();
         });
     }

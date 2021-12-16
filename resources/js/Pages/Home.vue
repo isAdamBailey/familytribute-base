@@ -39,10 +39,7 @@
                     {{ pictures[1].description }}
                 </div>
             </div>
-            <div
-                v-if="pictures[2]"
-                class="relative lg:row-start-2"
-            >
+            <div v-if="pictures[2]" class="relative lg:row-start-2">
                 <img
                     class="h-full w-full object-cover"
                     :src="pictures[2].url"
@@ -54,10 +51,7 @@
                     {{ pictures[2].description }}
                 </div>
             </div>
-            <div
-                v-if="pictures[3]"
-                class="relative lg:col-span-2"
-            >
+            <div v-if="pictures[3]" class="relative lg:col-span-2">
                 <img
                     class="h-full w-full object-cover"
                     :src="pictures[3].url"
