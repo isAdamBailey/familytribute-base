@@ -11,7 +11,7 @@
             </div>
 
             <div class="mt-8 text-2xl">
-                Welcome to {{ $inertia.page.props.siteName }}'s dashboard,
+                Welcome to {{ $inertia.page.props.settings.title }}'s dashboard,
                 {{ $page.props.user.name }}!
             </div>
 
