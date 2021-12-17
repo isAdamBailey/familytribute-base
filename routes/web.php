@@ -33,7 +33,7 @@ Route::middleware(['auth:sanctum', 'verified', 'team'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/Show', [
             'people' => Person::all(),
-            'settings' => SiteSetting::first()->only('id', 'registration', 'registration_secret'),
+            'settings' => SiteSetting::first()->only('id', 'title', 'description', 'registration', 'registration_secret'),
         ]);
     })->name('dashboard');
 

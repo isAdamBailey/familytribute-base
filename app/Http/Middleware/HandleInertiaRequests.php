@@ -38,8 +38,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request)
     {
         return array_merge(parent::share($request), [
-            'siteName' => config('app.name'),
-            'registration' => SiteSetting::first()->registration,
+            'settings' => SiteSetting::first()->only('title', 'description', 'registration'),
         ]);
     }
 }

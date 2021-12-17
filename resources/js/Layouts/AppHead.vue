@@ -60,13 +60,13 @@ export default {
     computed: {
         headTitle() {
             return this.title
-                ? `${this.$inertia.page.props.siteName} - ${this.title}`
-                : `${this.$inertia.page.props.siteName} - Home`;
+                ? `${this.$inertia.page.props.settings.title} - ${this.title}`
+                : `${this.$inertia.page.props.settings.title} - Home`;
         },
         headDescription() {
             return (
                 this.description ||
-                `Displaying the history of ${this.$inertia.page.props.siteName}`
+                `Displaying the history of ${this.$inertia.page.props.settings.title}`
             );
         },
         headKeywords() {

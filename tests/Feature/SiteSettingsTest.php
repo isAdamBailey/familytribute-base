@@ -20,6 +20,8 @@ class SiteSettingsTest extends TestCase
         $settings = SiteSetting::first();
 
         $request = [
+            'title' => $this->faker->word(),
+            'description' => $this->faker->sentence(),
             'registration_secret' => $this->faker->word(),
             'registration' => $this->faker->boolean(),
         ];
@@ -30,6 +32,8 @@ class SiteSettingsTest extends TestCase
             ->assertSessionHas('flash.banner');
 
         $settings = $settings->fresh();
+        $this->assertEquals($settings->title, $request['title']);
+        $this->assertEquals($settings->description, $request['description']);
         $this->assertEquals($settings->registration_secret, $request['registration_secret']);
         $this->assertEquals($settings->registration, (bool) $request['registration']);
     }

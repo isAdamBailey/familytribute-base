@@ -11,7 +11,7 @@
                     >
                         <jet-application-mark class="block h-9 w-auto" />
                         <div class="font-header text-3xl md:text-5xl font-bold">
-                            {{ $page.props.siteName }}
+                            {{ $page.props.settings.title }}
                         </div>
                     </Link>
 

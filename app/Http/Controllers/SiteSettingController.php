@@ -11,14 +11,24 @@ class SiteSettingController extends Controller
     public function update(Request $request, $id): RedirectResponse
     {
         $request->validate([
+            'title' => 'string|max:100',
+            'description' => 'string',
             'registration_secret' => 'string|max:100',
             'registration' => 'boolean',
         ]);
 
         $settings = SiteSetting::find($id);
 
-        if (isset($request->registration_secret)) {
+        if ($request->registration_secret) {
             $settings->registration_secret = $request->registration_secret;
+        }
+
+        if ($request->title) {
+            $settings->title = $request->title;
+        }
+
+        if ($request->description) {
+            $settings->description = $request->description;
         }
 
         if (isset($request->registration)) {

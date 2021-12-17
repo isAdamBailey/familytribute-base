@@ -8,6 +8,35 @@
 
         <template #form>
             <div class="col-span-6 sm:col-span-4">
+                <jet-label for="title" value="Title" />
+                <div class="flex items-center text-sm text-indigo-600">
+                    <i class="ri-information-line mr-1"></i>
+                    This is what shows at the top of the page next to the menu.
+                </div>
+                <jet-input
+                    id="title"
+                    v-model="form.title"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="title"
+                />
+                <jet-input-error :message="form.errors.title" class="mt-2" />
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="description" value="Description" />
+                <div class="flex items-center text-sm text-indigo-600">
+                    <i class="ri-information-line mr-1"></i>
+                    This is the text content on the home page.
+                </div>
+                <wysiwyg v-model="form.description" />
+                <jet-input-error
+                    :message="form.errors.description"
+                    class="mt-2"
+                />
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
                 <jet-label for="registration" value="Registration Enabled" />
                 <div class="flex items-center text-sm text-indigo-600">
                     <i class="ri-information-line mr-1"></i>
@@ -71,9 +100,11 @@ import JetInputError from "@/Base/InputError.vue";
 import JetLabel from "@/Base/Label.vue";
 import JetActionMessage from "@/Base/ActionMessage.vue";
 import Checkbox from "@/Base/Checkbox";
+import Wysiwyg from "@/Base/Wysiwyg";
 
 export default defineComponent({
     components: {
+        Wysiwyg,
         Checkbox,
         JetActionMessage,
         JetFormSection,
@@ -92,6 +123,8 @@ export default defineComponent({
                 _method: "PUT",
                 registration: Boolean(this.settings.registration),
                 registration_secret: this.settings.registration_secret,
+                description: this.settings.description,
+                title: this.settings.title,
             }),
         };
     },

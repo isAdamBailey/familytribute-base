@@ -23,16 +23,28 @@
                     If nothing has been added to the site yet,
                     <strong>this is where you start!</strong>
                 </p>
-                <p>
-                    If you would like to tag photos to a person, we suggest
-                    starting by adding
-                    <a
-                        class="text-sky-500 font-bold underline underline-offset-1 decoration-sky-500 hover:decoration-2 transition"
-                        href="#new-obituary"
-                        >an obituary</a
-                    >
-                    first.
-                </p>
+                <ul class="mt-2 list-disc">
+                    <li class="ml-4">
+                        If you would like to tag photos to a person, we suggest
+                        starting by adding
+                        <a
+                            class="text-sky-500 font-bold underline underline-offset-1 decoration-sky-500 hover:decoration-2 transition"
+                            href="#new-obituary"
+                            >an obituary</a
+                        >
+                        first.
+                    </li>
+                    <li class="ml-4">
+                        If you want to change the name or description on the
+                        home page, turn off registration, or change the
+                        registration secret, go to
+                        <a
+                            class="text-sky-500 font-bold underline underline-offset-1 decoration-sky-500 hover:decoration-2 transition"
+                            href="#site-settings"
+                            >site settings</a
+                        >.
+                    </li>
+                </ul>
             </div>
         </div>
 
@@ -46,7 +58,7 @@
             <store-obituary-form id="new-obituary" />
             <jet-section-border />
 
-            <update-settings-form :settings="settings" />
+            <update-settings-form id="site-settings" :settings="settings" />
         </div>
     </app-layout>
 </template>

@@ -3,13 +3,12 @@
         <div class="flex flex-col-reverse mb-5 md:mb-7 lg:flex-row">
             <div>
                 <div class="font-header font-bold text-4xl md:text-6xl">
-                    Welcome to {{ $inertia.page.props.siteName }}
+                    Welcome to {{ $inertia.page.props.settings.title }}
                 </div>
-                <div class="mt-6 text-gray-500 text-l md:text-2xl">
-                    Hansen Farm provides a beautiful, robust starting point for
-                    your next Laravel application. Laravel is designed to help
-                    you build your application using a development environment
-                </div>
+                <div
+                    class="html-content mt-6 text-gray-500 text-l md:text-2xl"
+                    v-html="$inertia.page.props.settings.description"
+                ></div>
             </div>
             <application-mark class="w-full md:w-1/2 mx-auto mb-6 lg:mb-0" />
         </div>

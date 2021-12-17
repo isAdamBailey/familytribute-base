@@ -13,7 +13,7 @@
                 </Link>
 
                 <Link
-                    v-if="$inertia.page.props.registration"
+                    v-if="$inertia.page.props.settings.registration"
                     :href="route('register')"
                     class="ml-4"
                 >
