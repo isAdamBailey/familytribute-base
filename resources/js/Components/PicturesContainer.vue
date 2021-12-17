@@ -20,9 +20,10 @@
                 </p>
                 <p class="text-sm font-bold">{{ picture.year }}</p>
             </div>
-            <p class="text-sm prose max-w-none truncate">
-                {{ picture.description }}
-            </p>
+            <p
+                class="text-sm prose max-w-none truncate"
+                v-html="picture.description"
+            ></p>
         </div>
     </Link>
 </template>
