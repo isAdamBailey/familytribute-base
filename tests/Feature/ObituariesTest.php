@@ -21,7 +21,7 @@ class ObituariesTest extends TestCase
     {
         Storage::fake('s3');
 
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
 
         $request = [
             'photo' => UploadedFile::fake()->image('photo1.jpg'),
@@ -52,7 +52,7 @@ class ObituariesTest extends TestCase
     {
         Storage::fake('s3');
 
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
 
         $obituary = Obituary::factory()->create();
 
@@ -84,7 +84,7 @@ class ObituariesTest extends TestCase
 
     public function test_obituary_can_be_destroyed()
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
 
         $obituary = Obituary::factory()->create();
         $story = Story::factory()->create();

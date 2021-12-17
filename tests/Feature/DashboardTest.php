@@ -13,9 +13,17 @@ class DashboardTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_dashboard_component()
+    public function test_dashboard_component_redirects_if_no_team()
     {
         $this->actingAs(User::factory()->create());
+
+        $this->get(route('dashboard'))
+            ->assertRedirect(route('teams.create'));
+    }
+
+    public function test_dashboard_component()
+    {
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
 
         Person::factory()->count(5)->create();
 

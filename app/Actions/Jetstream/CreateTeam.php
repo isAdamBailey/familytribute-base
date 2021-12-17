@@ -32,6 +32,8 @@ class CreateTeam implements CreatesTeams
             'personal_team' => false,
         ]));
 
+        $team->users()->attach($user, ['role' => 'admin']);
+
         return $team;
     }
 }

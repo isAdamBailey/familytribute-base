@@ -76,7 +76,7 @@ class StoriesTest extends TestCase
 
     public function test_new_story_is_stored()
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
 
         $personCount = 5;
         $people = Person::factory()->count($personCount)->create();
@@ -101,7 +101,7 @@ class StoriesTest extends TestCase
 
     public function test_all_properties_of_story_can_be_updated()
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
 
         $story = Story::factory()->create();
         $personCount = 2;
@@ -128,7 +128,7 @@ class StoriesTest extends TestCase
 
     public function test_story_can_be_destroyed()
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
 
         $obituary = Obituary::factory()->create();
         $story = Story::factory()->create();

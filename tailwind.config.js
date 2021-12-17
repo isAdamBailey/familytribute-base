@@ -12,7 +12,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Montserrat", ...defaultTheme.fontFamily.sans],
+                sans: ["OpenSans", ...defaultTheme.fontFamily.sans],
                 header: ["Gwendolyn", ...defaultTheme.fontFamily.sans],
             },
         },

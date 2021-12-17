@@ -29,7 +29,7 @@ Route::get('/stories/{story}', [StoryController::class, 'show'])->name('stories.
 
 Route::get('/people', [PersonController::class, 'index'])->name('people.index');
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified', 'team'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/Show', [
             'people' => Person::all(),

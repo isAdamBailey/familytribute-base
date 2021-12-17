@@ -69,12 +69,12 @@ class CreateNewUser implements CreatesNewUsers
 
             $user->switchTeam($team);
         } else {
-            $user->ownedTeams()->create(
-                [
-                    'name' => config('app.name'),
-                    'personal_team' => true, // allows user to delete the team in the UI
-                ]
-            );
+            $user->switchTeam($team = $user->ownedTeams()->create([
+                'name' => config('app.name'),
+                'personal_team' => false,
+            ]));
+
+            $team->users()->attach($user, ['role' => 'admin']);
         }
     }
 }

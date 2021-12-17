@@ -91,7 +91,7 @@ class PicturesTest extends TestCase
     {
         Storage::fake('s3');
 
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
 
         $personCount = 5;
         $people = Person::factory()->count($personCount)->create();
@@ -125,7 +125,7 @@ class PicturesTest extends TestCase
     {
         Storage::fake('s3');
 
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
 
         $picture = Picture::factory()->create();
         $personCount = 2;
@@ -161,7 +161,7 @@ class PicturesTest extends TestCase
     {
         Storage::fake('s3');
 
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
 
         $obituary = Obituary::factory()->create();
 
