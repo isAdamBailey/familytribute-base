@@ -35,12 +35,7 @@
                 :src="picture.url"
                 :alt="picture.title"
             />
-            <div
-                v-if="picture.featured"
-                class="absolute pl-0.5 top-0 inset-x-0 text-white text-sm"
-            >
-                <i class="ri-star-fill"></i>
-            </div>
+            <featured-star :picture="picture" />
         </div>
 
         <social-share :title="picture.title" />
@@ -78,9 +73,11 @@ import PictureDeleteModal from "@/Modals/PictureDeleteModal";
 import TaggedPeople from "@/Components/TaggedPeople";
 import JetDangerButton from "@/Base/DangerButton";
 import SocialShare from "@/Components/SocialShare";
+import FeaturedStar from "../Components/FeaturedStar";
 
 export default defineComponent({
     components: {
+        FeaturedStar,
         SocialShare,
         JetDangerButton,
         PictureDeleteModal,

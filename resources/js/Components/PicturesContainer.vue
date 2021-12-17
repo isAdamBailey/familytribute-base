@@ -11,12 +11,8 @@
             :src="picture.url"
             :alt="picture.title"
         />
-        <div
-            v-if="picture.featured"
-            class="absolute pl-0.5 top-0 inset-x-0 text-white text-sm"
-        >
-            <i class="ri-star-fill"></i>
-        </div>
+        <featured-star :picture="picture" />
+
         <div class="card-text-gradient p-3 rounded-b">
             <div class="flex justify-between">
                 <p class="text-sm font-bold truncate">
@@ -33,8 +29,10 @@
 
 <script>
 import { defineComponent } from "vue";
+import FeaturedStar from "./FeaturedStar";
 
 export default defineComponent({
+    components: { FeaturedStar },
     props: {
         items: Array,
         fixedWidth: {

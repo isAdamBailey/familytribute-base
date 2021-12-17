@@ -36,6 +36,7 @@
                     Year ASC
                 </jet-dropdown-link>
                 <jet-dropdown-link
+                    v-if="$inertia.page.props.user"
                     :href="
                         route('pictures.index', {
                             sort: 'featured',
