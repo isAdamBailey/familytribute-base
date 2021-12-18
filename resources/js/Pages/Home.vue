@@ -77,13 +77,13 @@
         <div class="flex justify-center flex-wrap mt-10">
             <Link :href="route('people.index')">
                 <base-button
-                    class="justify-center w-48 sm:mr-5 mb-5"
+                    class="justify-center w-60 h-12 sm:mr-5 mb-5"
                     type="button"
                     >People</base-button
                 >
             </Link>
             <Link :href="route('pictures.index')">
-                <base-button class="justify-center w-48" type="button"
+                <base-button class="justify-center w-60 h-12" type="button"
                     >Pictures</base-button
                 >
             </Link>

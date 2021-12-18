@@ -1,6 +1,6 @@
 <template>
     <div v-if="people.length">
-        <div class="my-3 text-2xl">{{ title }}</div>
+        <div class="my-3 text-lg md:text-2xl">{{ title }}</div>
         <div class="flex flex-wrap">
             <div v-for="person in people" :key="person.id">
                 <pill class="mb-2 mr-2">
