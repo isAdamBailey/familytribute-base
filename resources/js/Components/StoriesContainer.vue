@@ -17,7 +17,7 @@
             }}</pill>
         </div>
         <div class="rounded-b-lg">
-            <div class="p-3 prose max-w-none" v-html="story.excerpt" />
+            <div class="p-3 prose max-w-none truncate" v-html="story.excerpt" />
         </div>
     </Link>
 </template>
