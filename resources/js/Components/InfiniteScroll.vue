@@ -37,6 +37,8 @@ export default defineComponent({
             // if this is a search, then replace all items
             if (this.$inertia.page.props.search) {
                 this.itemsData = this.items.data;
+            } else {
+                this.itemsData.push(...this.items.data);
             }
         },
     },
@@ -53,8 +55,6 @@ export default defineComponent({
                         preserveState: true,
                     }
                 );
-
-                this.itemsData.push(...this.items.data);
             }
         },
     },

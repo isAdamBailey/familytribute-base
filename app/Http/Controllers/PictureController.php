@@ -27,6 +27,7 @@ class PictureController extends Controller
                     ->orWhere('year', 'LIKE', '%'.$search.'%')
             )
             ->orderBy($sort ?: 'year', $order ?: 'asc')
+            ->orderBy('id')
             ->paginate();
 
         $pictures->appends([
