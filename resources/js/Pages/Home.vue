@@ -22,9 +22,8 @@
                 />
                 <div
                     class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4"
-                >
-                    {{ pictures[0].description }}
-                </div>
+                    v-html="pictures[0].description"
+                ></div>
             </div>
             <div v-if="pictures[1]" class="relative">
                 <img
@@ -34,9 +33,8 @@
                 />
                 <div
                     class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4"
-                >
-                    {{ pictures[1].description }}
-                </div>
+                    v-html="pictures[1].description"
+                ></div>
             </div>
             <div v-if="pictures[2]" class="relative lg:row-start-2">
                 <img
@@ -46,9 +44,8 @@
                 />
                 <div
                     class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4"
-                >
-                    {{ pictures[2].description }}
-                </div>
+                    v-html="pictures[2].description"
+                ></div>
             </div>
             <div v-if="pictures[3]" class="relative lg:col-span-2">
                 <img
@@ -58,9 +55,8 @@
                 />
                 <div
                     class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4"
-                >
-                    {{ pictures[3].description }}
-                </div>
+                    v-html="pictures[3].description"
+                ></div>
             </div>
             <div
                 v-if="pictures[4]"
@@ -73,9 +69,8 @@
                 />
                 <div
                     class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4"
-                >
-                    {{ pictures[4].description }}
-                </div>
+                    v-html="pictures[4].description"
+                ></div>
             </div>
         </section>
 
