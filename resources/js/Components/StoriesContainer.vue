@@ -3,12 +3,10 @@
         v-for="(story, index) in items"
         :key="index"
         :href="route('stories.show', story)"
+        :class="fixedWidth ? 'w-60' : ''"
         class="bg-gradient-to-bl from-yellow-200 via-transparent to-blueGray-800 shadow-xl rounded-lg hover:shadow-2xl transition"
     >
-        <div
-            :class="fixedWidth ? 'w-60 md:w-96' : ''"
-            class="flex justify-between rounded-t-lg"
-        >
+        <div class="flex justify-between rounded-t-lg">
             <h2 class="p-3 font-bold text-xl truncate">
                 {{ story.title }}
             </h2>
