@@ -13,7 +13,7 @@
         />
         <featured-star :picture="picture" />
 
-        <div class="card-text-gradient p-3 rounded-b">
+        <div class="card-text-gradient max-h-16 p-3 rounded-b truncate">
             <div class="flex justify-between">
                 <p class="text-sm font-bold truncate">
                     {{ picture.title }}
