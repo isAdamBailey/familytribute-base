@@ -14,7 +14,7 @@ class StoryFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->words(2, true),
+            'title' => $this->faker->words(4, true),
             'excerpt' => $this->faker->sentences(3, true),
             'content' => $this->faker->paragraphs(3, true),
         ];

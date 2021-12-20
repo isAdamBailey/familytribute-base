@@ -6,8 +6,11 @@
         :class="fixedWidth ? 'w-60' : ''"
         class="py-10 px-7 bg-gradient-to-bl from-yellow-200 via-transparent to-gray-100 rounded-lg shadow-indigo-200/50 hover:shadow-xl hover:shadow-indigo-300/50 hover:opacity-80 transition"
     >
-        <div :class="fixedWidth ? 'w-60' : ''" class="flex rounded-t-lg">
-            <h2 class="font-bold text-xl truncate">
+        <div
+            :class="fixedWidth ? 'w-60' : ''"
+            class="flex justify-between flex-wrap w-rounded-t-lg"
+        >
+            <h2 class="w-11/12 font-bold shrink text-xl truncate">
                 {{ story.title }}
             </h2>
             <pill v-if="story.category" class="m-3" no-hover>{{

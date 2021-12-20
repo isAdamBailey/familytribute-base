@@ -55,5 +55,5 @@ Route::middleware(['auth:sanctum', 'verified', 'team'])->group(function () {
 Route::get('/{person}', [PersonController::class, 'show'])->name('people.show');
 
 Route::fallback(function () {
-    return Inertia::render('404');
+    return Inertia::render('Error', ['status' => 404]);
 })->name('404.show');
