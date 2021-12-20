@@ -22,7 +22,7 @@
                     :alt="pictures[0].title"
                 />
                 <div
-                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4"
+                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4 truncate line-clamp-1"
                     v-html="pictures[0].description"
                 ></div>
             </div>
@@ -33,7 +33,7 @@
                     :alt="pictures[1].title"
                 />
                 <div
-                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4"
+                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4 truncate line-clamp-1"
                     v-html="pictures[1].description"
                 ></div>
             </div>
@@ -47,7 +47,7 @@
                     :alt="pictures[2].title"
                 />
                 <div
-                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4"
+                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4 truncate line-clamp-1"
                     v-html="pictures[2].description"
                 ></div>
             </div>
@@ -58,7 +58,7 @@
                     :alt="pictures[3].title"
                 />
                 <div
-                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4"
+                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4 truncate line-clamp-1"
                     v-html="pictures[3].description"
                 ></div>
             </div>
@@ -72,7 +72,7 @@
                     :alt="pictures[4].title"
                 />
                 <div
-                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4"
+                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4 truncate line-clamp-1"
                     v-html="pictures[4].description"
                 ></div>
             </div>
