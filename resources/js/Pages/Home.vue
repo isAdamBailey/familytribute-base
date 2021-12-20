@@ -2,9 +2,10 @@
     <home-layout title="Home">
         <div class="flex flex-col-reverse mb-5 md:mb-7 lg:flex-row">
             <div>
-                <div class="font-header font-bold text-4xl md:text-6xl">
-                    Welcome to {{ $inertia.page.props.settings.title }}
-                </div>
+                <div
+                    class="font-header font-bold text-6xl md:text-8xl"
+                    v-html="$inertia.page.props.settings.title"
+                ></div>
                 <div
                     class="html-content mt-6 text-gray-500 text-l md:text-2xl"
                     v-html="$inertia.page.props.settings.description"
@@ -13,7 +14,7 @@
             <application-mark class="w-full md:w-1/2 mx-auto mb-6 lg:mb-0" />
         </div>
 
-        <section class="grid lg:grid-cols-4 gap-1">
+        <section class="grid grid-cols-2 lg:grid-cols-4 gap-1">
             <div v-if="pictures[0]" class="relative lg:col-span-2">
                 <img
                     class="h-full w-full object-cover"
@@ -36,7 +37,10 @@
                     v-html="pictures[1].description"
                 ></div>
             </div>
-            <div v-if="pictures[2]" class="relative lg:row-start-2">
+            <div
+                v-if="pictures[2]"
+                class="relative col-span-2 lg:col-span-1 lg:row-start-2"
+            >
                 <img
                     class="h-full w-full object-cover"
                     :src="pictures[2].url"
@@ -76,16 +80,16 @@
 
         <div class="flex justify-center flex-wrap mt-10">
             <Link :href="route('people.index')">
-                <base-button
-                    class="justify-center w-60 h-12 sm:mr-5 mb-5"
-                    type="button"
-                    >People</base-button
-                >
+                <attention-button class="mb-5 mr-5">
+                    <i class="ri-user-shared-fill mr-2"></i>
+                    People
+                </attention-button>
             </Link>
             <Link :href="route('pictures.index')">
-                <base-button class="justify-center w-60 h-12" type="button"
-                    >Pictures</base-button
-                >
+                <attention-button>
+                    <i class="ri-image-2-fill mr-2"></i>
+                    Pictures
+                </attention-button>
             </Link>
         </div>
     </home-layout>
@@ -95,9 +99,11 @@
 import { defineComponent } from "vue";
 import HomeLayout from "@/Layouts/HomeLayout";
 import ApplicationMark from "@/Base/ApplicationMark";
+import AttentionButton from "@/Base/AttentionButton";
 
 export default defineComponent({
     components: {
+        AttentionButton,
         ApplicationMark,
         HomeLayout,
     },

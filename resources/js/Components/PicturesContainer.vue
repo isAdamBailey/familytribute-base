@@ -4,7 +4,7 @@
         :key="index"
         :href="route('pictures.show', picture)"
         :class="fixedWidth ? 'w-60' : ''"
-        class="relative snap-center bg-white shadow-xl shadow-indigo-200/50 rounded-lg hover:shadow-2xl hover:shadow-indigo-400/50 transition"
+        class="min-w-20 relative snap-center bg-white rounded-lg shadow-indigo-200/50 hover:shadow-xl hover:shadow-indigo-300/50 hover:opacity-80 transition"
     >
         <img
             class="w-full h-48 object-cover rounded-t-lg"
@@ -13,7 +13,10 @@
         />
         <featured-star :picture="picture" />
 
-        <div class="card-text-gradient max-h-16 p-3 rounded-b truncate">
+        <div
+            :class="fixedWidth ? 'w-60' : ''"
+            class="card-text-gradient p-3 rounded-b truncate"
+        >
             <div class="flex justify-between">
                 <p class="text-sm font-bold truncate">
                     {{ picture.title }}
@@ -21,7 +24,7 @@
                 <p class="text-sm font-bold">{{ picture.year }}</p>
             </div>
             <p
-                class="text-sm prose max-w-none truncate"
+                class="text-sm prose max-w-none line-clamp-1"
                 v-html="picture.description"
             ></p>
         </div>

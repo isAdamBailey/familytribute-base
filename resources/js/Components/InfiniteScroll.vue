@@ -2,7 +2,9 @@
     <component :is="component" :items="itemsData" />
 
     <div v-if="items.next_page_url" class="flex justify-center mt-7">
-        <base-button @click="loadMore">Load more {{ typeString }}</base-button>
+        <attention-button @click="loadMore"
+            >Load More {{ typeString }}</attention-button
+        >
     </div>
 </template>
 
@@ -11,9 +13,11 @@ import { defineComponent } from "vue";
 import PicturesGrid from "@/Components/PicturesGrid";
 import StoriesGrid from "@/Components/StoriesGrid";
 import PeopleGrid from "@/Components/PeopleGrid";
+import AttentionButton from "../Base/AttentionButton";
 
 export default defineComponent({
     components: {
+        AttentionButton,
         PicturesGrid,
         StoriesGrid,
         PeopleGrid,

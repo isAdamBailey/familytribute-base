@@ -6,7 +6,7 @@
         </template>
 
         <div class="flex flex-wrap-reverse justify-between mt-8 mb-3">
-            <h1 class="font-header text-3xl md:text-6xl">
+            <h1 class="font-header font-header text-5xl md:text-7xl">
                 {{ picture.title }}
             </h1>
 

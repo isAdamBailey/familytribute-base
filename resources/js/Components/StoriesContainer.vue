@@ -4,10 +4,10 @@
         :key="index"
         :href="route('stories.show', story)"
         :class="fixedWidth ? 'w-60' : ''"
-        class="bg-gradient-to-bl from-yellow-200 via-transparent to-blueGray-800 shadow-xl rounded-lg hover:shadow-2xl transition"
+        class="py-10 px-7 bg-gradient-to-bl from-yellow-200 via-transparent to-gray-100 rounded-lg shadow-indigo-200/50 hover:shadow-xl hover:shadow-indigo-300/50 hover:opacity-80 transition"
     >
-        <div class="flex justify-between rounded-t-lg">
-            <h2 class="p-3 font-bold text-xl truncate">
+        <div :class="fixedWidth ? 'w-60' : ''" class="flex rounded-t-lg">
+            <h2 class="font-bold text-xl truncate">
                 {{ story.title }}
             </h2>
             <pill v-if="story.category" class="m-3" no-hover>{{
@@ -15,7 +15,10 @@
             }}</pill>
         </div>
         <div class="rounded-b-lg">
-            <div class="p-3 prose max-w-none truncate" v-html="story.excerpt" />
+            <div
+                class="text-sm prose max-w-none line-clamp-3"
+                v-html="story.excerpt"
+            />
         </div>
     </Link>
 </template>

@@ -1,12 +1,12 @@
 <template>
     <div
-        class="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-4 max-w-7xl mx-auto md:p-4"
+        class="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-2 max-w-7xl mx-auto md:p-4"
     >
         <Link
             v-for="(person, index) in items"
             :key="index"
             :href="route('people.show', person.slug)"
-            class="bg-white shadow-xl shadow-indigo-200/50 rounded-lg hover:shadow-2xl hover:shadow-indigo-400/50 transition"
+            class="bg-white shadow-indigo-200/50 rounded-lg hover:shadow-xl hover:shadow-indigo-300/50 hover:opacity-80 transition"
         >
             <img
                 class="w-full h-48 object-cover rounded-t-lg"

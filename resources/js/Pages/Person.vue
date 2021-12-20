@@ -9,7 +9,7 @@
         </template>
 
         <div class="flex flex-wrap-reverse justify-between mt-8 mb-3">
-            <h1 class="font-header text-3xl md:text-6xl">
+            <h1 class="font-header font-header text-5xl md:text-7xl">
                 {{ person.full_name }}
             </h1>
             <div v-if="$page.props.user">
@@ -43,20 +43,20 @@
         <social-share :title="`${person.full_name}'s obituary`" />
 
         <div
-            class="html-content my-6 prose max-w-none"
+            class="html-content my-10 prose max-w-none"
             v-html="person.obituary.content"
         />
 
         <div
             v-if="person.pictures.length"
-            class="flex snap-x space-x-8 overflow-x-scroll pb-10 px-5"
+            class="flex snap-x space-x-1 overflow-x-scroll pb-8 px-3"
         >
             <pictures-container :items="person.pictures" :fixed-width="true" />
         </div>
 
         <div
             v-if="person.stories.length"
-            class="flex snap-x space-x-8 overflow-x-scroll mt-5 pb-10 px-5"
+            class="flex snap-x space-x-1 overflow-x-scroll mt-5 pb-8 px-3"
         >
             <stories-container :items="person.stories" :fixed-width="true" />
         </div>
