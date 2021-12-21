@@ -28,16 +28,37 @@
                 </base-button>
             </div>
         </div>
+
         <div class="mb-3 text-sm font-semibold">
             {{ formatDate(person.obituary.birth_date) }} -
             {{ formatDate(person.obituary.death_date) }}
         </div>
-        <div class="flex justify-center">
+
+        <div
+            v-if="person.obituary.background_photo_url"
+            class="w-full h-80 bg-cover bg-no-repeat bg-center"
+            :style="`background-image: url(${person.obituary.background_photo_url});`"
+        >
             <img
-                class="md:w-2/3 object-cover rounded-xl"
-                :src="person.obituary.main_photo_url"
-                :alt="`${person.full_name}'s headstone`"
+                class="opacity-0 w-full h-full"
+                :src="person.obituary.background_photo_url"
+                alt="background image"
             />
+        </div>
+        <div
+            v-else
+            class="w-full h-80 bg-gradient-to-t from-violet-400 via-trueGray-200 to-transparent"
+        ></div>
+        <div class="flex justify-center">
+            <div class="-mt-40">
+                <div class="w-60 h-60 rounded-full relative avatar">
+                    <img
+                        class="w-full h-full rounded-full relative border-4 border-gray-900"
+                        :src="person.obituary.main_photo_url"
+                        alt=""
+                    />
+                </div>
+            </div>
         </div>
 
         <social-share :title="`${person.full_name}'s obituary`" />
