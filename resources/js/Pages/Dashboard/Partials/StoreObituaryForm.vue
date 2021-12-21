@@ -8,34 +8,79 @@
 
         <template #form>
             <div class="col-span-6 sm:col-span-4">
-                <input
-                    ref="photo"
-                    type="file"
-                    class="hidden"
-                    @change="updatePhotoPreview"
-                />
+                <div class="flex flex-wrap -mx-3">
+                    <div class="w-full md:w-1/2 mb-5">
+                        <input
+                            ref="photo"
+                            type="file"
+                            class="hidden"
+                            @change="updatePhotoPreview"
+                        />
 
-                <jet-label for="photo" value="Headstone Photo" />
+                        <jet-label for="photo" value="Photo" />
 
-                <div v-show="photoPreview" class="mt-2">
-                    <span
-                        class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
-                        :style="
-                            'background-image: url(\'' + photoPreview + '\');'
-                        "
-                    >
-                    </span>
+                        <div v-show="photoPreview" class="mt-2">
+                            <span
+                                class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
+                                :style="
+                                    'background-image: url(\'' +
+                                    photoPreview +
+                                    '\');'
+                                "
+                            >
+                            </span>
+                        </div>
+
+                        <jet-secondary-button
+                            class="mt-2 mr-2"
+                            type="button"
+                            @click.prevent="selectNewPhoto"
+                        >
+                            Select A Photo
+                        </jet-secondary-button>
+
+                        <jet-input-error
+                            :message="form.errors.photo"
+                            class="mt-2"
+                        />
+                    </div>
+
+                    <div class="w-full md:w-1/2">
+                        <input
+                            ref="bg_photo"
+                            type="file"
+                            class="hidden"
+                            @change="updateBackgroundPhotoPreview"
+                        />
+
+                        <jet-label for="bg_photo" value="Background Photo" />
+
+                        <div v-show="bgPhotoPreview" class="mt-2">
+                            <span
+                                class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
+                                :style="
+                                    'background-image: url(\'' +
+                                    bgPhotoPreview +
+                                    '\');'
+                                "
+                            >
+                            </span>
+                        </div>
+
+                        <jet-secondary-button
+                            class="mt-2 mr-2"
+                            type="button"
+                            @click.prevent="selectNewBackgroundPhoto"
+                        >
+                            Select A Background Photo
+                        </jet-secondary-button>
+
+                        <jet-input-error
+                            :message="form.errors.background_photo"
+                            class="mt-2"
+                        />
+                    </div>
                 </div>
-
-                <jet-secondary-button
-                    class="mt-2 mr-2"
-                    type="button"
-                    @click.prevent="selectNewPhoto"
-                >
-                    Select A Headstone Photo
-                </jet-secondary-button>
-
-                <jet-input-error :message="form.errors.photo" class="mt-2" />
             </div>
 
             <div class="col-span-6 sm:col-span-4">
@@ -147,9 +192,11 @@ export default defineComponent({
                 birth_date: null,
                 death_date: null,
                 photo: null,
+                background_photo: null,
             }),
 
             photoPreview: null,
+            bgPhotoPreview: null,
         };
     },
 
@@ -157,6 +204,10 @@ export default defineComponent({
         storeObituary() {
             if (this.$refs.photo) {
                 this.form.photo = this.$refs.photo.files[0];
+            }
+
+            if (this.$refs.bg_photo) {
+                this.form.background_photo = this.$refs.bg_photo.files[0];
             }
 
             this.form.post(route("obituaries.store"), {
@@ -173,6 +224,10 @@ export default defineComponent({
             this.$refs.photo.click();
         },
 
+        selectNewBackgroundPhoto() {
+            this.$refs.bg_photo.click();
+        },
+
         updatePhotoPreview() {
             const photo = this.$refs.photo.files[0];
 
@@ -187,9 +242,27 @@ export default defineComponent({
             reader.readAsDataURL(photo);
         },
 
+        updateBackgroundPhotoPreview() {
+            const photo = this.$refs.bg_photo.files[0];
+
+            if (!photo) return;
+
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.bgPhotoPreview = e.target.result;
+            };
+
+            reader.readAsDataURL(photo);
+        },
+
         clearPhotoFileInput() {
             if (this.$refs.photo?.value) {
                 this.$refs.photo.value = null;
+            }
+
+            if (this.$refs.bg_photo?.value) {
+                this.$refs.bg_photo.value = null;
             }
         },
     },

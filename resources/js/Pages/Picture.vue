@@ -38,7 +38,7 @@
             <featured-star :picture="picture" />
         </div>
 
-        <social-share :title="picture.title" />
+        <social-share class="mt-5" :title="picture.title" />
 
         <div
             class="html-content mt-6 prose max-w-none"

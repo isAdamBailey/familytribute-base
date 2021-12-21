@@ -59,7 +59,7 @@ class ObituaryController extends Controller
             'content' => 'string',
             'birth_date' => 'date',
             'death_date' => 'date',
-            'photo' => 'file|mimes:jpg,jpeg,png|max:1024',
+            'photo' => 'file|mimes:jpg,jpeg,png|max:1024|nullable',
             'background_photo' => 'file|mimes:jpg,jpeg,png|max:1024|nullable',
         ]);
 

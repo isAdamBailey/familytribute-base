@@ -31,7 +31,7 @@
             v-html="story.content"
         />
 
-        <social-share :title="story.title" />
+        <social-share class="mt-5" :title="story.title" />
 
         <tagged-people :people="story.people" title="People in this story" />
     </app-layout>

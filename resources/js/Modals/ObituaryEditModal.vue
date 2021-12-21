@@ -1,45 +1,103 @@
 <template>
     <jet-dialog-modal :show="open" @close="closeModal()">
-        <template #title> Edit Obituary </template>
+        <template #title> Edit Obituary</template>
 
         <template #content>
             <div class="col-span-6 sm:col-span-4">
-                <input
-                    ref="photo"
-                    type="file"
-                    class="hidden"
-                    @change="updatePhotoPreview"
-                />
+                <div class="flex flex-wrap -mx-3">
+                    <div class="w-full md:w-1/2 mb-5">
+                        <input
+                            ref="photo"
+                            type="file"
+                            class="hidden"
+                            @change="updatePhotoPreview"
+                        />
 
-                <jet-label for="photo" value="Headstone Photo" />
+                        <jet-label for="photo" value="Photo" />
 
-                <div v-show="!photoPreview" class="mt-2">
-                    <img
-                        :src="person.obituary.main_photo_url"
-                        :alt="person.full_name"
-                        class="rounded-full h-20 w-20 object-cover"
-                    />
+                        <div v-show="!photoPreview" class="mt-2">
+                            <img
+                                :src="person.obituary.main_photo_url"
+                                :alt="person.full_name"
+                                class="rounded-full h-20 w-20 object-cover"
+                            />
+                        </div>
+
+                        <div v-show="photoPreview" class="mt-2">
+                            <span
+                                class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
+                                :style="
+                                    'background-image: url(\'' +
+                                    photoPreview +
+                                    '\');'
+                                "
+                            >
+                            </span>
+                        </div>
+
+                        <jet-secondary-button
+                            class="mt-2 mr-2"
+                            type="button"
+                            @click.prevent="selectNewPhoto"
+                        >
+                            Select A New Photo
+                        </jet-secondary-button>
+
+                        <jet-input-error
+                            :message="form.errors.photo"
+                            class="mt-2"
+                        />
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <input
+                            ref="bg_photo"
+                            type="file"
+                            class="hidden"
+                            @change="updateBackgroundPhotoPreview"
+                        />
+
+                        <jet-label for="bg_photo" value="Background Photo" />
+
+                        <div
+                            v-show="
+                                person.obituary.background_photo_url &&
+                                !bgPhotoPreview
+                            "
+                            class="mt-2"
+                        >
+                            <img
+                                :src="person.obituary.background_photo_url"
+                                :alt="person.full_name"
+                                class="rounded-full h-20 w-20 object-cover"
+                            />
+                        </div>
+
+                        <div v-show="bgPhotoPreview" class="mt-2">
+                            <span
+                                class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
+                                :style="
+                                    'background-image: url(\'' +
+                                    bgPhotoPreview +
+                                    '\');'
+                                "
+                            >
+                            </span>
+                        </div>
+
+                        <jet-secondary-button
+                            class="mt-2 mr-2"
+                            type="button"
+                            @click.prevent="selectNewBackgroundPhoto"
+                        >
+                            Select A New Background Photo
+                        </jet-secondary-button>
+
+                        <jet-input-error
+                            :message="form.errors.background_photo"
+                            class="mt-2"
+                        />
+                    </div>
                 </div>
-
-                <div v-show="photoPreview" class="mt-2">
-                    <span
-                        class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
-                        :style="
-                            'background-image: url(\'' + photoPreview + '\');'
-                        "
-                    >
-                    </span>
-                </div>
-
-                <jet-secondary-button
-                    class="mt-2 mr-2"
-                    type="button"
-                    @click.prevent="selectNewPhoto"
-                >
-                    Select A New Headstone Photo
-                </jet-secondary-button>
-
-                <jet-input-error :message="form.errors.photo" class="mt-2" />
             </div>
 
             <div class="mt-3 col-span-6 sm:col-span-4">
@@ -164,9 +222,11 @@ export default defineComponent({
                 birth_date: parseISO(this.person.obituary.birth_date),
                 death_date: parseISO(this.person.obituary.death_date),
                 photo: null,
+                background_photo: null,
             }),
 
             photoPreview: null,
+            bgPhotoPreview: null,
         };
     },
 
@@ -174,6 +234,9 @@ export default defineComponent({
         updateObituary() {
             if (this.$refs.photo) {
                 this.form.photo = this.$refs.photo.files[0];
+            }
+            if (this.$refs.bg_photo) {
+                this.form.background_photo = this.$refs.bg_photo.files[0];
             }
 
             this.form.post(
@@ -187,6 +250,10 @@ export default defineComponent({
 
         selectNewPhoto() {
             this.$refs.photo.click();
+        },
+
+        selectNewBackgroundPhoto() {
+            this.$refs.bg_photo.click();
         },
 
         updatePhotoPreview() {
@@ -203,14 +270,34 @@ export default defineComponent({
             reader.readAsDataURL(photo);
         },
 
+        updateBackgroundPhotoPreview() {
+            const photo = this.$refs.bg_photo.files[0];
+
+            if (!photo) return;
+
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.bgPhotoPreview = e.target.result;
+            };
+
+            reader.readAsDataURL(photo);
+        },
+
         clearPhotoFileInput() {
+            this.photoPreview = null;
+            this.bgPhotoPreview = null;
+
             if (this.$refs.photo?.value) {
                 this.$refs.photo.value = null;
+            }
+
+            if (this.$refs.bg_photo?.value) {
+                this.$refs.bg_photo.value = null;
             }
         },
 
         closeModal() {
-            this.photoPreview = null;
             this.clearPhotoFileInput();
             this.form.reset();
             this.form.clearErrors();
