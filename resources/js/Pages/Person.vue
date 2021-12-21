@@ -35,7 +35,7 @@
         <div class="flex justify-center">
             <img
                 class="md:w-2/3 object-cover rounded-xl"
-                :src="person.obituary.headstone_url"
+                :src="person.obituary.main_photo_url"
                 :alt="`${person.full_name}'s headstone`"
             />
         </div>

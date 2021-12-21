@@ -10,7 +10,7 @@
         >
             <img
                 class="w-full h-48 object-cover rounded-t-lg"
-                :src="person.obituary.headstone_url"
+                :src="person.obituary.main_photo_url"
                 :alt="`${person.full_name}'s headstone`"
             />
             <div class="card-text-gradient px-3 py-2 rounded-b-lg">

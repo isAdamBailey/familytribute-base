@@ -15,7 +15,7 @@
 
                 <div v-show="!photoPreview" class="mt-2">
                     <img
-                        :src="person.obituary.headstone_url"
+                        :src="person.obituary.main_photo_url"
                         :alt="person.full_name"
                         class="rounded-full h-20 w-20 object-cover"
                     />

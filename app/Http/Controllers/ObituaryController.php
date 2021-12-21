@@ -22,7 +22,8 @@ class ObituaryController extends Controller
             'content' => 'required|string',
             'birth_date' => 'required|date',
             'death_date' => 'required|date',
-            'photo' => 'file',
+            'photo' => 'file|mimes:jpg,jpeg,png|max:1024',
+            'background_photo' => 'file|mimes:jpg,jpeg,png|max:1024|nullable',
         ]);
 
         $person = Person::create([
@@ -30,16 +31,21 @@ class ObituaryController extends Controller
             'last_name' => $request->input('last_name'),
         ]);
 
-        $headstoneUrl = $request->file('photo')
+        $mainPhotoUrl = $request->file('photo')
             ? $request->file('photo')->storePublicly('obituaries')
             : '';
+
+        $backgroundPhotoUrl = $request->file('background_photo')
+            ? $request->file('background_photo')->storePublicly('obituaries')
+            : null;
 
         Obituary::create([
             'person_id' => $person->id,
             'content' => $request->input('content'),
             'birth_date' => Carbon::parse($request->birth_date)->toDateString(),
             'death_date' => Carbon::parse($request->death_date)->toDateString(),
-            'headstone_url' => $headstoneUrl,
+            'main_photo_url' => $mainPhotoUrl,
+            'background_photo_url' => $backgroundPhotoUrl,
         ]);
 
         return back()->with('flash.banner', 'Obituary successfully created!');
@@ -53,7 +59,8 @@ class ObituaryController extends Controller
             'content' => 'string',
             'birth_date' => 'date',
             'death_date' => 'date',
-            'photo' => 'file',
+            'photo' => 'file|mimes:jpg,jpeg,png|max:1024',
+            'background_photo' => 'file|mimes:jpg,jpeg,png|max:1024|nullable',
         ]);
 
         $obituary = Obituary::find($id);
@@ -79,10 +86,17 @@ class ObituaryController extends Controller
         }
 
         if ($request->file('photo')) {
-            if (! empty($obituary->headstone_url)) {
-                Storage::disk('s3')->delete($obituary->headstone_url);
+            if (! empty($obituary->main_photo_url)) {
+                Storage::disk('s3')->delete($obituary->main_photo_url);
             }
-            $obituary->headstone_url = $request->file('photo')->storePublicly('obituaries');
+            $obituary->main_photo_url = $request->file('photo')->storePublicly('obituaries');
+        }
+
+        if ($request->file('background_photo')) {
+            if (! empty($obituary->background_photo_url)) {
+                Storage::disk('s3')->delete($obituary->background_photo_url);
+            }
+            $obituary->background_photo_url = $request->file('background_photo')->storePublicly('obituaries');
         }
 
         $obituary->save();
@@ -95,6 +109,9 @@ class ObituaryController extends Controller
     public function destroy($id): Redirector|Application|RedirectResponse
     {
         $obituary = Obituary::find($id);
+
+        Storage::disk('s3')->delete($obituary->main_photo_url);
+        Storage::disk('s3')->delete($obituary->background_photo_url);
 
         $obituary->person->stories()->detach();
         $obituary->person->pictures()->detach();

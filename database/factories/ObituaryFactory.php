@@ -19,7 +19,8 @@ class ObituaryFactory extends Factory
             'birth_date' => $this->faker->date('Y-m-d', '-100 years'),
             'death_date' => $this->faker->date('Y-m-d', '-10 years'),
             'content' => $this->faker->paragraphs(3, true),
-            'headstone_url' => $this->faker->imageUrl(),
+            'main_photo_url' => $this->faker->imageUrl(),
+            'background_photo_url' => $this->faker->imageUrl(),
         ];
     }
 }

@@ -53,7 +53,7 @@ class Person extends Model
     public function obituary(): HasOne
     {
         return $this->hasOne(Obituary::class)
-            ->select(['id', 'person_id', 'birth_date', 'death_date', 'headstone_url', 'content']);
+            ->select(['id', 'person_id', 'birth_date', 'death_date', 'main_photo_url', 'content', 'background_photo_url']);
     }
 
     public function pictures(): BelongsToMany

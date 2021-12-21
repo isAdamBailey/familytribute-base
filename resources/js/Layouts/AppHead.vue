@@ -41,7 +41,11 @@
             :content="headDescription"
         />
         <meta head-key="og:type" property="og:type" content="website" />
-        <meta head-key="og:image" property="og:image" content="/images/undraw_appreciation_re_p6rl.svg" />
+        <meta
+            head-key="og:image"
+            property="og:image"
+            content="/images/undraw_appreciation_re_p6rl.svg"
+        />
 
         <slot />
     </Head>

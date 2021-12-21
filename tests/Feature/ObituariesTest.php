@@ -25,6 +25,7 @@ class ObituariesTest extends TestCase
 
         $request = [
             'photo' => UploadedFile::fake()->image('photo1.jpg'),
+            'background_photo' => UploadedFile::fake()->image('photo2.jpg'),
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'content' => $this->faker->sentences(4, true),
@@ -36,11 +37,15 @@ class ObituariesTest extends TestCase
             ->assertRedirect()
             ->assertSessionHas('flash.banner');
 
-        $filePath = 'obituaries/'.$request['photo']->hashName();
-        Storage::disk('s3')->assertExists($filePath);
+        $mainPhotoFilePath = 'obituaries/'.$request['photo']->hashName();
+        Storage::disk('s3')->assertExists($mainPhotoFilePath);
+
+        $backgroundPhotoFilePath = 'obituaries/'.$request['background_photo']->hashName();
+        Storage::disk('s3')->assertExists($backgroundPhotoFilePath);
 
         $obituary = Obituary::first();
-        $this->assertEquals($obituary->headstone_url, Storage::url($filePath));
+        $this->assertEquals($obituary->main_photo_url, Storage::url($mainPhotoFilePath));
+        $this->assertEquals($obituary->background_photo_url, Storage::url($backgroundPhotoFilePath));
         $this->assertEquals($obituary->person->first_name, strtolower($request['first_name']));
         $this->assertEquals($obituary->person->last_name, strtolower($request['last_name']));
         $this->assertEquals($obituary->content, $request['content']);
@@ -58,6 +63,7 @@ class ObituariesTest extends TestCase
 
         $request = [
             'photo' => UploadedFile::fake()->image('photo1.jpg'),
+            'background_photo' => UploadedFile::fake()->image('photo2.jpg'),
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'content' => $this->faker->sentences(4, true),
@@ -71,10 +77,14 @@ class ObituariesTest extends TestCase
         $response->assertRedirect(route('people.show', $obituary->person->slug))
             ->assertSessionHas('flash.banner');
 
-        $filePath = 'obituaries/'.$request['photo']->hashName();
-        Storage::disk('s3')->assertExists($filePath);
+        $mainPhotoFilePath = 'obituaries/'.$request['photo']->hashName();
+        Storage::disk('s3')->assertExists($mainPhotoFilePath);
 
-        $this->assertEquals($obituary->headstone_url, Storage::url($filePath));
+        $backgroundPhotoFilePath = 'obituaries/'.$request['background_photo']->hashName();
+        Storage::disk('s3')->assertExists($backgroundPhotoFilePath);
+
+        $this->assertEquals($obituary->main_photo_url, Storage::url($mainPhotoFilePath));
+        $this->assertEquals($obituary->background_photo_url, Storage::url($backgroundPhotoFilePath));
         $this->assertEquals($obituary->person->first_name, strtolower($request['first_name']));
         $this->assertEquals($obituary->person->last_name, strtolower($request['last_name']));
         $this->assertEquals($obituary->content, $request['content']);

@@ -17,16 +17,17 @@ class Obituary extends Model
         'birth_date',
         'death_date',
         'content',
-        'headstone_url',
+        'main_photo_url',
+        'background_photo_url',
     ];
 
     /**
      * Return temporary s3 url of path if full path doesn't exist.
      */
-    public function getHeadstoneUrlAttribute($value): string
+    public function getMainPhotoUrlAttribute($value): string
     {
         if (empty($value)) {
-            return $this->defaultHeadstoneUrl();
+            return $this->defaultMainPhotoUrl();
         }
 
         if (Str::startsWith($value, 'https://')) {
@@ -38,7 +39,25 @@ class Obituary extends Model
             : Storage::temporaryUrl($value, now()->addMinutes(5));
     }
 
-    protected function defaultHeadstoneUrl(): string
+    /**
+     * Return temporary s3 url of path if full path doesn't exist.
+     */
+    public function getBackgroundPhotoUrlAttribute($value): ?string
+    {
+        if (empty($value)) {
+            return null;
+        }
+
+        if (Str::startsWith($value, 'https://')) {
+            return $value;
+        }
+
+        return app()->environment('testing')
+            ? Storage::url($value)
+            : Storage::temporaryUrl($value, now()->addMinutes(5));
+    }
+
+    protected function defaultMainPhotoUrl(): string
     {
         return 'https://ui-avatars.com/api/?name='.urlencode($this->person->full_name).'&color=374151&background=F3F4F6';
     }

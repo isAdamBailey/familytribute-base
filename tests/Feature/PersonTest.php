@@ -32,6 +32,7 @@ class PersonTest extends TestCase
                 ->has('people.data.0.obituary')
                 ->has('people.data.0.obituary.birth_date')
                 ->has('people.data.0.obituary.death_date')
+                ->has('people.data.0.obituary.main_photo_url')
         );
     }
 
@@ -57,6 +58,7 @@ class PersonTest extends TestCase
                 ->has('people.data.0.obituary')
                 ->has('people.data.0.obituary.birth_date')
                 ->has('people.data.0.obituary.death_date')
+                ->has('people.data.0.obituary.main_photo_url')
         );
     }
 
@@ -80,7 +82,8 @@ class PersonTest extends TestCase
                     ->has('person.obituary.birth_date')
                     ->has('person.obituary.death_date')
                     ->has('person.obituary.content')
-                    ->has('person.obituary.headstone_url')
+                    ->has('person.obituary.main_photo_url')
+                    ->has('person.obituary.background_photo_url')
                     ->has('person.pictures.0', fn (Assert $page) => $page
                         ->where('slug', $picture->slug)
                         ->where('title', $picture->title)
