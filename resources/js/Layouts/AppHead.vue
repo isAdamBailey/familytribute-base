@@ -32,7 +32,9 @@
             name="twitter:card"
             content="summary_large_image"
         />
+        <meta name="twitter:image:alt" :content="siteTitle">
 
+        <meta head-key="og:site_name" property="og:site_name" :content="siteTitle"/>
         <meta head-key="og:url" property="og:url" :content="currentPage" />
         <meta head-key="og:title" property="og:title" :content="headTitle" />
         <meta
@@ -49,6 +51,8 @@
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
+        <link rel="icon" href="/favicon.ico">
+
         <slot />
     </Head>
 </template>
@@ -64,15 +68,18 @@ export default {
         keywords: String,
     },
     computed: {
+        siteTitle() {
+          return this.$inertia.page.props.settings.title;
+        },
         headTitle() {
             return this.title
-                ? `${this.$inertia.page.props.settings.title} - ${this.title}`
-                : `${this.$inertia.page.props.settings.title} - Home`;
+                ? `${this.siteTitle} - ${this.title}`
+                : `${this.siteTitle} - Home`;
         },
         headDescription() {
             return (
                 this.description ||
-                `Displaying the history of ${this.$inertia.page.props.settings.title}`
+                `Displaying the history of ${this.siteTitle}`
             );
         },
         headKeywords() {
