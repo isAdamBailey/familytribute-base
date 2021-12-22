@@ -9,10 +9,11 @@
         <template #form>
             <div class="col-span-2">
                 <jet-label for="title" value="Title" />
-                <info-text
-                    >This is what shows at the top of the page next to the
-                    menu.</info-text
-                >
+                <info-text>
+                    This is the name of the site to your users. It is used at
+                    the top of every page, and in emails that are sent from the
+                    site.
+                </info-text>
                 <jet-input
                     id="title"
                     v-model="form.title"
@@ -25,8 +26,9 @@
 
             <div class="col-span-6">
                 <jet-label for="description" value="Description" />
-                <info-text>This is the text content on the home page.</info-text
-                >>
+                <info-text
+                    >This is the text content on the home page.</info-text
+                >
                 <wysiwyg v-model="form.description" />
                 <jet-input-error
                     :message="form.errors.description"

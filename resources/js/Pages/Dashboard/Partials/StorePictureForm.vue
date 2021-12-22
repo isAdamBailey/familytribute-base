@@ -85,12 +85,11 @@
                 />
             </div>
 
-            <div class="mt-2 col-span-6">
+            <div class="mt-2 col-span-2">
                 <jet-label for="featured" value="Featured" />
-                <div class="flex items-center text-sm text-indigo-600">
-                    <i class="ri-information-line mr-1"></i>
-                    Featured images are displayed on the home page
-                </div>
+                <info-text
+                    >Featured images are displayed on the home page</info-text
+                >
                 <checkbox
                     id="featured"
                     v-model:checked="form.featured"
@@ -126,9 +125,11 @@ import JetActionMessage from "@/Base/ActionMessage.vue";
 import JetSecondaryButton from "@/Base/SecondaryButton.vue";
 import Wysiwyg from "@/Base/Wysiwyg";
 import Checkbox from "@/Base/Checkbox";
+import InfoText from "../../../Base/InfoText";
 
 export default defineComponent({
     components: {
+        InfoText,
         Checkbox,
         JetActionMessage,
         JetFormSection,

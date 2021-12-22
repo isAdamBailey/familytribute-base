@@ -1,9 +1,10 @@
 <template>
     <jet-form-section :full="true" @submitted="storeObituary">
-        <template #title> New Obituary</template>
+        <template #title> New Person</template>
 
         <template #description>
-            Add a new obituary to the "People" Page
+            Add a new person to the site. This allows you to "tag" them in
+            photos and stories.
         </template>
 
         <template #form>

@@ -13,14 +13,11 @@ class TeamInvitation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * The team invitation instance.
-     *
-     * @var TeamInvitationModel
-     */
-    public $invitation;
+    public TeamInvitationModel $invitation;
 
     public string $secret;
+
+    public string $appName;
 
     /**
      * Create a new message instance.
@@ -30,8 +27,11 @@ class TeamInvitation extends Mailable
      */
     public function __construct(TeamInvitationModel $invitation)
     {
+        $siteSetting = SiteSetting::first();
+
         $this->invitation = $invitation;
-        $this->secret = SiteSetting::first()->registration_secret;
+        $this->secret = $siteSetting->registration_secret;
+        $this->appName = $siteSetting->title;
     }
 
     /**
@@ -41,12 +41,10 @@ class TeamInvitation extends Mailable
      */
     public function build()
     {
-        $appName = config('app.name');
-
         return $this->markdown('jetstream::mail.team-invitation', [
-            'appName' => $appName,
+            'appName' => $this->appName,
             'secret' => $this->secret,
         ]
-        )->subject(__(' Invitation to '.$appName));
+        )->subject(__(' Invitation to '.$this->appName));
     }
 }

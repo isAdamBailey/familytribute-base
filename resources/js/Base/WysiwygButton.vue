@@ -1,6 +1,7 @@
 <template>
     <button
-        :aria-label="aria"
+        :aria-label="title"
+        :title="title"
         class="border-r border-b py-1 px-2"
         :class="{ 'font-bold bg-purple-600 text-white': isActive }"
     >
@@ -15,7 +16,7 @@ export default defineComponent({
     props: {
         icon: String,
         isActive: Boolean,
-        aria: {
+        title: {
             type: String,
             default: "editor style toggle",
         },
