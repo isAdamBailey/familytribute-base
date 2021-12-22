@@ -41,12 +41,12 @@ class TeamInvitation extends Mailable
      */
     public function build()
     {
+        $appName = config('app.name');
+
         return $this->markdown('jetstream::mail.team-invitation', [
-            'acceptUrl' => URL::signedRoute('team-invitations.accept', [
-                'invitation' => $this->invitation,
-            ]),
+            'appName' => $appName,
             'secret' => $this->secret,
         ]
-        )->subject(__('Team Invitation'));
+        )->subject(__(' Invitation to '.$appName));
     }
 }
