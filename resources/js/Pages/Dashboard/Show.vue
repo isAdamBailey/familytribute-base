@@ -5,7 +5,7 @@
         <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
             <div class="flex items-baseline">
                 <jet-application-mark class="block h-12 w-auto" />
-                <div class="ml-3 text-2xl md:text-5xl">
+                <div class="ml-3 font-header text-3xl md:text-5xl">
                     {{ $inertia.page.props.settings.title }}
                 </div>
             </div>
