@@ -6,7 +6,7 @@
             <div class="flex items-baseline">
                 <jet-application-mark class="block h-12 w-auto" />
                 <div class="ml-3 text-2xl md:text-5xl">
-                    {{ $inertia.page.props.siteName }}
+                    {{ $inertia.page.props.settings.title }}
                 </div>
             </div>
 
