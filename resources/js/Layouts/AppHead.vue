@@ -46,8 +46,8 @@
             property="og:image"
             content="/images/undraw_appreciation_re_p6rl.svg"
         />
-        <meta property="og:image:width" content="1200"/>
-        <meta property="og:image:height" content="630"/>
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
 
         <slot />
     </Head>

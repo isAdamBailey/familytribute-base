@@ -7,12 +7,12 @@
         </template>
 
         <template #form>
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-2">
                 <jet-label for="title" value="Title" />
-                <div class="flex items-center text-sm text-indigo-600">
-                    <i class="ri-information-line mr-1"></i>
-                    This is what shows at the top of the page next to the menu.
-                </div>
+                <info-text
+                    >This is what shows at the top of the page next to the
+                    menu.</info-text
+                >
                 <jet-input
                     id="title"
                     v-model="form.title"
@@ -23,12 +23,10 @@
                 <jet-input-error :message="form.errors.title" class="mt-2" />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <jet-label for="description" value="Description" />
-                <div class="flex items-center text-sm text-indigo-600">
-                    <i class="ri-information-line mr-1"></i>
-                    This is the text content on the home page.
-                </div>
+                <info-text>This is the text content on the home page.</info-text
+                >>
                 <wysiwyg v-model="form.description" />
                 <jet-input-error
                     :message="form.errors.description"
@@ -36,12 +34,12 @@
                 />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6 md:col-span-2">
                 <jet-label for="registration" value="Registration Enabled" />
-                <div class="flex items-center text-sm text-indigo-600">
-                    <i class="ri-information-line mr-1"></i>
-                    Turning this off removes the ability to register to the site
-                </div>
+                <info-text
+                    >Turning this off removes the ability to register to the
+                    site.</info-text
+                >
                 <checkbox
                     id="registration"
                     v-model:checked="form.registration"
@@ -53,16 +51,15 @@
                 />
             </div>
 
-            <div v-if="form.registration" class="col-span-6 sm:col-span-4">
+            <div v-if="form.registration" class="col-span-6 md:col-span-2">
                 <jet-label
                     for="registration_secret"
                     value="Registration Secret"
                 />
-                <div class="flex items-center text-sm text-indigo-600">
-                    <i class="ri-information-line mr-1"></i>
-                    New users will need to enter this in order to register to
-                    the site
-                </div>
+                <info-text
+                    >New users will need to enter this in order to register to
+                    the site.</info-text
+                >
                 <jet-input
                     id="registration_secret"
                     v-model="form.registration_secret"
@@ -101,9 +98,11 @@ import JetLabel from "@/Base/Label.vue";
 import JetActionMessage from "@/Base/ActionMessage.vue";
 import Checkbox from "@/Base/Checkbox";
 import Wysiwyg from "@/Base/Wysiwyg";
+import InfoText from "@/Base/InfoText";
 
 export default defineComponent({
     components: {
+        InfoText,
         Wysiwyg,
         Checkbox,
         JetActionMessage,

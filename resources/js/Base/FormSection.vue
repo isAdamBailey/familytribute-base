@@ -2,7 +2,9 @@
     <div :class="full ? '' : 'md:grid md:grid-cols-3 md:gap-6'">
         <jet-section-title>
             <template #title><slot name="title"></slot></template>
-            <template #description><slot name="description"></slot></template>
+            <template #description
+                ><info-text><slot name="description"></slot></info-text
+            ></template>
         </jet-section-title>
 
         <div class="mt-5 md:mt-0 md:col-span-2">
@@ -35,9 +37,11 @@
 <script>
 import { defineComponent } from "vue";
 import JetSectionTitle from "./SectionTitle.vue";
+import InfoText from "./InfoText";
 
 export default defineComponent({
     components: {
+        InfoText,
         JetSectionTitle,
     },
     props: {

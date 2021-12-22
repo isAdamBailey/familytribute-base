@@ -15,13 +15,13 @@
                 {{ $page.props.user.name }}!
             </div>
 
+            <info-text>
+                If nothing has been added to the site yet,
+                <strong>this is where you start!</strong>
+            </info-text>
             <div class="mt-6 text-gray-500">
                 <p>
                     Here you can add new stories, photos, obituaries and more!
-                </p>
-                <p>
-                    If nothing has been added to the site yet,
-                    <strong>this is where you start!</strong>
                 </p>
                 <ul class="mt-2 list-disc">
                     <li class="ml-4">
@@ -72,6 +72,7 @@ import StorePictureForm from "@/Pages/Dashboard/Partials/StorePictureForm";
 import StoreObituaryForm from "@/Pages/Dashboard/Partials/StoreObituaryForm";
 import StoreStoryForm from "@/Pages/Dashboard/Partials/StoreStoryForm";
 import UpdateSettingsForm from "@/Pages/Dashboard/Partials/UpdateSettingsForm";
+import InfoText from "@/Base/InfoText";
 
 export default defineComponent({
     components: {
@@ -82,6 +83,7 @@ export default defineComponent({
         StorePictureForm,
         StoreObituaryForm,
         StoreStoryForm,
+        InfoText,
     },
 
     props: {

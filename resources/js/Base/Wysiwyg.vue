@@ -100,12 +100,6 @@
                     editor.chain().focus().setHorizontalRule().run()
                 "
             />
-
-            <wysiwyg-button
-                icon="ri-insert-row-bottom"
-                aria="toggle line break"
-                @click.prevent="editor.chain().focus().setHardBreak().run()"
-            />
         </span>
 
         <wysiwyg-button
@@ -122,7 +116,11 @@
 
         <editor-content :editor="editor" />
 
-        <div :class="`ml-1 text-sm ${isClose ? 'text-red-600 font-bold' : 'text-gray-400'}`">
+        <div
+            :class="`ml-1 text-sm ${
+                isClose ? 'text-red-600 font-bold' : 'text-gray-400'
+            }`"
+        >
             {{ editorCharacterCount }}
         </div>
     </div>
@@ -159,7 +157,7 @@ export default {
 
     computed: {
         isExcerpt() {
-          return this.maxCharacterCount <= 250;
+            return this.maxCharacterCount <= 250;
         },
         editorCharacterCount() {
             return this.editor.storage.characterCount.characters();

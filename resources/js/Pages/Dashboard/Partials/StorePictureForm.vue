@@ -59,7 +59,7 @@
                 />
             </div>
 
-            <div class="col-span-6">
+            <div class="col-span-2">
                 <jet-label for="year" value="Year" />
                 <jet-input
                     id="year"

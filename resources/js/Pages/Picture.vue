@@ -73,7 +73,7 @@ import PictureDeleteModal from "@/Modals/PictureDeleteModal";
 import TaggedPeople from "@/Components/TaggedPeople";
 import JetDangerButton from "@/Base/DangerButton";
 import SocialShare from "@/Components/SocialShare";
-import FeaturedStar from "../Components/FeaturedStar";
+import FeaturedStar from "@/Base/FeaturedStar";
 
 export default defineComponent({
     components: {

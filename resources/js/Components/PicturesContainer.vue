@@ -33,7 +33,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import FeaturedStar from "./FeaturedStar";
+import FeaturedStar from "@/Base/FeaturedStar";
 
 export default defineComponent({
     components: { FeaturedStar },

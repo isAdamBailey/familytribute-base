@@ -81,7 +81,7 @@ import JetDropdownLink from "@/Base/DropdownLink.vue";
 import InfiniteScroll from "@/Components/InfiniteScroll";
 import SearchInput from "@/Base/SearchInput";
 import SectionBorder from "@/Base/SectionBorder";
-import SortDropdown from "@/Components/SortDropdown";
+import SortDropdown from "@/Base/SortDropdown";
 
 export default defineComponent({
     components: {
