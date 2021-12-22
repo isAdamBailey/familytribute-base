@@ -15,7 +15,7 @@
                             : 'sm:rounded-md'
                     "
                 >
-                    <div class="grid grid-cols-6 gap-6">
+                    <div :class="full ? 'grid gap-6' : 'grid-cols-6'">
                         <slot name="form"></slot>
                     </div>
                 </div>

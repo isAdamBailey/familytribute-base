@@ -7,7 +7,7 @@
         </template>
 
         <template #form>
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <div class="flex flex-wrap -mx-3">
                     <div class="w-full md:w-1/2 mb-5">
                         <input
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <div class="flex flex-wrap -mx-3">
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <jet-label for="first_name" value="First Name" />
@@ -116,7 +116,7 @@
                 </div>
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <div class="flex flex-wrap -mx-3">
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <jet-label for="birth_date" value="Birth Date" />
@@ -137,7 +137,7 @@
                 </div>
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <jet-label for="content" value="Obituary" />
                 <wysiwyg v-model="form.content" />
                 <jet-input-error :message="form.errors.content" class="mt-2" />

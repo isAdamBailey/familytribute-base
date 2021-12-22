@@ -7,7 +7,7 @@
         </template>
 
         <template #form>
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <input
                     ref="photo"
                     type="file"
@@ -38,7 +38,7 @@
                 <jet-input-error :message="form.errors.photo" class="mt-2" />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <jet-label for="title" value="Title" />
                 <jet-input
                     id="title"
@@ -50,7 +50,7 @@
                 <jet-input-error :message="form.errors.title" class="mt-2" />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <jet-label for="description" value="Description" />
                 <wysiwyg v-model="form.description" />
                 <jet-input-error
@@ -59,7 +59,7 @@
                 />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <jet-label for="year" value="Year" />
                 <jet-input
                     id="year"
@@ -70,7 +70,7 @@
                 <jet-input-error :message="form.errors.year" class="mt-2" />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <jet-label for="person_ids" value="Tag People" />
                 <Multiselect
                     id="person_ids"
@@ -85,7 +85,7 @@
                 />
             </div>
 
-            <div class="mt-2 col-span-6 sm:col-span-4">
+            <div class="mt-2 col-span-6">
                 <jet-label for="featured" value="Featured" />
                 <div class="flex items-center text-sm text-indigo-600">
                     <i class="ri-information-line mr-1"></i>

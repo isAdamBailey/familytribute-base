@@ -7,7 +7,7 @@
             @click.prevent="editor.chain().focus().setParagraph().run()"
         />
 
-        <span v-if="!excerpt">
+        <span v-if="!isExcerpt">
             <wysiwyg-button
                 icon="ri-h-1"
                 aria="toggle h1"
@@ -121,6 +121,10 @@
         />
 
         <editor-content :editor="editor" />
+
+        <div :class="`ml-1 text-sm ${isClose ? 'text-red-600 font-bold' : 'text-gray-400'}`">
+            {{ editorCharacterCount }}
+        </div>
     </div>
 </template>
 
@@ -130,6 +134,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Typography from "@tiptap/extension-typography";
 import WysiwygButton from "@/Base/WysiwygButton";
 import Link from "@tiptap/extension-link";
+import { CharacterCount } from "@tiptap/extension-character-count";
 
 export default {
     components: {
@@ -142,7 +147,7 @@ export default {
             type: String,
             default: "",
         },
-        excerpt: Boolean,
+        maxCharacterCount: { type: Number, default: 20000 },
     },
     emits: ["update:modelValue"],
 
@@ -150,6 +155,18 @@ export default {
         return {
             editor: null,
         };
+    },
+
+    computed: {
+        isExcerpt() {
+          return this.maxCharacterCount <= 250;
+        },
+        editorCharacterCount() {
+            return this.editor.storage.characterCount.characters();
+        },
+        isClose() {
+            return this.editorCharacterCount >= this.maxCharacterCount - 10;
+        },
     },
 
     watch: {
@@ -168,12 +185,15 @@ export default {
         this.editor = new Editor({
             editorProps: {
                 attributes: {
-                    class: "prose prose-sm sm:prose lg:prose-lg my-2 mx-5 focus:outline-none",
+                    class: "prose md:prose-lg h-48 my-2 mx-5 border-t overflow-y-auto focus:outline-none",
                 },
             },
             extensions: [
                 StarterKit,
                 Typography,
+                CharacterCount.configure({
+                    limit: this.maxCharacterCount,
+                }),
                 Link.configure({
                     openOnClick: false,
                 }),

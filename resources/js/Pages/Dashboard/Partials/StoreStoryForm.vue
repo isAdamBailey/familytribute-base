@@ -7,7 +7,7 @@
         </template>
 
         <template #form>
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <jet-label for="title" value="Title" />
                 <jet-input
                     id="title"
@@ -19,19 +19,19 @@
                 <jet-input-error :message="form.errors.title" class="mt-2" />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <jet-label for="excerpt" value="Excerpt" />
-                <wysiwyg v-model="form.excerpt" :excerpt="true" />
+                <wysiwyg v-model="form.excerpt" :max-character-count="250" />
                 <jet-input-error :message="form.errors.excerpt" class="mt-2" />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <jet-label for="content" value="Story" />
                 <wysiwyg v-model="form.content" />
                 <jet-input-error :message="form.errors.content" class="mt-2" />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6">
                 <jet-label for="person_ids" value="Tag People" />
                 <Multiselect
                     id="person_ids"
