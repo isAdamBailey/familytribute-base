@@ -68,7 +68,7 @@ export default defineComponent({
             return window.location.href;
         },
         description() {
-            return `See ${this.title} on ${this.$inertia.page.props.siteName} FamilyTribute`;
+            return `See ${this.title} on ${this.$inertia.page.props.settings.title} FamilyTribute`;
         },
     },
 });

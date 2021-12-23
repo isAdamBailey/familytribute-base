@@ -1,7 +1,7 @@
 <template>
     <app-layout
         title="People"
-        :description="`The people of ${$inertia.page.props.siteName}`"
+        :description="`The people of ${$inertia.page.props.settings.title}`"
     >
         <template #header> People </template>
 
