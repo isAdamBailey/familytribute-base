@@ -20,12 +20,6 @@ return [
 
     'faker_locale' => 'en_US',
 
-    'meta' => [
-        'social_image' => env('META_SOCIAL_IMAGE'),
-        'description' => env('META_DESCRIPTION'),
-        'keywords' => env('META_KEYWORDS'),
-    ],
-
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
@@ -91,6 +85,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\MetaTagsServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,

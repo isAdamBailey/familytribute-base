@@ -1,5 +1,5 @@
 <template>
-    <app-layout :title="picture.title">
+    <app-layout>
         <template #header>
             <Link :href="route('pictures.index')">Pictures</Link> /
             {{ picture.title }}

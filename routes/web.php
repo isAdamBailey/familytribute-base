@@ -1,25 +1,16 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ObituaryController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\SiteSettingController;
 use App\Http\Controllers\StoryController;
-use App\Models\Person;
-use App\Models\Picture;
-use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home', [
-        'pictures' => Picture::where('featured', 1)->inRandomOrder()->limit(5)->get()->map(fn ($picture) => [
-            'url' => $picture->url,
-            'title' => $picture->title,
-            'description' => $picture->description,
-        ]),
-    ]);
-})->name('home');
+Route::get('/', [HomeController::class, 'show'])->name('home');
 
 Route::get('/pictures', [PictureController::class, 'index'])->name('pictures.index');
 Route::get('/pictures/{picture}', [PictureController::class, 'show'])->name('pictures.show');
@@ -30,12 +21,7 @@ Route::get('/stories/{story}', [StoryController::class, 'show'])->name('stories.
 Route::get('/people', [PersonController::class, 'index'])->name('people.index');
 
 Route::middleware(['auth:sanctum', 'verified', 'team'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard/Show', [
-            'people' => Person::all(),
-            'settings' => SiteSetting::first()->only('id', 'title', 'description', 'registration', 'registration_secret'),
-        ]);
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
 
     Route::post('/pictures', [PictureController::class, 'store'])->name('pictures.store');
     Route::put('/pictures/{picture}', [PictureController::class, 'update'])->name('pictures.update');

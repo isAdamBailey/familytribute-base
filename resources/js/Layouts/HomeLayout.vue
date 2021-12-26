@@ -1,6 +1,6 @@
 <template>
     <div>
-        <app-head :title="title" :description="description" />
+        <Head :title="$page.props.title" />
 
         <div class="min-h-screen bg-gradient-to-r from-indigo-100 to-gray-100">
             <primary-nav />
@@ -29,18 +29,14 @@
 <script>
 import { defineComponent } from "vue";
 import PrimaryFooter from "@/Layouts/PrimaryFooter";
-import AppHead from "@/Layouts/AppHead";
 import PrimaryNav from "@/Layouts/Nav/PrimaryNav";
+import { Head } from "@inertiajs/inertia-vue3";
 
 export default defineComponent({
     components: {
+        Head,
         PrimaryNav,
-        AppHead,
         PrimaryFooter,
-    },
-    props: {
-        title: String,
-        description: String,
     },
 });
 </script>

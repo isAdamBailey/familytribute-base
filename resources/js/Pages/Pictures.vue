@@ -1,8 +1,5 @@
 <template>
-    <app-layout
-        title="Pictures"
-        :description="`The pictures of ${$inertia.page.props.settings.title}`"
-    >
+    <app-layout>
         <template #header> Pictures </template>
 
         <div class="md:mt-5 mb-5 md:mb-0 flex justify-between items-center">

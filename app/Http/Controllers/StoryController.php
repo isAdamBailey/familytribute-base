@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Person;
 use App\Models\Story;
+use App\Traits\HasSeoTags;
+use Butschster\Head\Hydrator\VueMetaHydrator;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,8 +16,13 @@ use Inertia\Response;
 
 class StoryController extends Controller
 {
+    use HasSeoTags;
+
     public function index(Request $request): Response
     {
+        $this->setTitleStart('Stories');
+        $this->renderSeo();
+
         $search = $request->input('search');
 
         $stories = Story::query()
@@ -43,6 +50,9 @@ class StoryController extends Controller
 
     public function show(Story $story): Response
     {
+        $this->setTitleStart($story->title);
+        $this->renderSeo();
+
         return Inertia::render('Story', [
             'story' => $story->only([
                 'slug',

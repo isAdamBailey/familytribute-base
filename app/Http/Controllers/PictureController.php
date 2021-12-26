@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Person;
 use App\Models\Picture;
+use App\Traits\HasSeoTags;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,8 +15,13 @@ use Inertia\Response;
 
 class PictureController extends Controller
 {
+    use HasSeoTags;
+
     public function index(Request $request): Response
     {
+        $this->setTitleStart('Pictures');
+        $this->renderSeo();
+
         $sort = $request->sort;
         $order = $request->order;
         $search = $request->search;
@@ -53,6 +59,9 @@ class PictureController extends Controller
 
     public function show(Picture $picture): Response
     {
+        $this->setTitleStart($picture->title);
+        $this->renderSeo();
+
         return Inertia::render('Picture', [
             'picture' => $picture->only(
                 'slug',

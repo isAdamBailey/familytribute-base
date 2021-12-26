@@ -29,8 +29,7 @@ export default {
         },
         headDescription() {
             return (
-                this.description ||
-                `Discover the history of ${this.siteTitle}`
+                this.description || `Discover the history of ${this.siteTitle}`
             );
         },
         headKeywords() {

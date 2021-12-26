@@ -4,14 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Obituary;
 use App\Models\Person;
+use App\Traits\HasSeoTags;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class PersonController extends Controller
 {
+    use HasSeoTags;
+
     public function index(Request $request): Response
     {
+        $this->setTitleStart('People');
+        $this->renderSeo();
+
         $sort = $request->sort;
         $order = $request->order;
         $search = $request->search;
@@ -19,7 +25,7 @@ class PersonController extends Controller
         $people = Person::with('obituary')
             ->when($search,
                 fn ($query) => $query->where('first_name', 'LIKE', '%'.$search.'%')
-                        ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$search.'%')
             )
             ->when(! $sort || in_array($sort, ['death_date', 'birth_date']),
                 fn ($query) => $query->orderBy(
@@ -51,6 +57,9 @@ class PersonController extends Controller
 
     public function show(Person $person): Response
     {
+        $this->setTitleStart($person->full_name);
+        $this->renderSeo();
+
         $person = $person->load(['obituary', 'pictures', 'stories']);
 
         return Inertia::render('Person', [

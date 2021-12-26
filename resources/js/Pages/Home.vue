@@ -1,5 +1,5 @@
 <template>
-    <home-layout title="Home">
+    <home-layout>
         <div class="flex flex-col-reverse mb-5 md:mb-7 lg:flex-row">
             <div>
                 <div
