@@ -27,6 +27,7 @@ class PictureFactory extends Factory
             'url' => $this->faker->imageUrl(),
             'year' => $this->faker->year('-100 years'),
             'featured' => $this->faker->boolean(),
+            'private' => false,
         ];
     }
 }

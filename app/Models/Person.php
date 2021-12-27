@@ -59,6 +59,9 @@ class Person extends Model
     public function pictures(): BelongsToMany
     {
         return $this->belongsToMany(Picture::class)
+            ->when(! auth()->user(),
+                fn ($query) => $query->where('private', '!=', 1)
+            )
             ->select(['slug', 'url', 'title', 'description', 'year'])
             ->orderBy('year');
     }

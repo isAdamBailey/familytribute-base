@@ -35,6 +35,40 @@ class PicturesTest extends TestCase
                 ->has('pictures.data.0.title')
                 ->has('pictures.data.0.year')
                 ->has('pictures.data.0.featured')
+                ->has('meta.meta')
+                ->has('meta.title')
+            );
+    }
+
+    public function test_private_pictures_are_not_shown_publicly()
+    {
+        Picture::factory()->create();
+        Picture::factory()->count(20)->create(['private' => 1]);
+        $this->assertDatabaseCount('pictures', 21);
+
+        $this->get(route('pictures.index'))
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->component('Pictures')
+                    ->url('/pictures')
+                    ->has('pictures.data', 1)
+            );
+    }
+
+    public function test_private_pictures_are_shown_to_authenticated_users()
+    {
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
+        Picture::factory()->create();
+        Picture::factory()->count(10)->create(['private' => 1]);
+        $this->assertDatabaseCount('pictures', 11);
+
+        $this->get(route('pictures.index'))
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->component('Pictures')
+                    ->url('/pictures')
+                    ->has('pictures.data', 11)
             );
     }
 
@@ -64,6 +98,8 @@ class PicturesTest extends TestCase
                     ->where('featured', (int) $picture->featured)
                     ->etc()
                 )
+                ->has('meta.meta')
+                ->has('meta.title')
         );
     }
 
@@ -84,6 +120,39 @@ class PicturesTest extends TestCase
                 ->has('picture.people')
                 ->has('picture.person_ids')
                 ->has('people')
+                ->has('meta.meta')
+                ->has('meta.title')
+            );
+    }
+
+    public function test_private_picture_is_not_shown_publicly()
+    {
+        $picture = Picture::factory()->create(['private' => 1]);
+
+        $this->get(route('pictures.show', $picture))->assertRedirect(route('pictures.index'));
+    }
+
+    public function test_private_picture_component_is_shown_by_slug_when_authenticated()
+    {
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
+        $picture = Picture::factory()->create(['private' => 1]);
+
+        $this->get(route('pictures.show', $picture))
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->component('Picture')
+                    ->url('/pictures/'.$picture->slug)
+                    ->has('picture.title')
+                    ->has('picture.description')
+                    ->has('picture.url')
+                    ->has('picture.year')
+                    ->has('picture.featured')
+                    ->has('picture.people')
+                    ->has('picture.person_ids')
+                    ->has('people')
+                    ->has('meta.meta')
+                    ->has('meta.title')
             );
     }
 
@@ -102,6 +171,7 @@ class PicturesTest extends TestCase
             'description' => $this->faker->sentences(4, true),
             'year' => $this->faker->year(),
             'featured' => $this->faker->numberBetween(0, 1),
+            'private' => $this->faker->numberBetween(0, 1),
             'person_ids' => $people->modelKeys(),
         ];
 
@@ -117,7 +187,8 @@ class PicturesTest extends TestCase
         $this->assertEquals(strtolower($picture->title), $request['title']);
         $this->assertEquals($picture->description, $request['description']);
         $this->assertEquals($picture->year, $request['year']);
-        $this->assertEquals($picture->featured, (int) $request['featured']);
+        $this->assertEquals($picture->featured, $request['featured']);
+        $this->assertEquals($picture->private, $request['private']);
         $this->assertCount($personCount, $picture->people->toArray());
     }
 
@@ -137,6 +208,7 @@ class PicturesTest extends TestCase
             'description' => $this->faker->sentences(4, true),
             'year' => $this->faker->year(),
             'featured' => $this->faker->numberBetween(0, 1),
+            'private' => $this->faker->numberBetween(0, 1),
             'person_ids' => $people->modelKeys(),
         ];
 
@@ -154,6 +226,7 @@ class PicturesTest extends TestCase
         $this->assertEquals($picture->description, $request['description']);
         $this->assertEquals($picture->year, $request['year']);
         $this->assertEquals($picture->featured, $request['featured']);
+        $this->assertEquals($picture->private, $request['private']);
         $this->assertCount($personCount, $picture->people->toArray());
     }
 

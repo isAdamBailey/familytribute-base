@@ -33,6 +33,8 @@ class PersonTest extends TestCase
                 ->has('people.data.0.obituary.birth_date')
                 ->has('people.data.0.obituary.death_date')
                 ->has('people.data.0.obituary.main_photo_url')
+                ->has('meta.meta')
+                ->has('meta.title')
         );
     }
 
@@ -59,6 +61,8 @@ class PersonTest extends TestCase
                 ->has('people.data.0.obituary.birth_date')
                 ->has('people.data.0.obituary.death_date')
                 ->has('people.data.0.obituary.main_photo_url')
+                ->has('meta.meta')
+                ->has('meta.title')
         );
     }
 
@@ -97,6 +101,24 @@ class PersonTest extends TestCase
                         ->where('excerpt', $story->excerpt)
                         ->etc()
                     )
+                    ->has('meta.meta')
+                    ->has('meta.title')
+            );
+    }
+
+    public function test_person_component_has_no_private_pictures()
+    {
+        $obituary = Obituary::factory()->create();
+        $picture = Picture::factory()->create(['private' => 1]);
+
+        $obituary->person->pictures()->attach($picture);
+
+        $this->get(route('people.show', $obituary->person->slug))
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->component('Person')
+                    ->url('/'.$obituary->person->slug)
+                    ->missing('person.pictures.0')
             );
     }
 }

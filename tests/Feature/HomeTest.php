@@ -26,6 +26,8 @@ class HomeTest extends TestCase
                     ->has('pictures.0.description')
                     ->has('pictures.0.url')
                     ->has('pictures.0.title')
+                    ->has('meta.meta')
+                    ->has('meta.title')
             );
     }
 }

@@ -28,6 +28,8 @@ class StoriesTest extends TestCase
                 ->url('/stories')
                 ->has('stories.data', 15)
                 ->has('stories.data.0.excerpt')
+                ->has('meta.meta')
+                ->has('meta.title')
             );
     }
 
@@ -54,6 +56,8 @@ class StoriesTest extends TestCase
                     ->where('excerpt', $story->excerpt)
                     ->etc()
                 )
+                ->has('meta.meta')
+                ->has('meta.title')
         );
     }
 
@@ -71,6 +75,8 @@ class StoriesTest extends TestCase
                 ->has('story.excerpt')
                 ->has('story.person_ids')
                 ->has('people')
+                ->has('meta.meta')
+                ->has('meta.title')
             );
     }
 

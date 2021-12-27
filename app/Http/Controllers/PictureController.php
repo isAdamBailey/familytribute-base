@@ -27,6 +27,9 @@ class PictureController extends Controller
         $search = $request->search;
 
         $pictures = Picture::query()
+            ->when(! auth()->user(),
+                fn ($query) => $query->where('private', '!=', 1)
+            )
             ->when($search,
                 fn ($query) => $query->where('title', 'LIKE', '%'.$search.'%')
                     ->orWhere('description', 'LIKE', '%'.$search.'%')
@@ -57,8 +60,12 @@ class PictureController extends Controller
         ]);
     }
 
-    public function show(Picture $picture): Response
+    public function show(Picture $picture): Response|RedirectResponse
     {
+        if ($picture->private && ! auth()->user()) {
+            return redirect(route('pictures.index'));
+        }
+
         $this->setTitleStart($picture->title);
         $this->setOgImage($picture->url);
         $this->setTwitterImage($picture->url);
@@ -90,6 +97,7 @@ class PictureController extends Controller
             'description' => 'required|string',
             'year' => 'required|digits:4',
             'featured' => 'required|boolean',
+            'private' => 'required|boolean',
             'photo' => 'required|file|mimes:jpg,jpeg,png|max:1024',
             'person_ids' => 'array|nullable',
         ]);
@@ -99,6 +107,7 @@ class PictureController extends Controller
             'description' => $request->description,
             'year' => $request->year,
             'featured' => $request->featured,
+            'private' => $request->private,
             'url' => $request->file('photo')->storePublicly('pictures'),
         ]);
 
@@ -116,6 +125,7 @@ class PictureController extends Controller
             'description' => 'string',
             'year' => 'digits:4',
             'featured' => 'boolean',
+            'private' => 'boolean',
             'photo' => 'file|mimes:jpg,jpeg,png|max:1024',
             'person_ids' => 'array|nullable',
         ]);
@@ -136,6 +146,10 @@ class PictureController extends Controller
 
         if (isset($request->featured)) {
             $picture->featured = $request->featured;
+        }
+
+        if (isset($request->private)) {
+            $picture->private = $request->private;
         }
 
         if ($request->file('photo')) {

@@ -34,6 +34,8 @@ class DashboardTest extends TestCase
                     ->url('/dashboard')
                     ->has('people', 5)
                     ->has('settings')
+                    ->has('meta.meta')
+                    ->has('meta.title')
             );
     }
 }

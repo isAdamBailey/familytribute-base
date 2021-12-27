@@ -21,6 +21,7 @@ class Picture extends Model
         'url',
         'year',
         'featured',
+        'private',
     ];
 
     protected $appends = ['person_ids'];
