@@ -35,6 +35,7 @@ class PicturesTest extends TestCase
                 ->has('pictures.data.0.title')
                 ->has('pictures.data.0.year')
                 ->has('pictures.data.0.featured')
+                ->has('pictures.data.0.private')
                 ->has('meta.meta')
                 ->has('meta.title')
             );

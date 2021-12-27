@@ -43,6 +43,17 @@
                 >
                     <i class="ri-star-fill"></i> Featured
                 </jet-dropdown-link>
+                <jet-dropdown-link
+                    v-if="$inertia.page.props.user"
+                    :href="
+                        route('pictures.index', {
+                            sort: 'private',
+                            order: 'desc',
+                        })
+                    "
+                >
+                    <i class="ri-git-repository-private-fill"></i> Private
+                </jet-dropdown-link>
                 <jet-dropdown-link :href="route('pictures.index')">
                     <i class="ri-filter-off-fill"></i> Clear
                 </jet-dropdown-link>

@@ -1,0 +1,6 @@
+public/*
+vendor/
+composer.*
+*.yml
+package-lock.json
+package.json

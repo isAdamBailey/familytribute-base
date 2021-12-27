@@ -35,7 +35,7 @@
                 :src="picture.url"
                 :alt="picture.title"
             />
-            <featured-star :picture="picture" />
+            <embedded-icon :item="picture" />
         </div>
 
         <social-share class="mt-5" :title="picture.title" />
@@ -73,11 +73,11 @@ import PictureDeleteModal from "@/Modals/PictureDeleteModal";
 import TaggedPeople from "@/Components/TaggedPeople";
 import JetDangerButton from "@/Base/DangerButton";
 import SocialShare from "@/Components/SocialShare";
-import FeaturedStar from "@/Base/FeaturedStar";
+import EmbeddedIcon from "@/Base/EmbeddedIcon";
 
 export default defineComponent({
     components: {
-        FeaturedStar,
+        EmbeddedIcon,
         SocialShare,
         JetDangerButton,
         PictureDeleteModal,

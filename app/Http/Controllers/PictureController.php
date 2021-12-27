@@ -52,6 +52,7 @@ class PictureController extends Controller
                 'year' => $picture->year,
                 'url' => $picture->url,
                 'featured' => $picture->featured,
+                'private' => $picture->private,
                 'description' => $picture->description,
             ]),
             'sort' => ucwords(str_replace('_', ' ', $sort)),

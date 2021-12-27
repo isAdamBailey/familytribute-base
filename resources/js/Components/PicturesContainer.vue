@@ -11,7 +11,7 @@
             :src="picture.url"
             :alt="picture.title"
         />
-        <featured-star :picture="picture" />
+        <embedded-icon :item="picture" />
 
         <div
             :class="fixedWidth ? 'w-60' : ''"
@@ -33,10 +33,10 @@
 
 <script>
 import { defineComponent } from "vue";
-import FeaturedStar from "@/Base/FeaturedStar";
+import EmbeddedIcon from "@/Base/EmbeddedIcon";
 
 export default defineComponent({
-    components: { FeaturedStar },
+    components: { EmbeddedIcon },
     props: {
         items: Array,
         fixedWidth: {
