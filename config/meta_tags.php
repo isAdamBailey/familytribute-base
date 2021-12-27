@@ -9,7 +9,7 @@ return [
     'title' => [
         'default' => env('APP_NAME'),
         'separator' => '-',
-        'max_length' => 255,
+        'max_length' => 100,
     ],
 
     /*
@@ -17,7 +17,7 @@ return [
      */
     'description' => [
         'default' => env('META_DESCRIPTION'),
-        'max_length' => 255,
+        'max_length' => 100,
     ],
 
     /*

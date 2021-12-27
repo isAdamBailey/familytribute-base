@@ -26,7 +26,7 @@ class Picture extends Model
     protected $appends = ['person_ids'];
 
     /**
-     * Return temporary s3 url of path if full path doesn't exist.
+     * Return s3 url of path if full path doesn't exist.
      */
     public function getUrlAttribute($value): string
     {
@@ -34,9 +34,7 @@ class Picture extends Model
             return $value;
         }
 
-        return app()->environment('testing')
-            ? Storage::url($value)
-            : Storage::temporaryUrl($value, now()->addMinutes(5));
+        return Storage::url($value);
     }
 
     /**

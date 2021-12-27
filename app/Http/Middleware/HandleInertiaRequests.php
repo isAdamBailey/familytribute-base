@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\SiteSetting;
 use Butschster\Head\Contracts\MetaTags\MetaInterface;
+use Butschster\Head\Hydrator\VueMetaHydrator;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -16,6 +17,13 @@ class HandleInertiaRequests extends Middleware
      * @var string
      */
     protected $rootView = 'app';
+
+    protected $meta;
+
+    public function __construct(MetaInterface $meta)
+    {
+        $this->meta = $meta;
+    }
 
     /**
      * Determines the current asset version.
@@ -40,7 +48,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'settings' => SiteSetting::first()->only('title', 'description', 'registration'),
-            'title' => fn (MetaInterface $meta) => ($meta->toArray()['head'][1]['content']),
+            'meta' => fn (VueMetaHydrator $hydrator) => ($hydrator->hydrate($this->meta)),
         ]);
     }
 }

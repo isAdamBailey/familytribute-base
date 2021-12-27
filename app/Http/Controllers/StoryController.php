@@ -51,6 +51,7 @@ class StoryController extends Controller
     public function show(Story $story): Response
     {
         $this->setTitleStart($story->title);
+        $this->setDescription($story->excerpt);
         $this->renderSeo();
 
         return Inertia::render('Story', [

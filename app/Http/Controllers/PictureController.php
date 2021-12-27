@@ -60,6 +60,9 @@ class PictureController extends Controller
     public function show(Picture $picture): Response
     {
         $this->setTitleStart($picture->title);
+        $this->setOgImage($picture->url);
+        $this->setTwitterImage($picture->url);
+        $this->setDescription($picture->description);
         $this->renderSeo();
 
         return Inertia::render('Picture', [

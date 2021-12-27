@@ -57,10 +57,13 @@ class PersonController extends Controller
 
     public function show(Person $person): Response
     {
-        $this->setTitleStart($person->full_name);
-        $this->renderSeo();
-
         $person = $person->load(['obituary', 'pictures', 'stories']);
+
+        $this->setTitleStart($person->full_name);
+        $this->setOgImage($person->obituary->main_photo_url);
+        $this->setTwitterImage($person->obituary->main_photo_url);
+        $this->setDescription($person->obituary->content);
+        $this->renderSeo();
 
         return Inertia::render('Person', [
             'person' => $person->only(

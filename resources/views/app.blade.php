@@ -3,7 +3,7 @@
     <head>
         <link rel="home" href="{{ config('app.url') }}">
 
-        {!! str_replace('<title>','<title inertia>', Meta::toHtml()) !!}
+        {!! str_replace('<title>', '<title inertia>', Meta::toHtml()) !!}
 
         @env ('production')
             <!-- Global site tag (gtag.js) - Google Analytics -->

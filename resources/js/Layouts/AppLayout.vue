@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Head :title="$page.props.title" />
+        <app-head />
 
         <jet-banner />
 
@@ -43,11 +43,11 @@ import { defineComponent } from "vue";
 import JetBanner from "@/Base/Banner.vue";
 import PrimaryNav from "@/Layouts/Nav/PrimaryNav";
 import PrimaryFooter from "@/Layouts/PrimaryFooter";
-import { Head } from "@inertiajs/inertia-vue3";
+import AppHead from "@/Layouts/AppHead";
 
 export default defineComponent({
     components: {
-        Head,
+        AppHead,
         PrimaryNav,
         PrimaryFooter,
         JetBanner,

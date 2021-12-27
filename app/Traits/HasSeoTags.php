@@ -2,9 +2,11 @@
 
 namespace App\Traits;
 
+use App\Models\SiteSetting;
 use Butschster\Head\Contracts\MetaTags\MetaInterface;
 use Butschster\Head\Packages\Entities\OpenGraphPackage;
 use Butschster\Head\Packages\Entities\TwitterCardPackage;
+use Illuminate\Support\Str;
 
 trait HasSeoTags
 {
@@ -26,9 +28,12 @@ trait HasSeoTags
 
     protected MetaInterface $meta;
 
+    protected SiteSetting $siteSettings;
+
     public function __construct(MetaInterface $meta)
     {
         $this->meta = $meta;
+        $this->siteSettings = SiteSetting::first();
     }
 
     public function renderSeo()
@@ -44,6 +49,7 @@ trait HasSeoTags
         if ($this->getTitleStart()) {
             $this->meta->prependTitle($this->getTitleStart());
         }
+        $this->meta->setDescription($this->getDescription());
     }
 
     public function renderOg()
@@ -54,14 +60,14 @@ trait HasSeoTags
             ->setSiteName($this->getSiteName())
             ->setTitle($this->getTitle())
             ->setDescription($this->getDescription())
-            ->addImage('/images/'.$this->getOgImage(), [
+            ->addImage($this->getOgImage(), [
                 'alt' => $this->getTitle(),
                 'height' => '630',
                 'width' => '1200',
             ])
             ->setUrl(request()->url());
 
-        $this->meta->registerPackage($openGraph);
+        $this->meta->replacePackage($openGraph);
     }
 
     public function renderTwitter()
@@ -75,7 +81,7 @@ trait HasSeoTags
             ->setDescription($this->getDescription())
             ->setImage($this->getTwitterImage());
 
-        $this->meta->registerPackage($twitter);
+        $this->meta->replacePackage($twitter);
     }
 
     public function ogSetType(string $ogType)
@@ -100,32 +106,32 @@ trait HasSeoTags
 
     public function ogSetTitle(string $title)
     {
-        $this->title = $title;
+        $this->title = strip_tags($title);
     }
 
     public function getTitle(): string
     {
-        return $this->title ?: config('meta_tags.title.default');
+        return $this->title ?: strip_tags($this->siteSettings->title);
     }
 
     public function ogSetSiteName(string $siteName)
     {
-        $this->siteName = $siteName;
+        $this->siteName = strip_tags($siteName);
     }
 
     public function getSiteName(): string
     {
-        return $this->siteName ?: config('meta_tags.title.default');
+        return $this->siteName ?: strip_tags($this->siteSettings->title);
     }
 
     public function setDescription(string $description)
     {
-        $this->description = $description;
+        $this->description = Str::limit(strip_tags($description));
     }
 
     public function getDescription(): string
     {
-        return $this->description ?: config('meta_tags.description.default');
+        return $this->description ?: Str::limit(strip_tags($this->siteSettings->description));
     }
 
     public function setOgImage(string $ogImage)
