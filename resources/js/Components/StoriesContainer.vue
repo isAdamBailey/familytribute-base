@@ -3,16 +3,19 @@
         v-for="(story, index) in items"
         :key="index"
         :href="route('stories.show', story)"
-        :class="fixedWidth ? 'w-60' : ''"
-        class="relative py-10 px-7 bg-gradient-to-bl from-yellow-200 via-transparent to-gray-100 rounded-lg shadow-indigo-200/50 hover:shadow-xl hover:shadow-indigo-300/50 hover:opacity-80 transition"
+        :class="fixedWidth ? 'w-96' : ''"
+        class="relative p-7 rounded-lg shadow shadow-indigo-200/50 hover:shadow-xl hover:shadow-indigo-300/50 hover:opacity-80 transition"
     >
         <embedded-icon :item="story" color="text-gray-900" />
 
         <div
-            :class="fixedWidth ? 'w-60' : ''"
-            class="flex justify-between flex-wrap w-rounded-t-lg"
+            :class="fixedWidth ? 'w-96' : ''"
+            class="flex justify-between flex-wrap"
         >
-            <h2 class="w-11/12 font-bold shrink text-xl truncate">
+            <h2
+                :class="fixedWidth ? 'w-80' : ''"
+                class="font-bold text-xl truncate"
+            >
                 {{ story.title }}
             </h2>
             <pill v-if="story.category" class="m-3" no-hover>{{
