@@ -35,6 +35,7 @@ class StoryController extends Controller
                     ->orWhere('content', 'LIKE', '%'.$search.'%')
             )
             ->orderBy($sort ?: 'created_at', $order ?: 'desc')
+            ->orderBy('id', $order ?: 'desc')
             ->paginate();
 
         $stories->appends([
@@ -127,7 +128,7 @@ class StoryController extends Controller
             $story->excerpt = $request->excerpt;
         }
 
-        if ($request->private) {
+        if (isset($request->private)) {
             $story->private = $request->private;
         }
 

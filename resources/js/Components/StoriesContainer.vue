@@ -4,8 +4,10 @@
         :key="index"
         :href="route('stories.show', story)"
         :class="fixedWidth ? 'w-60' : ''"
-        class="py-10 px-7 bg-gradient-to-bl from-yellow-200 via-transparent to-gray-100 rounded-lg shadow-indigo-200/50 hover:shadow-xl hover:shadow-indigo-300/50 hover:opacity-80 transition"
+        class="relative py-10 px-7 bg-gradient-to-bl from-yellow-200 via-transparent to-gray-100 rounded-lg shadow-indigo-200/50 hover:shadow-xl hover:shadow-indigo-300/50 hover:opacity-80 transition"
     >
+        <embedded-icon :item="story" color="text-gray-900" />
+
         <div
             :class="fixedWidth ? 'w-60' : ''"
             class="flex justify-between flex-wrap w-rounded-t-lg"
@@ -29,9 +31,10 @@
 <script>
 import { defineComponent } from "vue";
 import Pill from "@/Base/Pill";
+import EmbeddedIcon from "@/Base/EmbeddedIcon";
 
 export default defineComponent({
-    components: { Pill },
+    components: { EmbeddedIcon, Pill },
     props: {
         items: Array,
         fixedWidth: {

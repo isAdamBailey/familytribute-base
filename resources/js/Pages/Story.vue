@@ -1,12 +1,15 @@
 <template>
-    <app-layout :title="story.title">
+    <app-layout>
         <template #header>
             <Link :href="route('stories.index')">Stories</Link> /
             {{ story.title }}
         </template>
 
         <div class="flex flex-wrap-reverse justify-between mt-8 mb-3">
-            <h1 class="font-header text-5xl md:text-7xl">{{ story.title }}</h1>
+            <h1 class="relative font-header text-5xl md:text-7xl">
+                <embedded-icon :item="story" color="text-gray-900" />
+                {{ story.title }}
+            </h1>
             <div v-if="$page.props.user">
                 <jet-danger-button
                     class="mr-3"
@@ -58,9 +61,11 @@ import TaggedPeople from "@/Components/TaggedPeople";
 import StoryDeleteModal from "@/Modals/StoryDeleteModal";
 import JetDangerButton from "@/Base/DangerButton";
 import SocialShare from "@/Components/SocialShare";
+import EmbeddedIcon from "@/Base/EmbeddedIcon";
 
 export default defineComponent({
     components: {
+        EmbeddedIcon,
         SocialShare,
         JetDangerButton,
         StoryDeleteModal,

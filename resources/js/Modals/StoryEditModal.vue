@@ -41,6 +41,19 @@
                 <wysiwyg v-model="form.content" />
                 <jet-input-error :message="form.errors.content" class="mt-2" />
             </div>
+
+            <div class="mt-2 col-span-6 sm:col-span-4">
+                <jet-label for="private" value="Private" />
+                <info-text>
+                    Private stories will only appear for registered users
+                </info-text>
+                <checkbox
+                    id="private"
+                    v-model:checked="form.private"
+                    name="private"
+                />
+                <jet-input-error :message="form.errors.private" class="mt-2" />
+            </div>
         </template>
 
         <template #footer>
@@ -69,9 +82,13 @@ import JetInput from "@/Base/Input.vue";
 import JetInputError from "@/Base/InputError.vue";
 import JetLabel from "@/Base/Label.vue";
 import Wysiwyg from "@/Base/Wysiwyg";
+import InfoText from "@/Base/InfoText";
+import Checkbox from "@/Base/Checkbox";
 
 export default defineComponent({
     components: {
+        Checkbox,
+        InfoText,
         Wysiwyg,
         JetDialogModal,
         JetSecondaryButton,
@@ -104,6 +121,7 @@ export default defineComponent({
                 title: this.story.title,
                 excerpt: this.story.excerpt,
                 content: this.story.content,
+                private: Boolean(this.story.private),
                 person_ids: this.story.person_ids,
             }),
         };

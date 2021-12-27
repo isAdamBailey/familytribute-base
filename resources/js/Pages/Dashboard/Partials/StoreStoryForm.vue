@@ -45,6 +45,19 @@
                     class="mt-2"
                 />
             </div>
+            <div class="col-span-6">
+                <jet-label for="private" value="Private" />
+                <info-text
+                    >Private stories will only appear for registered
+                    users</info-text
+                >
+                <checkbox
+                    id="private"
+                    v-model:checked="form.private"
+                    name="private"
+                />
+                <jet-input-error :message="form.errors.private" class="mt-2" />
+            </div>
         </template>
 
         <template #actions>
@@ -71,9 +84,13 @@ import JetLabel from "@/Base/Label.vue";
 import JetActionMessage from "@/Base/ActionMessage.vue";
 import Multiselect from "@vueform/multiselect";
 import Wysiwyg from "@/Base/Wysiwyg";
+import InfoText from "@/Base/InfoText";
+import Checkbox from "@/Base/Checkbox";
 
 export default defineComponent({
     components: {
+        Checkbox,
+        InfoText,
         JetActionMessage,
         JetFormSection,
         JetInput,
@@ -94,6 +111,7 @@ export default defineComponent({
                 title: null,
                 excerpt: null,
                 content: null,
+                private: false,
                 person_ids: null,
             }),
         };
