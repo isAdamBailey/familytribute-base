@@ -79,6 +79,7 @@ class PictureController extends Controller
                 'url',
                 'year',
                 'featured',
+                'private',
                 'description',
                 'people',
                 'person_ids'

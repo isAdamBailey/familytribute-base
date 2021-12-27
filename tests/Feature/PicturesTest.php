@@ -117,6 +117,7 @@ class PicturesTest extends TestCase
                 ->has('picture.url')
                 ->has('picture.year')
                 ->has('picture.featured')
+                ->has('picture.private')
                 ->has('picture.people')
                 ->has('picture.person_ids')
                 ->has('people')

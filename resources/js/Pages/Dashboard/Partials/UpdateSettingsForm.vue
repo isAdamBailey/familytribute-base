@@ -12,7 +12,7 @@
                 <info-text>
                     This is the name of the site to your users. It is used at
                     the top of every page, and in emails that are sent from the
-                    site.
+                    site. It is also used when sharing pages to social media.
                 </info-text>
                 <jet-input
                     id="title"
@@ -26,9 +26,10 @@
 
             <div class="col-span-6">
                 <jet-label for="description" value="Description" />
-                <info-text
-                    >This is the text content on the home page.</info-text
-                >
+                <info-text>
+                    This is the text content on the home page. It is also used
+                    when sharing pages to social media.
+                </info-text>
                 <wysiwyg v-model="form.description" />
                 <jet-input-error
                     :message="form.errors.description"
@@ -39,8 +40,8 @@
             <div class="col-span-6 md:col-span-2">
                 <jet-label for="registration" value="Registration Enabled" />
                 <info-text
-                    >Turning this off removes the ability to register to the
-                    site.</info-text
+                    >Turning this off removes the ability for anyone to register
+                    to the site, even if they were sent an invite.</info-text
                 >
                 <checkbox
                     id="registration"
@@ -59,8 +60,9 @@
                     value="Registration Secret"
                 />
                 <info-text
-                    >New users will need to enter this in order to register to
-                    the site.</info-text
+                    >New users will need to enter this secret in the
+                    registration form. This makes sure only people you invite
+                    can register.</info-text
                 >
                 <jet-input
                     id="registration_secret"

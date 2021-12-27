@@ -85,17 +85,32 @@
                 />
             </div>
 
-            <div class="mt-2 col-span-2">
+            <div class="mt-2 col-span-6 md:col-span-2">
                 <jet-label for="featured" value="Featured" />
-                <info-text
-                    >Featured images are displayed on the home page</info-text
-                >
+                <info-text>
+                    Featured images are displayed randomly on the home page, and
+                    cannot be private.
+                </info-text>
                 <checkbox
                     id="featured"
                     v-model:checked="form.featured"
                     name="featured"
+                    :disabled="form.private"
                 />
                 <jet-input-error :message="form.errors.featured" class="mt-2" />
+            </div>
+            <div class="mt-2 col-span-6 md:col-span-2">
+                <jet-label for="private" value="Private" />
+                <info-text
+                    >Private images will only appear for registered
+                    users</info-text
+                >
+                <checkbox
+                    id="private"
+                    v-model:checked="form.private"
+                    name="private"
+                />
+                <jet-input-error :message="form.errors.private" class="mt-2" />
             </div>
         </template>
 
@@ -155,10 +170,19 @@ export default defineComponent({
                 photo: null,
                 person_ids: null,
                 featured: false,
+                private: false,
             }),
 
             photoPreview: null,
         };
+    },
+
+    watch: {
+        "form.private"() {
+            if (this.form.private) {
+                this.form.featured = false;
+            }
+        },
     },
 
     methods: {

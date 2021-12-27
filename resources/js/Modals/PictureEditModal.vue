@@ -89,18 +89,39 @@
                 <jet-input-error :message="form.errors.year" class="mt-2" />
             </div>
 
-            <div class="mt-2 col-span-6 sm:col-span-4">
-                <jet-label for="featured" value="Featured" />
-                <div class="flex items-center text-sm text-indigo-600">
-                    <i class="ri-information-line mr-1"></i>
-                    Featured images are displayed on the home page
+            <div class="mt-2 flex">
+                <div class="w-1/2">
+                    <jet-label for="featured" value="Featured" />
+                    <info-text>
+                        Featured images are displayed randomly on the home page.
+                    </info-text>
+                    <checkbox
+                        id="featured"
+                        v-model:checked="form.featured"
+                        name="featured"
+                        :disabled="form.private"
+                    />
+                    <jet-input-error
+                        :message="form.errors.featured"
+                        class="mt-2"
+                    />
                 </div>
-                <checkbox
-                    id="featured"
-                    v-model:checked="form.featured"
-                    name="featured"
-                />
-                <jet-input-error :message="form.errors.featured" class="mt-2" />
+
+                <div class="w-1/2">
+                    <jet-label for="private" value="Private" />
+                    <info-text>
+                        Private images will only appear for registered users
+                    </info-text>
+                    <checkbox
+                        id="private"
+                        v-model:checked="form.private"
+                        name="private"
+                    />
+                    <jet-input-error
+                        :message="form.errors.private"
+                        class="mt-2"
+                    />
+                </div>
             </div>
         </template>
 
@@ -130,10 +151,12 @@ import JetInput from "@/Base/Input.vue";
 import JetInputError from "@/Base/InputError.vue";
 import JetLabel from "@/Base/Label.vue";
 import Wysiwyg from "@/Base/Wysiwyg";
-import Checkbox from "../Base/Checkbox";
+import Checkbox from "@/Base/Checkbox";
+import InfoText from "@/Base/InfoText";
 
 export default defineComponent({
     components: {
+        InfoText,
         Checkbox,
         Wysiwyg,
         JetDialogModal,
@@ -168,6 +191,7 @@ export default defineComponent({
                 description: this.picture.description,
                 year: this.picture.year,
                 featured: Boolean(this.picture.featured),
+                private: Boolean(this.picture.private),
                 photo: null,
                 person_ids: this.picture.person_ids,
             }),
@@ -184,6 +208,14 @@ export default defineComponent({
                     label: person.full_name,
                 };
             });
+        },
+    },
+
+    watch: {
+        "form.private"() {
+            if (this.form.private) {
+                this.form.featured = false;
+            }
         },
     },
 
