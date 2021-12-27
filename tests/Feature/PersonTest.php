@@ -106,12 +106,14 @@ class PersonTest extends TestCase
             );
     }
 
-    public function test_person_component_has_no_private_pictures()
+    public function test_person_component_has_no_private_model_relations()
     {
         $obituary = Obituary::factory()->create();
         $picture = Picture::factory()->create(['private' => 1]);
+        $story = Story::factory()->create(['private' => 1]);
 
         $obituary->person->pictures()->attach($picture);
+        $obituary->person->stories()->attach($story);
 
         $this->get(route('people.show', $obituary->person->slug))
             ->assertInertia(
@@ -119,6 +121,7 @@ class PersonTest extends TestCase
                     ->component('Person')
                     ->url('/'.$obituary->person->slug)
                     ->missing('person.pictures.0')
+                    ->missing('person.stories.0')
             );
     }
 }

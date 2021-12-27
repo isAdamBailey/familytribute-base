@@ -17,6 +17,7 @@ class Story extends Model
         'title',
         'excerpt',
         'content',
+        'private',
     ];
 
     protected $appends = ['person_ids'];

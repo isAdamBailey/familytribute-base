@@ -69,6 +69,9 @@ class Person extends Model
     public function stories(): BelongsToMany
     {
         return $this->belongsToMany(Story::class)
+            ->when(! auth()->user(),
+                fn ($query) => $query->where('private', '!=', 1)
+            )
             ->select(['slug', 'excerpt', 'title', 'content']);
     }
 

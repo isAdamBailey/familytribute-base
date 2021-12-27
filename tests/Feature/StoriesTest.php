@@ -28,8 +28,41 @@ class StoriesTest extends TestCase
                 ->url('/stories')
                 ->has('stories.data', 15)
                 ->has('stories.data.0.excerpt')
+                ->has('stories.data.0.private')
                 ->has('meta.meta')
                 ->has('meta.title')
+            );
+    }
+
+    public function test_private_stories_are_not_shown_publicly()
+    {
+        Story::factory()->create();
+        Story::factory()->count(20)->create(['private' => 1]);
+        $this->assertDatabaseCount('stories', 21);
+
+        $this->get(route('stories.index'))
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->component('Stories')
+                    ->url('/stories')
+                    ->has('stories.data', 1)
+            );
+    }
+
+    public function test_private_stories_are_shown_to_authenticated_users()
+    {
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
+        Story::factory()->create();
+        Story::factory()->count(10)->create(['private' => 1]);
+        $this->assertDatabaseCount('stories', 11);
+
+        $this->get(route('stories.index'))
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->component('Stories')
+                    ->url('/stories')
+                    ->has('stories.data', 11)
             );
     }
 
@@ -73,11 +106,19 @@ class StoriesTest extends TestCase
                 ->has('story.title')
                 ->has('story.content')
                 ->has('story.excerpt')
+                ->has('story.private')
                 ->has('story.person_ids')
                 ->has('people')
                 ->has('meta.meta')
                 ->has('meta.title')
             );
+    }
+
+    public function test_private_story_is_not_shown_publicly()
+    {
+        $story = Story::factory()->create(['private' => 1]);
+
+        $this->get(route('stories.show', $story))->assertRedirect(route('stories.index'));
     }
 
     public function test_new_story_is_stored()
@@ -91,6 +132,7 @@ class StoriesTest extends TestCase
             'title' => $this->faker->words(2, true),
             'excerpt' => $this->faker->sentence,
             'content' => $this->faker->sentences(4, true),
+            'private' => $this->faker->numberBetween(0, 1),
             'person_ids' => $people->modelKeys(),
         ];
 
@@ -102,6 +144,7 @@ class StoriesTest extends TestCase
         $this->assertEquals(strtolower($story->title), $request['title']);
         $this->assertEquals($story->excerpt, $request['excerpt']);
         $this->assertEquals($story->content, $request['content']);
+        $this->assertEquals($story->private, $request['private']);
         $this->assertCount($personCount, $story->people->toArray());
     }
 
@@ -117,6 +160,7 @@ class StoriesTest extends TestCase
             'title' => $this->faker->words(2, true),
             'excerpt' => $this->faker->sentence,
             'content' => $this->faker->sentences(4, true),
+            'private' => $this->faker->numberBetween(0, 1),
             'person_ids' => $people->modelKeys(),
         ];
 
@@ -129,6 +173,7 @@ class StoriesTest extends TestCase
         $this->assertEquals(strtolower($story->title), $request['title']);
         $this->assertEquals($story->excerpt, $request['excerpt']);
         $this->assertEquals($story->content, $request['content']);
+        $this->assertEquals($story->private, $request['private']);
         $this->assertCount($personCount, $story->people->toArray());
     }
 

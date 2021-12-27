@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Person;
 use App\Models\Story;
 use App\Traits\HasSeoTags;
-use Butschster\Head\Hydrator\VueMetaHydrator;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -23,18 +21,25 @@ class StoryController extends Controller
         $this->setTitleStart('Stories');
         $this->renderSeo();
 
-        $search = $request->input('search');
+        $search = $request->search;
+        $sort = $request->sort;
+        $order = $request->order;
 
         $stories = Story::query()
+            ->when(! auth()->user(),
+                fn ($query) => $query->where('private', '!=', 1)
+            )
             ->when($search,
                 fn ($query) => $query->where('title', 'LIKE', '%'.$search.'%')
                     ->orWhere('excerpt', 'LIKE', '%'.$search.'%')
                     ->orWhere('content', 'LIKE', '%'.$search.'%')
             )
-            ->latest()
+            ->orderBy($sort ?: 'created_at', $order ?: 'desc')
             ->paginate();
 
         $stories->appends([
+            'sort' => $sort,
+            'order' => $order,
             'search' => $search,
         ]);
 
@@ -43,13 +48,20 @@ class StoryController extends Controller
                 'slug' => $story->slug,
                 'title' => $story->title,
                 'excerpt' => $story->excerpt,
+                'private' => $story->private,
             ]),
+            'sort' => ucwords(str_replace('_', ' ', $sort)),
+            'order' => strtoupper($order),
             'search' => $search,
         ]);
     }
 
-    public function show(Story $story): Response
+    public function show(Story $story): Response|RedirectResponse
     {
+        if ($story->private && ! auth()->user()) {
+            return redirect(route('stories.index'));
+        }
+
         $this->setTitleStart($story->title);
         $this->setDescription($story->excerpt);
         $this->renderSeo();
@@ -60,6 +72,7 @@ class StoryController extends Controller
                 'title',
                 'content',
                 'excerpt',
+                'private',
                 'people',
                 'person_ids',
             ]),
@@ -76,17 +89,19 @@ class StoryController extends Controller
             'title' => 'required|string|max:100',
             'excerpt' => 'required|string|max:250',
             'content' => 'required|string',
+            'private' => 'required|boolean',
             'person_ids' => 'array|nullable',
         ]);
 
         $story = Story::create([
-            'title' => $request->input('title'),
-            'excerpt' => $request->input('excerpt'),
+            'title' => $request->title,
+            'excerpt' => $request->excerpt,
+            'private' => $request->private,
             'content' => $request->input('content'),
         ]);
 
-        if ($request->input('person_ids')) {
-            $story->people()->sync($request->input('person_ids'));
+        if ($request->person_ids) {
+            $story->people()->sync($request->person_ids);
         }
 
         return back()->with('flash.banner', 'Story successfully created!');
@@ -98,25 +113,30 @@ class StoryController extends Controller
             'title' => 'string|max:100',
             'excerpt' => 'string|max:250',
             'content' => 'string',
+            'private' => 'boolean',
             'person_ids' => 'array|nullable',
         ]);
 
         $story = Story::where('slug', $slug)->first();
 
-        if ($request->input('title')) {
-            $story->title = $request->input('title');
+        if ($request->title) {
+            $story->title = $request->title;
         }
 
-        if ($request->input('excerpt')) {
-            $story->excerpt = $request->input('excerpt');
+        if ($request->excerpt) {
+            $story->excerpt = $request->excerpt;
+        }
+
+        if ($request->private) {
+            $story->private = $request->private;
         }
 
         if ($request->input('content')) {
             $story->content = $request->input('content');
         }
 
-        if ($request->input('person_ids')) {
-            $story->people()->sync($request->input('person_ids'));
+        if ($request->person_ids) {
+            $story->people()->sync($request->person_ids);
         }
 
         $story->save();
