@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Mail\UpcomingDates;
 use App\Models\Obituary;
+use App\Models\SiteSetting;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -43,12 +44,13 @@ class SendUpcomingDatesEmail extends Command
      */
     public function handle()
     {
-        $upcomingDeathDates = $this->checkBetweenDates('death_date');
-        $upcomingBirthDates = $this->checkBetweenDates('birth_date');
+        $upcomingDeathDates = $this->getObituariesInRange('death_date');
+        $upcomingBirthDates = $this->getObituariesInRange('birth_date');
 
         if ($upcomingBirthDates->isNotEmpty() || $upcomingDeathDates->isNotEmpty()) {
             foreach (User::all() as $user) {
                 Mail::to($user->email)->send(new UpcomingDates([
+                    'siteName' => SiteSetting::first()->title,
                     'deathDates' => $upcomingDeathDates,
                     'birthDates' => $upcomingBirthDates,
                 ]));
@@ -64,9 +66,9 @@ class SendUpcomingDatesEmail extends Command
         return 0;
     }
 
-    private function checkBetweenDates($date): Collection|array
+    private function getObituariesInRange($date): Collection|array
     {
-        return Obituary::all()->filter(function ($obit) use ($date) {
+        return Obituary::all()->load('person')->filter(function ($obit) use ($date) {
             $date = Carbon::parse($obit->$date);
 
             return $date->setYear(now()->year)->between(now(), now()->addWeek())

@@ -62,4 +62,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public static function adminEmails(): array
+    {
+        return self::whereHas('teams', function ($query) {
+            $query->whereRole('admin');
+        })->pluck('email')->toArray();
+    }
 }

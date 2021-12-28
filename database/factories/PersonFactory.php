@@ -14,7 +14,7 @@ class PersonFactory extends Factory
     public function definition()
     {
         return [
-            'first_name' => $this->faker->firstName(),
+            'first_name' => $this->faker->unique()->firstName(),
             'last_name' => $this->faker->lastName(),
         ];
     }

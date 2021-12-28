@@ -10,6 +10,16 @@ use App\Http\Controllers\StoryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+//Route::get('/mailable', function () {
+//    $data = [
+//        'siteName' => App\Models\SiteSetting::first()->title,
+//        'deathDates' => App\Models\Obituary::with('person')->inRandomOrder()->limit(3)->get(),
+//        'birthDates' => App\Models\Obituary::with('person')->inRandomOrder()->limit(3)->get(),
+//    ];
+//
+//    return new App\Mail\UpcomingDates($data);
+//});
+
 Route::get('/', [HomeController::class, 'show'])->name('home');
 
 Route::get('/pictures', [PictureController::class, 'index'])->name('pictures.index');

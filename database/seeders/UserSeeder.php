@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -14,8 +15,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->withPersonalTeam()->create([
+        $user = User::factory()->withPersonalTeam()->create([
             'email' => 'test@test.com',
         ]);
+        Team::first()->users()->attach($user, ['role' => 'admin']);
     }
 }
