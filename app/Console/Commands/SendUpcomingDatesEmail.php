@@ -44,16 +44,16 @@ class SendUpcomingDatesEmail extends Command
      */
     public function handle()
     {
-        $upcomingDeathDates = $this->getObituariesInRange('death_date');
-        $upcomingBirthDates = $this->getObituariesInRange('birth_date');
+        $upcomingDeathDates = $this->getThisWeeksObituaries('death_date');
+        $upcomingBirthDates = $this->getThisWeeksObituaries('birth_date');
 
         if ($upcomingBirthDates->isNotEmpty() || $upcomingDeathDates->isNotEmpty()) {
             foreach (User::all() as $user) {
-                Mail::to($user->email)->send(new UpcomingDates([
-                    'siteName' => SiteSetting::first()->title,
-                    'deathDates' => $upcomingDeathDates,
-                    'birthDates' => $upcomingBirthDates,
-                ]));
+                Mail::to($user->email)->send(new UpcomingDates(
+                    SiteSetting::first()->title,
+                    $upcomingBirthDates,
+                    $upcomingDeathDates,
+                ));
             }
 
             $this->info('The upcoming dates emails were sent!');
@@ -66,7 +66,7 @@ class SendUpcomingDatesEmail extends Command
         return 0;
     }
 
-    private function getObituariesInRange($date): Collection|array
+    private function getThisWeeksObituaries($date): Collection|array
     {
         return Obituary::all()->load('person')->filter(function ($obit) use ($date) {
             $date = Carbon::parse($obit->$date);

@@ -65,6 +65,10 @@ p {
     margin-top: 0;
     text-align: left;
 }
+li {
+    margin-bottom: 15px;
+    list-style: none;
+}
 
 p.sub {
     font-size: 12px;

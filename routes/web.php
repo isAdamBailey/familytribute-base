@@ -11,13 +11,11 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 //Route::get('/mailable', function () {
-//    $data = [
-//        'siteName' => App\Models\SiteSetting::first()->title,
-//        'deathDates' => App\Models\Obituary::with('person')->inRandomOrder()->limit(3)->get(),
-//        'birthDates' => App\Models\Obituary::with('person')->inRandomOrder()->limit(3)->get(),
-//    ];
-//
-//    return new App\Mail\UpcomingDates($data);
+//    return new App\Mail\UpcomingDates(
+//        App\Models\SiteSetting::first()->title,
+//        App\Models\Obituary::with('person')->inRandomOrder()->limit(3)->get(),
+//        App\Models\Obituary::with('person')->inRandomOrder()->limit(3)->get(),
+//    );
 //});
 
 Route::get('/', [HomeController::class, 'show'])->name('home');

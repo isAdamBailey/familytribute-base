@@ -6,21 +6,28 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 
 class UpcomingDates extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected array $data;
+    protected string $siteName;
+
+    protected Collection $birthDates;
+
+    protected Collection $deathDates;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(array $data)
+    public function __construct(string $siteName, Collection $birthDates, Collection $deathDates)
     {
-        $this->data = $data;
+        $this->siteName = $siteName;
+        $this->birthDates = $birthDates;
+        $this->deathDates = $deathDates;
     }
 
     /**
@@ -30,6 +37,10 @@ class UpcomingDates extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.upcoming-dates', $this->data);
+        return $this->markdown('emails.upcoming-dates', [
+            'siteName' => $this->siteName,
+            'birthDates' => $this->birthDates,
+            'deathDates' => $this->deathDates,
+        ])->subject(__('Upcoming Dates on '.$this->siteName));
     }
 }

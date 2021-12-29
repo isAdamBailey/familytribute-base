@@ -1,11 +1,17 @@
+@php
+    $assetPath = '/images/undraw_appreciation_re_p6rl.svg';
+@endphp
+
 <tr>
 <td class="header">
 <a href="{{ $url }}" style="display: inline-block;">
-@if (trim($slot) === 'Laravel')
-<img src="https://laravel.com/img/notification-logo.png" class="logo" alt="Laravel Logo">
-@else
-{{ $slot }}
+
+@if( file_exists(public_path($assetPath)) )
+<img src="{{ asset($assetPath) }}" class="logo" alt="{{ $appName ?? config('app.name') }} Logo">
 @endif
+
+<h1>{{ $slot }}</h1>
+
 </a>
 </td>
 </tr>
