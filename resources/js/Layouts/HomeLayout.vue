@@ -1,6 +1,6 @@
 <template>
     <div>
-        <app-head />
+        <app-head :title="title" />
 
         <div class="min-h-screen bg-gradient-to-r from-indigo-100 to-gray-100">
             <primary-nav />
@@ -37,6 +37,9 @@ export default defineComponent({
         AppHead,
         PrimaryNav,
         PrimaryFooter,
+    },
+    props: {
+        title: String,
     },
 });
 </script>

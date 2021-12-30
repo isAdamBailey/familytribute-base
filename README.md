@@ -1,4 +1,3 @@
-
 ## About FamilyTribute
 
 [FamilyTribute](https://familytribute.org/) is software that allows families to share their history together,

@@ -1,6 +1,6 @@
 <template>
     <Head>
-        <title>{{ $page.props.meta.title }}</title>
+        <title>{{ displayTitle }}</title>
 
         <slot />
     </Head>
@@ -8,12 +8,23 @@
 
 <script>
 import { Head } from "@inertiajs/inertia-vue3";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
     components: { Head },
+    props: {
+        title: { type: String },
+    },
     computed: {
+        displayTitle() {
+            const metaTitle = this.$page.props.meta?.title;
+
+            return this.title && metaTitle
+                ? `${this.title} - ${metaTitle}`
+                : metaTitle || this.title;
+        },
         meta() {
-            return this.$inertia.page.props.meta.meta;
+            return this.$page.props.meta?.meta || [];
         },
         description() {
             return this.meta.find((item) => item.name === "description")
@@ -41,24 +52,36 @@ export default {
         },
     },
     mounted() {
-        document
-            .querySelector('meta[name="description"]')
-            .setAttribute("content", this.description);
-        document
-            .querySelector('meta[property="og:image"]')
-            .setAttribute("content", this.ogImage);
-        document
-            .querySelector('meta[property="og:description"]')
-            .setAttribute("content", this.ogDescription);
-        document
-            .querySelector('meta[property="og:url"]')
-            .setAttribute("content", this.ogUrl);
-        document
-            .querySelector('meta[name="twitter:image"]')
-            .setAttribute("content", this.twitterImage);
-        document
-            .querySelector('meta[name="twitter:description"]')
-            .setAttribute("content", this.twitterDescription);
+        const description = document.querySelector('meta[name="description"]');
+        description
+            ? description.setAttribute("content", this.description)
+            : null;
+
+        const ogImage = document.querySelector('meta[property="og:image"]');
+        ogImage ? ogImage.setAttribute("content", this.ogImage) : null;
+        const ogDescription = document.querySelector(
+            'meta[property="og:description"]'
+        );
+        ogDescription
+            ? ogDescription.setAttribute("content", this.ogDescription)
+            : null;
+        const ogUrl = document.querySelector('meta[property="og:url"]');
+        ogUrl ? ogUrl.setAttribute("content", this.ogUrl) : null;
+        const twitterImage = document.querySelector(
+            'meta[name="twitter:image"]'
+        );
+        twitterImage
+            ? twitterImage.setAttribute("content", this.twitterImage)
+            : null;
+        const twitterDescription = document.querySelector(
+            'meta[name="twitter:description"]'
+        );
+        twitterDescription
+            ? twitterDescription.setAttribute(
+                  "content",
+                  this.twitterDescription
+              )
+            : null;
     },
-};
+});
 </script>
