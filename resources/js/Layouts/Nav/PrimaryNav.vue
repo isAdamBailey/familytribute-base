@@ -6,7 +6,7 @@
                 <div class="flex">
                     <!-- Logo -->
                     <Link
-                        class="flex-shrink-0 flex items-center"
+                        class="flex items-center w-3/4 lg:w-full"
                         :href="route('home')"
                     >
                         <jet-application-mark class="block h-9 w-auto" />
@@ -37,6 +37,8 @@
                         </jet-nav-link>
                     </div>
                 </div>
+
+                <theme-toggle class="" />
 
                 <div
                     v-if="$page.props.user"
@@ -298,6 +300,7 @@ import JetDropdown from "@/Base/Dropdown.vue";
 import JetDropdownLink from "@/Base/DropdownLink.vue";
 import JetNavLink from "@/Base/NavLink.vue";
 import JetResponsiveNavLink from "@/Base/ResponsiveNavLink.vue";
+import ThemeToggle from "@/Layouts/Nav/ThemeToggle";
 
 export default defineComponent({
     components: {
@@ -306,6 +309,7 @@ export default defineComponent({
         JetDropdownLink,
         JetNavLink,
         JetResponsiveNavLink,
+        ThemeToggle,
     },
 
     data() {
