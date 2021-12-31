@@ -1,5 +1,5 @@
 <template>
-    <div class="dark:bg-gray-900">
+    <div>
         <app-head />
 
         <jet-banner />
