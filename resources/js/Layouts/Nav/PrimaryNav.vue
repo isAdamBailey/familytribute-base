@@ -5,10 +5,7 @@
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <!-- Logo -->
-                    <Link
-                        class="flex items-center w-3/4 lg:w-full"
-                        :href="route('home')"
-                    >
+                    <Link class="flex items-center" :href="route('home')">
                         <jet-application-mark class="block h-9 w-auto" />
                         <div
                             class="font-header text-3xl md:text-5xl font-bold dark:text-indigo-300"
