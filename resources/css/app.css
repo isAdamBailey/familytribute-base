@@ -7,6 +7,10 @@
     .ProseMirror a {
         @apply text-sky-500 font-bold underline underline-offset-1 decoration-sky-500 hover:decoration-2 transition;
     }
+
+    .html-content blockquote p {
+        @apply text-gray-800 dark:text-indigo-300;
+    }
 }
 
 @layer utilities {
