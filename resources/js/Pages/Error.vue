@@ -1,7 +1,9 @@
 <template>
     <home-layout :title="title">
-        <h2 class="text-3xl text-gray-700">{{ title }}</h2>
-        <div class="text-xl">{{ description }}</div>
+        <h2 class="text-3xl text-gray-700 dark:text-indigo-500">{{ title }}</h2>
+        <div class="text-xl text-gray-700 dark:text-indigo-300">
+            {{ description }}
+        </div>
         <div class="flex justify-center items-baseline">
             <img class="w-3/4" :src="image" :alt="title" />
         </div>

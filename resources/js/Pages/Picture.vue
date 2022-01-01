@@ -6,7 +6,9 @@
         </template>
 
         <div class="flex flex-wrap-reverse justify-between mt-8 mb-3">
-            <h1 class="font-header font-header text-5xl md:text-7xl">
+            <h1
+                class="font-header font-header text-gray-800 dark:text-indigo-400 text-5xl md:text-7xl"
+            >
                 {{ picture.title }}
             </h1>
 
@@ -26,7 +28,9 @@
                 </base-button>
             </div>
         </div>
-        <div class="mb-3 text-sm font-semibold">
+        <div
+            class="mb-3 text-sm font-semibold text-gray-900 dark:text-gray-100"
+        >
             {{ picture.year }}
         </div>
         <div class="relative">
@@ -41,9 +45,11 @@
         <social-share class="mt-5" :title="picture.title" />
 
         <div
-            class="html-content mt-6 prose max-w-none"
+            class="html-content my-6 prose max-w-none text-gray-700 dark:text-gray-100"
             v-html="picture.description"
         />
+
+        <section-border />
 
         <tagged-people
             :people="picture.people"
@@ -74,9 +80,11 @@ import TaggedPeople from "@/Components/TaggedPeople";
 import JetDangerButton from "@/Base/DangerButton";
 import SocialShare from "@/Components/SocialShare";
 import EmbeddedIcon from "@/Base/EmbeddedIcon";
+import SectionBorder from "@/Base/SectionBorder";
 
 export default defineComponent({
     components: {
+        SectionBorder,
         EmbeddedIcon,
         SocialShare,
         JetDangerButton,

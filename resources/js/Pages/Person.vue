@@ -9,7 +9,9 @@
         </template>
 
         <div class="flex flex-wrap-reverse justify-between mt-8 mb-3">
-            <h1 class="font-header font-header text-5xl md:text-7xl">
+            <h1
+                class="font-header font-header text-gray-800 dark:text-indigo-400 text-5xl md:text-7xl"
+            >
                 {{ person.full_name }}
             </h1>
             <div v-if="$page.props.user">
@@ -29,14 +31,16 @@
             </div>
         </div>
 
-        <div class="mb-3 text-sm font-semibold">
+        <div
+            class="mb-3 text-sm font-semibold text-gray-900 dark:text-gray-100"
+        >
             {{ formatDate(person.obituary.birth_date) }} -
             {{ formatDate(person.obituary.death_date) }}
         </div>
 
         <div
             v-if="person.obituary.background_photo_url"
-            class="w-full h-80 bg-cover bg-no-repeat bg-center"
+            class="w-full h-80 bg-cover rounded-lg bg-no-repeat bg-center"
             :style="`background-image: url(${person.obituary.background_photo_url});`"
         >
             <img
@@ -64,11 +68,6 @@
         <social-share :title="`${person.full_name}'s obituary`" />
 
         <div
-            class="html-content my-10 prose max-w-none"
-            v-html="person.obituary.content"
-        />
-
-        <div
             v-if="person.pictures.length"
             class="flex snap-x space-x-1 overflow-x-scroll pb-8 px-3"
         >
@@ -81,6 +80,17 @@
         >
             <stories-container :items="person.stories" :fixed-width="true" />
         </div>
+
+        <h1
+            class="mt-10 font-header font-header text-gray-800 dark:text-indigo-400 text-3xl md:text-5xl"
+        >
+            Obituary
+        </h1>
+
+        <div
+            class="html-content text-gray-700 dark:text-gray-100 my-10 prose max-w-none"
+            v-html="person.obituary.content"
+        />
     </app-layout>
 
     <obituary-edit-modal

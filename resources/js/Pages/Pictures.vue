@@ -3,7 +3,11 @@
         <template #header> Pictures </template>
 
         <div class="md:mt-5 mb-5 md:mb-0 flex justify-between items-center">
-            <div class="font-header text-3xl md:text-5xl">Pictures</div>
+            <div
+                class="font-header text-gray-800 dark:text-indigo-400 text-3xl md:text-5xl"
+            >
+                Pictures
+            </div>
 
             <search-input route-name="pictures.index" />
 
@@ -65,7 +69,9 @@
         <div v-if="pictures.data.length">
             <infinite-scroll :items="pictures" component="pictures-grid" />
         </div>
-        <div v-else class="text-gray-500">No pictures were found.</div>
+        <div v-else class="text-gray-500 dark:text-indigo-300">
+            No pictures were found.
+        </div>
     </app-layout>
 </template>
 

@@ -3,11 +3,11 @@
         <div class="flex flex-col-reverse mb-5 md:mb-7 lg:flex-row">
             <div>
                 <div
-                    class="font-header font-bold text-6xl md:text-8xl"
+                    class="font-header font-bold text-gray-700 dark:text-indigo-400 text-6xl md:text-8xl"
                     v-html="$inertia.page.props.settings.title"
                 ></div>
                 <div
-                    class="html-content mt-6 text-gray-500 text-l md:text-2xl"
+                    class="html-content mt-6 text-gray-500 dark:text-indigo-300 text-l md:text-2xl"
                     v-html="$inertia.page.props.settings.description"
                 ></div>
             </div>

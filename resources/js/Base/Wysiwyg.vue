@@ -183,7 +183,7 @@ export default {
         this.editor = new Editor({
             editorProps: {
                 attributes: {
-                    class: "prose md:prose-lg h-48 my-2 mx-5 border-t overflow-y-auto focus:outline-none",
+                    class: "prose h-48 my-2 mx-5 border-t overflow-y-auto focus:outline-none",
                 },
             },
             extensions: [

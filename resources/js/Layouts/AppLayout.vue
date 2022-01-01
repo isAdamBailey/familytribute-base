@@ -4,13 +4,18 @@
 
         <jet-banner />
 
-        <div class="min-h-screen bg-gradient-to-r from-indigo-100 to-gray-100">
+        <div
+            class="min-h-screen bg-gradient-to-r from-indigo-100 to-gray-100 dark:from-indigo-900 to-indigo-300"
+        >
             <primary-nav />
 
             <!-- Page Heading -->
-            <header v-if="$slots.header" class="bg-white shadow">
+            <header
+                v-if="$slots.header"
+                class="bg-white dark:bg-gray-900 shadow"
+            >
                 <div
-                    class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8 text-gray-800 leading-tight"
+                    class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8 text-gray-800 dark:text-indigo-300 leading-tight"
                 >
                     <slot name="header"></slot>
                 </div>
@@ -24,7 +29,7 @@
                             class="bg-white overflow-hidden shadow-xl shadow-indigo-200/50 rounded-lg"
                         >
                             <div
-                                class="p-6 pb-20 sm:px-20 bg-white border-b border-gray-200"
+                                class="p-6 pb-20 sm:px-20 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-indigo-300"
                             >
                                 <slot></slot>
                             </div>

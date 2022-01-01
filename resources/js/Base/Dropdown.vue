@@ -4,7 +4,7 @@
             <span v-if="arrowTriggerTitle" class="inline-flex rounded-md">
                 <button
                     type="button"
-                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition"
+                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-indigo-300 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-indigo-500 focus:outline-none transition"
                 >
                     {{ arrowTriggerTitle }}
                     <svg
@@ -49,7 +49,7 @@
                 @click="open = false"
             >
                 <div
-                    class="rounded-md ring-1 ring-black ring-opacity-5"
+                    class="rounded-md ring-1 ring-black ring-opacity-5 dark:bg-gray-900"
                     :class="contentClasses"
                 >
                     <slot name="content"></slot>

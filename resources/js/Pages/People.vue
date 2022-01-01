@@ -3,7 +3,11 @@
         <template #header> People </template>
 
         <div class="md:mt-5 mb-5 md:mb-0 flex justify-between items-center">
-            <div class="font-header text-3xl md:text-5xl">People</div>
+            <div
+                class="font-header text-gray-800 dark:text-indigo-400 text-3xl md:text-5xl"
+            >
+                People
+            </div>
 
             <search-input route-name="people.index" />
 
@@ -67,7 +71,9 @@
         <div v-if="people.data.length">
             <infinite-scroll component="people-grid" :items="people" />
         </div>
-        <div v-else class="text-gray-500">No people were found.</div>
+        <div v-else class="text-gray-500 dark:text-indigo-300">
+            No people were found.
+        </div>
     </app-layout>
 </template>
 

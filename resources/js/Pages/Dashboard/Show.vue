@@ -2,15 +2,19 @@
     <app-layout title="Dashboard">
         <template #header> Dashboard </template>
 
-        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+        <div
+            class="p-6 sm:px-20 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-indigo-300"
+        >
             <div class="flex items-baseline">
                 <jet-application-mark class="block h-12 w-auto" />
-                <div class="ml-3 font-header text-3xl md:text-5xl">
+                <div
+                    class="ml-3 font-header text-3xl text-gray-800 dark:text-indigo-500 md:text-5xl"
+                >
                     {{ $inertia.page.props.settings.title }}
                 </div>
             </div>
 
-            <div class="mt-8 text-2xl">
+            <div class="mt-8 text-gray-800 dark:text-indigo-300 text-2xl">
                 Welcome to {{ $inertia.page.props.settings.title }}'s dashboard,
                 {{ $page.props.user.name }}!
             </div>
@@ -19,7 +23,7 @@
                 If nothing has been added to the site yet,
                 <strong>this is where you start!</strong>
             </info-text>
-            <div class="mt-6 text-gray-500">
+            <div class="mt-6 text-gray-500 dark:text-indigo-300">
                 <p>
                     Here you can add new stories, photos, obituaries and more!
                 </p>

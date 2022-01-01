@@ -6,8 +6,13 @@
         </template>
 
         <div class="flex flex-wrap-reverse justify-between mt-8 mb-3">
-            <h1 class="relative font-header text-5xl md:text-7xl">
-                <embedded-icon :item="story" color="text-gray-900" />
+            <h1
+                class="relative font-header text-gray-800 dark:text-indigo-400 text-5xl md:text-7xl"
+            >
+                <embedded-icon
+                    :item="story"
+                    color="text-gray-900 dark:text-indigo-300"
+                />
                 {{ story.title }}
             </h1>
             <div v-if="$page.props.user">
@@ -27,15 +32,19 @@
             </div>
         </div>
 
-        <div class="italic mt-6 prose max-w-none" v-html="story.excerpt" />
+        <div
+            class="italic mt-6 text-gray-900 dark:text-gray-100 prose max-w-none"
+            v-html="story.excerpt"
+        />
 
         <div
-            class="html-content mt-6 prose max-w-none"
+            class="html-content mt-6 text-gray-900 dark:text-gray-100 prose max-w-none"
             v-html="story.content"
         />
 
-        <social-share class="mt-5" :title="story.title" />
+        <social-share class="my-5" :title="story.title" />
 
+        <section-border />
         <tagged-people :people="story.people" title="People in this story" />
     </app-layout>
 
@@ -62,9 +71,11 @@ import StoryDeleteModal from "@/Modals/StoryDeleteModal";
 import JetDangerButton from "@/Base/DangerButton";
 import SocialShare from "@/Components/SocialShare";
 import EmbeddedIcon from "@/Base/EmbeddedIcon";
+import SectionBorder from "@/Base/SectionBorder";
 
 export default defineComponent({
     components: {
+        SectionBorder,
         EmbeddedIcon,
         SocialShare,
         JetDangerButton,
