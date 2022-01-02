@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('email:upcoming-dates')
+        $schedule->command('email:upcoming_dates')
             ->weekly()
             ->emailOutputOnFailure(User::adminEmails());
     }
