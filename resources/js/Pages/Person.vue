@@ -65,8 +65,6 @@
             </div>
         </div>
 
-        <social-share :title="`${person.full_name}'s obituary`" />
-
         <div
             v-if="person.pictures.length"
             class="flex snap-x space-x-1 overflow-x-scroll pb-8 px-3"
@@ -80,6 +78,8 @@
         >
             <stories-container :items="person.stories" :fixed-width="true" />
         </div>
+
+        <social-share :title="`${person.full_name}'s obituary`" />
 
         <h1
             class="mt-10 font-header font-header text-gray-800 dark:text-indigo-400 text-3xl md:text-5xl"
