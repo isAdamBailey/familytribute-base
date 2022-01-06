@@ -17,6 +17,10 @@
     .html-content blockquote p {
         @apply text-gray-800 dark:text-indigo-300;
     }
+
+    .html-content strong {
+        @apply text-gray-800 dark:text-gray-100;
+    }
 }
 
 @layer utilities {
