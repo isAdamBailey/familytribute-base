@@ -4,15 +4,15 @@
         class="invisible sticky w-full flex justify-end bottom-0 pb-3 pr-5 lg:pr-16 transition"
     >
         <div
-            class="rounded-full cursor-pointer text-gray-700 dark:text-orange-700 hover:text-indigo-600 dark:hover:text-orange-500 transition"
+            class="rounded-full cursor-pointer text-gray-700 dark:text-orange-600 hover:text-indigo-600 dark:hover:text-orange-500 transition"
         >
-            <a
+            <button
                 role="button"
-                aria-labelledby="scroll to top of the page"
+                aria-label="scroll to top of the page"
                 @click="scrollToTop"
             >
-                <i class="text-4xl md:text-5xl ri-arrow-up-circle-line"></i>
-            </a>
+                <i class="text-5xl ri-arrow-up-circle-line"></i>
+            </button>
         </div>
     </div>
 </template>
