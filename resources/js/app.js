@@ -1,4 +1,5 @@
 import Button from "@/Base/Button";
+import ScrollTop from "@/Base/ScrollTop";
 
 require("./bootstrap");
 
@@ -16,6 +17,7 @@ createInertiaApp({
             .use(VueSocialSharing)
             .component("Link", Link)
             .component("BaseButton", Button)
+            .component("ScrollTop", ScrollTop)
             .mixin({ methods: { route } })
             .mount(el);
     },

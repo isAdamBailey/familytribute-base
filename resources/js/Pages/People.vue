@@ -75,6 +75,7 @@
             No people were found.
         </div>
     </app-layout>
+    <scroll-top />
 </template>
 
 <script>

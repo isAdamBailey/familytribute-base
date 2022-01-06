@@ -60,6 +60,7 @@
         :story="story"
         @close="storyDeleteModalOpen = false"
     />
+    <scroll-top />
 </template>
 
 <script>

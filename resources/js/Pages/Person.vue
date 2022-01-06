@@ -103,6 +103,7 @@
         :person="person"
         @close="obituaryDeleteModalOpen = false"
     />
+    <scroll-top />
 </template>
 
 <script>

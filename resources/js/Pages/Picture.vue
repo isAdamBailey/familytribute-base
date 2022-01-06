@@ -69,6 +69,7 @@
         :picture="picture"
         @close="pictureDeleteModalOpen = false"
     />
+    <scroll-top />
 </template>
 
 <script>

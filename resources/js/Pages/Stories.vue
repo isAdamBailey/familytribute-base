@@ -63,6 +63,7 @@
             No stories were found.
         </div>
     </app-layout>
+    <scroll-top />
 </template>
 
 <script>

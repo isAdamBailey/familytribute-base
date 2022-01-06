@@ -73,6 +73,7 @@
             No pictures were found.
         </div>
     </app-layout>
+    <scroll-top />
 </template>
 
 <script>
