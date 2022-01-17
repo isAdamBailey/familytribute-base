@@ -41,6 +41,7 @@ class UpcomingDates extends Mailable
             'siteName' => $this->siteName,
             'birthDates' => $this->birthDates,
             'deathDates' => $this->deathDates,
-        ])->subject(__('Upcoming Dates on '.$this->siteName));
+        ])->from(config('mail.from.address'), $this->siteName)
+            ->subject(__('Upcoming Dates on '.$this->siteName));
     }
 }

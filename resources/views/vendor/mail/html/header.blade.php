@@ -7,7 +7,7 @@
 <a href="{{ $url }}" style="display: inline-block;">
 
 @if( file_exists(public_path($assetPath)) )
-<img src="{{ asset($assetPath) }}" class="logo" alt="{{ $appName ?? config('app.name') }} Logo">
+<img src="{{ $url.$assetPath }}" class="logo" alt="{{ $appName ?? config('app.name') }} Logo">
 @endif
 
 <h1>{{ $slot }}</h1>
