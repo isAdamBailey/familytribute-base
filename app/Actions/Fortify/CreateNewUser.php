@@ -4,6 +4,7 @@ namespace App\Actions\Fortify;
 
 use App\Models\SiteSetting;
 use App\Models\Team;
+use App\Models\TeamInvitation;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Laravel\Jetstream\Events\AddingTeamMember;
+use Laravel\Jetstream\Events\TeamMemberAdded;
 use Laravel\Jetstream\Jetstream;
 
 class CreateNewUser implements CreatesNewUsers
@@ -68,6 +71,10 @@ class CreateNewUser implements CreatesNewUsers
             $team->users()->attach($user, ['role' => 'editor']);
 
             $user->switchTeam($team);
+
+            if ($invitation = TeamInvitation::where('email', $user->email)) {
+                $invitation->delete();
+            }
         } else {
             $user->switchTeam($team = $user->ownedTeams()->create([
                 'name' => config('app.name'),

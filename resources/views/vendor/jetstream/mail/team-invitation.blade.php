@@ -1,4 +1,4 @@
-@component('mail::message', ['appName' => $appname])
+@component('mail::message', ['appName' => $appName])
 #{{ __('You have been invited to join :appname!', ['appname' => $appName]) }}
 
 With an account at {{ $appName }}, you have access to exclusive stories and pictures

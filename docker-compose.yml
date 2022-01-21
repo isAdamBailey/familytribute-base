@@ -23,9 +23,9 @@ services:
             - sail
         depends_on:
             - mysql
-            - redis
-            - meilisearch
-            - selenium
+#            - redis
+#            - meilisearch
+#            - selenium
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
