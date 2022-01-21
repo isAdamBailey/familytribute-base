@@ -1,5 +1,5 @@
 @component('mail::message', ['appName' => $appName])
-#{{ __('You have been invited to join :appname!', ['appname' => $appName]) }}
+{{ __('You have been invited to join :appname!', ['appname' => $appName]) }}
 
 With an account at {{ $appName }}, you have access to exclusive stories and pictures
 not available on the public website. You may also receive emails with reminders of notable dates for your family.
