@@ -86,7 +86,7 @@ class StoryController extends Controller
             'title' => 'required|string|max:100',
             'excerpt' => 'required|string|max:250',
             'content' => 'required|string',
-            'year' => 'digits:4',
+            'year' => 'digits:4|nullable',
             'private' => 'required|boolean',
             'person_ids' => 'array|nullable',
         ]);
@@ -112,7 +112,7 @@ class StoryController extends Controller
             'title' => 'string|max:100',
             'excerpt' => 'string|max:250',
             'content' => 'string',
-            'year' => 'digits:4',
+            'year' => 'digits:4|nullable',
             'private' => 'boolean',
             'person_ids' => 'array|nullable',
         ]);
