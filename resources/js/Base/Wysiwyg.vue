@@ -1,5 +1,8 @@
 <template>
-    <div v-if="editor" class="border border-gray-300 rounded-md shadow-sm">
+    <div
+        v-if="editor"
+        class="bg-white border border-gray-300 rounded-md shadow-sm"
+    >
         <wysiwyg-button
             icon="ri-paragraph"
             title="set paragraph"
