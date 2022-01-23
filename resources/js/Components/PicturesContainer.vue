@@ -17,11 +17,13 @@
             :class="fixedWidth ? 'w-60' : ''"
             class="card-text-gradient p-3 rounded-b truncate"
         >
-            <div class="flex justify-between">
+            <div class="flex justify-between items-center">
                 <p class="text-sm font-bold truncate">
                     {{ picture.title }}
                 </p>
-                <p class="text-sm font-bold">{{ picture.year }}</p>
+                <pill v-if="picture.year" class="" no-hover>{{
+                    picture.year
+                }}</pill>
             </div>
             <p
                 class="text-sm prose max-w-none line-clamp-1"
@@ -34,9 +36,10 @@
 <script>
 import { defineComponent } from "vue";
 import EmbeddedIcon from "@/Base/EmbeddedIcon";
+import Pill from "../Base/Pill";
 
 export default defineComponent({
-    components: { EmbeddedIcon },
+    components: { Pill, EmbeddedIcon },
     props: {
         items: Array,
         fixedWidth: {

@@ -8,19 +8,14 @@
     >
         <embedded-icon :item="story" color="text-gray-900" />
 
-        <div
-            :class="fixedWidth ? 'w-96' : ''"
-            class="flex justify-between flex-wrap"
-        >
+        <div :class="fixedWidth ? 'w-96' : ''" class="flex justify-between">
             <h2
                 :class="fixedWidth ? 'w-80' : ''"
                 class="font-bold text-xl truncate"
             >
                 {{ story.title }}
             </h2>
-            <pill v-if="story.category" class="m-3" no-hover>{{
-                story.category
-            }}</pill>
+            <pill v-if="story.year" class="" no-hover>{{ story.year }}</pill>
         </div>
         <div class="rounded-b-lg">
             <div

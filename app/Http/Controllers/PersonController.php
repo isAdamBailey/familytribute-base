@@ -37,12 +37,6 @@ class PersonController extends Controller
             )
             ->paginate();
 
-        $people->appends([
-            'sort' => $sort,
-            'order' => $order,
-            'search' => $search,
-        ]);
-
         return Inertia::render('People', [
             'people' => $people->through(fn ($person) => [
                 'slug' => $person->slug,

@@ -15,8 +15,35 @@
                 <dropdown-link
                     :href="
                         route('stories.index', {
+                            sort: 'year',
+                            order: 'desc',
+                            search: $page.props.search,
+                        })
+                    "
+                >
+                    <i class="ri-calendar-fill"></i>
+                    <i class="ri-arrow-down-line"></i>
+                    Year Written DESC
+                </dropdown-link>
+                <dropdown-link
+                    :href="
+                        route('stories.index', {
+                            sort: 'year',
+                            order: 'asc',
+                            search: $page.props.search,
+                        })
+                    "
+                >
+                    <i class="ri-calendar-fill"></i>
+                    <i class="ri-arrow-up-line"></i>
+                    Year Written ASC
+                </dropdown-link>
+                <dropdown-link
+                    :href="
+                        route('stories.index', {
                             sort: 'created_at',
                             order: 'asc',
+                            search: $page.props.search,
                         })
                     "
                 >
@@ -29,6 +56,7 @@
                         route('stories.index', {
                             sort: 'created_at',
                             order: 'desc',
+                            search: $page.props.search,
                         })
                     "
                 >

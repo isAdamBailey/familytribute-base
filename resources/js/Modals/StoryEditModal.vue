@@ -42,17 +42,32 @@
                 <jet-input-error :message="form.errors.content" class="mt-2" />
             </div>
 
-            <div class="mt-2 col-span-6 sm:col-span-4">
-                <jet-label for="private" value="Private" />
-                <info-text>
-                    Private stories will only appear for registered users
-                </info-text>
-                <checkbox
-                    id="private"
-                    v-model:checked="form.private"
-                    name="private"
-                />
-                <jet-input-error :message="form.errors.private" class="mt-2" />
+            <div class="flex flex-wrap -mx-3">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <jet-label for="private" value="Private" />
+                    <info-text>
+                        Private stories will only appear for registered users
+                    </info-text>
+                    <checkbox
+                        id="private"
+                        v-model:checked="form.private"
+                        name="private"
+                    />
+                    <jet-input-error
+                        :message="form.errors.private"
+                        class="mt-2"
+                    />
+                </div>
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <jet-label for="year" value="Year" />
+                    <jet-input
+                        id="year"
+                        v-model="form.year"
+                        type="number"
+                        class="mt-1 block w-full"
+                    />
+                    <jet-input-error :message="form.errors.year" class="mt-2" />
+                </div>
             </div>
         </template>
 
@@ -121,6 +136,7 @@ export default defineComponent({
                 title: this.story.title,
                 excerpt: this.story.excerpt,
                 content: this.story.content,
+                year: this.story.year,
                 private: Boolean(this.story.private),
                 person_ids: this.story.person_ids,
             }),

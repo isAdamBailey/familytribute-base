@@ -35,7 +35,7 @@ class StoryController extends Controller
                     ->orWhere('content', 'LIKE', '%'.$search.'%')
             )
             ->orderBy($sort ?: 'year', $order ?: 'asc')
-            ->orderBy('id', $order ?: 'desc')
+            ->orderBy('id', $order ?: 'asc')
             ->paginate();
 
         return Inertia::render('Stories', [

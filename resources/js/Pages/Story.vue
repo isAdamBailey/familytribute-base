@@ -32,6 +32,11 @@
             </div>
         </div>
 
+        <p v-if="story.year" class="text-gray-800 dark:text-indigo-400">
+            Written on or around
+            <span class="font-semibold">{{ story.year }}</span>
+        </p>
+
         <div
             class="italic mt-6 text-gray-900 dark:text-gray-100 prose max-w-none"
             v-html="story.excerpt"
@@ -73,9 +78,11 @@ import JetDangerButton from "@/Base/DangerButton";
 import SocialShare from "@/Components/SocialShare";
 import EmbeddedIcon from "@/Base/EmbeddedIcon";
 import SectionBorder from "@/Base/SectionBorder";
+import Pill from "../Base/Pill";
 
 export default defineComponent({
     components: {
+        Pill,
         SectionBorder,
         EmbeddedIcon,
         SocialShare,

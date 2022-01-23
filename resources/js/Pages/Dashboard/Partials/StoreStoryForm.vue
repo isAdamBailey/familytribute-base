@@ -45,7 +45,18 @@
                     class="mt-2"
                 />
             </div>
-            <div class="col-span-6">
+
+            <div class="col-span-6 md:col-span-2">
+                <jet-label for="year" value="Year" />
+                <jet-input
+                    id="year"
+                    v-model="form.year"
+                    type="number"
+                    class="mt-1 block w-full"
+                />
+                <jet-input-error :message="form.errors.year" class="mt-2" />
+            </div>
+            <div class="col-span-6 md:col-span-2">
                 <jet-label for="private" value="Private" />
                 <info-text
                     >Private stories will only appear for registered
@@ -111,6 +122,7 @@ export default defineComponent({
                 title: null,
                 excerpt: null,
                 content: null,
+                year: null,
                 private: false,
                 person_ids: null,
             }),

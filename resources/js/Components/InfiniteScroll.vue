@@ -29,6 +29,7 @@ export default defineComponent({
     data() {
         return {
             itemsData: this.items.data,
+            loadingMore: false,
         };
     },
     computed: {
@@ -38,22 +39,26 @@ export default defineComponent({
     },
     watch: {
         items() {
-            // if this is a search, then replace all items
-            if (this.$inertia.page.props.search) {
-                this.itemsData = this.items.data;
-            } else {
+            if (this.loadingMore) {
                 this.itemsData.push(...this.items.data);
+                this.loadingMore = false;
             }
         },
     },
     methods: {
         loadMore() {
+            this.loadingMore = true;
+
             const links = this.items.links;
             const next = links[links.length - 1];
             if (next.url) {
                 this.$inertia.get(
                     next.url,
-                    {},
+                    {
+                        search: this.$inertia.page.props.search,
+                        sort: this.$inertia.page.props.sort,
+                        order: this.$inertia.page.props.order,
+                    },
                     {
                         preserveScroll: true,
                         preserveState: true,

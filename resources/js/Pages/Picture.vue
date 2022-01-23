@@ -28,11 +28,10 @@
                 </base-button>
             </div>
         </div>
-        <div
-            class="mb-3 text-sm font-semibold text-gray-900 dark:text-gray-100"
-        >
-            {{ picture.year }}
-        </div>
+        <p class="mb-3 md:mb-7 text-gray-800 dark:text-indigo-400">
+            Taken on or around
+            <span class="font-semibold">{{ picture.year }}</span>
+        </p>
         <div class="relative">
             <img
                 class="w-full object-cover rounded-lg"
@@ -82,9 +81,11 @@ import JetDangerButton from "@/Base/DangerButton";
 import SocialShare from "@/Components/SocialShare";
 import EmbeddedIcon from "@/Base/EmbeddedIcon";
 import SectionBorder from "@/Base/SectionBorder";
+import Pill from "../Base/Pill";
 
 export default defineComponent({
     components: {
+        Pill,
         SectionBorder,
         EmbeddedIcon,
         SocialShare,

@@ -17,6 +17,7 @@
                         route('pictures.index', {
                             sort: 'year',
                             order: 'desc',
+                            search: $page.props.search,
                         })
                     "
                 >
@@ -29,6 +30,7 @@
                         route('pictures.index', {
                             sort: 'year',
                             order: 'asc',
+                            search: $page.props.search,
                         })
                     "
                 >
@@ -42,6 +44,7 @@
                         route('pictures.index', {
                             sort: 'featured',
                             order: 'desc',
+                            search: $page.props.search,
                         })
                     "
                 >
@@ -53,6 +56,7 @@
                         route('pictures.index', {
                             sort: 'private',
                             order: 'desc',
+                            search: $page.props.search,
                         })
                     "
                 >

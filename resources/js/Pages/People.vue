@@ -17,6 +17,7 @@
                         route('people.index', {
                             sort: 'last_name',
                             order: 'desc',
+                            search: $page.props.search,
                         })
                     "
                 >
@@ -29,6 +30,7 @@
                         route('people.index', {
                             sort: 'last_name',
                             order: 'asc',
+                            search: $page.props.search,
                         })
                     "
                 >
@@ -41,6 +43,7 @@
                         route('people.index', {
                             sort: 'death_date',
                             order: 'desc',
+                            search: $page.props.search,
                         })
                     "
                 >
@@ -53,6 +56,7 @@
                         route('people.index', {
                             sort: 'death_date',
                             order: 'asc',
+                            search: $page.props.search,
                         })
                     "
                 >

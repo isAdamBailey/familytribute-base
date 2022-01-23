@@ -12,7 +12,6 @@
             placeholder="Search"
             type="search"
             @keyup.esc="search = null"
-            @blur="search = null"
         />
     </div>
 </template>
@@ -28,6 +27,7 @@ export default defineComponent({
     data() {
         return {
             search: this.$inertia.page.props.search || null,
+            sort: this.$inertia.page.props.sort || null,
         };
     },
 
@@ -41,11 +41,15 @@ export default defineComponent({
         },
     },
 
+    mounted() {
+        this.$refs.search.focus();
+    },
+
     methods: {
         searchMethod: _.debounce(function () {
             this.$inertia.get(
                 route(this.routeName),
-                { search: this.search },
+                { search: this.search, sort: this.sort },
                 { preserveState: true }
             );
         }, 500),

@@ -39,12 +39,6 @@ class PictureController extends Controller
             ->orderBy('id', $order ?: 'asc')
             ->paginate();
 
-        $pictures->appends([
-            'sort' => $sort,
-            'order' => $order,
-            'search' => $search,
-        ]);
-
         return Inertia::render('Pictures', [
             'pictures' => $pictures->through(fn ($picture) => [
                 'slug' => $picture->slug,
