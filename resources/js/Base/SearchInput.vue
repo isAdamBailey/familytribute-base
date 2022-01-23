@@ -50,7 +50,7 @@ export default defineComponent({
             this.$inertia.get(
                 route(this.routeName),
                 { search: this.search, sort: this.sort },
-                { preserveState: true }
+                { preserveState: false }
             );
         }, 500),
     },
