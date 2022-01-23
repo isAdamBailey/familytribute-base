@@ -28,6 +28,7 @@ class StoriesTest extends TestCase
                 ->url('/stories')
                 ->has('stories.data', 15)
                 ->has('stories.data.0.excerpt')
+                ->has('stories.data.0.year')
                 ->has('stories.data.0.private')
                 ->has('meta.meta')
                 ->has('meta.title')
@@ -87,6 +88,7 @@ class StoriesTest extends TestCase
                 ->has('stories.data.0', fn (Assert $page) => $page
                     ->where('title', $story->title)
                     ->where('excerpt', $story->excerpt)
+                    ->where('year', $story->year)
                     ->etc()
                 )
                 ->has('meta.meta')
@@ -106,6 +108,7 @@ class StoriesTest extends TestCase
                 ->has('story.title')
                 ->has('story.content')
                 ->has('story.excerpt')
+                ->has('story.year')
                 ->has('story.private')
                 ->has('story.person_ids')
                 ->has('people')
@@ -132,6 +135,7 @@ class StoriesTest extends TestCase
             'title' => $this->faker->words(2, true),
             'excerpt' => $this->faker->sentence,
             'content' => $this->faker->sentences(4, true),
+            'year' => $this->faker->numberBetween(1900, 2000),
             'private' => $this->faker->numberBetween(0, 1),
             'person_ids' => $people->modelKeys(),
         ];
@@ -145,6 +149,7 @@ class StoriesTest extends TestCase
         $this->assertEquals($story->excerpt, $request['excerpt']);
         $this->assertEquals($story->content, $request['content']);
         $this->assertEquals($story->private, $request['private']);
+        $this->assertEquals($story->year, $request['year']);
         $this->assertCount($personCount, $story->people->toArray());
     }
 
@@ -160,6 +165,7 @@ class StoriesTest extends TestCase
             'title' => $this->faker->words(2, true),
             'excerpt' => $this->faker->sentence,
             'content' => $this->faker->sentences(4, true),
+            'year' => $this->faker->numberBetween(1900, 2000),
             'private' => $this->faker->numberBetween(0, 1),
             'person_ids' => $people->modelKeys(),
         ];
@@ -174,6 +180,7 @@ class StoriesTest extends TestCase
         $this->assertEquals($story->excerpt, $request['excerpt']);
         $this->assertEquals($story->content, $request['content']);
         $this->assertEquals($story->private, $request['private']);
+        $this->assertEquals($story->year, $request['year']);
         $this->assertCount($personCount, $story->people->toArray());
     }
 

@@ -34,15 +34,9 @@ class StoryController extends Controller
                     ->orWhere('excerpt', 'LIKE', '%'.$search.'%')
                     ->orWhere('content', 'LIKE', '%'.$search.'%')
             )
-            ->orderBy($sort ?: 'created_at', $order ?: 'desc')
+            ->orderBy($sort ?: 'year', $order ?: 'asc')
             ->orderBy('id', $order ?: 'desc')
             ->paginate();
-
-        $stories->appends([
-            'sort' => $sort,
-            'order' => $order,
-            'search' => $search,
-        ]);
 
         return Inertia::render('Stories', [
             'stories' => $stories->through(fn ($story) => [
@@ -50,6 +44,7 @@ class StoryController extends Controller
                 'title' => $story->title,
                 'excerpt' => $story->excerpt,
                 'private' => $story->private,
+                'year' => $story->year,
             ]),
             'sort' => ucwords(str_replace('_', ' ', $sort)),
             'order' => strtoupper($order),
@@ -72,6 +67,7 @@ class StoryController extends Controller
                 'slug',
                 'title',
                 'content',
+                'year',
                 'excerpt',
                 'private',
                 'people',
@@ -90,6 +86,7 @@ class StoryController extends Controller
             'title' => 'required|string|max:100',
             'excerpt' => 'required|string|max:250',
             'content' => 'required|string',
+            'year' => 'digits:4',
             'private' => 'required|boolean',
             'person_ids' => 'array|nullable',
         ]);
@@ -99,6 +96,7 @@ class StoryController extends Controller
             'excerpt' => $request->excerpt,
             'private' => $request->private,
             'content' => $request->input('content'),
+            'year' => $request->year,
         ]);
 
         if ($request->person_ids) {
@@ -114,6 +112,7 @@ class StoryController extends Controller
             'title' => 'string|max:100',
             'excerpt' => 'string|max:250',
             'content' => 'string',
+            'year' => 'digits:4',
             'private' => 'boolean',
             'person_ids' => 'array|nullable',
         ]);
@@ -134,6 +133,10 @@ class StoryController extends Controller
 
         if ($request->input('content')) {
             $story->content = $request->input('content');
+        }
+
+        if ($request->year) {
+            $story->year = $request->year;
         }
 
         if ($request->person_ids) {
