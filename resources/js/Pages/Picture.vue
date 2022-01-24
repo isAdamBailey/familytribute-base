@@ -29,7 +29,7 @@
             </div>
         </div>
         <p class="mb-3 md:mb-7 text-gray-800 dark:text-indigo-400">
-            Taken on or around
+            Taken in or around
             <span class="font-semibold">{{ picture.year }}</span>
         </p>
         <div class="relative">
@@ -57,6 +57,7 @@
     </app-layout>
 
     <picture-edit-modal
+        v-if="$page.props.user"
         :open="pictureEditModalOpen"
         :picture="picture"
         :people="people"
@@ -64,6 +65,7 @@
     />
 
     <picture-delete-modal
+        v-if="$page.props.user"
         :open="pictureDeleteModalOpen"
         :picture="picture"
         @close="pictureDeleteModalOpen = false"

@@ -73,10 +73,7 @@ class StoryController extends Controller
                 'people',
                 'person_ids',
             ]),
-            'people' => Person::all()->map(fn ($person) => [
-                'id' => $person->id,
-                'full_name' => $person->full_name,
-            ]),
+            'people' => Person::allForTagging(),
         ]);
     }
 

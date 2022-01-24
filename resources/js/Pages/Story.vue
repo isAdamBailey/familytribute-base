@@ -33,7 +33,7 @@
         </div>
 
         <p v-if="story.year" class="text-gray-800 dark:text-indigo-400">
-            Written on or around
+            Written in or around
             <span class="font-semibold">{{ story.year }}</span>
         </p>
 
@@ -54,6 +54,7 @@
     </app-layout>
 
     <story-edit-modal
+        v-if="$page.props.user"
         :open="storyEditModalOpen"
         :story="story"
         :people="people"
@@ -61,6 +62,7 @@
     />
 
     <story-delete-modal
+        v-if="$page.props.user"
         :open="storyDeleteModalOpen"
         :story="story"
         @close="storyDeleteModalOpen = false"

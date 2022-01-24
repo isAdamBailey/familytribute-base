@@ -94,11 +94,14 @@
     </app-layout>
 
     <obituary-edit-modal
+        v-if="$page.props.user"
         :open="obituaryEditModalOpen"
         :person="person"
+        :people="people"
         @close="obituaryEditModalOpen = false"
     />
     <obituary-delete-modal
+        v-if="$page.props.user"
         :open="obituaryDeleteModalOpen"
         :person="person"
         @close="obituaryDeleteModalOpen = false"
@@ -130,6 +133,7 @@ export default defineComponent({
 
     props: {
         person: Object,
+        people: Array,
     },
 
     data() {

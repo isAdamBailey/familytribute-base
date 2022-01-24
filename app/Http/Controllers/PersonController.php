@@ -66,8 +66,12 @@ class PersonController extends Controller
                 'last_name',
                 'obituary',
                 'pictures',
-                'stories'
+                'stories',
+                'parents',
+                'children',
+                'parent_ids',
             ),
+            'people' => Person::allForTagging(),
         ]);
     }
 }

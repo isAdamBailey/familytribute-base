@@ -69,7 +69,7 @@ class SendUpcomingDatesEmailCommandTest extends TestCase
         User::factory()->count(5)->create();
 
         Obituary::factory()->create([
-            'death_date' => $this->faker->dateTimeBetween('-1 week', '-1 day'),
+            'death_date' => $this->faker->dateTimeBetween('-8 days', '-1 day'),
         ]);
 
         Obituary::factory()->create([

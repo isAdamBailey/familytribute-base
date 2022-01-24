@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -25,7 +25,7 @@ class Person extends Model
      *
      * @var array
      */
-    protected $appends = ['full_name'];
+    protected $appends = ['full_name', 'parent_ids'];
 
     /**
      * Get the obituary's full name.
@@ -49,6 +49,11 @@ class Person extends Model
     public function setLastNameAttribute($value)
     {
         $this->attributes['last_name'] = strtolower($value);
+    }
+
+    public function getParentIdsAttribute()
+    {
+        return $this->parents->modelKeys();
     }
 
     public function obituary(): HasOne
@@ -84,6 +89,17 @@ class Person extends Model
     public function children(): BelongsToMany
     {
         return $this->belongsToMany(self::class, 'parent_child', 'parent_id', 'child_id');
+    }
+
+    /**
+     * if user is authenticated, return all people for use in tagging
+     */
+    public static function allForTagging(): array|Collection
+    {
+        return auth()->user() ? self::all()->map(fn ($person) => [
+            'id' => $person->id,
+            'full_name' => $person->full_name,
+        ]) : [];
     }
 
     /**

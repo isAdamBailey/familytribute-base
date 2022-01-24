@@ -154,6 +154,22 @@
                 </div>
             </div>
 
+            <div class="mt-2 col-span-6 sm:col-span-4">
+                <jet-label for="parent_ids" value="Tag Parents" />
+                <Multiselect
+                    id="parent_ids"
+                    v-model="form.parent_ids"
+                    mode="tags"
+                    :create-tag="true"
+                    :options="peopleOptions"
+                    placeholder="Tag people on this site as parents"
+                />
+                <jet-input-error
+                    :message="form.errors.parent_ids"
+                    class="mt-2"
+                />
+            </div>
+
             <div class="mt-3 col-span-6 sm:col-span-4">
                 <jet-label for="content" value="Obituary" />
                 <wysiwyg v-model="form.content" />
@@ -181,6 +197,7 @@
 <script>
 import { defineComponent } from "vue";
 import { parseISO } from "date-fns";
+import Multiselect from "@vueform/multiselect";
 import JetDialogModal from "@/Base/DialogModal";
 import JetSecondaryButton from "@/Base/SecondaryButton";
 import JetInput from "@/Base/Input.vue";
@@ -191,6 +208,7 @@ import Wysiwyg from "@/Base/Wysiwyg";
 
 export default defineComponent({
     components: {
+        Multiselect,
         Wysiwyg,
         JetDialogModal,
         JetSecondaryButton,
@@ -209,6 +227,10 @@ export default defineComponent({
             type: Object,
             required: true,
         },
+        people: {
+            type: Array,
+            required: true,
+        },
     },
     emits: ["close"],
 
@@ -223,11 +245,22 @@ export default defineComponent({
                 death_date: parseISO(this.person.obituary.death_date),
                 photo: null,
                 background_photo: null,
+                parent_ids: this.person.parent_ids,
             }),
-
             photoPreview: null,
             bgPhotoPreview: null,
         };
+    },
+
+    computed: {
+        peopleOptions() {
+            return this.people.map((person) => {
+                return {
+                    value: person.id,
+                    label: person.full_name,
+                };
+            });
+        },
     },
 
     methods: {
@@ -306,3 +339,5 @@ export default defineComponent({
     },
 });
 </script>
+
+<style src="@vueform/multiselect/themes/default.css"></style>
