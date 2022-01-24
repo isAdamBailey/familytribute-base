@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -73,6 +74,16 @@ class Person extends Model
                 fn ($query) => $query->where('private', '!=', 1)
             )
             ->select(['slug', 'excerpt', 'title', 'content']);
+    }
+
+    public function parents(): BelongsToMany
+    {
+        return $this->belongsToMany(self::class, 'parent_child', 'child_id', 'parent_id');
+    }
+
+    public function children(): BelongsToMany
+    {
+        return $this->belongsToMany(self::class, 'parent_child', 'parent_id', 'child_id');
     }
 
     /**

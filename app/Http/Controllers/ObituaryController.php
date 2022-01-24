@@ -24,6 +24,8 @@ class ObituaryController extends Controller
             'death_date' => 'required|date',
             'photo' => 'file|mimes:jpg,jpeg,png|max:1024',
             'background_photo' => 'file|mimes:jpg,jpeg,png|max:1024|nullable',
+            'parent_ids' => 'array|nullable',
+            'child_ids' => 'array|nullable',
         ]);
 
         $person = Person::create([
@@ -38,6 +40,14 @@ class ObituaryController extends Controller
         $backgroundPhotoUrl = $request->file('background_photo')
             ? $request->file('background_photo')->storePublicly('obituaries')
             : null;
+
+        if ($request->parent_ids) {
+            $person->parents()->sync($request->parent_ids);
+        }
+
+        if ($request->child_ids) {
+            $person->children()->sync($request->child_ids);
+        }
 
         Obituary::create([
             'person_id' => $person->id,
@@ -61,16 +71,27 @@ class ObituaryController extends Controller
             'death_date' => 'date',
             'photo' => 'file|mimes:jpg,jpeg,png|max:1024|nullable',
             'background_photo' => 'file|mimes:jpg,jpeg,png|max:1024|nullable',
+            'parent_ids' => 'array|nullable',
+            'child_ids' => 'array|nullable',
         ]);
 
         $obituary = Obituary::find($id);
+        $person = $obituary->person;
 
         if ($request->input('first_name')) {
-            $obituary->person->first_name = $request->input('first_name');
+            $person->first_name = $request->input('first_name');
         }
 
         if ($request->input('last_name')) {
-            $obituary->person->last_name = $request->input('last_name');
+            $person->last_name = $request->input('last_name');
+        }
+
+        if ($request->parent_ids) {
+            $person->parents()->sync($request->parent_ids);
+        }
+
+        if ($request->child_ids) {
+            $person->children()->sync($request->child_ids);
         }
 
         if ($request->input('content')) {
@@ -100,7 +121,7 @@ class ObituaryController extends Controller
         }
 
         $obituary->save();
-        $obituary->person->save();
+        $person->save();
 
         return redirect(route('people.show', $obituary->person->fresh()))
             ->with('flash.banner', 'Obituary successfully updated!');
@@ -115,6 +136,8 @@ class ObituaryController extends Controller
 
         $obituary->person->stories()->detach();
         $obituary->person->pictures()->detach();
+        $obituary->person->parents()->detach();
+        $obituary->person->children()->detach();
         $obituary->person->delete();
         $obituary->delete();
 

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Obituary;
+use App\Models\Person;
 use App\Models\Picture;
 use App\Models\Story;
 use App\Models\User;
@@ -22,6 +23,7 @@ class ObituariesTest extends TestCase
         Storage::fake('s3');
 
         $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $parents = Person::factory()->count(2)->create();
 
         $request = [
             'photo' => UploadedFile::fake()->image('photo1.jpg'),
@@ -31,6 +33,7 @@ class ObituariesTest extends TestCase
             'content' => $this->faker->sentences(4, true),
             'birth_date' => $this->faker->date(),
             'death_date' => $this->faker->date(),
+            'parent_ids' => $parents->pluck('id')->toArray(),
         ];
 
         $this->post(route('obituaries.store'), $request)
@@ -46,11 +49,18 @@ class ObituariesTest extends TestCase
         $obituary = Obituary::first();
         $this->assertEquals($obituary->main_photo_url, Storage::url($mainPhotoFilePath));
         $this->assertEquals($obituary->background_photo_url, Storage::url($backgroundPhotoFilePath));
-        $this->assertEquals($obituary->person->first_name, strtolower($request['first_name']));
-        $this->assertEquals($obituary->person->last_name, strtolower($request['last_name']));
+
         $this->assertEquals($obituary->content, $request['content']);
         $this->assertEquals($obituary->birth_date, $request['birth_date']);
         $this->assertEquals($obituary->death_date, $request['death_date']);
+
+        $person = $obituary->person;
+        $this->assertEquals($person->first_name, strtolower($request['first_name']));
+        $this->assertEquals($person->last_name, strtolower($request['last_name']));
+        $this->assertSame($request['parent_ids'], $person->parents->pluck('id')->toArray());
+        foreach ($person->parents as $parent) {
+            $this->assertSame([$person->id], $parent->children->pluck('id')->toArray());
+        }
     }
 
     public function test_all_properties_of_obituary_can_be_updated()
@@ -91,6 +101,51 @@ class ObituariesTest extends TestCase
         $this->assertEquals($obituary->birth_date, $request['birth_date']);
         $this->assertEquals($obituary->death_date, $request['death_date']);
     }
+
+    public function test_person_parent_relationships()
+    {
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
+        $child = Obituary::factory()->create();
+
+        $parents = Obituary::factory()->count(2)->create();
+        $request = [
+            'parent_ids' => $parents->pluck('person_id')->toArray(),
+        ];
+
+        $this->put(route('obituaries.update', $child), $request)
+            ->assertRedirect()
+            ->assertSessionHas('flash.banner');
+
+        $this->assertSame($request['parent_ids'], $child->person->parents->pluck('id')->toArray());
+        foreach ($parents as $parent) {
+            $this->assertSame([$child->person->id], $parent->person->children->pluck('id')->toArray());
+        }
+
+    }
+
+    public function test_person_child_relationships()
+    {
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
+        $parent = Obituary::factory()->create();
+
+        $children = Obituary::factory()->count(5)->create();
+        $request = [
+            'child_ids' => $children->pluck('person_id')->toArray(),
+        ];
+
+        $this->put(route('obituaries.update', $parent), $request)
+            ->assertRedirect()
+            ->assertSessionHas('flash.banner');
+
+        $this->assertSame($request['child_ids'], $parent->person->children->pluck('id')->toArray());
+        foreach ($children as $child) {
+            $this->assertSame([$parent->person->id], $child->person->parents->pluck('id')->toArray());
+        }
+
+    }
+
 
     public function test_obituary_can_be_destroyed()
     {
