@@ -7,7 +7,7 @@
 
         <div class="flex flex-wrap-reverse justify-between mt-8 mb-3">
             <h1
-                class="font-header font-header text-gray-800 dark:text-indigo-400 text-5xl md:text-7xl"
+                class="font-header text-gray-800 dark:text-indigo-400 text-5xl md:text-7xl"
             >
                 {{ picture.title }}
             </h1>
