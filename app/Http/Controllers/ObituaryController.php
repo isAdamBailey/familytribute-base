@@ -22,15 +22,10 @@ class ObituaryController extends Controller
             'content' => 'required|string',
             'birth_date' => 'required|date',
             'death_date' => 'required|date',
-            'photo' => 'file|mimes:jpg,jpeg,png|max:1024',
-            'background_photo' => 'file|mimes:jpg,jpeg,png|max:1024|nullable',
+            'photo' => 'file|mimes:jpg,jpeg,png,svg,webp|max:2000|nullable',
+            'background_photo' => 'file|mimes:jpg,jpeg,png,svg,webp|max:2000|nullable',
             'parent_ids' => 'array|nullable',
             'child_ids' => 'array|nullable',
-        ]);
-
-        $person = Person::create([
-            'first_name' => $request->input('first_name'),
-            'last_name' => $request->input('last_name'),
         ]);
 
         $mainPhotoUrl = $request->file('photo')
@@ -40,6 +35,12 @@ class ObituaryController extends Controller
         $backgroundPhotoUrl = $request->file('background_photo')
             ? $request->file('background_photo')->storePublicly('obituaries')
             : null;
+
+        $person = Person::create([
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'photo_url' => $mainPhotoUrl,
+        ]);
 
         if ($request->parent_ids) {
             $person->parents()->sync($request->parent_ids);
@@ -54,7 +55,6 @@ class ObituaryController extends Controller
             'content' => $request->input('content'),
             'birth_date' => Carbon::parse($request->birth_date)->toDateString(),
             'death_date' => Carbon::parse($request->death_date)->toDateString(),
-            'main_photo_url' => $mainPhotoUrl,
             'background_photo_url' => $backgroundPhotoUrl,
         ]);
 
@@ -69,8 +69,8 @@ class ObituaryController extends Controller
             'content' => 'string',
             'birth_date' => 'date',
             'death_date' => 'date',
-            'photo' => 'file|mimes:jpg,jpeg,png|max:1024|nullable',
-            'background_photo' => 'file|mimes:jpg,jpeg,png|max:1024|nullable',
+            'photo' => 'file|mimes:jpg,jpeg,png,svg,webp|max:2000|nullable',
+            'background_photo' => 'file|mimes:jpg,jpeg,png,svg,webp|max:2000|nullable',
             'parent_ids' => 'array|nullable',
             'child_ids' => 'array|nullable',
         ]);
@@ -84,6 +84,13 @@ class ObituaryController extends Controller
 
         if ($request->input('last_name')) {
             $person->last_name = $request->input('last_name');
+        }
+
+        if ($request->file('photo')) {
+            if (! empty($person->photo_url)) {
+                Storage::disk('s3')->delete($person->photo_url);
+            }
+            $person->photo_url = $request->file('photo')->storePublicly('obituaries');
         }
 
         if ($request->parent_ids) {
@@ -106,13 +113,6 @@ class ObituaryController extends Controller
             $obituary->death_date = Carbon::parse($request->death_date)->toDateString();
         }
 
-        if ($request->file('photo')) {
-            if (! empty($obituary->main_photo_url)) {
-                Storage::disk('s3')->delete($obituary->main_photo_url);
-            }
-            $obituary->main_photo_url = $request->file('photo')->storePublicly('obituaries');
-        }
-
         if ($request->file('background_photo')) {
             if (! empty($obituary->background_photo_url)) {
                 Storage::disk('s3')->delete($obituary->background_photo_url);
@@ -130,15 +130,16 @@ class ObituaryController extends Controller
     public function destroy($id): Redirector|Application|RedirectResponse
     {
         $obituary = Obituary::find($id);
+        $person = $obituary->person;
 
-        Storage::disk('s3')->delete($obituary->main_photo_url);
+        Storage::disk('s3')->delete($person->photo_url);
         Storage::disk('s3')->delete($obituary->background_photo_url);
 
-        $obituary->person->stories()->detach();
-        $obituary->person->pictures()->detach();
-        $obituary->person->parents()->detach();
-        $obituary->person->children()->detach();
-        $obituary->person->delete();
+        $person->stories()->detach();
+        $person->pictures()->detach();
+        $person->parents()->detach();
+        $person->children()->detach();
+        $person->delete();
         $obituary->delete();
 
         return redirect(route('people.index'))

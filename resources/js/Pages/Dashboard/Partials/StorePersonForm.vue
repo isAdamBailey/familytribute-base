@@ -139,14 +139,14 @@
             </div>
 
             <div class="col-span-6">
-                <jet-label for="parent_ids" value="Tag Parents" />
+                <jet-label for="parent_ids" value="Parents" />
                 <Multiselect
                     id="parent_ids"
                     v-model="form.parent_ids"
                     mode="tags"
                     :create-tag="true"
                     :options="peopleOptions"
-                    placeholder="Tag people on this site as parents (you can do this later)"
+                    placeholder="Select parents (you can do this later)"
                 />
                 <jet-input-error
                     :message="form.errors.parent_ids"

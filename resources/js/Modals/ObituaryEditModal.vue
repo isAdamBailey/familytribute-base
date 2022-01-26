@@ -17,7 +17,7 @@
 
                         <div v-show="!photoPreview" class="mt-2">
                             <img
-                                :src="person.obituary.main_photo_url"
+                                :src="person.photo_url"
                                 :alt="person.full_name"
                                 class="rounded-full h-20 w-20 object-cover"
                             />
@@ -155,14 +155,14 @@
             </div>
 
             <div class="mt-2 col-span-6 sm:col-span-4">
-                <jet-label for="parent_ids" value="Tag Parents" />
+                <jet-label for="parent_ids" value="Parents" />
                 <Multiselect
                     id="parent_ids"
                     v-model="form.parent_ids"
                     mode="tags"
                     :create-tag="true"
                     :options="peopleOptions"
-                    placeholder="Tag people on this site as parents"
+                    placeholder="Select parents"
                 />
                 <jet-input-error
                     :message="form.errors.parent_ids"

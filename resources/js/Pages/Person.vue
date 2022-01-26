@@ -58,7 +58,7 @@
                 <div class="w-60 h-60 rounded-full relative avatar">
                     <img
                         class="w-full h-full rounded-full relative border-4 border-gray-900"
-                        :src="person.obituary.main_photo_url"
+                        :src="person.photo_url"
                         alt=""
                     />
                 </div>

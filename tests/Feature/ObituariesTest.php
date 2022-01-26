@@ -47,7 +47,6 @@ class ObituariesTest extends TestCase
         Storage::disk('s3')->assertExists($backgroundPhotoFilePath);
 
         $obituary = Obituary::first();
-        $this->assertEquals($obituary->main_photo_url, Storage::url($mainPhotoFilePath));
         $this->assertEquals($obituary->background_photo_url, Storage::url($backgroundPhotoFilePath));
 
         $this->assertEquals($obituary->content, $request['content']);
@@ -55,6 +54,7 @@ class ObituariesTest extends TestCase
         $this->assertEquals($obituary->death_date, $request['death_date']);
 
         $person = $obituary->person;
+        $this->assertEquals($person->photo_url, Storage::url($mainPhotoFilePath));
         $this->assertEquals($person->first_name, strtolower($request['first_name']));
         $this->assertEquals($person->last_name, strtolower($request['last_name']));
         $this->assertSame($request['parent_ids'], $person->parents->pluck('id')->toArray());
@@ -93,13 +93,15 @@ class ObituariesTest extends TestCase
         $backgroundPhotoFilePath = 'obituaries/'.$request['background_photo']->hashName();
         Storage::disk('s3')->assertExists($backgroundPhotoFilePath);
 
-        $this->assertEquals($obituary->main_photo_url, Storage::url($mainPhotoFilePath));
-        $this->assertEquals($obituary->background_photo_url, Storage::url($backgroundPhotoFilePath));
-        $this->assertEquals($obituary->person->first_name, strtolower($request['first_name']));
-        $this->assertEquals($obituary->person->last_name, strtolower($request['last_name']));
         $this->assertEquals($obituary->content, $request['content']);
         $this->assertEquals($obituary->birth_date, $request['birth_date']);
         $this->assertEquals($obituary->death_date, $request['death_date']);
+        $this->assertEquals($obituary->background_photo_url, Storage::url($backgroundPhotoFilePath));
+
+        $person = $obituary->person;
+        $this->assertEquals($person->first_name, strtolower($request['first_name']));
+        $this->assertEquals($person->last_name, strtolower($request['last_name']));
+        $this->assertEquals($person->photo_url, Storage::url($mainPhotoFilePath));
     }
 
     public function test_person_parent_relationships()
@@ -121,7 +123,6 @@ class ObituariesTest extends TestCase
         foreach ($parents as $parent) {
             $this->assertSame([$child->person->id], $parent->person->children->pluck('id')->toArray());
         }
-
     }
 
     public function test_person_child_relationships()
@@ -143,9 +144,7 @@ class ObituariesTest extends TestCase
         foreach ($children as $child) {
             $this->assertSame([$parent->person->id], $child->person->parents->pluck('id')->toArray());
         }
-
     }
-
 
     public function test_obituary_can_be_destroyed()
     {
