@@ -4,7 +4,7 @@
         :key="index"
         :href="route('stories.show', story)"
         :class="fixedWidth ? 'w-96' : ''"
-        class="relative p-7 rounded-lg bg-white dark:card-text-gradient shadow shadow-indigo-200/50 hover:shadow-xl hover:shadow-indigo-300/50 hover:opacity-80 transition"
+        class="relative snap-center p-7 rounded-lg bg-white dark:card-text-gradient shadow shadow-indigo-200/50 hover:shadow-xl hover:shadow-indigo-300/50 hover:opacity-80 transition"
     >
         <embedded-icon :item="story" color="text-gray-900" />
 
