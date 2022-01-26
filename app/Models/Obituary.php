@@ -17,25 +17,8 @@ class Obituary extends Model
         'birth_date',
         'death_date',
         'content',
-        'main_photo_url',
         'background_photo_url',
     ];
-
-    /**
-     * Return s3 url of path if full path doesn't exist.
-     */
-    public function getMainPhotoUrlAttribute($value): string
-    {
-        if (empty($value)) {
-            return $this->defaultMainPhotoUrl();
-        }
-
-        if (Str::startsWith($value, 'https://')) {
-            return $value;
-        }
-
-        return Storage::url($value);
-    }
 
     /**
      * Return s3 url of path if full path doesn't exist.
@@ -51,11 +34,6 @@ class Obituary extends Model
         }
 
         return Storage::url($value);
-    }
-
-    protected function defaultMainPhotoUrl(): string
-    {
-        return 'https://ui-avatars.com/api/?name='.urlencode($this->person->full_name).'&color=374151&background=F3F4F6';
     }
 
     public function person(): BelongsTo

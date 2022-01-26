@@ -10,7 +10,7 @@
 
         <div class="flex flex-wrap-reverse justify-between mt-8 mb-3">
             <h1
-                class="font-header font-header text-gray-800 dark:text-indigo-400 text-5xl md:text-7xl"
+                class="font-header text-gray-800 dark:text-indigo-400 text-5xl md:text-7xl"
             >
                 {{ person.full_name }}
             </h1>
@@ -58,7 +58,7 @@
                 <div class="w-60 h-60 rounded-full relative avatar">
                     <img
                         class="w-full h-full rounded-full relative border-4 border-gray-900"
-                        :src="person.obituary.main_photo_url"
+                        :src="person.photo_url"
                         alt=""
                     />
                 </div>
@@ -82,7 +82,7 @@
         <social-share :title="`${person.full_name}'s obituary`" />
 
         <h1
-            class="mt-10 font-header font-header text-gray-800 dark:text-indigo-400 text-3xl md:text-5xl"
+            class="mt-10 font-header text-gray-800 dark:text-indigo-400 text-3xl md:text-5xl"
         >
             Obituary
         </h1>
@@ -91,14 +91,27 @@
             class="html-content text-gray-700 dark:text-gray-100 my-10 prose max-w-none"
             v-html="person.obituary.content"
         />
+
+        <div v-if="person.parents.length">
+            <parent-child-container :people="person.parents" title="Parents" />
+        </div>
+        <div v-if="person.children.length">
+            <parent-child-container
+                :people="person.children"
+                title="Children"
+            />
+        </div>
     </app-layout>
 
     <obituary-edit-modal
+        v-if="$page.props.user"
         :open="obituaryEditModalOpen"
         :person="person"
+        :people="people"
         @close="obituaryEditModalOpen = false"
     />
     <obituary-delete-modal
+        v-if="$page.props.user"
         :open="obituaryDeleteModalOpen"
         :person="person"
         @close="obituaryDeleteModalOpen = false"
@@ -116,9 +129,11 @@ import JetDangerButton from "@/Base/DangerButton";
 import PicturesContainer from "@/Components/PicturesContainer";
 import StoriesContainer from "@/Components/StoriesContainer";
 import SocialShare from "@/Components/SocialShare";
+import ParentChildContainer from "@/Components/ParentChildContainer";
 
 export default defineComponent({
     components: {
+        ParentChildContainer,
         SocialShare,
         StoriesContainer,
         PicturesContainer,
@@ -130,6 +145,7 @@ export default defineComponent({
 
     props: {
         person: Object,
+        people: Array,
     },
 
     data() {

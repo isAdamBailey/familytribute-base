@@ -22,8 +22,8 @@ class SendUpcomingDatesEmailCommandTest extends TestCase
         User::factory()->count(5)->create();
 
         $this->artisan('email:upcoming_dates')
-            ->expectsOutput('There were no upcoming dates to email!')
-            ->assertExitCode(0);
+            ->assertExitCode(0)
+            ->expectsOutput('There were no upcoming dates to email!');
 
         Mail::assertNotSent(UpcomingDates::class);
     }
@@ -39,8 +39,8 @@ class SendUpcomingDatesEmailCommandTest extends TestCase
         ]);
 
         $this->artisan('email:upcoming_dates')
-            ->expectsOutput('The upcoming dates emails were sent!')
-            ->assertExitCode(0);
+            ->assertExitCode(0)
+            ->expectsOutput('The upcoming dates emails were sent!');
 
         Mail::assertSent(UpcomingDates::class, 5);
     }
@@ -56,8 +56,8 @@ class SendUpcomingDatesEmailCommandTest extends TestCase
         ]);
 
         $this->artisan('email:upcoming_dates')
-            ->expectsOutput('The upcoming dates emails were sent!')
-            ->assertExitCode(0);
+            ->assertExitCode(0)
+            ->expectsOutput('The upcoming dates emails were sent!');
 
         Mail::assertSent(UpcomingDates::class, 5);
     }
@@ -69,7 +69,7 @@ class SendUpcomingDatesEmailCommandTest extends TestCase
         User::factory()->count(5)->create();
 
         Obituary::factory()->create([
-            'death_date' => $this->faker->dateTimeBetween('-1 week', '-1 day'),
+            'death_date' => $this->faker->dateTimeBetween('-8 days', '-1 day'),
         ]);
 
         Obituary::factory()->create([
@@ -77,8 +77,8 @@ class SendUpcomingDatesEmailCommandTest extends TestCase
         ]);
 
         $this->artisan('email:upcoming_dates')
-            ->expectsOutput('There were no upcoming dates to email!')
-            ->assertExitCode(0);
+            ->assertExitCode(0)
+            ->expectsOutput('There were no upcoming dates to email!');
 
         Mail::assertNotSent(UpcomingDates::class);
     }

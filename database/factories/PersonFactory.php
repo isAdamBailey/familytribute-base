@@ -16,6 +16,7 @@ class PersonFactory extends Factory
         return [
             'first_name' => $this->faker->unique()->firstName(),
             'last_name' => $this->faker->lastName(),
+            'photo_url' => $this->faker->imageUrl(),
         ];
     }
 }

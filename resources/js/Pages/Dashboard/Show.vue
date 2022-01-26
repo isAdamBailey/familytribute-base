@@ -58,7 +58,10 @@
             <store-story-form :people-options="peopleOptions" />
             <jet-section-border />
 
-            <store-person-form id="new-person" />
+            <store-person-form
+                id="new-person"
+                :people-options="peopleOptions"
+            />
             <jet-section-border />
 
             <update-settings-form id="site-settings" :settings="settings" />

@@ -139,6 +139,22 @@
             </div>
 
             <div class="col-span-6">
+                <jet-label for="parent_ids" value="Parents" />
+                <Multiselect
+                    id="parent_ids"
+                    v-model="form.parent_ids"
+                    mode="tags"
+                    :create-tag="true"
+                    :options="peopleOptions"
+                    placeholder="Select parents (you can do this later)"
+                />
+                <jet-input-error
+                    :message="form.errors.parent_ids"
+                    class="mt-2"
+                />
+            </div>
+
+            <div class="col-span-6">
                 <jet-label for="content" value="Obituary" />
                 <wysiwyg v-model="form.content" />
                 <jet-input-error :message="form.errors.content" class="mt-2" />
@@ -170,9 +186,11 @@ import JetActionMessage from "@/Base/ActionMessage.vue";
 import JetSecondaryButton from "@/Base/SecondaryButton.vue";
 import DatePicker from "@/Base/DatePicker";
 import Wysiwyg from "@/Base/Wysiwyg";
+import Multiselect from "@vueform/multiselect";
 
 export default defineComponent({
     components: {
+        Multiselect,
         Wysiwyg,
         DatePicker,
         JetActionMessage,
@@ -181,6 +199,10 @@ export default defineComponent({
         JetInputError,
         JetLabel,
         JetSecondaryButton,
+    },
+
+    props: {
+        peopleOptions: Array,
     },
 
     data() {
@@ -194,6 +216,7 @@ export default defineComponent({
                 death_date: null,
                 photo: null,
                 background_photo: null,
+                parent_ids: null,
             }),
 
             photoPreview: null,
@@ -269,3 +292,5 @@ export default defineComponent({
     },
 });
 </script>
+
+<style src="@vueform/multiselect/themes/default.css"></style>

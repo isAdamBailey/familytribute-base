@@ -41,6 +41,7 @@ class PersonController extends Controller
             'people' => $people->through(fn ($person) => [
                 'slug' => $person->slug,
                 'full_name' => $person->full_name,
+                'photo_url' => $person->photo_url,
                 'obituary' => $person->obituary,
             ]),
             'sort' => ucwords(str_replace('_', ' ', $sort)),
@@ -54,8 +55,8 @@ class PersonController extends Controller
         $person = $person->load(['obituary', 'pictures', 'stories']);
 
         $this->setTitleStart($person->full_name);
-        $this->setOgImage($person->obituary->main_photo_url);
-        $this->setTwitterImage($person->obituary->main_photo_url);
+        $this->setOgImage($person->photo_url);
+        $this->setTwitterImage($person->photo_url);
         $this->setDescription($person->obituary->content);
         $this->renderSeo();
 
@@ -64,10 +65,15 @@ class PersonController extends Controller
                 'full_name',
                 'first_name',
                 'last_name',
+                'photo_url',
                 'obituary',
                 'pictures',
-                'stories'
+                'stories',
+                'parents',
+                'children',
+                'parent_ids',
             ),
+            'people' => Person::allForTagging(),
         ]);
     }
 }
