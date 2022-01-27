@@ -4,7 +4,7 @@
             Whoops! Something went wrong.
         </div>
 
-        <ul class="mt-3 list-disc list-inside text-sm text-red-600">
+        <ul class="mt-3 list-inside list-disc text-sm text-red-600">
             <li v-for="(error, key) in errors" :key="key">{{ error }}</li>
         </ul>
     </div>

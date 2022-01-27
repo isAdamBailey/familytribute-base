@@ -17,13 +17,13 @@
                     <img
                         :src="picture.url"
                         :alt="picture.title"
-                        class="rounded-full h-20 w-20 object-cover"
+                        class="h-20 w-20 rounded-full object-cover"
                     />
                 </div>
 
                 <div v-show="photoPreview" class="mt-2">
                     <span
-                        class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
+                        class="block h-20 w-20 rounded-full bg-cover bg-center bg-no-repeat"
                         :style="
                             'background-image: url(\'' + photoPreview + '\');'
                         "
@@ -42,7 +42,7 @@
                 <jet-input-error :message="form.errors.photo" class="mt-2" />
             </div>
 
-            <div class="mt-2 col-span-6 sm:col-span-4">
+            <div class="col-span-6 mt-2 sm:col-span-4">
                 <jet-label for="title" value="Title" />
                 <jet-input
                     id="title"
@@ -54,7 +54,7 @@
                 <jet-input-error :message="form.errors.title" class="mt-2" />
             </div>
 
-            <div class="mt-2 col-span-6 sm:col-span-4">
+            <div class="col-span-6 mt-2 sm:col-span-4">
                 <jet-label for="person_ids" value="Tag People" />
                 <Multiselect
                     id="person_ids"
@@ -69,7 +69,7 @@
                 />
             </div>
 
-            <div class="mt-2 col-span-6 sm:col-span-4">
+            <div class="col-span-6 mt-2 sm:col-span-4">
                 <jet-label for="description" value="Description" />
                 <wysiwyg v-model="form.description" />
                 <jet-input-error
@@ -78,7 +78,7 @@
                 />
             </div>
 
-            <div class="mt-2 col-span-6 sm:col-span-4">
+            <div class="col-span-6 mt-2 sm:col-span-4">
                 <jet-label for="year" value="Year" />
                 <jet-input
                     id="year"

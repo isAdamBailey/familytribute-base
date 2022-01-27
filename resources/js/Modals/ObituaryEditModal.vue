@@ -4,8 +4,8 @@
 
         <template #content>
             <div class="col-span-6 sm:col-span-4">
-                <div class="flex flex-wrap -mx-3">
-                    <div class="w-full md:w-1/2 mb-5">
+                <div class="-mx-3 flex flex-wrap">
+                    <div class="mb-5 w-full md:w-1/2">
                         <input
                             ref="photo"
                             type="file"
@@ -19,13 +19,13 @@
                             <img
                                 :src="person.photo_url"
                                 :alt="person.full_name"
-                                class="rounded-full h-20 w-20 object-cover"
+                                class="h-20 w-20 rounded-full object-cover"
                             />
                         </div>
 
                         <div v-show="photoPreview" class="mt-2">
                             <span
-                                class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
+                                class="block h-20 w-20 rounded-full bg-cover bg-center bg-no-repeat"
                                 :style="
                                     'background-image: url(\'' +
                                     photoPreview +
@@ -68,13 +68,13 @@
                             <img
                                 :src="person.obituary.background_photo_url"
                                 :alt="person.full_name"
-                                class="rounded-full h-20 w-20 object-cover"
+                                class="h-20 w-20 rounded-full object-cover"
                             />
                         </div>
 
                         <div v-show="bgPhotoPreview" class="mt-2">
                             <span
-                                class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
+                                class="block h-20 w-20 rounded-full bg-cover bg-center bg-no-repeat"
                                 :style="
                                     'background-image: url(\'' +
                                     bgPhotoPreview +
@@ -100,9 +100,9 @@
                 </div>
             </div>
 
-            <div class="mt-3 col-span-6 sm:col-span-4">
-                <div class="flex flex-wrap -mx-3">
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <div class="col-span-6 mt-3 sm:col-span-4">
+                <div class="-mx-3 flex flex-wrap">
+                    <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
                         <jet-label for="first_name" value="First Name" />
                         <jet-input
                             id="first_name"
@@ -116,7 +116,7 @@
                             class="mt-2"
                         />
                     </div>
-                    <div class="w-full md:w-1/2 px-3">
+                    <div class="w-full px-3 md:w-1/2">
                         <jet-label for="last_name" value="Last Name" />
                         <jet-input
                             id="last_name"
@@ -133,9 +133,9 @@
                 </div>
             </div>
 
-            <div class="mt-3 col-span-6 sm:col-span-4">
-                <div class="flex flex-wrap -mx-3">
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <div class="col-span-6 mt-3 sm:col-span-4">
+                <div class="-mx-3 flex flex-wrap">
+                    <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
                         <jet-label for="birth_date" value="Birth Date" />
                         <date-picker v-model="form.birth_date" />
                         <jet-input-error
@@ -143,7 +143,7 @@
                             class="mt-2"
                         />
                     </div>
-                    <div class="w-full md:w-1/2 px-3">
+                    <div class="w-full px-3 md:w-1/2">
                         <jet-label for="death_date" value="Death Date" />
                         <date-picker v-model="form.death_date" />
                         <jet-input-error
@@ -154,7 +154,7 @@
                 </div>
             </div>
 
-            <div class="mt-2 col-span-6 sm:col-span-4">
+            <div class="col-span-6 mt-2 sm:col-span-4">
                 <jet-label for="parent_ids" value="Parents" />
                 <Multiselect
                     id="parent_ids"
@@ -170,7 +170,7 @@
                 />
             </div>
 
-            <div class="mt-3 col-span-6 sm:col-span-4">
+            <div class="col-span-6 mt-3 sm:col-span-4">
                 <jet-label for="content" value="Obituary" />
                 <wysiwyg v-model="form.content" />
                 <jet-input-error :message="form.errors.content" class="mt-2" />

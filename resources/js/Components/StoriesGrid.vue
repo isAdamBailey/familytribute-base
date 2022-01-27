@@ -1,6 +1,6 @@
 <template>
     <div
-        class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(22rem,1fr))] gap-4 mx-auto md:p-4"
+        class="mx-auto grid grid-cols-1 gap-4 md:grid-cols-[repeat(auto-fit,minmax(22rem,1fr))] md:p-4"
     >
         <stories-container :items="items" />
     </div>

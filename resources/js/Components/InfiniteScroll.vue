@@ -1,7 +1,7 @@
 <template>
     <component :is="component" :items="itemsData" />
 
-    <div v-if="items.next_page_url" class="flex justify-center mt-7">
+    <div v-if="items.next_page_url" class="mt-7 flex justify-center">
         <attention-button @click="loadMore"
             >Load More {{ typeString }}</attention-button
         >

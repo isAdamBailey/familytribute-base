@@ -4,14 +4,14 @@
         :key="index"
         :href="route('stories.show', story)"
         :class="fixedWidth ? 'w-96' : ''"
-        class="relative snap-center p-7 rounded-lg bg-white dark:card-text-gradient shadow shadow-indigo-200/50 hover:shadow-xl hover:shadow-indigo-300/50 hover:opacity-80 transition"
+        class="dark:card-text-gradient relative snap-center rounded-lg bg-white p-7 shadow shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
     >
         <embedded-icon :item="story" color="text-gray-900" />
 
         <div :class="fixedWidth ? 'w-96' : ''" class="flex justify-between">
             <h2
                 :class="fixedWidth ? 'w-80' : ''"
-                class="font-bold text-xl truncate"
+                class="truncate text-xl font-bold"
             >
                 {{ story.title }}
             </h2>
@@ -19,7 +19,7 @@
         </div>
         <div class="rounded-b-lg">
             <div
-                class="text-sm prose max-w-none line-clamp-3"
+                class="prose max-w-none text-sm line-clamp-3"
                 v-html="story.excerpt"
             />
         </div>

@@ -9,8 +9,8 @@
 
         <template #form>
             <div class="col-span-6">
-                <div class="flex flex-wrap -mx-3">
-                    <div class="w-full md:w-1/2 mb-5">
+                <div class="-mx-3 flex flex-wrap">
+                    <div class="mb-5 w-full md:w-1/2">
                         <input
                             ref="photo"
                             type="file"
@@ -22,7 +22,7 @@
 
                         <div v-show="photoPreview" class="mt-2">
                             <span
-                                class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
+                                class="block h-20 w-20 rounded-full bg-cover bg-center bg-no-repeat"
                                 :style="
                                     'background-image: url(\'' +
                                     photoPreview +
@@ -58,7 +58,7 @@
 
                         <div v-show="bgPhotoPreview" class="mt-2">
                             <span
-                                class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
+                                class="block h-20 w-20 rounded-full bg-cover bg-center bg-no-repeat"
                                 :style="
                                     'background-image: url(\'' +
                                     bgPhotoPreview +
@@ -85,8 +85,8 @@
             </div>
 
             <div class="col-span-6">
-                <div class="flex flex-wrap -mx-3">
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <div class="-mx-3 flex flex-wrap">
+                    <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
                         <jet-label for="first_name" value="First Name" />
                         <jet-input
                             id="first_name"
@@ -100,7 +100,7 @@
                             class="mt-2"
                         />
                     </div>
-                    <div class="w-full md:w-1/2 px-3">
+                    <div class="w-full px-3 md:w-1/2">
                         <jet-label for="last_name" value="Last Name" />
                         <jet-input
                             id="last_name"
@@ -118,8 +118,8 @@
             </div>
 
             <div class="col-span-6">
-                <div class="flex flex-wrap -mx-3">
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <div class="-mx-3 flex flex-wrap">
+                    <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
                         <jet-label for="birth_date" value="Birth Date" />
                         <date-picker v-model="form.birth_date" />
                         <jet-input-error
@@ -127,7 +127,7 @@
                             class="mt-2"
                         />
                     </div>
-                    <div class="w-full md:w-1/2 px-3">
+                    <div class="w-full px-3 md:w-1/2">
                         <jet-label for="death_date" value="Death Date" />
                         <date-picker v-model="form.death_date" />
                         <jet-input-error

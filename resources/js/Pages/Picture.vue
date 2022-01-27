@@ -5,9 +5,9 @@
             {{ picture.title }}
         </template>
 
-        <div class="flex flex-wrap-reverse justify-between mt-8 mb-3">
+        <div class="mt-8 mb-3 flex flex-wrap-reverse justify-between">
             <h1
-                class="font-header text-gray-800 dark:text-indigo-400 text-5xl md:text-7xl"
+                class="font-header text-5xl text-gray-800 dark:text-indigo-400 md:text-7xl"
             >
                 {{ picture.title }}
             </h1>
@@ -28,13 +28,13 @@
                 </base-button>
             </div>
         </div>
-        <p class="mb-3 md:mb-7 text-gray-800 dark:text-indigo-400">
+        <p class="mb-3 text-gray-800 dark:text-indigo-400 md:mb-7">
             Taken in or around
             <span class="font-semibold">{{ picture.year }}</span>
         </p>
         <div class="relative">
             <img
-                class="w-full object-cover rounded-lg"
+                class="w-full rounded-lg object-cover"
                 :src="picture.url"
                 :alt="picture.title"
             />
@@ -44,7 +44,7 @@
         <social-share class="mt-5" :title="picture.title" />
 
         <div
-            class="html-content my-6 prose max-w-none text-gray-700 dark:text-gray-100"
+            class="html-content prose my-6 max-w-none text-gray-700 dark:text-gray-100"
             v-html="picture.description"
         />
 
@@ -83,11 +83,9 @@ import JetDangerButton from "@/Base/DangerButton";
 import SocialShare from "@/Components/SocialShare";
 import EmbeddedIcon from "@/Base/EmbeddedIcon";
 import SectionBorder from "@/Base/SectionBorder";
-import Pill from "../Base/Pill";
 
 export default defineComponent({
     components: {
-        Pill,
         SectionBorder,
         EmbeddedIcon,
         SocialShare,

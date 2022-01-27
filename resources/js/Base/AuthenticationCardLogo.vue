@@ -1,6 +1,6 @@
 <template>
     <Link :href="'/'">
-        <application-mark class="w-20 h-20" />
+        <application-mark class="h-20 w-20" />
     </Link>
 </template>
 

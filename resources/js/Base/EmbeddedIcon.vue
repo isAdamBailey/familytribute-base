@@ -2,7 +2,7 @@
     <div
         v-if="$inertia.page.props.user"
         :class="color"
-        class="absolute pl-0.5 top-0 inset-x-0 text-sm"
+        class="absolute inset-x-0 top-0 pl-0.5 text-sm"
     >
         <i v-if="item.featured" class="ri-star-fill"></i>
         <i v-if="item.private" class="ri-git-repository-private-fill"></i>

@@ -30,7 +30,7 @@
                 <div v-if="availablePermissions.length > 0" class="col-span-6">
                     <jet-label for="permissions" value="Permissions" />
 
-                    <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="mt-2 grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div
                             v-for="permission in availablePermissions"
                             :key="permission"
@@ -103,7 +103,7 @@
 
                                     <button
                                         v-if="availablePermissions.length > 0"
-                                        class="cursor-pointer ml-6 text-sm text-gray-400 underline"
+                                        class="ml-6 cursor-pointer text-sm text-gray-400 underline"
                                         @click="
                                             manageApiTokenPermissions(token)
                                         "
@@ -112,7 +112,7 @@
                                     </button>
 
                                     <button
-                                        class="cursor-pointer ml-6 text-sm text-red-500"
+                                        class="ml-6 cursor-pointer text-sm text-red-500"
                                         @click="confirmApiTokenDeletion(token)"
                                     >
                                         Delete
@@ -140,7 +140,7 @@
 
                 <div
                     v-if="$page.props.jetstream.flash.token"
-                    class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-gray-500"
+                    class="mt-4 rounded bg-gray-100 px-4 py-2 font-mono text-sm text-gray-500"
                 >
                     {{ $page.props.jetstream.flash.token }}
                 </div>
@@ -161,7 +161,7 @@
             <template #title> API Token Permissions </template>
 
             <template #content>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div
                         v-for="permission in availablePermissions"
                         :key="permission"

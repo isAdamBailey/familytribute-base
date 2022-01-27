@@ -7,10 +7,10 @@
             ></template>
         </jet-section-title>
 
-        <div class="mt-5 md:mt-0 md:col-span-2">
+        <div class="mt-5 md:col-span-2 md:mt-0">
             <form @submit.prevent="$emit('submitted')">
                 <div
-                    class="px-4 py-5 bg-white dark:bg-indigo-300 sm:p-6 shadow"
+                    class="bg-white px-4 py-5 shadow dark:bg-indigo-300 sm:p-6"
                     :class="
                         hasActions
                             ? 'sm:rounded-tl-md sm:rounded-tr-md'
@@ -24,7 +24,7 @@
 
                 <div
                     v-if="hasActions"
-                    class="flex items-center px-4 py-3 bg-gray-50 text-right sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md"
+                    class="flex items-center bg-gray-50 px-4 py-3 text-right shadow sm:rounded-bl-md sm:rounded-br-md sm:px-6"
                     :class="full ? 'justify-start' : 'justify-end'"
                 >
                     <slot name="actions"></slot>

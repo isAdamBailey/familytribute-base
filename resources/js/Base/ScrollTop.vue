@@ -1,17 +1,17 @@
 <template>
     <div
         ref="scrollTopButton"
-        class="invisible sticky w-full flex justify-end bottom-0 pb-3 pr-5 lg:pr-16 transition"
+        class="invisible sticky bottom-0 flex w-full justify-end pb-3 pr-5 transition lg:pr-16"
     >
         <div
-            class="rounded-full cursor-pointer text-gray-700 dark:text-orange-600 hover:text-indigo-600 dark:hover:text-orange-500 transition"
+            class="cursor-pointer rounded-full text-gray-700 transition hover:text-indigo-600 dark:text-orange-600 dark:hover:text-orange-500"
         >
             <button
                 role="button"
                 aria-label="scroll to top of the page"
                 @click="scrollToTop"
             >
-                <i class="text-5xl ri-arrow-up-circle-line"></i>
+                <i class="ri-arrow-up-circle-line text-5xl"></i>
             </button>
         </div>
     </div>

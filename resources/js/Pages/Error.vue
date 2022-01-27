@@ -4,11 +4,11 @@
         <div class="text-xl text-gray-700 dark:text-indigo-300">
             {{ description }}
         </div>
-        <div class="flex justify-center items-baseline">
+        <div class="flex items-baseline justify-center">
             <img class="w-3/4" :src="image" :alt="title" />
         </div>
 
-        <div class="flex justify-center mt-10">
+        <div class="mt-10 flex justify-center">
             <Link :href="route('home')">
                 <attention-button>Back Home?</attention-button>
             </Link>

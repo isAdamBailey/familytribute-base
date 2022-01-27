@@ -2,9 +2,9 @@
     <app-layout>
         <template #header> People </template>
 
-        <div class="md:mt-5 mb-5 md:mb-0 flex justify-between items-center">
+        <div class="mb-5 flex items-center justify-between md:mt-5 md:mb-0">
             <div
-                class="font-header text-gray-800 dark:text-indigo-400 text-3xl md:text-5xl"
+                class="font-header text-3xl text-gray-800 dark:text-indigo-400 md:text-5xl"
             >
                 People
             </div>

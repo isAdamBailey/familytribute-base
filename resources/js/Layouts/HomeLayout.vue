@@ -3,18 +3,18 @@
         <app-head :title="title" />
 
         <div
-            class="min-h-screen bg-gradient-to-r from-indigo-100 to-gray-100 dark:from-indigo-900 to-indigo-300"
+            class="min-h-screen bg-gradient-to-r from-indigo-100 to-gray-100 to-indigo-300 dark:from-indigo-900"
         >
             <primary-nav />
             <!-- Page Content -->
             <main>
                 <div class="md:py-12">
-                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                         <div
-                            class="shadow-xl shadow-indigo-200/50 rounded-lg overflow-hidden"
+                            class="overflow-hidden rounded-lg shadow-xl shadow-indigo-200/50"
                         >
                             <div
-                                class="p-2 pb-20 sm:px-20 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-indigo-900"
+                                class="border-b border-gray-200 bg-white p-2 pb-20 dark:border-indigo-900 dark:bg-gray-800 sm:px-20"
                             >
                                 <slot></slot>
                             </div>

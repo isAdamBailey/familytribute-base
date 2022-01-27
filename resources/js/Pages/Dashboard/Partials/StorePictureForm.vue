@@ -19,7 +19,7 @@
 
                 <div v-show="photoPreview" class="mt-2">
                     <span
-                        class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
+                        class="block h-20 w-20 rounded-full bg-cover bg-center bg-no-repeat"
                         :style="
                             'background-image: url(\'' + photoPreview + '\');'
                         "
@@ -85,7 +85,7 @@
                 />
             </div>
 
-            <div class="mt-2 col-span-6 md:col-span-2">
+            <div class="col-span-6 mt-2 md:col-span-2">
                 <jet-label for="featured" value="Featured" />
                 <info-text>
                     Featured images are displayed randomly on the home page, and
@@ -99,7 +99,7 @@
                 />
                 <jet-input-error :message="form.errors.featured" class="mt-2" />
             </div>
-            <div class="mt-2 col-span-6 md:col-span-2">
+            <div class="col-span-6 mt-2 md:col-span-2">
                 <jet-label for="private" value="Private" />
                 <info-text
                     >Private images will only appear for registered

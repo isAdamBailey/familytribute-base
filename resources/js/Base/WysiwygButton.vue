@@ -3,7 +3,7 @@
         :aria-label="title"
         :title="title"
         class="border-r border-b py-1 px-2"
-        :class="{ 'font-bold bg-purple-600 text-white': isActive }"
+        :class="{ 'bg-purple-600 font-bold text-white': isActive }"
     >
         <i :class="icon"></i>
     </button>

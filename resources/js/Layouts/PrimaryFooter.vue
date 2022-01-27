@@ -1,13 +1,13 @@
 <template>
-    <footer class="bg-white dark:bg-gray-900 border-t relative pt-1">
+    <footer class="relative border-t bg-white pt-1 dark:bg-gray-900">
         <div class="container mx-auto px-6">
             <div
                 v-if="!$page.props.user"
-                class="flex justify-center items-center mt-8"
+                class="mt-8 flex items-center justify-center"
             >
                 <Link
                     :href="route('login')"
-                    class="text-gray-900 dark:text-indigo-300 underline hover:text-gray-500 dark:hover:text-gray-100"
+                    class="text-gray-900 underline hover:text-gray-500 dark:text-indigo-300 dark:hover:text-gray-100"
                 >
                     Log In
                 </Link>
@@ -15,21 +15,21 @@
                 <Link
                     v-if="$inertia.page.props.settings.registration"
                     :href="route('register')"
-                    class="ml-4 text-gray-900 dark:text-indigo-300 underline hover:text-gray-500 dark:hover:text-gray-100"
+                    class="ml-4 text-gray-900 underline hover:text-gray-500 dark:text-indigo-300 dark:hover:text-gray-100"
                 >
                     Register
                 </Link>
             </div>
             <div
-                class="mt-16 border-t-2 border-gray-300 dark:border-indigo-300 flex flex-col items-center"
+                class="mt-16 flex flex-col items-center border-t-2 border-gray-300 dark:border-indigo-300"
             >
-                <div class="sm:w-2/3 text-center py-6">
+                <div class="py-6 text-center sm:w-2/3">
                     <p
-                        class="text-sm text-indigo-700 dark:text-indigo-300 font-bold mb-2"
+                        class="mb-2 text-sm font-bold text-indigo-700 dark:text-indigo-300"
                     >
                         © {{ new Date().getFullYear() }} by
                         <a
-                            class="text-indigo-700 dark:text-indigo-300 hover:text-indigo-800 dark:hover:text-indigo-500 hover:underline decoration-indigo-800"
+                            class="text-indigo-700 decoration-indigo-800 hover:text-indigo-800 hover:underline dark:text-indigo-300 dark:hover:text-indigo-500"
                             href="https://familytribute.org"
                             >FamilyTribute</a
                         >

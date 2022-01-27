@@ -5,9 +5,9 @@
             {{ story.title }}
         </template>
 
-        <div class="flex flex-wrap-reverse justify-between mt-8 mb-3">
+        <div class="mt-8 mb-3 flex flex-wrap-reverse justify-between">
             <h1
-                class="relative font-header text-gray-800 dark:text-indigo-400 text-5xl md:text-7xl"
+                class="relative font-header text-5xl text-gray-800 dark:text-indigo-400 md:text-7xl"
             >
                 <embedded-icon
                     :item="story"
@@ -38,12 +38,12 @@
         </p>
 
         <div
-            class="italic mt-6 text-gray-900 dark:text-gray-100 prose max-w-none"
+            class="prose mt-6 max-w-none italic text-gray-900 dark:text-gray-100"
             v-html="story.excerpt"
         />
 
         <div
-            class="html-content mt-6 text-gray-900 dark:text-gray-100 prose max-w-none"
+            class="html-content prose mt-6 max-w-none text-gray-900 dark:text-gray-100"
             v-html="story.content"
         />
 
@@ -80,11 +80,9 @@ import JetDangerButton from "@/Base/DangerButton";
 import SocialShare from "@/Components/SocialShare";
 import EmbeddedIcon from "@/Base/EmbeddedIcon";
 import SectionBorder from "@/Base/SectionBorder";
-import Pill from "../Base/Pill";
 
 export default defineComponent({
     components: {
-        Pill,
         SectionBorder,
         EmbeddedIcon,
         SocialShare,

@@ -8,9 +8,9 @@
             {{ person.full_name }}
         </template>
 
-        <div class="flex flex-wrap-reverse justify-between mt-8 mb-3">
+        <div class="mt-8 mb-3 flex flex-wrap-reverse justify-between">
             <h1
-                class="font-header text-gray-800 dark:text-indigo-400 text-5xl md:text-7xl"
+                class="font-header text-5xl text-gray-800 dark:text-indigo-400 md:text-7xl"
             >
                 {{ person.full_name }}
             </h1>
@@ -40,24 +40,24 @@
 
         <div
             v-if="person.obituary.background_photo_url"
-            class="w-full h-80 bg-cover rounded-lg bg-no-repeat bg-center"
+            class="h-80 w-full rounded-lg bg-cover bg-center bg-no-repeat"
             :style="`background-image: url(${person.obituary.background_photo_url});`"
         >
             <img
-                class="opacity-0 w-full h-full"
+                class="h-full w-full opacity-0"
                 :src="person.obituary.background_photo_url"
                 alt="background image"
             />
         </div>
         <div
             v-else
-            class="w-full h-80 bg-gradient-to-t from-violet-400 via-trueGray-200 to-transparent"
+            class="via-trueGray-200 h-80 w-full bg-gradient-to-t from-violet-400 to-transparent"
         ></div>
         <div class="flex justify-center">
             <div class="-mt-40">
-                <div class="w-60 h-60 rounded-full relative avatar">
+                <div class="avatar relative h-60 w-60 rounded-full">
                     <img
-                        class="w-full h-full rounded-full relative border-4 border-gray-900"
+                        class="relative h-full w-full rounded-full border-4 border-gray-900"
                         :src="person.photo_url"
                         alt=""
                     />
@@ -67,14 +67,14 @@
 
         <div
             v-if="person.pictures.length"
-            class="flex snap-x space-x-1 overflow-x-scroll pb-8 px-3"
+            class="flex snap-x space-x-1 overflow-x-scroll px-3 pb-8"
         >
             <pictures-container :items="person.pictures" :fixed-width="true" />
         </div>
 
         <div
             v-if="person.stories.length"
-            class="flex snap-x space-x-1 overflow-x-scroll mt-5 pb-8 px-3"
+            class="mt-5 flex snap-x space-x-1 overflow-x-scroll px-3 pb-8"
         >
             <stories-container :items="person.stories" :fixed-width="true" />
         </div>
@@ -82,13 +82,13 @@
         <social-share :title="`${person.full_name}'s obituary`" />
 
         <h1
-            class="mt-10 font-header text-gray-800 dark:text-indigo-400 text-3xl md:text-5xl"
+            class="mt-10 font-header text-3xl text-gray-800 dark:text-indigo-400 md:text-5xl"
         >
             Obituary
         </h1>
 
         <div
-            class="html-content text-gray-700 dark:text-gray-100 my-10 prose max-w-none"
+            class="html-content prose my-10 max-w-none text-gray-700 dark:text-gray-100"
             v-html="person.obituary.content"
         />
 

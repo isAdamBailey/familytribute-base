@@ -50,15 +50,15 @@
                         />
 
                         <div
-                            class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer"
+                            class="relative z-0 mt-1 cursor-pointer rounded-lg border border-gray-200"
                         >
                             <button
                                 v-for="(role, i) in availableRoles"
                                 :key="role.key"
                                 type="button"
-                                class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
+                                class="relative inline-flex w-full rounded-lg px-4 py-3 focus:z-10 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-200"
                                 :class="{
-                                    'border-t border-gray-200 rounded-t-none':
+                                    'rounded-t-none border-t border-gray-200':
                                         i > 0,
                                     'rounded-b-none':
                                         i !==
@@ -107,7 +107,7 @@
 
                                     <!-- Role Description -->
                                     <div
-                                        class="mt-2 text-xs text-gray-600 text-left"
+                                        class="mt-2 text-left text-xs text-gray-600"
                                     >
                                         {{ role.description }}
                                     </div>
@@ -169,7 +169,7 @@
                                 <!-- Cancel Team Invitation -->
                                 <button
                                     v-if="userPermissions.canRemoveTeamMembers"
-                                    class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none"
+                                    class="ml-6 cursor-pointer text-sm text-red-500 focus:outline-none"
                                     @click="cancelTeamInvitation(invitation)"
                                 >
                                     Cancel
@@ -202,7 +202,7 @@
                         >
                             <div class="flex items-center">
                                 <img
-                                    class="w-8 h-8 rounded-full"
+                                    class="h-8 w-8 rounded-full"
                                     :src="user.profile_photo_url"
                                     :alt="user.name"
                                 />
@@ -233,7 +233,7 @@
                                 <!-- Leave Team -->
                                 <button
                                     v-if="$page.props.user.id === user.id"
-                                    class="cursor-pointer ml-6 text-sm text-red-500"
+                                    class="ml-6 cursor-pointer text-sm text-red-500"
                                     @click="confirmLeavingTeam"
                                 >
                                     Leave
@@ -242,7 +242,7 @@
                                 <!-- Remove Team Member -->
                                 <button
                                     v-if="userPermissions.canRemoveTeamMembers"
-                                    class="cursor-pointer ml-6 text-sm text-red-500"
+                                    class="ml-6 cursor-pointer text-sm text-red-500"
                                     @click="confirmTeamMemberRemoval(user)"
                                 >
                                     Remove
@@ -264,15 +264,15 @@
             <template #content>
                 <div v-if="managingRoleFor">
                     <div
-                        class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer"
+                        class="relative z-0 mt-1 cursor-pointer rounded-lg border border-gray-200"
                     >
                         <button
                             v-for="(role, i) in availableRoles"
                             :key="role.key"
                             type="button"
-                            class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
+                            class="relative inline-flex w-full rounded-lg px-4 py-3 focus:z-10 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-200"
                             :class="{
-                                'border-t border-gray-200 rounded-t-none':
+                                'rounded-t-none border-t border-gray-200':
                                     i > 0,
                                 'rounded-b-none':
                                     i !==

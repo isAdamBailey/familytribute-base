@@ -1,11 +1,11 @@
 <template>
-    <div class="w-1/2 bg-white dark:bg-gray-800 px-4">
+    <div class="w-1/2 bg-white px-4 dark:bg-gray-800">
         <label for="search" class="hidden">Search</label>
         <input
             id="search"
             ref="search"
             v-model="search"
-            class="transition h-10 w-full bg-gray-100 border border-gray-500 rounded-full focus:border-purple-400 outline-none cursor-pointer text-gray-700 px-4 pb-0 pt-px"
+            class="h-10 w-full cursor-pointer rounded-full border border-gray-500 bg-gray-100 px-4 pb-0 pt-px text-gray-700 outline-none transition focus:border-purple-400"
             :class="{ 'transition-border': search }"
             autocomplete="off"
             name="search"

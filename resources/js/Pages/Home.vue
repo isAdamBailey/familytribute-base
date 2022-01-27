@@ -1,20 +1,20 @@
 <template>
     <home-layout>
-        <div class="flex flex-col-reverse mb-5 md:mb-7 lg:flex-row">
+        <div class="mb-5 flex flex-col-reverse md:mb-7 lg:flex-row">
             <div>
                 <div
-                    class="font-header font-bold text-gray-700 dark:text-indigo-400 text-6xl md:text-8xl"
+                    class="font-header text-6xl font-bold text-gray-700 dark:text-indigo-400 md:text-8xl"
                     v-html="$inertia.page.props.settings.title"
                 ></div>
                 <div
-                    class="html-content mt-6 text-gray-500 dark:text-indigo-300 text-l md:text-2xl"
+                    class="html-content text-l mt-6 text-gray-500 dark:text-indigo-300 md:text-2xl"
                     v-html="$inertia.page.props.settings.description"
                 ></div>
             </div>
-            <application-mark class="w-full md:w-1/2 mx-auto mb-6 lg:mb-0" />
+            <application-mark class="mx-auto mb-6 w-full md:w-1/2 lg:mb-0" />
         </div>
 
-        <section class="grid grid-cols-2 lg:grid-cols-4 gap-1">
+        <section class="grid grid-cols-2 gap-1 lg:grid-cols-4">
             <div v-if="pictures[0]" class="relative lg:col-span-2">
                 <img
                     class="h-full w-full object-cover"
@@ -22,7 +22,7 @@
                     :alt="pictures[0].title"
                 />
                 <div
-                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4 truncate line-clamp-1"
+                    class="absolute inset-x-0 bottom-0 w-full truncate bg-white/30 py-2.5 text-center text-sm leading-4 text-white backdrop-blur-sm line-clamp-1"
                     v-html="pictures[0].description"
                 ></div>
             </div>
@@ -33,7 +33,7 @@
                     :alt="pictures[1].title"
                 />
                 <div
-                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4 truncate line-clamp-1"
+                    class="absolute inset-x-0 bottom-0 w-full truncate bg-white/30 py-2.5 text-center text-sm leading-4 text-white backdrop-blur-sm line-clamp-1"
                     v-html="pictures[1].description"
                 ></div>
             </div>
@@ -47,7 +47,7 @@
                     :alt="pictures[2].title"
                 />
                 <div
-                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4 truncate line-clamp-1"
+                    class="absolute inset-x-0 bottom-0 w-full truncate bg-white/30 py-2.5 text-center text-sm leading-4 text-white backdrop-blur-sm line-clamp-1"
                     v-html="pictures[2].description"
                 ></div>
             </div>
@@ -58,13 +58,13 @@
                     :alt="pictures[3].title"
                 />
                 <div
-                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4 truncate line-clamp-1"
+                    class="absolute inset-x-0 bottom-0 w-full truncate bg-white/30 py-2.5 text-center text-sm leading-4 text-white backdrop-blur-sm line-clamp-1"
                     v-html="pictures[3].description"
                 ></div>
             </div>
             <div
                 v-if="pictures[4]"
-                class="relative lg:row-start-1 lg:row-span-2 lg:col-start-4"
+                class="relative lg:col-start-4 lg:row-span-2 lg:row-start-1"
             >
                 <img
                     class="h-full w-full object-cover"
@@ -72,13 +72,13 @@
                     :alt="pictures[4].title"
                 />
                 <div
-                    class="absolute w-full py-2.5 bottom-0 inset-x-0 backdrop-blur-sm bg-white/30 text-white text-sm text-center leading-4 truncate line-clamp-1"
+                    class="absolute inset-x-0 bottom-0 w-full truncate bg-white/30 py-2.5 text-center text-sm leading-4 text-white backdrop-blur-sm line-clamp-1"
                     v-html="pictures[4].description"
                 ></div>
             </div>
         </section>
 
-        <div class="flex justify-center flex-wrap mt-10">
+        <div class="mt-10 flex flex-wrap justify-center">
             <Link :href="route('people.index')">
                 <attention-button class="mb-5 mr-5">
                     <i class="ri-user-shared-fill mr-2"></i>

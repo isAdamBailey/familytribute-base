@@ -48,7 +48,7 @@
                 />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="mt-4 flex items-center justify-end">
                 <base-button
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"

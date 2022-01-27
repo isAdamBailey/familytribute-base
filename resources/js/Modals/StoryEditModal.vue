@@ -3,7 +3,7 @@
         <template #title> Edit Story </template>
 
         <template #content>
-            <div class="mt-2 col-span-6 sm:col-span-4">
+            <div class="col-span-6 mt-2 sm:col-span-4">
                 <jet-label for="title" value="Title" />
                 <jet-input
                     id="title"
@@ -15,13 +15,13 @@
                 <jet-input-error :message="form.errors.title" class="mt-2" />
             </div>
 
-            <div class="mt-2 col-span-6 sm:col-span-4">
+            <div class="col-span-6 mt-2 sm:col-span-4">
                 <jet-label for="excerpt" value="Excerpt" />
                 <wysiwyg v-model="form.excerpt" :excerpt="true" />
                 <jet-input-error :message="form.errors.excerpt" class="mt-2" />
             </div>
 
-            <div class="mt-2 col-span-6 sm:col-span-4">
+            <div class="col-span-6 mt-2 sm:col-span-4">
                 <jet-label for="person_ids" value="Tag People" />
                 <Multiselect
                     id="person_ids"
@@ -36,14 +36,14 @@
                 />
             </div>
 
-            <div class="mt-2 col-span-6 sm:col-span-4">
+            <div class="col-span-6 mt-2 sm:col-span-4">
                 <jet-label for="content" value="Story" />
                 <wysiwyg v-model="form.content" />
                 <jet-input-error :message="form.errors.content" class="mt-2" />
             </div>
 
-            <div class="flex flex-wrap -mx-3">
-                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <div class="-mx-3 flex flex-wrap">
+                <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
                     <jet-label for="private" value="Private" />
                     <info-text>
                         Private stories will only appear for registered users
@@ -58,7 +58,7 @@
                         class="mt-2"
                     />
                 </div>
-                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
                     <jet-label for="year" value="Year" />
                     <jet-input
                         id="year"

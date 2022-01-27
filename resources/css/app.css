@@ -5,7 +5,7 @@
 @layer base {
     .html-content a,
     .ProseMirror a {
-        @apply text-sky-500 font-bold underline underline-offset-1 decoration-sky-500 hover:decoration-2 transition;
+        @apply font-bold text-sky-500 underline decoration-sky-500 underline-offset-1 transition hover:decoration-2;
     }
 
     .html-content h2,

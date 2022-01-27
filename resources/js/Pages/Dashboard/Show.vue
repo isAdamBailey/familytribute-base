@@ -3,7 +3,7 @@
         <template #header> Dashboard </template>
 
         <div
-            class="p-6 sm:px-20 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-indigo-300"
+            class="border-b border-gray-200 bg-white p-6 dark:border-indigo-300 dark:bg-gray-900 sm:px-20"
         >
             <div class="flex items-baseline">
                 <jet-application-mark class="block h-12 w-auto" />
@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <div class="mt-8 text-gray-800 dark:text-indigo-300 text-2xl">
+            <div class="mt-8 text-2xl text-gray-800 dark:text-indigo-300">
                 Welcome to {{ $inertia.page.props.settings.title }}'s dashboard,
                 {{ $page.props.user.name }}!
             </div>
@@ -31,7 +31,7 @@
                     <li class="ml-4">
                         We suggest starting by adding
                         <a
-                            class="text-sky-500 font-bold underline underline-offset-1 decoration-sky-500 hover:decoration-2 transition"
+                            class="font-bold text-sky-500 underline decoration-sky-500 underline-offset-1 transition hover:decoration-2"
                             href="#new-person"
                             >a person</a
                         >
@@ -42,7 +42,7 @@
                         home page, turn off registration, or change the
                         registration secret, go to
                         <a
-                            class="text-sky-500 font-bold underline underline-offset-1 decoration-sky-500 hover:decoration-2 transition"
+                            class="font-bold text-sky-500 underline decoration-sky-500 underline-offset-1 transition hover:decoration-2"
                             href="#site-settings"
                             >site settings</a
                         >.
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl py-10 sm:px-6 lg:px-8">
             <store-picture-form :people-options="peopleOptions" />
             <jet-section-border />
 
