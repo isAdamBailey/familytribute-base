@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PersonResource;
 use App\Models\Obituary;
 use App\Models\Person;
 use App\Traits\HasSeoTags;
@@ -38,12 +39,7 @@ class PersonController extends Controller
             ->paginate();
 
         return Inertia::render('People', [
-            'people' => $people->through(fn ($person) => [
-                'slug' => $person->slug,
-                'full_name' => $person->full_name,
-                'photo_url' => $person->photo_url,
-                'obituary' => $person->obituary,
-            ]),
+            'people' => PersonResource::collection($people),
             'sort' => ucwords(str_replace('_', ' ', $sort)),
             'order' => strtoupper($order),
             'search' => $search,
@@ -52,7 +48,7 @@ class PersonController extends Controller
 
     public function show(Person $person): Response
     {
-        $person = $person->load(['obituary', 'pictures', 'stories']);
+        $person = $person->load(['obituary', 'pictures', 'stories', 'parents', 'children']);
 
         $this->setTitleStart($person->full_name);
         $this->setOgImage($person->photo_url);
@@ -61,18 +57,7 @@ class PersonController extends Controller
         $this->renderSeo();
 
         return Inertia::render('Person', [
-            'person' => $person->only(
-                'full_name',
-                'first_name',
-                'last_name',
-                'photo_url',
-                'obituary',
-                'pictures',
-                'stories',
-                'parents',
-                'children',
-                'parent_ids',
-            ),
+            'person' => PersonResource::make($person),
             'people' => Person::allForTagging(),
         ]);
     }
