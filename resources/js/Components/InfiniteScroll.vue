@@ -1,7 +1,7 @@
 <template>
     <component :is="component" :items="itemsData" />
 
-    <div v-if="items.next_page_url" class="mt-7 flex justify-center">
+    <div v-if="items.links.next" class="mt-7 flex justify-center">
         <attention-button @click="loadMore"
             >Load More {{ typeString }}</attention-button
         >
@@ -49,7 +49,7 @@ export default defineComponent({
         loadMore() {
             this.loadingMore = true;
 
-            const links = this.items.links;
+            const links = this.items.meta.links;
             const next = links[links.length - 1];
             if (next.url) {
                 this.$inertia.get(
