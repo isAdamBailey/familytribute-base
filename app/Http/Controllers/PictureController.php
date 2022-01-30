@@ -61,7 +61,7 @@ class PictureController extends Controller
         $this->renderSeo();
 
         return Inertia::render('Picture', [
-            'picture' => PictureResource::make($picture),
+            'picture' => PictureResource::make($picture->load('people')),
             'people' => Person::allForTagging(),
         ]);
     }

@@ -21,11 +21,13 @@ class PictureResource extends JsonResource
             'title' => $this->title,
             'year' => $this->year,
             'url' => $this->url,
-            'featured' => $this->featured,
-            'private' => $this->private,
             'description' => $this->description,
-            'person_ids' => $this->person_ids,
             'people' => PersonResource::collection($this->whenLoaded('people')),
+            $this->mergeWhen(auth()->check(), [
+                'person_ids' => $this->person_ids,
+                'featured' => $this->featured,
+                'private' => $this->private,
+            ]),
         ];
     }
 }

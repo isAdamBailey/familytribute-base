@@ -34,10 +34,29 @@ class PicturesTest extends TestCase
                 ->has('pictures.data.0.url')
                 ->has('pictures.data.0.title')
                 ->has('pictures.data.0.year')
-                ->has('pictures.data.0.featured')
-                ->has('pictures.data.0.private')
+                ->missing('pictures.data.0.featured')
+                ->missing('pictures.data.0.private')
                 ->has('meta.meta')
                 ->has('meta.title')
+            );
+    }
+
+    public function test_pictures_component_is_rendered_with_paginated_data_and_extra_for_auth()
+    {
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
+        Picture::factory()->count(20)->create();
+        $this->assertDatabaseCount('pictures', 20);
+
+        $this->get(route('pictures.index'))
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->component('Pictures')
+                    ->url('/pictures')
+                    ->has('pictures.data', 15)
+                    ->has('pictures.links')
+                    ->has('pictures.data.0.featured')
+                    ->has('pictures.data.0.private')
             );
     }
 
@@ -53,6 +72,8 @@ class PicturesTest extends TestCase
                     ->component('Pictures')
                     ->url('/pictures')
                     ->has('pictures.data', 1)
+                    ->missing('pictures.data.0.featured')
+                    ->missing('pictures.data.0.private')
             );
     }
 
@@ -70,6 +91,8 @@ class PicturesTest extends TestCase
                     ->component('Pictures')
                     ->url('/pictures')
                     ->has('pictures.data', 11)
+                    ->has('pictures.data.0.featured')
+                    ->has('pictures.data.0.private')
             );
     }
 
@@ -96,7 +119,6 @@ class PicturesTest extends TestCase
                     ->where('description', $picture->description)
                     ->where('url', $picture->url)
                     ->where('year', (int) $picture->year)
-                    ->where('featured', (int) $picture->featured)
                     ->etc()
                 )
                 ->has('meta.meta')
@@ -111,19 +133,19 @@ class PicturesTest extends TestCase
         $this->get(route('pictures.show', $picture))
             ->assertInertia(
                 fn (Assert $page) => $page
-                ->component('Picture')
-                ->url('/pictures/'.$picture->slug)
-                ->has('picture.title')
-                ->has('picture.description')
-                ->has('picture.url')
-                ->has('picture.year')
-                ->has('picture.featured')
-                ->has('picture.private')
-                ->has('picture.people')
-                ->has('picture.person_ids')
-                ->has('people')
-                ->has('meta.meta')
-                ->has('meta.title')
+                    ->component('Picture')
+                    ->url('/pictures/'.$picture->slug)
+                    ->has('picture.title')
+                    ->has('picture.description')
+                    ->has('picture.url')
+                    ->has('picture.year')
+                    ->has('picture.people')
+                    ->missing('picture.featured')
+                    ->missing('picture.private')
+                    ->missing('picture.person_ids')
+                    ->has('people')
+                    ->has('meta.meta')
+                    ->has('meta.title')
             );
     }
 

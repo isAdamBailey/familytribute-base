@@ -6,6 +6,7 @@ use App\Models\Obituary;
 use App\Models\Person;
 use App\Models\Picture;
 use App\Models\Story;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\Assert;
 use Tests\TestCase;
@@ -68,6 +69,8 @@ class PersonTest extends TestCase
 
     public function test_person_component_is_shown_by_slug()
     {
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
         $obituary = Obituary::factory()->create();
         $story = Story::factory()->create();
         $picture = Picture::factory()->create();

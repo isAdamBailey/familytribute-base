@@ -22,9 +22,11 @@ class StoryResource extends JsonResource
             'content' => $this->content,
             'year' => $this->year,
             'excerpt' => $this->excerpt,
-            'private' => $this->private,
-            'person_ids' => $this->person_ids,
             'people' => PersonResource::collection($this->whenLoaded('people')),
+            $this->mergeWhen(auth()->check(), [
+                'person_ids' => $this->person_ids,
+                'private' => $this->private,
+            ]),
         ];
     }
 }

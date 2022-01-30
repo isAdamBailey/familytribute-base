@@ -29,9 +29,30 @@ class StoriesTest extends TestCase
                 ->has('stories.data', 15)
                 ->has('stories.data.0.excerpt')
                 ->has('stories.data.0.year')
-                ->has('stories.data.0.private')
+                ->missing('stories.data.0.private')
                 ->has('meta.meta')
                 ->has('meta.title')
+            );
+    }
+
+    public function test_stories_component_is_rendered_with_paginated_data_for_auth()
+    {
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
+        Story::factory()->count(20)->create();
+        $this->assertDatabaseCount('stories', 20);
+
+        $this->get(route('stories.index'))
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->component('Stories')
+                    ->url('/stories')
+                    ->has('stories.data', 15)
+                    ->has('stories.data.0.excerpt')
+                    ->has('stories.data.0.year')
+                    ->has('stories.data.0.private')
+                    ->has('meta.meta')
+                    ->has('meta.title')
             );
     }
 
@@ -47,6 +68,7 @@ class StoriesTest extends TestCase
                     ->component('Stories')
                     ->url('/stories')
                     ->has('stories.data', 1)
+                    ->missing('stories.data.0.private')
             );
     }
 
@@ -64,6 +86,7 @@ class StoriesTest extends TestCase
                     ->component('Stories')
                     ->url('/stories')
                     ->has('stories.data', 11)
+                    ->has('stories.data.0.private')
             );
     }
 
@@ -109,8 +132,8 @@ class StoriesTest extends TestCase
                 ->has('story.content')
                 ->has('story.excerpt')
                 ->has('story.year')
-                ->has('story.private')
-                ->has('story.person_ids')
+                ->missing('story.private')
+                ->missing('story.person_ids')
                 ->has('people')
                 ->has('meta.meta')
                 ->has('meta.title')
