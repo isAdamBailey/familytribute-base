@@ -24,9 +24,9 @@ class PersonResource extends JsonResource
             'last_name'=> $this->last_name,
             'photo_url' => $this->photo_url,
             'parent_ids' => $this->parent_ids,
-            'obituary' => $this->whenLoaded('obituary', ObituaryResource::make($this->obituary)),
-            'pictures' => $this->whenLoaded('pictures'),
-            'stories' => $this->whenLoaded('stories'),
+            'obituary' => ObituaryResource::make($this->whenLoaded('obituary')),
+            'pictures' => PictureResource::collection($this->whenLoaded('pictures')),
+            'stories' => StoryResource::collection($this->whenLoaded('stories')),
             'parents' => $this->whenLoaded('parents'),
             'children' => $this->whenLoaded('children'),
         ];

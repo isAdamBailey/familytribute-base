@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class StoryResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  Request  $request
+     * @return array|Arrayable|\JsonSerializable
+     */
+    public function toArray($request): array|\JsonSerializable|Arrayable
+    {
+        return [
+            'slug' => $this->slug,
+            'title' => $this->title,
+            'content' => $this->content,
+            'year' => $this->year,
+            'excerpt' => $this->excerpt,
+            'private' => $this->private,
+            'person_ids' => $this->person_ids,
+            'people' => PersonResource::collection($this->whenLoaded('people')),
+        ];
+    }
+}

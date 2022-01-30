@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\StoryResource;
 use App\Models\Person;
 use App\Models\Story;
 use App\Traits\HasSeoTags;
@@ -39,13 +40,7 @@ class StoryController extends Controller
             ->paginate();
 
         return Inertia::render('Stories', [
-            'stories' => $stories->through(fn ($story) => [
-                'slug' => $story->slug,
-                'title' => $story->title,
-                'excerpt' => $story->excerpt,
-                'private' => $story->private,
-                'year' => $story->year,
-            ]),
+            'stories' => StoryResource::collection($stories),
             'sort' => ucwords(str_replace('_', ' ', $sort)),
             'order' => strtoupper($order),
             'search' => $search,
@@ -63,16 +58,7 @@ class StoryController extends Controller
         $this->renderSeo();
 
         return Inertia::render('Story', [
-            'story' => $story->only([
-                'slug',
-                'title',
-                'content',
-                'year',
-                'excerpt',
-                'private',
-                'people',
-                'person_ids',
-            ]),
+            'story' => StoryResource::make($story),
             'people' => Person::allForTagging(),
         ]);
     }

@@ -86,7 +86,6 @@ class Person extends Model
             ->when(! auth()->user(),
                 fn ($query) => $query->where('private', '!=', 1)
             )
-            ->select(['slug', 'url', 'title', 'description', 'year'])
             ->orderBy('year');
     }
 
@@ -95,8 +94,7 @@ class Person extends Model
         return $this->belongsToMany(Story::class)
             ->when(! auth()->user(),
                 fn ($query) => $query->where('private', '!=', 1)
-            )
-            ->select(['slug', 'excerpt', 'title', 'content']);
+            );
     }
 
     public function parents(): BelongsToMany

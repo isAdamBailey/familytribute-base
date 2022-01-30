@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PictureResource;
 use App\Models\Person;
 use App\Models\Picture;
 use App\Traits\HasSeoTags;
@@ -40,15 +41,7 @@ class PictureController extends Controller
             ->paginate();
 
         return Inertia::render('Pictures', [
-            'pictures' => $pictures->through(fn ($picture) => [
-                'slug' => $picture->slug,
-                'title' => $picture->title,
-                'year' => $picture->year,
-                'url' => $picture->url,
-                'featured' => $picture->featured,
-                'private' => $picture->private,
-                'description' => $picture->description,
-            ]),
+            'pictures' => PictureResource::collection($pictures),
             'sort' => ucwords(str_replace('_', ' ', $sort)),
             'order' => strtoupper($order),
             'search' => $search,
@@ -68,17 +61,7 @@ class PictureController extends Controller
         $this->renderSeo();
 
         return Inertia::render('Picture', [
-            'picture' => $picture->only(
-                'slug',
-                'title',
-                'url',
-                'year',
-                'featured',
-                'private',
-                'description',
-                'people',
-                'person_ids'
-            ),
+            'picture' => PictureResource::make($picture),
             'people' => Person::allForTagging(),
         ]);
     }
