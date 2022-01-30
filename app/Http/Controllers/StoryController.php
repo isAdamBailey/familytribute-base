@@ -58,7 +58,7 @@ class StoryController extends Controller
         $this->renderSeo();
 
         return Inertia::render('Story', [
-            'story' => StoryResource::make($story),
+            'story' => StoryResource::make($story->load('people')),
             'people' => Person::allForTagging(),
         ]);
     }
