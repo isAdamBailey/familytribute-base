@@ -24,8 +24,8 @@ class PersonResource extends JsonResource
             'obituary' => ObituaryResource::make($this->whenLoaded('obituary')),
             'pictures' => PictureResource::collection($this->whenLoaded('pictures')),
             'stories' => StoryResource::collection($this->whenLoaded('stories')),
-            'parents' => $this->whenLoaded('parents'),
-            'children' => $this->whenLoaded('children'),
+            'parents' => ParentChildResource::collection($this->whenLoaded('parents')),
+            'children' => ParentChildResource::collection($this->whenLoaded('children')),
             $this->mergeWhen(auth()->check(), [
                 'parent_ids' => $this->parent_ids,
                 'first_name' => $this->first_name,
