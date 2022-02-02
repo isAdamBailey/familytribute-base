@@ -28,10 +28,13 @@
                 </base-button>
             </div>
         </div>
-        <p class="mb-3 text-gray-800 dark:text-indigo-400 md:mb-7">
-            Taken in or around
-            <span class="font-semibold">{{ picture.year }}</span>
-        </p>
+        <div class="flex flex-wrap items-center justify-between">
+            <p class="text-gray-800 dark:text-indigo-400 md:mb-7">
+                Taken in or around
+                <span class="font-semibold">{{ picture.year }}</span>
+            </p>
+            <social-share :title="picture.title" />
+        </div>
         <div class="relative">
             <img
                 class="w-full rounded-lg object-cover"
@@ -41,16 +44,13 @@
             <embedded-icon :item="picture" />
         </div>
 
-        <social-share class="mt-5" :title="picture.title" />
-
         <div
             class="html-content prose my-6 max-w-none text-gray-700 dark:text-gray-100"
             v-html="picture.description"
         />
 
-        <section-border />
-
-        <tagged-people
+        <section-border v-if="picture.people.length" />
+        <parent-child-container
             :people="picture.people"
             title="People in this picture"
         />
@@ -78,14 +78,15 @@ import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import PictureEditModal from "@/Modals/PictureEditModal";
 import PictureDeleteModal from "@/Modals/PictureDeleteModal";
-import TaggedPeople from "@/Components/TaggedPeople";
 import JetDangerButton from "@/Base/DangerButton";
 import SocialShare from "@/Components/SocialShare";
 import EmbeddedIcon from "@/Base/EmbeddedIcon";
 import SectionBorder from "@/Base/SectionBorder";
+import ParentChildContainer from "@/Components/ParentChildContainer";
 
 export default defineComponent({
     components: {
+        ParentChildContainer,
         SectionBorder,
         EmbeddedIcon,
         SocialShare,
@@ -93,7 +94,6 @@ export default defineComponent({
         PictureDeleteModal,
         PictureEditModal,
         AppLayout,
-        TaggedPeople,
     },
 
     props: {

@@ -4,7 +4,7 @@
         :key="index"
         :href="route('pictures.show', picture)"
         :class="fixedWidth ? 'w-60' : ''"
-        class="min-w-20 relative snap-center rounded-lg bg-white shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
+        class="min-w-20 relative snap-start rounded-lg bg-white shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
     >
         <img
             class="h-48 w-full rounded-t-lg object-cover"
@@ -13,10 +13,7 @@
         />
         <embedded-icon :item="picture" />
 
-        <div
-            :class="fixedWidth ? 'w-60' : ''"
-            class="card-text-gradient truncate rounded-b p-3"
-        >
+        <div class="card-text-gradient truncate rounded-b p-3">
             <div class="flex items-center justify-between">
                 <p class="truncate text-sm font-bold">
                     {{ picture.title }}

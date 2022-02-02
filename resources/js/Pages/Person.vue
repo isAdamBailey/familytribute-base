@@ -8,7 +8,7 @@
             {{ person.full_name }}
         </template>
 
-        <div class="mt-8 mb-3 flex flex-wrap-reverse justify-between">
+        <div class="mt-8 flex flex-wrap-reverse justify-between">
             <h1
                 class="font-header text-5xl text-gray-800 dark:text-indigo-400 md:text-7xl"
             >
@@ -31,11 +31,12 @@
             </div>
         </div>
 
-        <div
-            class="mb-3 text-sm font-semibold text-gray-900 dark:text-gray-100"
-        >
-            {{ formatDate(person.obituary.birth_date) }} -
-            {{ formatDate(person.obituary.death_date) }}
+        <div class="flex flex-wrap items-center justify-between">
+            <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                {{ formatDate(person.obituary.birth_date) }} -
+                {{ formatDate(person.obituary.death_date) }}
+            </div>
+            <social-share :title="`${person.full_name}'s obituary`" />
         </div>
 
         <div
@@ -54,7 +55,7 @@
             class="via-trueGray-200 h-80 w-full bg-gradient-to-t from-violet-400 to-transparent"
         ></div>
         <div class="flex justify-center">
-            <div class="-mt-40">
+            <div class="z-40 -mt-40">
                 <div class="avatar relative h-60 w-60 rounded-full">
                     <img
                         class="relative h-full w-full rounded-full border-4 border-gray-900"
@@ -67,19 +68,17 @@
 
         <div
             v-if="person.pictures.length"
-            class="flex snap-x space-x-1 overflow-x-scroll px-3 pb-8"
+            class="-mt-10 flex snap-x space-x-1 overflow-x-scroll px-3 pb-8 scrollbar scrollbar-thumb-indigo-500 scrollbar-thumb-rounded"
         >
             <pictures-container :items="person.pictures" :fixed-width="true" />
         </div>
 
         <div
             v-if="person.stories.length"
-            class="mt-5 flex snap-x space-x-1 overflow-x-scroll px-3 pb-8"
+            class="mt-5 flex snap-x space-x-1 overflow-x-scroll px-3 pb-8 scrollbar scrollbar-thumb-indigo-500 scrollbar-thumb-rounded"
         >
             <stories-container :items="person.stories" :fixed-width="true" />
         </div>
-
-        <social-share :title="`${person.full_name}'s obituary`" />
 
         <h1
             class="mt-10 font-header text-3xl text-gray-800 dark:text-indigo-400 md:text-5xl"

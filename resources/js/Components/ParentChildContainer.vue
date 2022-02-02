@@ -5,13 +5,13 @@
         {{ title }}
     </h3>
     <div
-        class="flex snap-x space-x-5 overflow-x-scroll px-3 pb-8 md:space-x-10"
+        class="flex snap-x space-x-5 overflow-x-scroll px-3 pb-8 scrollbar scrollbar-thumb-indigo-500 scrollbar-thumb-rounded"
     >
         <Link
             v-for="(person, index) in people"
             :key="index"
             :href="route('people.show', person.slug)"
-            class="snap-center rounded-lg bg-white shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
+            class="w-60 shrink-0 snap-start rounded-lg bg-white shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
         >
             <div class="card-text-gradient rounded-t-lg px-3 py-2">
                 <p class="truncate font-bold">

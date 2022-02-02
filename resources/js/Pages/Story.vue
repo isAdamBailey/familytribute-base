@@ -32,10 +32,13 @@
             </div>
         </div>
 
-        <p v-if="story.year" class="text-gray-800 dark:text-indigo-400">
-            Written in or around
-            <span class="font-semibold">{{ story.year }}</span>
-        </p>
+        <div class="flex flex-wrap items-center justify-between">
+            <p v-if="story.year" class="text-gray-800 dark:text-indigo-400">
+                Written in or around
+                <span class="font-semibold">{{ story.year }}</span>
+            </p>
+            <social-share :title="story.title" />
+        </div>
 
         <div
             class="prose mt-6 max-w-none italic text-gray-900 dark:text-gray-100"
@@ -47,10 +50,11 @@
             v-html="story.content"
         />
 
-        <social-share class="my-5" :title="story.title" />
-
-        <section-border />
-        <tagged-people :people="story.people" title="People in this story" />
+        <section-border v-if="story.people.length" />
+        <parent-child-container
+            :people="story.people"
+            title="People in this story"
+        />
     </app-layout>
 
     <story-edit-modal
@@ -74,15 +78,16 @@
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import StoryEditModal from "@/Modals/StoryEditModal";
-import TaggedPeople from "@/Components/TaggedPeople";
 import StoryDeleteModal from "@/Modals/StoryDeleteModal";
 import JetDangerButton from "@/Base/DangerButton";
 import SocialShare from "@/Components/SocialShare";
 import EmbeddedIcon from "@/Base/EmbeddedIcon";
 import SectionBorder from "@/Base/SectionBorder";
+import ParentChildContainer from "@/Components/ParentChildContainer";
 
 export default defineComponent({
     components: {
+        ParentChildContainer,
         SectionBorder,
         EmbeddedIcon,
         SocialShare,
@@ -90,7 +95,6 @@ export default defineComponent({
         StoryDeleteModal,
         AppLayout,
         StoryEditModal,
-        TaggedPeople,
     },
 
     props: {

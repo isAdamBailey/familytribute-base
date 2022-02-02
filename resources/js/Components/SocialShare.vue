@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-5 flex items-center justify-between md:w-60">
+    <div class="flex items-center justify-between space-x-3 md:w-60">
         <ShareNetwork
             network="facebook"
             :quote="title"
