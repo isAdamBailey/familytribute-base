@@ -79,7 +79,7 @@
             <base-button
                 class="ml-2"
                 :class="{ 'opacity-25': form.processing }"
-                :disabled="form.processing"
+                :disabled="form.processing || !form.isDirty"
                 @click="updateStory"
             >
                 Update Story
