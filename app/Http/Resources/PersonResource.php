@@ -19,6 +19,7 @@ class PersonResource extends JsonResource
     {
         return [
             'slug' => $this->slug,
+            'first_name' => $this->first_name,
             'full_name' => $this->full_name,
             'photo_url' => $this->photo_url,
             'obituary' => ObituaryResource::make($this->whenLoaded('obituary')),
@@ -28,7 +29,6 @@ class PersonResource extends JsonResource
             'children' => ParentChildResource::collection($this->whenLoaded('children')),
             $this->mergeWhen(auth()->check(), [
                 'parent_ids' => $this->parent_ids,
-                'first_name' => $this->first_name,
                 'last_name'=> $this->last_name,
             ]),
         ];
