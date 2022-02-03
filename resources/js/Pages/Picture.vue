@@ -49,11 +49,13 @@
             v-html="picture.description"
         />
 
-        <section-border v-if="picture.people.length" />
-        <parent-child-container
-            :people="picture.people"
-            title="People in this picture"
-        />
+        <div v-if="picture.people.length">
+            <section-border />
+            <parent-child-container
+                :people="picture.people"
+                title="People in this picture"
+            />
+        </div>
     </app-layout>
 
     <picture-edit-modal

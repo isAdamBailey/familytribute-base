@@ -50,11 +50,13 @@
             v-html="story.content"
         />
 
-        <section-border v-if="story.people.length" />
-        <parent-child-container
-            :people="story.people"
-            title="People in this story"
-        />
+        <div v-if="story.people.length">
+            <section-border />
+            <parent-child-container
+                :people="story.people"
+                title="People in this story"
+            />
+        </div>
     </app-layout>
 
     <story-edit-modal
