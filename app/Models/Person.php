@@ -38,12 +38,22 @@ class Person extends Model
         return ucwords("{$this->first_name} {$this->last_name}");
     }
 
+    public function getFirstNameAttribute($value): string
+    {
+        return ucfirst($value);
+    }
+
     /**
      * Always set first_name lowercase.
      */
     public function setFirstNameAttribute($value)
     {
         $this->attributes['first_name'] = strtolower($value);
+    }
+
+    public function getLastNameAttribute($value): string
+    {
+        return ucfirst($value);
     }
 
     /**
