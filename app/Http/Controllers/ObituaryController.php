@@ -93,11 +93,11 @@ class ObituaryController extends Controller
             $person->photo_url = $request->file('photo')->storePublicly('obituaries');
         }
 
-        if ($request->parent_ids) {
+        if (isset($request->parent_ids)) {
             $person->parents()->sync($request->parent_ids);
         }
 
-        if ($request->child_ids) {
+        if (isset($request->child_ids)) {
             $person->children()->sync($request->child_ids);
         }
 

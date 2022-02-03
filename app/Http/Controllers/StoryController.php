@@ -122,7 +122,7 @@ class StoryController extends Controller
             $story->year = $request->year;
         }
 
-        if ($request->person_ids) {
+        if (isset($request->person_ids)) {
             $story->people()->sync($request->person_ids);
         }
 

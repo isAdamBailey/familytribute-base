@@ -133,7 +133,7 @@ class PictureController extends Controller
             $picture->url = $request->file('photo')->storePublicly('pictures');
         }
 
-        if (! empty($request->person_ids)) {
+        if (isset($request->person_ids)) {
             $picture->people()->sync($request->person_ids);
         }
 
