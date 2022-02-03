@@ -52,7 +52,7 @@
 
         <div v-if="story.people.length">
             <section-border />
-            <parent-child-container
+            <related-people-container
                 :people="story.people"
                 title="People in this story"
             />
@@ -85,11 +85,11 @@ import JetDangerButton from "@/Base/DangerButton";
 import SocialShare from "@/Components/SocialShare";
 import EmbeddedIcon from "@/Base/EmbeddedIcon";
 import SectionBorder from "@/Base/SectionBorder";
-import ParentChildContainer from "@/Components/ParentChildContainer";
+import RelatedPeopleContainer from "@/Components/RelatedPeopleContainer";
 
 export default defineComponent({
     components: {
-        ParentChildContainer,
+        RelatedPeopleContainer,
         SectionBorder,
         EmbeddedIcon,
         SocialShare,
