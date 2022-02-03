@@ -55,8 +55,8 @@ class ObituariesTest extends TestCase
 
         $person = $obituary->person;
         $this->assertEquals($person->photo_url, Storage::url($mainPhotoFilePath));
-        $this->assertEquals($person->first_name, strtolower($request['first_name']));
-        $this->assertEquals($person->last_name, strtolower($request['last_name']));
+        $this->assertEquals($person->first_name, $request['first_name']);
+        $this->assertEquals($person->last_name, $request['last_name']);
         $this->assertSame($request['parent_ids'], $person->parents->pluck('id')->toArray());
         foreach ($person->parents as $parent) {
             $this->assertSame([$person->id], $parent->children->pluck('id')->toArray());
@@ -99,8 +99,8 @@ class ObituariesTest extends TestCase
         $this->assertEquals($obituary->background_photo_url, Storage::url($backgroundPhotoFilePath));
 
         $person = $obituary->person;
-        $this->assertEquals($person->first_name, strtolower($request['first_name']));
-        $this->assertEquals($person->last_name, strtolower($request['last_name']));
+        $this->assertEquals($person->first_name, $request['first_name']);
+        $this->assertEquals($person->last_name, $request['last_name']);
         $this->assertEquals($person->photo_url, Storage::url($mainPhotoFilePath));
     }
 
