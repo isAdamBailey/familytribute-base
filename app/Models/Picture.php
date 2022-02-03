@@ -61,8 +61,7 @@ class Picture extends Model
 
     public function people(): BelongsToMany
     {
-        return $this->belongsToMany(Person::class)
-            ->select(['people.id', 'slug', 'first_name', 'last_name']);
+        return $this->belongsToMany(Person::class);
     }
 
     /**
