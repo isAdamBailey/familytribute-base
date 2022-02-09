@@ -224,6 +224,6 @@ class StoriesTest extends TestCase
             ->exists();
         $this->assertFalse($personHasStory);
 
-        $this->assertDeleted($story);
+        $this->assertModelMissing($story);
     }
 }

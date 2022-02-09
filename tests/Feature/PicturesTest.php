@@ -282,6 +282,6 @@ class PicturesTest extends TestCase
             ->exists();
         $this->assertFalse($personHasPicture);
 
-        $this->assertDeleted($picture);
+        $this->assertModelMissing($picture);
     }
 }
