@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Picture;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Inertia\Testing\Assert;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class HomeTest extends TestCase
