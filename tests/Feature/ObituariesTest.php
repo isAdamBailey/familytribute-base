@@ -173,7 +173,7 @@ class ObituariesTest extends TestCase
             ->exists();
         $this->assertFalse($personHasPicture);
 
-        $this->assertDeleted($obituary->person);
-        $this->assertDeleted($obituary);
+        $this->assertModelMissing($obituary->person);
+        $this->assertModelMissing($obituary);
     }
 }

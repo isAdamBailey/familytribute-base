@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Inertia\Testing\Assert;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class PicturesTest extends TestCase
@@ -282,6 +282,6 @@ class PicturesTest extends TestCase
             ->exists();
         $this->assertFalse($personHasPicture);
 
-        $this->assertDeleted($picture);
+        $this->assertModelMissing($picture);
     }
 }
