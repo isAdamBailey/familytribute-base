@@ -12,7 +12,7 @@ You may click on their name to access their page, and share to social media!
 <a href="{{ config('app.url') }}/{{ $birthDate->person->slug }}">
     <strong>{{ $birthDate->person->full_name }}</strong>
 </a>
-was born {{ \Carbon\Carbon::parse($birthDate->birth_date)->diffForHumans() }} on
+was born {{ \Carbon\Carbon::parse($birthDate->birth_date - 1)->diffForHumans() }} on
 <strong>{{ \Carbon\Carbon::parse($birthDate->birth_date)->toFormattedDateString() }}</strong>
 </li>
 @endforeach
