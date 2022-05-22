@@ -43,9 +43,9 @@
         "@tiptap/starter-kit": "*",
         "@tiptap/vue-3": "*",
         "@vueform/multiselect": "^2.2.1",
+        "@vuepic/vue-datepicker": "^3.2.1",
         "date-fns": "^2.27.0",
         "remixicon": "^2.5.0",
-        "vue-social-sharing": "^4.0.0-alpha4",
-        "vue3-date-time-picker": "^2.3.6"
+        "vue-social-sharing": "^4.0.0-alpha4"
     }
 }
