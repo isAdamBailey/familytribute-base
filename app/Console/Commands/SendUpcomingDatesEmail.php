@@ -71,8 +71,10 @@ class SendUpcomingDatesEmail extends Command
         return Obituary::all()->load('person')->filter(function ($obit) use ($date) {
             $date = Carbon::parse($obit->$date);
 
-            return $date->setYear(now()->year)->between(now(), now()->addWeek())
-                || $date->setYear(now()->addWeek()->year)->between(now(), now()->addWeek());
+            return $date->setYear(now()->year)
+                    ->between(now()->startOfDay(), now()->startOfDay()->addWeek())
+                || $date->setYear(now()->addWeek()->year)
+                    ->between(now()->startOfDay(), now()->startOfDay()->addWeek());
         });
     }
 }
