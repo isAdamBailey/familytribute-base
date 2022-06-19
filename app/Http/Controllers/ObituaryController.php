@@ -22,8 +22,8 @@ class ObituaryController extends Controller
             'content' => 'required|string',
             'birth_date' => 'required|date',
             'death_date' => 'required|date',
-            'photo' => 'file|mimes:jpg,jpeg,png,svg,webp|max:2000|nullable',
-            'background_photo' => 'file|mimes:jpg,jpeg,png,svg,webp|max:2000|nullable',
+            'photo' => 'file|mimes:jpg,jpeg,png,svg,webp|max:20000|nullable',
+            'background_photo' => 'file|mimes:jpg,jpeg,png,svg,webp|max:20000|nullable',
             'parent_ids' => 'array|nullable',
             'child_ids' => 'array|nullable',
         ]);
@@ -69,8 +69,8 @@ class ObituaryController extends Controller
             'content' => 'string',
             'birth_date' => 'date',
             'death_date' => 'date',
-            'photo' => 'file|mimes:jpg,jpeg,png,svg,webp|max:2000|nullable',
-            'background_photo' => 'file|mimes:jpg,jpeg,png,svg,webp|max:2000|nullable',
+            'photo' => 'file|mimes:jpg,jpeg,png,svg,webp|max:20000|nullable',
+            'background_photo' => 'file|mimes:jpg,jpeg,png,svg,webp|max:20000|nullable',
             'parent_ids' => 'array|nullable',
             'child_ids' => 'array|nullable',
         ]);

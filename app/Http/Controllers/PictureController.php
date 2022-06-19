@@ -74,7 +74,7 @@ class PictureController extends Controller
             'year' => 'required|digits:4',
             'featured' => 'required|boolean',
             'private' => 'required|boolean',
-            'photo' => 'required|file|mimes:jpg,jpeg,png|max:1024',
+            'photo' => 'required|file|mimes:jpg,jpeg,png|max:20000',
             'person_ids' => 'array|nullable',
         ]);
 
@@ -102,7 +102,7 @@ class PictureController extends Controller
             'year' => 'digits:4',
             'featured' => 'boolean',
             'private' => 'boolean',
-            'photo' => 'file|mimes:jpg,jpeg,png|max:1024',
+            'photo' => 'file|mimes:jpg,jpeg,png|max:20000',
             'person_ids' => 'array|nullable',
         ]);
 
