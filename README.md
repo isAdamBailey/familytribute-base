@@ -7,6 +7,13 @@ publicly, and / or privately.
 
 If you are interested in inquiring about FamilyTribute for your family, please contact me, and we can set one up free of charge.
 
+## Local Development
+
+- `sail up`
+- `sail artisan migrate:fresh --seed`
+- `npm run watch`
+- Navigate to http://0.0.0.0/
+
 
 ## License
 
