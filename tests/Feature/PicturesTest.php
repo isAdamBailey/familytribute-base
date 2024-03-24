@@ -26,18 +26,18 @@ class PicturesTest extends TestCase
         $this->get(route('pictures.index'))
             ->assertInertia(
                 fn (Assert $page) => $page
-                ->component('Pictures')
-                ->url('/pictures')
-                ->has('pictures.data', 15)
-                ->has('pictures.links')
-                ->has('pictures.data.0.description')
-                ->has('pictures.data.0.url')
-                ->has('pictures.data.0.title')
-                ->has('pictures.data.0.year')
-                ->missing('pictures.data.0.featured')
-                ->missing('pictures.data.0.private')
-                ->has('meta.meta')
-                ->has('meta.title')
+                    ->component('Pictures')
+                    ->url('/pictures')
+                    ->has('pictures.data', 15)
+                    ->has('pictures.links')
+                    ->has('pictures.data.0.description')
+                    ->has('pictures.data.0.url')
+                    ->has('pictures.data.0.title')
+                    ->has('pictures.data.0.year')
+                    ->missing('pictures.data.0.featured')
+                    ->missing('pictures.data.0.private')
+                    ->has('meta.meta')
+                    ->has('meta.title')
             );
     }
 

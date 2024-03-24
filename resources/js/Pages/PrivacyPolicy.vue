@@ -19,7 +19,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
 
 export default defineComponent({

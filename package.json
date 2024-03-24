@@ -12,9 +12,6 @@
         "format": "prettier .  --write"
     },
     "devDependencies": {
-        "@inertiajs/inertia": "^0.10.0",
-        "@inertiajs/inertia-vue3": "^0.5.1",
-        "@inertiajs/progress": "^0.2.6",
         "@tailwindcss/forms": "^0.4.0",
         "@tailwindcss/typography": "^0.5.0",
         "@vue/compiler-sfc": "^3.0.5",
@@ -36,6 +33,7 @@
         "vue-loader": "^16.1.2"
     },
     "dependencies": {
+        "@inertiajs/vue3": "^1.0.15",
         "@tailwindcss/line-clamp": "^0.3.0",
         "@tiptap/extension-character-count": "^2.0.0-beta.23",
         "@tiptap/extension-link": "^2.0.0-beta.33",

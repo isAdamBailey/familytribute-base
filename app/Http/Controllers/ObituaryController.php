@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Obituary;
 use App\Models\Person;
-use App\Models\Story;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;

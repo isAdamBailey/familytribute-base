@@ -24,14 +24,14 @@ class StoriesTest extends TestCase
         $this->get(route('stories.index'))
             ->assertInertia(
                 fn (Assert $page) => $page
-                ->component('Stories')
-                ->url('/stories')
-                ->has('stories.data', 15)
-                ->has('stories.data.0.excerpt')
-                ->has('stories.data.0.year')
-                ->missing('stories.data.0.private')
-                ->has('meta.meta')
-                ->has('meta.title')
+                    ->component('Stories')
+                    ->url('/stories')
+                    ->has('stories.data', 15)
+                    ->has('stories.data.0.excerpt')
+                    ->has('stories.data.0.year')
+                    ->missing('stories.data.0.private')
+                    ->has('meta.meta')
+                    ->has('meta.title')
             );
     }
 
@@ -126,17 +126,17 @@ class StoriesTest extends TestCase
         $this->get(route('stories.show', $story))
             ->assertInertia(
                 fn (Assert $page) => $page
-                ->component('Story')
-                ->url('/stories/'.$story->slug)
-                ->has('story.title')
-                ->has('story.content')
-                ->has('story.excerpt')
-                ->has('story.year')
-                ->missing('story.private')
-                ->missing('story.person_ids')
-                ->has('people')
-                ->has('meta.meta')
-                ->has('meta.title')
+                    ->component('Story')
+                    ->url('/stories/'.$story->slug)
+                    ->has('story.title')
+                    ->has('story.content')
+                    ->has('story.excerpt')
+                    ->has('story.year')
+                    ->missing('story.private')
+                    ->missing('story.person_ids')
+                    ->has('people')
+                    ->has('meta.meta')
+                    ->has('meta.title')
             );
     }
 

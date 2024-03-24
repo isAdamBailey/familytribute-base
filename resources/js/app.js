@@ -4,15 +4,14 @@ import ScrollTop from "@/Base/ScrollTop";
 require("./bootstrap");
 
 import { createApp, h } from "vue";
-import { createInertiaApp, Link } from "@inertiajs/inertia-vue3";
-import { InertiaProgress } from "@inertiajs/progress";
+import { createInertiaApp, Link } from "@inertiajs/vue3";
 import "remixicon/fonts/remixicon.css";
 import VueSocialSharing from "vue-social-sharing";
 
 createInertiaApp({
     resolve: (name) => require(`./Pages/${name}.vue`),
-    setup({ el, app, props, plugin }) {
-        return createApp({ render: () => h(app, props) })
+    setup({ el, App, props, plugin }) {
+        return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(VueSocialSharing)
             .component("Link", Link)
@@ -21,6 +20,7 @@ createInertiaApp({
             .mixin({ methods: { route } })
             .mount(el);
     },
+    progress: {
+        color: "#4B5563",
+    },
 });
-
-InertiaProgress.init({ color: "#4B5563" });

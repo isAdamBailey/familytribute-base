@@ -16,11 +16,11 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
-    use HasProfilePhoto;
     use HasNoPersonalTeam, HasTeams {
         HasNoPersonalTeam::ownsTeam insteadof HasTeams;
         HasNoPersonalTeam::isCurrentTeam insteadof HasTeams;
     }
+    use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
 

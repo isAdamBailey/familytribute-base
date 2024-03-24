@@ -6,7 +6,6 @@ use App\Models\SiteSetting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\URL;
 use Laravel\Jetstream\TeamInvitation as TeamInvitationModel;
 
 class TeamInvitation extends Mailable
@@ -22,7 +21,6 @@ class TeamInvitation extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param  TeamInvitationModel  $invitation
      * @return void
      */
     public function __construct(TeamInvitationModel $invitation)

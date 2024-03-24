@@ -72,7 +72,7 @@ class SendUpcomingDatesEmail extends Command
             $date = Carbon::parse($obit->$date);
 
             return $date->setYear(now()->year)
-                    ->between(now()->startOfDay(), now()->startOfDay()->addWeek())
+                ->between(now()->startOfDay(), now()->startOfDay()->addWeek())
                 || $date->setYear(now()->addWeek()->year)
                     ->between(now()->startOfDay(), now()->startOfDay()->addWeek());
         });

@@ -8,7 +8,6 @@ trait HasNoPersonalTeam
      * Determine if the user owns the given team.
      *
      * @param  mixed  $team
-     * @return bool
      */
     public function ownsTeam($team): bool
     {
@@ -19,7 +18,6 @@ trait HasNoPersonalTeam
      * Determine if the given team is the current team.
      *
      * @param  mixed  $team
-     * @return bool
      */
     public function isCurrentTeam($team): bool
     {
@@ -28,8 +26,6 @@ trait HasNoPersonalTeam
 
     /**
      * Determine if the user is a part of any team.
-     *
-     * @return bool
      */
     public function isMemberOfATeam(): bool
     {

@@ -13,7 +13,6 @@ class PersonResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  Request  $request
-     * @return array|Arrayable|JsonSerializable
      */
     public function toArray($request): array|JsonSerializable|Arrayable
     {
@@ -29,7 +28,7 @@ class PersonResource extends JsonResource
             'children' => ParentChildResource::collection($this->whenLoaded('children')),
             $this->mergeWhen(auth()->check(), [
                 'parent_ids' => $this->parent_ids,
-                'last_name'=> $this->last_name,
+                'last_name' => $this->last_name,
             ]),
         ];
     }
