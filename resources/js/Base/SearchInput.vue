@@ -3,7 +3,7 @@
         <label for="search" class="hidden">Search</label>
         <input
             id="search"
-            ref="search"
+            ref="searchRef"
             v-model="search"
             class="h-10 w-full cursor-pointer rounded-full border border-gray-500 bg-gray-100 px-4 pb-0 pt-px text-gray-700 outline-none transition focus:border-purple-400"
             :class="{ 'transition-border': search }"
@@ -16,43 +16,32 @@
     </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref, watch } from "vue";
+import { usePage, router } from "@inertiajs/vue3";
+import { debounce } from "lodash";
 
-export default defineComponent({
-    props: {
-        routeName: String,
-    },
-
-    data() {
-        return {
-            search: this.$inertia.page.props.search || null,
-            sort: this.$inertia.page.props.sort || null,
-        };
-    },
-
-    watch: {
-        search() {
-            if (this.search) {
-                this.searchMethod();
-            } else {
-                this.$inertia.get(route(this.routeName));
-            }
-        },
-    },
-
-    mounted() {
-        this.$refs.search.focus();
-    },
-
-    methods: {
-        searchMethod: _.debounce(function () {
-            this.$inertia.get(
-                route(this.routeName),
-                { search: this.search, sort: this.sort },
-                { preserveState: false }
-            );
-        }, 500),
-    },
+const props = defineProps({
+    routeName: String,
 });
+
+const search = ref(usePage().props?.search || null);
+const sort = ref(usePage().props?.sort || null);
+let searchRef = ref(null);
+
+watch(search, () => {
+    if (search.value) {
+        searchMethod();
+    } else {
+        router.get(route(props.routeName));
+    }
+});
+
+const searchMethod = debounce(() => {
+    router.get(
+        route(props.routeName),
+        { search: search.value, sort: sort.value },
+        { preserveState: true }
+    );
+}, 2000);
 </script>
