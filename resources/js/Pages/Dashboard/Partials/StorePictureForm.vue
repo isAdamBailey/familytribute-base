@@ -138,9 +138,9 @@ import JetInputError from "@/Base/InputError.vue";
 import JetLabel from "@/Base/Label.vue";
 import JetActionMessage from "@/Base/ActionMessage.vue";
 import JetSecondaryButton from "@/Base/SecondaryButton.vue";
-import Wysiwyg from "@/Base/Wysiwyg";
-import Checkbox from "@/Base/Checkbox";
-import InfoText from "../../../Base/InfoText";
+import Wysiwyg from "@/Base/Wysiwyg.vue";
+import Checkbox from "@/Base/Checkbox.vue";
+import InfoText from "@/Base/InfoText.vue";
 
 export default defineComponent({
     components: {

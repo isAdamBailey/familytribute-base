@@ -18,8 +18,8 @@
 
 <script>
 import { defineComponent } from "vue";
-import HomeLayout from "@/Layouts/HomeLayout";
-import AttentionButton from "@/Base/AttentionButton";
+import HomeLayout from "@/Layouts/HomeLayout.vue";
+import AttentionButton from "@/Base/AttentionButton.vue";
 
 export default defineComponent({
     components: {

@@ -79,13 +79,13 @@
 <script>
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import StoryEditModal from "@/Modals/StoryEditModal";
-import StoryDeleteModal from "@/Modals/StoryDeleteModal";
-import JetDangerButton from "@/Base/DangerButton";
-import SocialShare from "@/Components/SocialShare";
-import EmbeddedIcon from "@/Base/EmbeddedIcon";
-import SectionBorder from "@/Base/SectionBorder";
-import RelatedPeopleContainer from "@/Components/RelatedPeopleContainer";
+import StoryEditModal from "@/Modals/StoryEditModal.vue";
+import StoryDeleteModal from "@/Modals/StoryDeleteModal.vue";
+import JetDangerButton from "@/Base/DangerButton.vue";
+import SocialShare from "@/Components/SocialShare.vue";
+import EmbeddedIcon from "@/Base/EmbeddedIcon.vue";
+import SectionBorder from "@/Base/SectionBorder.vue";
+import RelatedPeopleContainer from "@/Components/RelatedPeopleContainer.vue";
 
 export default defineComponent({
     components: {

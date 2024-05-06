@@ -97,9 +97,9 @@
 
 <script>
 import { defineComponent } from "vue";
-import HomeLayout from "@/Layouts/HomeLayout";
-import ApplicationMark from "@/Base/ApplicationMark";
-import AttentionButton from "@/Base/AttentionButton";
+import HomeLayout from "@/Layouts/HomeLayout.vue";
+import ApplicationMark from "@/Base/ApplicationMark.vue";
+import AttentionButton from "@/Base/AttentionButton.vue";
 
 export default defineComponent({
     components: {

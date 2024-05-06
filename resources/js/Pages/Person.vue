@@ -146,13 +146,13 @@
 import { defineComponent } from "vue";
 import { format, parseISO } from "date-fns";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import ObituaryEditModal from "@/Modals/ObituaryEditModal";
-import ObituaryDeleteModal from "@/Modals/ObituaryDeleteModal";
-import JetDangerButton from "@/Base/DangerButton";
-import PicturesContainer from "@/Components/PicturesContainer";
-import StoriesContainer from "@/Components/StoriesContainer";
-import SocialShare from "@/Components/SocialShare";
-import RelatedPeopleContainer from "@/Components/RelatedPeopleContainer";
+import ObituaryEditModal from "@/Modals/ObituaryEditModal.vue";
+import ObituaryDeleteModal from "@/Modals/ObituaryDeleteModal.vue";
+import JetDangerButton from "@/Base/DangerButton.vue";
+import PicturesContainer from "@/Components/PicturesContainer.vue";
+import StoriesContainer from "@/Components/StoriesContainer.vue";
+import SocialShare from "@/Components/SocialShare.vue";
+import RelatedPeopleContainer from "@/Components/RelatedPeopleContainer.vue";
 
 export default defineComponent({
     components: {

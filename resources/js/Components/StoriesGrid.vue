@@ -8,7 +8,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import StoriesContainer from "@/Components/StoriesContainer";
+import StoriesContainer from "@/Components/StoriesContainer.vue";
 
 export default defineComponent({
     components: { StoriesContainer },

@@ -198,13 +198,13 @@
 import { defineComponent } from "vue";
 import { parseISO } from "date-fns";
 import Multiselect from "@vueform/multiselect";
-import JetDialogModal from "@/Base/DialogModal";
-import JetSecondaryButton from "@/Base/SecondaryButton";
+import JetDialogModal from "@/Base/DialogModal.vue";
+import JetSecondaryButton from "@/Base/SecondaryButton.vue";
 import JetInput from "@/Base/Input.vue";
 import JetInputError from "@/Base/InputError.vue";
 import JetLabel from "@/Base/Label.vue";
-import DatePicker from "@/Base/DatePicker";
-import Wysiwyg from "@/Base/Wysiwyg";
+import DatePicker from "@/Base/DatePicker.vue";
+import Wysiwyg from "@/Base/Wysiwyg.vue";
 
 export default defineComponent({
     components: {

@@ -184,8 +184,8 @@ import JetInputError from "@/Base/InputError.vue";
 import JetLabel from "@/Base/Label.vue";
 import JetActionMessage from "@/Base/ActionMessage.vue";
 import JetSecondaryButton from "@/Base/SecondaryButton.vue";
-import DatePicker from "@/Base/DatePicker";
-import Wysiwyg from "@/Base/Wysiwyg";
+import DatePicker from "@/Base/DatePicker.vue";
+import Wysiwyg from "@/Base/Wysiwyg.vue";
 import Multiselect from "@vueform/multiselect";
 
 export default defineComponent({

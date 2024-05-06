@@ -301,7 +301,7 @@ import JetDropdown from "@/Base/Dropdown.vue";
 import JetDropdownLink from "@/Base/DropdownLink.vue";
 import JetNavLink from "@/Base/NavLink.vue";
 import JetResponsiveNavLink from "@/Base/ResponsiveNavLink.vue";
-import ThemeToggle from "@/Layouts/Nav/ThemeToggle";
+import ThemeToggle from "@/Layouts/Nav/ThemeToggle.vue";
 
 export default defineComponent({
     components: {

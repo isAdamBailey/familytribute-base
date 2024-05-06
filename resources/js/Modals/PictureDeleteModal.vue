@@ -27,9 +27,9 @@
 
 <script>
 import { defineComponent } from "vue";
-import JetConfirmationModal from "@/Base/ConfirmationModal";
-import JetSecondaryButton from "@/Base/SecondaryButton";
-import JetDangerButton from "@/Base/DangerButton";
+import JetConfirmationModal from "@/Base/ConfirmationModal.vue";
+import JetSecondaryButton from "@/Base/SecondaryButton.vue";
+import JetDangerButton from "@/Base/DangerButton.vue";
 
 export default defineComponent({
     components: { JetConfirmationModal, JetSecondaryButton, JetDangerButton },

@@ -127,13 +127,14 @@
             {{ editorCharacterCount }}
         </div>
     </div>
+
 </template>
 
 <script>
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import Typography from "@tiptap/extension-typography";
-import WysiwygButton from "@/Base/WysiwygButton";
+import WysiwygButton from "@/Base/WysiwygButton.vue";
 import Link from "@tiptap/extension-link";
 import { CharacterCount } from "@tiptap/extension-character-count";
 

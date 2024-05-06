@@ -7,7 +7,7 @@
 <script>
 import { defineComponent } from "vue";
 import { Link } from "@inertiajs/vue3";
-import ApplicationMark from "@/Base/ApplicationMark";
+import ApplicationMark from "@/Base/ApplicationMark.vue";
 
 export default defineComponent({
     components: {

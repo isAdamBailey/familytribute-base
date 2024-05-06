@@ -11,8 +11,8 @@ If you are interested in inquiring about FamilyTribute for your family, please c
 
 - `sail up`
 - `sail artisan migrate:fresh --seed`
-- `npm run watch`
-- Navigate to http://0.0.0.0/
+- `npm run dev`
+- Navigate to http://localhost/
 
 
 ## License

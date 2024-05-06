@@ -10,10 +10,10 @@
 
 <script>
 import { defineComponent } from "vue";
-import PicturesGrid from "@/Components/PicturesGrid";
-import StoriesGrid from "@/Components/StoriesGrid";
-import PeopleGrid from "@/Components/PeopleGrid";
-import AttentionButton from "../Base/AttentionButton";
+import PicturesGrid from "@/Components/PicturesGrid.vue";
+import StoriesGrid from "@/Components/StoriesGrid.vue";
+import PeopleGrid from "@/Components/PeopleGrid.vue";
+import AttentionButton from "@/Base/AttentionButton.vue";
 
 export default defineComponent({
     components: {

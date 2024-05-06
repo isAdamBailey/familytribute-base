@@ -30,9 +30,9 @@
 
 <script>
 import { defineComponent } from "vue";
-import PrimaryFooter from "@/Layouts/PrimaryFooter";
-import PrimaryNav from "@/Layouts/Nav/PrimaryNav";
-import AppHead from "@/Layouts/AppHead";
+import PrimaryFooter from "@/Layouts/PrimaryFooter.vue";
+import PrimaryNav from "@/Layouts/Nav/PrimaryNav.vue";
+import AppHead from "@/Layouts/AppHead.vue";
 
 export default defineComponent({
     components: {

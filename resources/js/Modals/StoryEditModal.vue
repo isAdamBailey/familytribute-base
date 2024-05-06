@@ -91,14 +91,14 @@
 <script>
 import { defineComponent } from "vue";
 import Multiselect from "@vueform/multiselect";
-import JetDialogModal from "@/Base/DialogModal";
-import JetSecondaryButton from "@/Base/SecondaryButton";
+import JetDialogModal from "@/Base/DialogModal.vue";
+import JetSecondaryButton from "@/Base/SecondaryButton.vue";
 import JetInput from "@/Base/Input.vue";
 import JetInputError from "@/Base/InputError.vue";
 import JetLabel from "@/Base/Label.vue";
-import Wysiwyg from "@/Base/Wysiwyg";
-import InfoText from "@/Base/InfoText";
-import Checkbox from "@/Base/Checkbox";
+import Wysiwyg from "@/Base/Wysiwyg.vue";
+import InfoText from "@/Base/InfoText.vue";
+import Checkbox from "@/Base/Checkbox.vue";
 
 export default defineComponent({
     components: {

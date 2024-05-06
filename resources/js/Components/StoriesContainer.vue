@@ -25,8 +25,8 @@
 
 <script>
 import { defineComponent } from "vue";
-import Pill from "@/Base/Pill";
-import EmbeddedIcon from "@/Base/EmbeddedIcon";
+import Pill from "@/Base/Pill.vue";
+import EmbeddedIcon from "@/Base/EmbeddedIcon.vue";
 
 export default defineComponent({
     components: { EmbeddedIcon, Pill },

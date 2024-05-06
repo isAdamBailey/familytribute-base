@@ -45,7 +45,7 @@
 import { defineComponent } from "vue";
 import JetAuthenticationCard from "@/Base/AuthenticationCard.vue";
 import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
-import AppHead from "@/Layouts/AppHead";
+import AppHead from "@/Layouts/AppHead.vue";
 
 export default defineComponent({
     components: {

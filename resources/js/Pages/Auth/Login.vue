@@ -76,7 +76,7 @@ import JetInput from "@/Base/Input.vue";
 import JetCheckbox from "@/Base/Checkbox.vue";
 import JetLabel from "@/Base/Label.vue";
 import JetValidationErrors from "@/Base/ValidationErrors.vue";
-import AppHead from "@/Layouts/AppHead";
+import AppHead from "@/Layouts/AppHead.vue";
 
 export default defineComponent({
     components: {

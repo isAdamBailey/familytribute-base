@@ -98,10 +98,10 @@
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import InfiniteScroll from "@/Components/InfiniteScroll.vue";
-import SearchInput from "@/Base/SearchInput";
-import SectionBorder from "@/Base/SectionBorder";
-import SortDropdown from "@/Base/SortDropdown";
-import DropdownLink from "@/Base/DropdownLink";
+import SearchInput from "@/Base/SearchInput.vue";
+import SectionBorder from "@/Base/SectionBorder.vue";
+import SortDropdown from "@/Base/SortDropdown.vue";
+import DropdownLink from "@/Base/DropdownLink.vue";
 
 export default defineComponent({
     components: {

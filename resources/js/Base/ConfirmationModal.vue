@@ -45,7 +45,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import Modal from "./Modal.vue";
+import Modal from "@/Base/Modal.vue";
 
 export default defineComponent({
     components: {

@@ -36,8 +36,8 @@
 
 <script>
 import { defineComponent } from "vue";
-import JetSectionTitle from "./SectionTitle.vue";
-import InfoText from "./InfoText";
+import JetSectionTitle from "@/Base/SectionTitle.vue";
+import InfoText from "@/Base/InfoText.vue";
 
 export default defineComponent({
     components: {

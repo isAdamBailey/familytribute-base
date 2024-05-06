@@ -8,7 +8,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import PicturesContainer from "@/Components/PicturesContainer";
+import PicturesContainer from "@/Components/PicturesContainer.vue";
 
 export default defineComponent({
     components: { PicturesContainer },

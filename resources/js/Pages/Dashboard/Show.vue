@@ -74,11 +74,11 @@ import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetApplicationMark from "@/Base/ApplicationMark.vue";
 import JetSectionBorder from "@/Base/SectionBorder.vue";
-import StorePictureForm from "@/Pages/Dashboard/Partials/StorePictureForm";
-import StorePersonForm from "@/Pages/Dashboard/Partials/StorePersonForm";
-import StoreStoryForm from "@/Pages/Dashboard/Partials/StoreStoryForm";
-import UpdateSettingsForm from "@/Pages/Dashboard/Partials/UpdateSettingsForm";
-import InfoText from "@/Base/InfoText";
+import StorePictureForm from "@/Pages/Dashboard/Partials/StorePictureForm.vue";
+import StorePersonForm from "@/Pages/Dashboard/Partials/StorePersonForm.vue";
+import StoreStoryForm from "@/Pages/Dashboard/Partials/StoreStoryForm.vue";
+import UpdateSettingsForm from "@/Pages/Dashboard/Partials/UpdateSettingsForm.vue";
+import InfoText from "@/Base/InfoText.vue";
 
 export default defineComponent({
     components: {

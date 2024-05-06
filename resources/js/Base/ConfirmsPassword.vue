@@ -46,10 +46,10 @@
 
 <script>
 import { defineComponent } from "vue";
-import JetDialogModal from "./DialogModal.vue";
-import JetInput from "./Input.vue";
-import JetInputError from "./InputError.vue";
-import JetSecondaryButton from "./SecondaryButton.vue";
+import JetDialogModal from "@/Base/DialogModal.vue";
+import JetInput from "@/Base/Input.vue";
+import JetInputError from "@/Base/InputError.vue";
+import JetSecondaryButton from "@/Base/SecondaryButton.vue";
 
 export default defineComponent({
     components: {
