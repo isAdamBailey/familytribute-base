@@ -2,18 +2,21 @@
     <div
         class="mx-auto grid max-w-7xl grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 md:p-4"
     >
-        <pictures-container :items="items" />
+        <PicturesContainer :items="reactiveItems.data" />
     </div>
+    <div ref="infiniteScroll"></div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
 import PicturesContainer from "@/Components/PicturesContainer.vue";
+import useInfiniteScroll from "@/composables/useInfiniteScroll";
 
-export default defineComponent({
-    components: { PicturesContainer },
-    props: {
-        items: Array,
+const props = defineProps({
+    items: {
+        type: Object,
+        required: true,
     },
 });
+
+const { reactiveItems, infiniteScroll } = useInfiniteScroll(props.items);
 </script>

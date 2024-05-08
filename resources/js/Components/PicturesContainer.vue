@@ -30,19 +30,18 @@
     </Link>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
 import EmbeddedIcon from "@/Base/EmbeddedIcon.vue";
 import Pill from "@/Base/Pill.vue";
 
-export default defineComponent({
-    components: { Pill, EmbeddedIcon },
-    props: {
-        items: Array,
-        fixedWidth: {
-            type: Boolean,
-            default: false,
-        },
+defineProps({
+    items: {
+        type: Array,
+        required: true,
+    },
+    fixedWidth: {
+        type: Boolean,
+        default: false,
     },
 });
 </script>

@@ -71,7 +71,7 @@
         <section-border />
 
         <div v-if="pictures.data.length">
-            <infinite-scroll :items="pictures" component="pictures-grid" />
+            <PicturesGrid :items="pictures" />
         </div>
         <div v-else class="text-gray-500 dark:text-indigo-300">
             No pictures were found.
@@ -80,27 +80,18 @@
     <scroll-top />
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import InfiniteScroll from "@/Components/InfiniteScroll.vue";
 import JetDropdownLink from "@/Base/DropdownLink.vue";
 import SearchInput from "@/Base/SearchInput.vue";
 import SectionBorder from "@/Base/SectionBorder.vue";
 import SortDropdown from "@/Base/SortDropdown.vue";
+import PicturesGrid from "@/Components/PicturesGrid.vue";
 
-export default defineComponent({
-    components: {
-        SortDropdown,
-        SectionBorder,
-        SearchInput,
-        AppLayout,
-        InfiniteScroll,
-        JetDropdownLink,
-    },
-
-    props: {
-        pictures: Object,
+defineProps({
+    pictures: {
+        type: Object,
+        required: true,
     },
 });
 </script>
