@@ -40,6 +40,8 @@ class PictureController extends Controller
             ->orderBy('id', $order ?: 'asc')
             ->paginate();
 
+        $pictures->appends($request->all());
+
         return Inertia::render('Pictures', [
             'pictures' => PictureResource::collection($pictures),
             'sort' => ucwords(str_replace('_', ' ', $sort)),
