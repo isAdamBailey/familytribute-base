@@ -3,7 +3,7 @@
         class="mx-auto grid max-w-7xl grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-2 md:p-4"
     >
         <Link
-            v-for="(person, index) in items"
+            v-for="(person, index) in reactiveItems.data"
             :key="index"
             :href="route('people.show', person.slug)"
             class="rounded-lg bg-white shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
@@ -24,28 +24,26 @@
             </div>
         </Link>
     </div>
+    <div ref="infiniteScroll"></div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
 import { format, parseISO } from "date-fns";
+import useInfiniteScroll from "@/composables/useInfiniteScroll.js";
 
-export default defineComponent({
-    props: {
-        items: Array,
-    },
-    methods: {
-        fullName(obituary) {
-            return `${this.capitalize(obituary.first_name)} ${this.capitalize(
-                obituary.last_name
-            )}`;
-        },
-        capitalize(word) {
-            return word[0].toUpperCase() + word.slice(1);
-        },
-        formatDate(date) {
-            return format(parseISO(date), "PPP");
-        },
+const props = defineProps({
+    items: {
+        type: Object,
+        required: true,
     },
 });
+
+const { reactiveItems, infiniteScroll } = useInfiniteScroll(
+    props.items,
+    "people",
+);
+
+function formatDate(date) {
+    return format(parseISO(date), "PPP");
+}
 </script>

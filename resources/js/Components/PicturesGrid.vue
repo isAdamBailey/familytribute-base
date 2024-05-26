@@ -18,5 +18,8 @@ const props = defineProps({
     },
 });
 
-const { reactiveItems, infiniteScroll } = useInfiniteScroll(props.items);
+const { reactiveItems, infiniteScroll } = useInfiniteScroll(
+    props.items,
+    "pictures",
+);
 </script>

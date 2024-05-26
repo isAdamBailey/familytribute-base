@@ -73,7 +73,7 @@
         <section-border />
 
         <div v-if="people.data.length">
-            <infinite-scroll component="people-grid" :items="people" />
+            <PeopleGrid :items="people" />
         </div>
         <div v-else class="text-gray-500 dark:text-indigo-300">
             No people were found.
@@ -82,27 +82,15 @@
     <scroll-top />
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetDropdownLink from "@/Base/DropdownLink.vue";
-import InfiniteScroll from "@/Components/InfiniteScroll.vue";
 import SearchInput from "@/Base/SearchInput.vue";
 import SectionBorder from "@/Base/SectionBorder.vue";
 import SortDropdown from "@/Base/SortDropdown.vue";
+import PeopleGrid from "../Components/PeopleGrid.vue";
 
-export default defineComponent({
-    components: {
-        SortDropdown,
-        SectionBorder,
-        SearchInput,
-        AppLayout,
-        InfiniteScroll,
-        JetDropdownLink,
-    },
-
-    props: {
-        people: Object,
-    },
+defineProps({
+    people: { type: Object, required: true },
 });
 </script>

@@ -1,7 +1,7 @@
 import { onMounted, reactive, ref } from "vue";
 import { router } from "@inertiajs/vue3";
 
-export default function useInfiniteScroll(items) {
+export default function useInfiniteScroll(items, type = "") {
     const reactiveItems = reactive(items);
     const infiniteScroll = ref(null);
     let observer = null;
@@ -17,7 +17,6 @@ export default function useInfiniteScroll(items) {
 
     function fetchUploads() {
         if (reactiveItems.links.next) {
-            console.log(reactiveItems.links.next);
             router.get(
                 reactiveItems.links.next,
                 {},
@@ -27,10 +26,10 @@ export default function useInfiniteScroll(items) {
                     onSuccess: (page) => {
                         reactiveItems.data = [
                             ...reactiveItems.data,
-                            ...page.props.pictures.data,
+                            ...page.props[type].data,
                         ];
 
-                        reactiveItems.links = page.props.pictures.links;
+                        reactiveItems.links = page.props[type].links;
                     },
                 },
             );
