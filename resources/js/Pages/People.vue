@@ -79,7 +79,7 @@
             No people were found.
         </div>
     </app-layout>
-    <scroll-top />
+    <ScrollTop />
 </template>
 
 <script setup>
@@ -89,6 +89,7 @@ import SearchInput from "@/Base/SearchInput.vue";
 import SectionBorder from "@/Base/SectionBorder.vue";
 import SortDropdown from "@/Base/SortDropdown.vue";
 import PeopleGrid from "../Components/PeopleGrid.vue";
+import ScrollTop from "@/Base/ScrollTop.vue";
 
 defineProps({
     people: { type: Object, required: true },

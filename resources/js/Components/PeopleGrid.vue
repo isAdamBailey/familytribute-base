@@ -17,10 +17,15 @@
                 <p class="truncate font-bold">
                     {{ person.full_name }}
                 </p>
-                <p class="truncate text-xs font-semibold">
-                    {{ formatDate(person.obituary.birth_date) }} -
+                <p
+                    v-if="person.obituary"
+                    class="truncate text-xs font-semibold"
+                >
+                    {{ formatDate(person.obituary.birth_date) }}
+                    -
                     {{ formatDate(person.obituary.death_date) }}
                 </p>
+                <p v-else class="p-2"></p>
             </div>
         </Link>
     </div>
