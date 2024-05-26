@@ -38,6 +38,8 @@ class PersonController extends Controller
             )
             ->paginate();
 
+        $people->appends($request->all());
+
         return Inertia::render('People', [
             'people' => PersonResource::collection($people),
             'sort' => ucwords(str_replace('_', ' ', $sort)),
