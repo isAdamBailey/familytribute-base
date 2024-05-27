@@ -77,7 +77,7 @@
             No pictures were found.
         </div>
     </app-layout>
-    <scroll-top />
+    <ScrollTop />
 </template>
 
 <script setup>

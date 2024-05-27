@@ -39,6 +39,8 @@ class StoryController extends Controller
             ->orderBy('id', $order ?: 'asc')
             ->paginate();
 
+        $stories->appends($request->all());
+
         return Inertia::render('Stories', [
             'stories' => StoryResource::collection($stories),
             'sort' => ucwords(str_replace('_', ' ', $sort)),

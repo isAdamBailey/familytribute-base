@@ -84,37 +84,28 @@
         <section-border />
 
         <div v-if="stories.data.length">
-            <infinite-scroll :items="stories" component="stories-grid" />
+            <StoriesGrid :items="stories" />
         </div>
 
         <div v-else class="text-gray-500 dark:text-indigo-300">
             No stories were found.
         </div>
     </app-layout>
-    <scroll-top />
+    <ScrollTop />
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import InfiniteScroll from "@/Components/InfiniteScroll.vue";
 import SearchInput from "@/Base/SearchInput.vue";
 import SectionBorder from "@/Base/SectionBorder.vue";
 import SortDropdown from "@/Base/SortDropdown.vue";
 import DropdownLink from "@/Base/DropdownLink.vue";
+import StoriesGrid from "@/Components/StoriesGrid.vue";
 
-export default defineComponent({
-    components: {
-        DropdownLink,
-        SortDropdown,
-        SectionBorder,
-        SearchInput,
-        AppLayout,
-        InfiniteScroll,
-    },
-
-    props: {
-        stories: Object,
+defineProps({
+    stories: {
+        type: Object,
+        required: true,
     },
 });
 </script>

@@ -2,18 +2,24 @@
     <div
         class="mx-auto grid grid-cols-1 gap-4 md:grid-cols-[repeat(auto-fit,minmax(22rem,1fr))] md:p-4"
     >
-        <stories-container :items="items" />
+        <StoriesContainer :items="reactiveItems.data" />
     </div>
+    <div ref="infiniteScroll"></div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
 import StoriesContainer from "@/Components/StoriesContainer.vue";
+import useInfiniteScroll from "@/composables/useInfiniteScroll.js";
 
-export default defineComponent({
-    components: { StoriesContainer },
-    props: {
-        items: Array,
+const props = defineProps({
+    items: {
+        type: Object,
+        required: true,
     },
 });
+
+const { reactiveItems, infiniteScroll } = useInfiniteScroll(
+    props.items,
+    "stories",
+);
 </script>
