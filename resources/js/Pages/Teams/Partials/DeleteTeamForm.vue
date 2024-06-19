@@ -52,43 +52,28 @@
     </jet-action-section>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
 import JetActionSection from "@/Base/ActionSection.vue";
 import JetConfirmationModal from "@/Base/ConfirmationModal.vue";
 import JetDangerButton from "@/Base/DangerButton.vue";
 import JetSecondaryButton from "@/Base/SecondaryButton.vue";
 
-export default defineComponent({
-    components: {
-        JetActionSection,
-        JetConfirmationModal,
-        JetDangerButton,
-        JetSecondaryButton,
-    },
-    props: {
-        team: Object,
-    },
-
-    data() {
-        return {
-            confirmingTeamDeletion: false,
-            deleting: false,
-
-            form: this.$inertia.form(),
-        };
-    },
-
-    methods: {
-        confirmTeamDeletion() {
-            this.confirmingTeamDeletion = true;
-        },
-
-        deleteTeam() {
-            this.form.delete(route("teams.destroy", this.team), {
-                errorBag: "deleteTeam",
-            });
-        },
-    },
+const props = defineProps({
+    team: Object,
 });
+
+const form = useForm({});
+const confirmingTeamDeletion = ref(false);
+
+const confirmTeamDeletion = () => {
+    confirmingTeamDeletion.value = true;
+};
+
+const deleteTeam = () => {
+    form.delete(route("teams.destroy", props.team), {
+        errorBag: "deleteTeam",
+    });
+};
 </script>
