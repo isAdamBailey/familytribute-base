@@ -10,13 +10,13 @@
                 <div
                     class="ml-3 font-header text-3xl text-gray-800 dark:text-indigo-500 md:text-5xl"
                 >
-                    {{ $inertia.page.props.settings.title }}
+                    {{ page.props.settings.title }}
                 </div>
             </div>
 
             <div class="mt-8 text-2xl text-gray-800 dark:text-indigo-300">
-                Welcome to {{ $inertia.page.props.settings.title }}'s dashboard,
-                {{ $page.props.user.name }}!
+                Welcome to {{ page.props.settings.title }}'s dashboard,
+                {{ user.name }}!
             </div>
 
             <info-text>
@@ -69,8 +69,9 @@
     </app-layout>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetApplicationMark from "@/Base/ApplicationMark.vue";
 import JetSectionBorder from "@/Base/SectionBorder.vue";
@@ -80,34 +81,23 @@ import StoreStoryForm from "@/Pages/Dashboard/Partials/StoreStoryForm.vue";
 import UpdateSettingsForm from "@/Pages/Dashboard/Partials/UpdateSettingsForm.vue";
 import InfoText from "@/Base/InfoText.vue";
 
-export default defineComponent({
-    components: {
-        UpdateSettingsForm,
-        AppLayout,
-        JetApplicationMark,
-        JetSectionBorder,
-        StorePictureForm,
-        StorePersonForm,
-        StoreStoryForm,
-        InfoText,
-    },
-
-    props: {
-        people: Array,
-        settings: Object,
-    },
-
-    computed: {
-        peopleOptions() {
-            return this.people.map((person) => {
-                return {
-                    value: person.id,
-                    label: person.full_name,
-                };
-            });
-        },
-    },
+const props = defineProps({
+    people: Array,
+    settings: Object,
 });
+
+const peopleOptions = computed(() => {
+    return props.people.map((person) => {
+        return {
+            value: person.id,
+            label: person.full_name,
+        };
+    });
+});
+
+const page = usePage();
+
+const user = computed(() => page.props.auth.user);
 </script>
 
 <style src="@vueform/multiselect/themes/default.css"></style>

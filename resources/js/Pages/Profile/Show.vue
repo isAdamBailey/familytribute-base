@@ -4,22 +4,22 @@
 
         <div>
             <div class="mx-auto max-w-7xl py-10 sm:px-6 lg:px-8">
-                <div v-if="$page.props.jetstream.canUpdateProfileInformation">
-                    <update-profile-information-form :user="$page.props.user" />
+                <div v-if="page.props.jetstream.canUpdateProfileInformation">
+                    <update-profile-information-form
+                        :user="page.props.auth.user"
+                    />
 
                     <jet-section-border />
                 </div>
 
-                <div v-if="$page.props.jetstream.canUpdatePassword">
+                <div v-if="page.props.jetstream.canUpdatePassword">
                     <update-password-form class="mt-10 sm:mt-0" />
 
                     <jet-section-border />
                 </div>
 
                 <div
-                    v-if="
-                        $page.props.jetstream.canManageTwoFactorAuthentication
-                    "
+                    v-if="page.props.jetstream.canManageTwoFactorAuthentication"
                 >
                     <two-factor-authentication-form class="mt-10 sm:mt-0" />
 
@@ -32,7 +32,7 @@
                 />
 
                 <template
-                    v-if="$page.props.jetstream.hasAccountDeletionFeatures"
+                    v-if="page.props.jetstream.hasAccountDeletionFeatures"
                 >
                     <jet-section-border />
 
@@ -43,8 +43,9 @@
     </app-layout>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import DeleteUserForm from "@/Pages/Profile/Partials/DeleteUserForm.vue";
 import JetSectionBorder from "@/Base/SectionBorder.vue";
@@ -53,18 +54,9 @@ import TwoFactorAuthenticationForm from "@/Pages/Profile/Partials/TwoFactorAuthe
 import UpdatePasswordForm from "@/Pages/Profile/Partials/UpdatePasswordForm.vue";
 import UpdateProfileInformationForm from "@/Pages/Profile/Partials/UpdateProfileInformationForm.vue";
 
-export default defineComponent({
-    components: {
-        AppLayout,
-        DeleteUserForm,
-        JetSectionBorder,
-        LogoutOtherBrowserSessionsForm,
-        TwoFactorAuthenticationForm,
-        UpdatePasswordForm,
-        UpdateProfileInformationForm,
-    },
-    props: {
-        sessions: Array,
-    },
+defineProps({
+    sessions: Array,
 });
+
+const page = usePage();
 </script>

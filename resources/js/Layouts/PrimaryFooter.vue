@@ -1,10 +1,7 @@
 <template>
     <footer class="relative border-t bg-white pt-1 dark:bg-gray-900">
         <div class="container mx-auto px-6">
-            <div
-                v-if="!$page.props.user"
-                class="mt-8 flex items-center justify-center"
-            >
+            <div v-if="!user" class="mt-8 flex items-center justify-center">
                 <Link
                     :href="route('login')"
                     class="text-gray-900 underline hover:text-gray-500 dark:text-indigo-300 dark:hover:text-gray-100"
@@ -13,7 +10,7 @@
                 </Link>
 
                 <Link
-                    v-if="$inertia.page.props.settings.registration"
+                    v-if="settings.registration"
                     :href="route('register')"
                     class="ml-4 text-gray-900 underline hover:text-gray-500 dark:text-indigo-300 dark:hover:text-gray-100"
                 >
@@ -27,7 +24,7 @@
                     <p
                         class="mb-2 text-sm font-bold text-indigo-700 dark:text-indigo-300"
                     >
-                        © {{ new Date().getFullYear() }} by
+                        © {{ currentYear }} by
                         <a
                             class="text-indigo-700 decoration-indigo-800 hover:text-indigo-800 hover:underline dark:text-indigo-300 dark:hover:text-indigo-500"
                             href="https://familytribute.org"
@@ -39,3 +36,13 @@
         </div>
     </footer>
 </template>
+
+<script setup>
+import { computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
+
+const page = usePage();
+const user = computed(() => page.props.auth.user);
+const settings = computed(() => page.props.settings);
+const currentYear = computed(() => new Date().getFullYear());
+</script>

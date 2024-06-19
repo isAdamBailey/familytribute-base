@@ -1,11 +1,11 @@
 <template>
     <div>
-        <app-head :title="title" />
+        <AppHead :title="title" />
 
         <div
             class="min-h-screen bg-gradient-to-r from-indigo-100 to-gray-100 to-indigo-300 dark:from-indigo-900"
         >
-            <primary-nav />
+            <PrimaryNav />
             <!-- Page Content -->
             <main>
                 <div class="md:py-12">
@@ -23,25 +23,17 @@
                 </div>
             </main>
 
-            <primary-footer />
+            <PrimaryFooter />
         </div>
     </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
 import PrimaryFooter from "@/Layouts/PrimaryFooter.vue";
 import PrimaryNav from "@/Layouts/Nav/PrimaryNav.vue";
 import AppHead from "@/Layouts/AppHead.vue";
 
-export default defineComponent({
-    components: {
-        AppHead,
-        PrimaryNav,
-        PrimaryFooter,
-    },
-    props: {
-        title: String,
-    },
+defineProps({
+    title: String,
 });
 </script>
