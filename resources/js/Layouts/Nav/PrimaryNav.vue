@@ -12,7 +12,7 @@
                         <div
                             class="font-header text-3xl font-bold dark:text-indigo-500 md:text-5xl"
                         >
-                            {{ $page.props.settings.title }}
+                            {{ page.props.settings.title }}
                         </div>
                     </Link>
 
@@ -42,7 +42,7 @@
                 <theme-toggle class="" />
 
                 <div
-                    v-if="$page.props.user"
+                    v-if="page.props.auth.user"
                     class="hidden sm:ml-6 sm:flex sm:items-center"
                 >
                     <!-- Settings Dropdown -->
@@ -51,7 +51,7 @@
                             <template #trigger>
                                 <button
                                     v-if="
-                                        $page.props.jetstream
+                                        page.props.jetstream
                                             .managesProfilePhotos
                                     "
                                     class="flex rounded-full border-2 border-transparent text-sm transition focus:border-gray-300 focus:outline-none"
@@ -59,9 +59,10 @@
                                     <img
                                         class="h-8 w-8 rounded-full object-cover"
                                         :src="
-                                            $page.props.user.profile_photo_url
+                                            page.props.auth.user
+                                                .profile_photo_url
                                         "
-                                        :alt="$page.props.user.name"
+                                        :alt="page.props.auth.user.name"
                                     />
                                 </button>
 
@@ -70,7 +71,7 @@
                                         type="button"
                                         class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition hover:text-gray-700 focus:outline-none"
                                     >
-                                        {{ $page.props.user.name }}
+                                        {{ page.props.auth.user.name }}
 
                                         <svg
                                             class="ml-2 -mr-0.5 h-4 w-4"
@@ -100,7 +101,7 @@
                                     Dashboard
                                 </jet-dropdown-link>
 
-                                <div v-if="$page.props.user.current_team">
+                                <div v-if="page.props.auth.user.current_team">
                                     <div
                                         class="block px-4 py-2 text-xs text-gray-400"
                                     >
@@ -112,7 +113,8 @@
                                         :href="
                                             route(
                                                 'teams.show',
-                                                $page.props.user.current_team
+                                                page.props.auth.user
+                                                    .current_team,
                                             )
                                         "
                                     >
@@ -134,7 +136,7 @@
                                 </jet-dropdown-link>
 
                                 <jet-dropdown-link
-                                    v-if="$page.props.jetstream.hasApiFeatures"
+                                    v-if="page.props.jetstream.hasApiFeatures"
                                     :href="route('api-tokens.index')"
                                 >
                                     API Tokens
@@ -225,27 +227,27 @@
 
             <!-- Responsive Settings Options -->
             <div
-                v-if="$page.props.user"
+                v-if="page.props.auth.user"
                 class="border-t border-gray-200 pt-4 pb-1"
             >
                 <div class="flex items-center px-4">
                     <div
-                        v-if="$page.props.jetstream.managesProfilePhotos"
+                        v-if="page.props.jetstream.managesProfilePhotos"
                         class="mr-3 flex-shrink-0"
                     >
                         <img
                             class="h-10 w-10 rounded-full object-cover"
-                            :src="$page.props.user.profile_photo_url"
-                            :alt="$page.props.user.name"
+                            :src="page.props.auth.user.profile_photo_url"
+                            :alt="page.props.auth.user.name"
                         />
                     </div>
 
                     <div>
                         <div class="text-base font-medium text-gray-800">
-                            {{ $page.props.user.name }}
+                            {{ page.props.auth.user.name }}
                         </div>
                         <div class="text-sm font-medium text-gray-500">
-                            {{ $page.props.user.email }}
+                            {{ page.props.auth.user.email }}
                         </div>
                     </div>
                 </div>
@@ -265,7 +267,7 @@
                     </jet-responsive-nav-link>
 
                     <jet-responsive-nav-link
-                        v-if="$page.props.jetstream.hasApiFeatures"
+                        v-if="page.props.jetstream.hasApiFeatures"
                         :href="route('api-tokens.index')"
                         :active="route().current('api-tokens.index')"
                     >
@@ -273,9 +275,12 @@
                     </jet-responsive-nav-link>
 
                     <jet-responsive-nav-link
-                        v-if="$page.props.user.current_team"
+                        v-if="page.props.auth.user.current_team"
                         :href="
-                            route('teams.show', $page.props.user.current_team)
+                            route(
+                                'teams.show',
+                                page.props.auth.user.current_team,
+                            )
                         "
                         :active="route().current('teams.show')"
                     >
@@ -294,8 +299,9 @@
     </nav>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref } from "vue";
+import { usePage, router } from "@inertiajs/vue3";
 import JetApplicationMark from "@/Base/ApplicationMark.vue";
 import JetDropdown from "@/Base/Dropdown.vue";
 import JetDropdownLink from "@/Base/DropdownLink.vue";
@@ -303,37 +309,22 @@ import JetNavLink from "@/Base/NavLink.vue";
 import JetResponsiveNavLink from "@/Base/ResponsiveNavLink.vue";
 import ThemeToggle from "@/Layouts/Nav/ThemeToggle.vue";
 
-export default defineComponent({
-    components: {
-        JetApplicationMark,
-        JetDropdown,
-        JetDropdownLink,
-        JetNavLink,
-        JetResponsiveNavLink,
-        ThemeToggle,
-    },
+const page = usePage();
+const showingNavigationDropdown = ref(false);
 
-    data() {
-        return {
-            showingNavigationDropdown: false,
-        };
-    },
+const logout = () => {
+    router.post(route("logout"));
+};
 
-    methods: {
-        logout() {
-            this.$inertia.post(route("logout"));
+const switchToTeam = (team) => {
+    router.put(
+        route("current-team.update"),
+        {
+            team_id: team.id,
         },
-        switchToTeam(team) {
-            this.$inertia.put(
-                route("current-team.update"),
-                {
-                    team_id: team.id,
-                },
-                {
-                    preserveState: false,
-                }
-            );
+        {
+            preserveState: false,
         },
-    },
-});
+    );
+};
 </script>

@@ -6,82 +6,75 @@
     </Head>
 </template>
 
-<script>
-import { Head } from "@inertiajs/vue3";
-import { defineComponent } from "vue";
+<script setup>
+import { Head, usePage } from "@inertiajs/vue3";
+import { computed, onMounted } from "vue";
 
-export default defineComponent({
-    components: { Head },
-    props: {
-        title: { type: String },
-    },
-    computed: {
-        displayTitle() {
-            const metaTitle = this.$page.props.meta?.title;
+const props = defineProps({
+    title: { type: String },
+});
 
-            return this.title && metaTitle
-                ? `${this.title} - ${metaTitle}`
-                : metaTitle || this.title;
-        },
-        meta() {
-            return this.$page.props.meta?.meta || [];
-        },
-        description() {
-            return this.meta.find((item) => item.name === "description")
-                ?.content;
-        },
-        ogDescription() {
-            return this.meta.find((item) => item.property === "og:description")
-                ?.content;
-        },
-        ogUrl() {
-            return this.meta.find((item) => item.property === "og:url")
-                ?.content;
-        },
-        ogImage() {
-            return this.meta.find((item) => item.property === "og:image")
-                ?.content;
-        },
-        twitterImage() {
-            return this.meta.find((item) => item.name === "twitter:image")
-                ?.content;
-        },
-        twitterDescription() {
-            return this.meta.find((item) => item.name === "twitter:description")
-                ?.content;
-        },
-    },
-    mounted() {
-        const description = document.querySelector('meta[name="description"]');
-        description
-            ? description.setAttribute("content", this.description)
-            : null;
+const page = usePage();
 
-        const ogImage = document.querySelector('meta[property="og:image"]');
-        ogImage ? ogImage.setAttribute("content", this.ogImage) : null;
-        const ogDescription = document.querySelector(
-            'meta[property="og:description"]'
-        );
-        ogDescription
-            ? ogDescription.setAttribute("content", this.ogDescription)
-            : null;
-        const ogUrl = document.querySelector('meta[property="og:url"]');
-        ogUrl ? ogUrl.setAttribute("content", this.ogUrl) : null;
-        const twitterImage = document.querySelector(
-            'meta[name="twitter:image"]'
-        );
-        twitterImage
-            ? twitterImage.setAttribute("content", this.twitterImage)
-            : null;
-        const twitterDescription = document.querySelector(
-            'meta[name="twitter:description"]'
-        );
-        twitterDescription
-            ? twitterDescription.setAttribute(
-                  "content",
-                  this.twitterDescription
-              )
-            : null;
-    },
+const displayTitle = computed(() => {
+    const metaTitle = page.props.meta?.title;
+
+    return props.title && metaTitle
+        ? `${props.title} - ${metaTitle}`
+        : metaTitle || props.title;
+});
+
+const meta = computed(() => page.props.meta?.meta || []);
+const description = computed(
+    () => meta.value.find((item) => item.name === "description")?.content,
+);
+const ogDescription = computed(
+    () =>
+        meta.value.find((item) => item.property === "og:description")?.content,
+);
+const ogUrl = computed(
+    () => meta.value.find((item) => item.property === "og:url")?.content,
+);
+const ogImage = computed(
+    () => meta.value.find((item) => item.property === "og:image")?.content,
+);
+const twitterImage = computed(
+    () => meta.value.find((item) => item.name === "twitter:image")?.content,
+);
+const twitterDescription = computed(
+    () =>
+        meta.value.find((item) => item.name === "twitter:description")?.content,
+);
+
+onMounted(() => {
+    const descriptionEl = document.querySelector('meta[name="description"]');
+    descriptionEl
+        ? descriptionEl.setAttribute("content", description.value)
+        : null;
+
+    const ogImageEl = document.querySelector('meta[property="og:image"]');
+    ogImageEl ? ogImageEl.setAttribute("content", ogImage.value) : null;
+
+    const ogDescriptionEl = document.querySelector(
+        'meta[property="og:description"]',
+    );
+    ogDescriptionEl
+        ? ogDescriptionEl.setAttribute("content", ogDescription.value)
+        : null;
+
+    const ogUrlEl = document.querySelector('meta[property="og:url"]');
+    ogUrlEl ? ogUrlEl.setAttribute("content", ogUrl.value) : null;
+
+    const twitterImageEl = document.querySelector('meta[name="twitter:image"]');
+    twitterImageEl
+        ? twitterImageEl.setAttribute("content", twitterImage.value)
+        : null;
+
+    const twitterDescriptionEl = document.querySelector(
+        'meta[name="twitter:description"]',
+    );
+    twitterDescriptionEl
+        ? twitterDescriptionEl.setAttribute("content", twitterDescription.value)
+        : null;
 });
 </script>

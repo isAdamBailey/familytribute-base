@@ -1,13 +1,13 @@
 <template>
     <div>
-        <app-head />
+        <AppHead />
 
-        <jet-banner />
+        <JetBanner />
 
         <div
             class="min-h-screen bg-gradient-to-r from-indigo-100 to-gray-100 to-indigo-300 dark:from-indigo-900"
         >
-            <primary-nav />
+            <PrimaryNav />
 
             <!-- Page Heading -->
             <header
@@ -38,24 +38,14 @@
                 </div>
             </main>
 
-            <primary-footer />
+            <PrimaryFooter />
         </div>
     </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
 import JetBanner from "@/Base/Banner.vue";
 import PrimaryNav from "@/Layouts/Nav/PrimaryNav.vue";
 import PrimaryFooter from "@/Layouts/PrimaryFooter.vue";
 import AppHead from "@/Layouts/AppHead.vue";
-
-export default defineComponent({
-    components: {
-        AppHead,
-        PrimaryNav,
-        PrimaryFooter,
-        JetBanner,
-    },
-});
 </script>
