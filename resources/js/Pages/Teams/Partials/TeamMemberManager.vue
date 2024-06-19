@@ -232,7 +232,7 @@
 
                                 <!-- Leave Team -->
                                 <button
-                                    v-if="$page.props.user.id === user.id"
+                                    v-if="$page.props.auth.user.id === user.id"
                                     class="ml-6 cursor-pointer text-sm text-red-500"
                                     @click="confirmLeavingTeam"
                                 >
@@ -398,8 +398,9 @@
     </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref } from "vue";
+import { usePage, useForm, router } from "@inertiajs/vue3";
 import JetActionMessage from "@/Base/ActionMessage.vue";
 import JetActionSection from "@/Base/ActionSection.vue";
 import JetButton from "@/Base/Button.vue";
@@ -413,121 +414,88 @@ import JetLabel from "@/Base/Label.vue";
 import JetSecondaryButton from "@/Base/SecondaryButton.vue";
 import JetSectionBorder from "@/Base/SectionBorder.vue";
 
-export default defineComponent({
-    components: {
-        JetActionMessage,
-        JetActionSection,
-        JetButton,
-        JetConfirmationModal,
-        JetDangerButton,
-        JetDialogModal,
-        JetFormSection,
-        JetInput,
-        JetInputError,
-        JetLabel,
-        JetSecondaryButton,
-        JetSectionBorder,
-    },
-
-    props: {
-        team: Object,
-        availableRoles: Array,
-        userPermissions: Object,
-    },
-
-    data() {
-        return {
-            addTeamMemberForm: this.$inertia.form({
-                email: "",
-                role: "editor",
-            }),
-
-            updateRoleForm: this.$inertia.form({
-                role: null,
-            }),
-
-            leaveTeamForm: this.$inertia.form(),
-            removeTeamMemberForm: this.$inertia.form(),
-
-            currentlyManagingRole: false,
-            managingRoleFor: null,
-            confirmingLeavingTeam: false,
-            teamMemberBeingRemoved: null,
-        };
-    },
-
-    methods: {
-        addTeamMember() {
-            this.addTeamMemberForm.post(
-                route("team-members.store", this.team),
-                {
-                    errorBag: "addTeamMember",
-                    preserveScroll: true,
-                    onSuccess: () => this.addTeamMemberForm.reset(),
-                }
-            );
-        },
-
-        cancelTeamInvitation(invitation) {
-            this.$inertia.delete(
-                route("team-invitations.destroy", invitation),
-                {
-                    preserveScroll: true,
-                }
-            );
-        },
-
-        manageRole(teamMember) {
-            this.managingRoleFor = teamMember;
-            this.updateRoleForm.role = teamMember.membership.role;
-            this.currentlyManagingRole = true;
-        },
-
-        updateRole() {
-            this.updateRoleForm.put(
-                route("team-members.update", [this.team, this.managingRoleFor]),
-                {
-                    preserveScroll: true,
-                    onSuccess: () => (this.currentlyManagingRole = false),
-                }
-            );
-        },
-
-        confirmLeavingTeam() {
-            this.confirmingLeavingTeam = true;
-        },
-
-        leaveTeam() {
-            this.leaveTeamForm.delete(
-                route("team-members.destroy", [
-                    this.team,
-                    this.$page.props.user,
-                ])
-            );
-        },
-
-        confirmTeamMemberRemoval(teamMember) {
-            this.teamMemberBeingRemoved = teamMember;
-        },
-
-        removeTeamMember() {
-            this.removeTeamMemberForm.delete(
-                route("team-members.destroy", [
-                    this.team,
-                    this.teamMemberBeingRemoved,
-                ]),
-                {
-                    errorBag: "removeTeamMember",
-                    preserveScroll: true,
-                    preserveState: true,
-                    onSuccess: () => (this.teamMemberBeingRemoved = null),
-                }
-            );
-        },
-
-        displayableRole(role) {
-            return this.availableRoles.find((r) => r.key === role).name;
-        },
-    },
+defineProps({
+    team: Object,
+    availableRoles: Array,
+    userPermissions: Object,
 });
+
+const page = usePage();
+const addTeamMemberForm = useForm({
+    email: "",
+    role: "editor",
+});
+const updateRoleForm = useForm({
+    role: null,
+});
+const leaveTeamForm = useForm({});
+const removeTeamMemberForm = useForm({});
+
+const currentlyManagingRole = ref(false);
+const managingRoleFor = ref(null);
+const confirmingLeavingTeam = ref(false);
+const teamMemberBeingRemoved = ref(null);
+
+const addTeamMember = () => {
+    addTeamMemberForm.post(route("team-members.store", page.props.team), {
+        errorBag: "addTeamMember",
+        preserveScroll: true,
+        onSuccess: () => addTeamMemberForm.reset(),
+    });
+};
+
+const cancelTeamInvitation = (invitation) => {
+    router.delete(route("team-invitations.destroy", invitation), {
+        preserveScroll: true,
+    });
+};
+
+const manageRole = (teamMember) => {
+    managingRoleFor.value = teamMember;
+    updateRoleForm.role = teamMember.membership.role;
+    currentlyManagingRole.value = true;
+};
+
+const updateRole = () => {
+    updateRoleForm.put(
+        route("team-members.update", [page.props.team, managingRoleFor.value]),
+        {
+            preserveScroll: true,
+            onSuccess: () => (currentlyManagingRole.value = false),
+        },
+    );
+};
+
+const confirmLeavingTeam = () => {
+    confirmingLeavingTeam.value = true;
+};
+
+const leaveTeam = () => {
+    leaveTeamForm.delete(
+        route("team-members.destroy", [page.props.team, page.props.auth.user]),
+    );
+};
+
+const confirmTeamMemberRemoval = (teamMember) => {
+    teamMemberBeingRemoved.value = teamMember;
+};
+
+const removeTeamMember = () => {
+    removeTeamMemberForm.delete(
+        route("team-members.destroy", [
+            page.props.team,
+            teamMemberBeingRemoved.value,
+        ]),
+        {
+            errorBag: "removeTeamMember",
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => (teamMemberBeingRemoved.value = null),
+        },
+    );
+};
+
+const displayableRole = (role) => {
+    return page.props.availableRoles.find((r) => r.key === role).name;
+};
 </script>
