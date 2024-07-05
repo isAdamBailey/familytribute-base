@@ -3,7 +3,6 @@
         <label for="search" class="hidden">Search</label>
         <input
             id="search"
-            ref="search"
             v-model="search"
             class="h-10 w-full cursor-pointer rounded-full border border-gray-500 bg-gray-100 px-4 pb-0 pt-px text-gray-700 outline-none transition focus:border-purple-400"
             :class="{ 'transition-border': search }"
@@ -12,43 +11,33 @@
             placeholder="Search"
             type="search"
             @keyup.esc="search = null"
+            @keyup.enter="searchMethod"
         />
     </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref, watch } from "vue";
+import { usePage, router } from "@inertiajs/vue3";
 
-export default defineComponent({
-    props: {
-        routeName: String,
-    },
-
-    data() {
-        return {
-            search: this.$inertia.page.props.search || null,
-            sort: this.$inertia.page.props.sort || null,
-        };
-    },
-
-    watch: {
-        search() {
-            if (this.search) {
-                this.searchMethod();
-            } else {
-                this.$inertia.get(route(this.routeName));
-            }
-        },
-    },
-
-    methods: {
-        searchMethod: _.debounce(function () {
-            this.$inertia.get(
-                route(this.routeName),
-                { search: this.search, sort: this.sort },
-                { preserveState: false }
-            );
-        }, 2000),
-    },
+const props = defineProps({
+    routeName: { type: String, default: "" },
 });
+
+const page = usePage();
+const search = ref(page.props.search || null);
+const sort = ref(page.props.sort || null);
+
+watch(search, (newValue, oldValue) => {
+    if (!search.value) {
+        searchMethod();
+    }
+});
+const searchMethod = () => {
+    router.get(
+        route(props.routeName),
+        { search: search.value, sort: sort.value },
+        { preserveState: false },
+    );
+};
 </script>
