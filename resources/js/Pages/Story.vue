@@ -15,7 +15,7 @@
                 />
                 {{ story.title }}
             </h1>
-            <div v-if="$page.props.user">
+            <div v-if="authenticated">
                 <jet-danger-button
                     class="mr-3"
                     aria-label="Delete Story"
@@ -60,7 +60,7 @@
     </app-layout>
 
     <story-edit-modal
-        v-if="$page.props.user"
+        v-if="authenticated"
         :open="storyEditModalOpen"
         :story="story"
         :people="people"
@@ -68,7 +68,7 @@
     />
 
     <story-delete-modal
-        v-if="$page.props.user"
+        v-if="authenticated"
         :open="storyDeleteModalOpen"
         :story="story"
         @close="storyDeleteModalOpen = false"
@@ -76,8 +76,8 @@
     <scroll-top />
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref, computed } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import StoryEditModal from "@/Modals/StoryEditModal.vue";
 import StoryDeleteModal from "@/Modals/StoryDeleteModal.vue";
@@ -86,29 +86,16 @@ import SocialShare from "@/Components/SocialShare.vue";
 import EmbeddedIcon from "@/Base/EmbeddedIcon.vue";
 import SectionBorder from "@/Base/SectionBorder.vue";
 import RelatedPeopleContainer from "@/Components/RelatedPeopleContainer.vue";
+import { usePage } from "@inertiajs/vue3";
 
-export default defineComponent({
-    components: {
-        RelatedPeopleContainer,
-        SectionBorder,
-        EmbeddedIcon,
-        SocialShare,
-        JetDangerButton,
-        StoryDeleteModal,
-        AppLayout,
-        StoryEditModal,
-    },
-
-    props: {
-        story: Object,
-        people: Array,
-    },
-
-    data() {
-        return {
-            storyEditModalOpen: false,
-            storyDeleteModalOpen: false,
-        };
-    },
+defineProps({
+    story: { type: Object, required: true },
+    people: { type: Array, required: true },
 });
+
+const storyEditModalOpen = ref(false);
+const storyDeleteModalOpen = ref(false);
+
+const page = usePage();
+const authenticated = computed(() => page.props.auth.user);
 </script>

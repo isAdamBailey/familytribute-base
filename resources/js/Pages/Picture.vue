@@ -12,7 +12,7 @@
                 {{ picture.title }}
             </h1>
 
-            <div v-if="$page.props.user">
+            <div v-if="authenticated">
                 <jet-danger-button
                     class="mr-3"
                     aria-label="Delete Picture"
@@ -59,7 +59,7 @@
     </app-layout>
 
     <picture-edit-modal
-        v-if="$page.props.user"
+        v-if="authenticated"
         :open="pictureEditModalOpen"
         :picture="picture"
         :people="people"
@@ -67,7 +67,7 @@
     />
 
     <picture-delete-modal
-        v-if="$page.props.user"
+        v-if="authenticated"
         :open="pictureDeleteModalOpen"
         :picture="picture"
         @close="pictureDeleteModalOpen = false"
@@ -75,8 +75,8 @@
     <scroll-top />
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref, computed } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import PictureEditModal from "@/Modals/PictureEditModal.vue";
 import PictureDeleteModal from "@/Modals/PictureDeleteModal.vue";
@@ -85,29 +85,16 @@ import SocialShare from "@/Components/SocialShare.vue";
 import EmbeddedIcon from "@/Base/EmbeddedIcon.vue";
 import SectionBorder from "@/Base/SectionBorder.vue";
 import RelatedPeopleContainer from "@/Components/RelatedPeopleContainer.vue";
+import { usePage } from "@inertiajs/vue3";
 
-export default defineComponent({
-    components: {
-        RelatedPeopleContainer,
-        SectionBorder,
-        EmbeddedIcon,
-        SocialShare,
-        JetDangerButton,
-        PictureDeleteModal,
-        PictureEditModal,
-        AppLayout,
-    },
-
-    props: {
-        picture: Object,
-        people: Array,
-    },
-
-    data() {
-        return {
-            pictureEditModalOpen: false,
-            pictureDeleteModalOpen: false,
-        };
-    },
+defineProps({
+    picture: { type: Object, required: true },
+    people: { type: Array, required: true },
 });
+
+const pictureEditModalOpen = ref(false);
+const pictureDeleteModalOpen = ref(false);
+
+const page = usePage();
+const authenticated = computed(() => page.props.auth.user);
 </script>

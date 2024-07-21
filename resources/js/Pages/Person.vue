@@ -14,7 +14,7 @@
             >
                 {{ person.full_name }}
             </h1>
-            <div v-if="$page.props.user">
+            <div v-if="authenticated">
                 <jet-danger-button
                     class="mr-3"
                     aria-label="Delete Person"
@@ -127,14 +127,14 @@
     </app-layout>
 
     <obituary-edit-modal
-        v-if="$page.props.user"
+        v-if="authenticated"
         :open="obituaryEditModalOpen"
         :person="person"
         :people="people"
         @close="obituaryEditModalOpen = false"
     />
     <obituary-delete-modal
-        v-if="$page.props.user"
+        v-if="authenticated"
         :open="obituaryDeleteModalOpen"
         :person="person"
         @close="obituaryDeleteModalOpen = false"
@@ -142,9 +142,10 @@
     <scroll-top />
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref, computed } from "vue";
 import { format, parseISO } from "date-fns";
+import { usePage } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import ObituaryEditModal from "@/Modals/ObituaryEditModal.vue";
 import ObituaryDeleteModal from "@/Modals/ObituaryDeleteModal.vue";
@@ -154,34 +155,18 @@ import StoriesContainer from "@/Components/StoriesContainer.vue";
 import SocialShare from "@/Components/SocialShare.vue";
 import RelatedPeopleContainer from "@/Components/RelatedPeopleContainer.vue";
 
-export default defineComponent({
-    components: {
-        RelatedPeopleContainer,
-        SocialShare,
-        StoriesContainer,
-        PicturesContainer,
-        JetDangerButton,
-        ObituaryDeleteModal,
-        AppLayout,
-        ObituaryEditModal,
-    },
-
-    props: {
-        person: Object,
-        people: Array,
-    },
-
-    data() {
-        return {
-            obituaryEditModalOpen: false,
-            obituaryDeleteModalOpen: false,
-        };
-    },
-
-    methods: {
-        formatDate(date) {
-            return format(parseISO(date), "PPP");
-        },
-    },
+defineProps({
+    person: { type: Object, required: true },
+    people: { type: Array, required: true },
 });
+
+function formatDate(date) {
+    return format(parseISO(date), "PPP");
+}
+
+const obituaryEditModalOpen = ref(false);
+const obituaryDeleteModalOpen = ref(false);
+
+const page = usePage();
+const authenticated = computed(() => page.props.auth.user);
 </script>

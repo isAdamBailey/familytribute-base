@@ -13,14 +13,14 @@
                 <div class="mt-2 flex items-center">
                     <img
                         class="h-12 w-12 rounded-full object-cover"
-                        :src="$page.props.user.profile_photo_url"
-                        :alt="$page.props.user.name"
+                        :src="authenticated.profile_photo_url"
+                        :alt="authenticated.name"
                     />
 
                     <div class="ml-4 leading-tight">
-                        <div>{{ $page.props.user.name }}</div>
+                        <div>{{ authenticated.name }}</div>
                         <div class="text-sm text-gray-700">
-                            {{ $page.props.user.email }}
+                            {{ authenticated.email }}
                         </div>
                     </div>
                 </div>
@@ -50,38 +50,25 @@
     </jet-form-section>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { computed } from "vue";
 import JetButton from "@/Base/Button.vue";
 import JetFormSection from "@/Base/FormSection.vue";
 import JetInput from "@/Base/Input.vue";
 import JetInputError from "@/Base/InputError.vue";
 import JetLabel from "@/Base/Label.vue";
+import { useForm, usePage } from "@inertiajs/vue3";
 
-export default defineComponent({
-    components: {
-        JetButton,
-        JetFormSection,
-        JetInput,
-        JetInputError,
-        JetLabel,
-    },
-
-    data() {
-        return {
-            form: this.$inertia.form({
-                name: "",
-            }),
-        };
-    },
-
-    methods: {
-        createTeam() {
-            this.form.post(route("teams.store"), {
-                errorBag: "createTeam",
-                preserveScroll: true,
-            });
-        },
-    },
+const form = useForm({
+    name: "",
 });
+
+const authenticated = computed(() => usePage().props.auth.user);
+
+const createTeam = () => {
+    form.post(route("teams.store"), {
+        errorBag: "createTeam",
+        preserveScroll: true,
+    });
+};
 </script>
