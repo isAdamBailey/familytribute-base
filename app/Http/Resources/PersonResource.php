@@ -11,9 +11,6 @@ class PersonResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
-     *
-     * @param  Request  $request
-     * @return array|JsonSerializable|Arrayable
      */
     public function toArray(Request $request): array|JsonSerializable|Arrayable
     {
