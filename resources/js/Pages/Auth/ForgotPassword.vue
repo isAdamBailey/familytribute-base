@@ -1,9 +1,9 @@
 <template>
-    <app-head title="Forgot Password" />
+    <AppHead title="Forgot Password" />
 
-    <jet-authentication-card>
+    <JetAuthenticationCard>
         <template #logo>
-            <jet-authentication-card-logo />
+            <JetAuthenticationCardLogo />
         </template>
 
         <div class="mb-4 text-sm text-gray-600">
@@ -16,12 +16,12 @@
             {{ status }}
         </div>
 
-        <jet-validation-errors class="mb-4" />
+        <JetValidationErrors class="mb-4" />
 
         <form @submit.prevent="submit">
             <div>
-                <jet-label for="email" value="Email" />
-                <jet-input
+                <JetLabel for="email" value="Email" />
+                <JetInput
                     id="email"
                     v-model="form.email"
                     type="email"
@@ -32,19 +32,20 @@
             </div>
 
             <div class="mt-4 flex items-center justify-end">
-                <base-button
+                <BaseButton
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Email Password Reset Link
-                </base-button>
+                </BaseButton>
             </div>
         </form>
-    </jet-authentication-card>
+    </JetAuthenticationCard>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
 import JetAuthenticationCard from "@/Base/AuthenticationCard.vue";
 import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
 import JetInput from "@/Base/Input.vue";
@@ -52,32 +53,15 @@ import JetLabel from "@/Base/Label.vue";
 import JetValidationErrors from "@/Base/ValidationErrors.vue";
 import AppHead from "@/Layouts/AppHead.vue";
 
-export default defineComponent({
-    components: {
-        AppHead,
-        JetAuthenticationCard,
-        JetAuthenticationCardLogo,
-        JetInput,
-        JetLabel,
-        JetValidationErrors,
-    },
-
-    props: {
-        status: String,
-    },
-
-    data() {
-        return {
-            form: this.$inertia.form({
-                email: "",
-            }),
-        };
-    },
-
-    methods: {
-        submit() {
-            this.form.post(this.route("password.email"));
-        },
-    },
+const props = defineProps({
+    status: String,
 });
+
+const form = useForm({
+    email: "",
+});
+
+const submit = () => {
+    form.post(route("password.email"));
+};
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <jet-form-section @submitted="updateTeamName">
+    <JetFormSection @submitted="updateTeamName">
         <template #title> Team Name </template>
 
         <template #description>
@@ -9,7 +9,7 @@
         <template #form>
             <!-- Team Owner Information -->
             <div class="col-span-6">
-                <jet-label value="Team Owner" />
+                <JetLabel value="Team Owner" />
 
                 <div class="mt-2 flex items-center">
                     <img
@@ -29,9 +29,9 @@
 
             <!-- Team Name -->
             <div class="col-span-6 sm:col-span-4">
-                <jet-label for="name" value="Team Name" />
+                <JetLabel for="name" value="Team Name" />
 
-                <jet-input
+                <JetInput
                     id="name"
                     v-model="form.name"
                     type="text"
@@ -39,7 +39,7 @@
                     :disabled="!permissions.canUpdateTeam"
                 />
 
-                <jet-input-error :message="form.errors.name" class="mt-2" />
+                <JetInput-error :message="form.errors.name" class="mt-2" />
             </div>
         </template>
 
@@ -55,11 +55,11 @@
                 Save
             </jet-button>
         </template>
-    </jet-form-section>
+    </JetFormSection>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { useForm } from "@inertiajs/vue3";
 import JetActionMessage from "@/Base/ActionMessage.vue";
 import JetButton from "@/Base/Button.vue";
 import JetFormSection from "@/Base/FormSection.vue";
@@ -67,36 +67,19 @@ import JetInput from "@/Base/Input.vue";
 import JetInputError from "@/Base/InputError.vue";
 import JetLabel from "@/Base/Label.vue";
 
-export default defineComponent({
-    components: {
-        JetActionMessage,
-        JetButton,
-        JetFormSection,
-        JetInput,
-        JetInputError,
-        JetLabel,
-    },
-
-    props: {
-        team: Object,
-        permissions: Object,
-    },
-
-    data() {
-        return {
-            form: this.$inertia.form({
-                name: this.team.name,
-            }),
-        };
-    },
-
-    methods: {
-        updateTeamName() {
-            this.form.put(route("teams.update", this.team), {
-                errorBag: "updateTeamName",
-                preserveScroll: true,
-            });
-        },
-    },
+const props = defineProps({
+    team: Object,
+    permissions: Object,
 });
+
+const form = useForm({
+    name: props.team.name,
+});
+
+const updateTeamName = () => {
+    form.put(route("teams.update", props.team), {
+        errorBag: "updateTeamName",
+        preserveScroll: true,
+    });
+};
 </script>

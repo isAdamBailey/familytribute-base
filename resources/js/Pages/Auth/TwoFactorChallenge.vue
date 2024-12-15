@@ -1,9 +1,9 @@
 <template>
-    <app-head title="Two-factor Confirmation" />
+    <AppHead title="Two-factor Confirmation" />
 
-    <jet-authentication-card>
+    <JetAuthenticationCard>
         <template #logo>
-            <jet-authentication-card-logo />
+            <JetAuthenticationCardLogo />
         </template>
 
         <div class="mb-4 text-sm text-gray-600">
@@ -18,12 +18,12 @@
             </template>
         </div>
 
-        <jet-validation-errors class="mb-4" />
+        <JetValidationErrors class="mb-4" />
 
         <form @submit.prevent="submit">
             <div v-if="!recovery">
-                <jet-label for="code" value="Code" />
-                <jet-input
+                <JetLabel for="code" value="Code" />
+                <JetInput
                     id="code"
                     ref="code"
                     v-model="form.code"
@@ -36,8 +36,8 @@
             </div>
 
             <div v-else>
-                <jet-label for="recovery_code" value="Recovery Code" />
-                <jet-input
+                <JetLabel for="recovery_code" value="Recovery Code" />
+                <JetInput
                     id="recovery_code"
                     ref="recovery_code"
                     v-model="form.recovery_code"
@@ -58,20 +58,21 @@
                     <template v-else> Use an authentication code </template>
                 </button>
 
-                <base-button
+                <BaseButton
                     class="ml-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Log in
-                </base-button>
+                </BaseButton>
             </div>
         </form>
-    </jet-authentication-card>
+    </JetAuthenticationCard>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref, nextTick } from "vue";
+import { useForm } from "@inertiajs/vue3";
 import JetAuthenticationCard from "@/Base/AuthenticationCard.vue";
 import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
 import JetInput from "@/Base/Input.vue";
@@ -79,44 +80,27 @@ import JetLabel from "@/Base/Label.vue";
 import JetValidationErrors from "@/Base/ValidationErrors.vue";
 import AppHead from "@/Layouts/AppHead.vue";
 
-export default defineComponent({
-    components: {
-        AppHead,
-        JetAuthenticationCard,
-        JetAuthenticationCardLogo,
-        JetInput,
-        JetLabel,
-        JetValidationErrors,
-    },
-
-    data() {
-        return {
-            recovery: false,
-            form: this.$inertia.form({
-                code: "",
-                recovery_code: "",
-            }),
-        };
-    },
-
-    methods: {
-        toggleRecovery() {
-            this.recovery ^= true;
-
-            this.$nextTick(() => {
-                if (this.recovery) {
-                    this.$refs.recovery_code.focus();
-                    this.form.code = "";
-                } else {
-                    this.$refs.code.focus();
-                    this.form.recovery_code = "";
-                }
-            });
-        },
-
-        submit() {
-            this.form.post(this.route("two-factor.login"));
-        },
-    },
+const recovery = ref(false);
+const form = useForm({
+    code: "",
+    recovery_code: "",
 });
+
+const toggleRecovery = () => {
+    recovery.value = !recovery.value;
+
+    nextTick(() => {
+        if (recovery.value) {
+            form.refs.recovery_code.focus();
+            form.code = "";
+        } else {
+            form.refs.code.focus();
+            form.recovery_code = "";
+        }
+    });
+};
+
+const submit = () => {
+    form.post(route("two-factor.login"));
+};
 </script>

@@ -1,12 +1,12 @@
 <template>
-    <app-head title="Log in" />
+    <AppHead title="Log in" />
 
-    <jet-authentication-card>
+    <JetAuthenticationCard>
         <template #logo>
-            <jet-authentication-card-logo />
+            <JetAuthenticationCardLogo />
         </template>
 
-        <jet-validation-errors class="mb-4" />
+        <JetValidationErrors class="mb-4" />
 
         <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
@@ -14,8 +14,8 @@
 
         <form @submit.prevent="submit">
             <div>
-                <jet-label for="email" value="Email" />
-                <jet-input
+                <JetLabel for="email" value="Email" />
+                <JetInput
                     id="email"
                     v-model="form.email"
                     type="email"
@@ -26,8 +26,8 @@
             </div>
 
             <div class="mt-4">
-                <jet-label for="password" value="Password" />
-                <jet-input
+                <JetLabel for="password" value="Password" />
+                <JetInput
                     id="password"
                     v-model="form.password"
                     type="password"
@@ -39,7 +39,7 @@
 
             <div class="mt-4 block">
                 <label class="flex items-center">
-                    <jet-checkbox
+                    <JetCheckbox
                         v-model:checked="form.remember"
                         name="remember"
                     />
@@ -56,20 +56,20 @@
                     Forgot your password?
                 </Link>
 
-                <base-button
+                <BaseButton
                     class="ml-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Log in
-                </base-button>
+                </BaseButton>
             </div>
         </form>
-    </jet-authentication-card>
+    </JetAuthenticationCard>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { useForm } from "@inertiajs/vue3";
 import JetAuthenticationCard from "@/Base/AuthenticationCard.vue";
 import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
 import JetInput from "@/Base/Input.vue";
@@ -78,43 +78,23 @@ import JetLabel from "@/Base/Label.vue";
 import JetValidationErrors from "@/Base/ValidationErrors.vue";
 import AppHead from "@/Layouts/AppHead.vue";
 
-export default defineComponent({
-    components: {
-        AppHead,
-        JetAuthenticationCard,
-        JetAuthenticationCardLogo,
-        JetInput,
-        JetCheckbox,
-        JetLabel,
-        JetValidationErrors,
-    },
-
-    props: {
-        canResetPassword: Boolean,
-        status: String,
-    },
-
-    data() {
-        return {
-            form: this.$inertia.form({
-                email: "",
-                password: "",
-                remember: false,
-            }),
-        };
-    },
-
-    methods: {
-        submit() {
-            this.form
-                .transform((data) => ({
-                    ...data,
-                    remember: this.form.remember ? "on" : "",
-                }))
-                .post(this.route("login"), {
-                    onFinish: () => this.form.reset("password"),
-                });
-        },
-    },
+const props = defineProps({
+    canResetPassword: Boolean,
+    status: String,
 });
+
+const form = useForm({
+    email: "",
+    password: "",
+    remember: false,
+});
+
+const submit = () => {
+    form.transform((data) => ({
+        ...data,
+        remember: form.remember ? "on" : "",
+    })).post(route("login"), {
+        onFinish: () => form.reset("password"),
+    });
+};
 </script>
