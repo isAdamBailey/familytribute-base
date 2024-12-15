@@ -2,7 +2,7 @@
     <button
         class="my-5 mx-2 text-indigo-800 transition hover:text-orange-700 dark:text-indigo-400 dark:hover:text-yellow-300 md:mx-5"
         aria-label="Toggle Dark Theme"
-        @click="toggle()"
+        @click="toggle"
     >
         <svg
             id="light"
@@ -37,37 +37,31 @@
     </button>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref, onMounted } from "vue";
 
-export default defineComponent({
-    data() {
-        return {
-            light: null,
-            dark: null,
-        };
-    },
-    mounted() {
-        this.light = document.getElementById("light");
-        this.dark = document.getElementById("dark");
+const light = ref(null);
+const dark = ref(null);
 
-        if (document.documentElement.classList.contains("dark")) {
-            this.light.classList.add("hidden");
-            this.dark.classList.remove("hidden");
-        } else {
-            this.dark.classList.add("hidden");
-            this.light.classList.remove("hidden");
-        }
-    },
-    methods: {
-        toggle() {
-            document.documentElement.classList.toggle("dark");
-            this.light.classList.toggle("hidden");
-            this.dark.classList.toggle("hidden");
+onMounted(() => {
+    light.value = document.getElementById("light");
+    dark.value = document.getElementById("dark");
 
-            const newTheme = localStorage.theme === "light" ? "dark" : "light";
-            localStorage.setItem("theme", newTheme);
-        },
-    },
+    if (document.documentElement.classList.contains("dark")) {
+        light.value.classList.add("hidden");
+        dark.value.classList.remove("hidden");
+    } else {
+        dark.value.classList.add("hidden");
+        light.value.classList.remove("hidden");
+    }
 });
+
+const toggle = () => {
+    document.documentElement.classList.toggle("dark");
+    light.value.classList.toggle("hidden");
+    dark.value.classList.toggle("hidden");
+
+    const newTheme = localStorage.theme === "light" ? "dark" : "light";
+    localStorage.setItem("theme", newTheme);
+};
 </script>

@@ -14,8 +14,10 @@ class AddBackgroundImageColumn extends Migration
     public function up()
     {
         Schema::table('obituaries', function (Blueprint $table) {
-            $table->renameColumn('headstone_url', 'main_photo_url');
-            $table->string('background_photo_url')->nullable()->after('headstone_url');
+            if (Schema::hasColumn('obituaries', 'headstone_url')) {
+                $table->renameColumn('headstone_url', 'main_photo_url');
+            }
+            $table->string('background_photo_url')->nullable()->after('main_photo_url');
         });
     }
 
@@ -26,6 +28,11 @@ class AddBackgroundImageColumn extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('obituaries', function (Blueprint $table) {
+            if (Schema::hasColumn('obituaries', 'main_photo_url')) {
+                $table->renameColumn('main_photo_url', 'headstone_url');
+            }
+            $table->dropColumn('background_photo_url');
+        });
     }
 }
