@@ -1,28 +1,28 @@
 <template>
-    <jet-dialog-modal :show="open" @close="closeModal()">
+    <JetDialogModal :show="open" @close="closeModal()">
         <template #title> Edit Story </template>
 
         <template #content>
             <div class="col-span-6 mt-2 sm:col-span-4">
-                <jet-label for="title" value="Title" />
-                <jet-input
+                <JetLabel for="title" value="Title" />
+                <JetInput
                     id="title"
                     v-model="form.title"
                     type="text"
                     class="mt-1 block w-full"
                     autocomplete="title"
                 />
-                <jet-input-error :message="form.errors.title" class="mt-2" />
+                <JetInputError :message="form.errors.title" class="mt-2" />
             </div>
 
             <div class="col-span-6 mt-2 sm:col-span-4">
-                <jet-label for="excerpt" value="Excerpt" />
+                <JetLabel for="excerpt" value="Excerpt" />
                 <wysiwyg v-model="form.excerpt" :excerpt="true" />
-                <jet-input-error :message="form.errors.excerpt" class="mt-2" />
+                <JetInputError :message="form.errors.excerpt" class="mt-2" />
             </div>
 
             <div class="col-span-6 mt-2 sm:col-span-4">
-                <jet-label for="person_ids" value="Tag People" />
+                <JetLabel for="person_ids" value="Tag People" />
                 <Multiselect
                     id="person_ids"
                     v-model="form.person_ids"
@@ -30,66 +30,64 @@
                     :create-tag="true"
                     :options="peopleOptions"
                 />
-                <jet-input-error
-                    :message="form.errors.person_ids"
-                    class="mt-2"
-                />
+                <JetInputError :message="form.errors.person_ids" class="mt-2" />
             </div>
 
             <div class="col-span-6 mt-2 sm:col-span-4">
-                <jet-label for="content" value="Story" />
+                <JetLabel for="content" value="Story" />
                 <wysiwyg v-model="form.content" />
-                <jet-input-error :message="form.errors.content" class="mt-2" />
+                <JetInputError :message="form.errors.content" class="mt-2" />
             </div>
 
             <div class="-mx-3 flex flex-wrap">
                 <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
-                    <jet-label for="private" value="Private" />
-                    <info-text>
+                    <JetLabel for="private" value="Private" />
+                    <InfoText>
                         Private stories will only appear for registered users
-                    </info-text>
-                    <checkbox
+                    </InfoText>
+                    <Checkbox
                         id="private"
                         v-model:checked="form.private"
                         name="private"
                     />
-                    <jet-input-error
+                    <JetInputError
                         :message="form.errors.private"
                         class="mt-2"
                     />
                 </div>
                 <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
-                    <jet-label for="year" value="Year" />
-                    <jet-input
+                    <JetLabel for="year" value="Year" />
+                    <JetInput
                         id="year"
                         v-model="form.year"
                         type="number"
                         class="mt-1 block w-full"
                     />
-                    <jet-input-error :message="form.errors.year" class="mt-2" />
+                    <JetInputError :message="form.errors.year" class="mt-2" />
                 </div>
             </div>
         </template>
 
         <template #footer>
-            <jet-secondary-button @click="closeModal()">
+            <JetSecondaryButton @click="closeModal()">
                 Nevermind
-            </jet-secondary-button>
+            </JetSecondaryButton>
 
-            <base-button
+            <BaseButton
                 class="ml-2"
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing || !form.isDirty"
                 @click="updateStory"
             >
                 Update Story
-            </base-button>
+            </BaseButton>
         </template>
-    </jet-dialog-modal>
+    </JetDialogModal>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { computed } from "vue";
+import { useForm } from "@inertiajs/vue3";
 import Multiselect from "@vueform/multiselect";
 import JetDialogModal from "@/Base/DialogModal.vue";
 import JetSecondaryButton from "@/Base/SecondaryButton.vue";
@@ -100,75 +98,54 @@ import Wysiwyg from "@/Base/Wysiwyg.vue";
 import InfoText from "@/Base/InfoText.vue";
 import Checkbox from "@/Base/Checkbox.vue";
 
-export default defineComponent({
-    components: {
-        Checkbox,
-        InfoText,
-        Wysiwyg,
-        JetDialogModal,
-        JetSecondaryButton,
-        JetInput,
-        JetInputError,
-        JetLabel,
-        Multiselect,
+const props = defineProps({
+    open: {
+        type: Boolean,
+        default: false,
     },
-
-    props: {
-        open: {
-            type: Boolean,
-            default: false,
-        },
-        story: {
-            type: Object,
-            required: true,
-        },
-        people: {
-            type: Array,
-            required: true,
-        },
+    story: {
+        type: Object,
+        required: true,
     },
-    emits: ["close"],
-
-    data() {
-        return {
-            form: this.$inertia.form({
-                _method: "PUT",
-                title: this.story.title,
-                excerpt: this.story.excerpt,
-                content: this.story.content,
-                year: this.story.year,
-                private: Boolean(this.story.private),
-                person_ids: this.story.person_ids,
-            }),
-        };
-    },
-
-    computed: {
-        peopleOptions() {
-            return this.people.map((person) => {
-                return {
-                    value: person.id,
-                    label: person.full_name,
-                };
-            });
-        },
-    },
-
-    methods: {
-        updateStory() {
-            this.form.post(route("stories.update", this.story.slug), {
-                errorBag: "updateStory",
-                onSuccess: () => this.closeModal(),
-            });
-        },
-
-        closeModal() {
-            this.form.reset();
-            this.form.clearErrors();
-            this.$emit("close", true);
-        },
+    people: {
+        type: Array,
+        required: true,
     },
 });
+
+const emit = defineEmits(["close"]);
+
+const form = useForm({
+    _method: "PUT",
+    title: props.story.title,
+    excerpt: props.story.excerpt,
+    content: props.story.content,
+    year: props.story.year,
+    private: Boolean(props.story.private),
+    person_ids: props.story.person_ids,
+});
+
+const peopleOptions = computed(() => {
+    return props.people.map((person) => {
+        return {
+            value: person.id,
+            label: person.full_name,
+        };
+    });
+});
+
+const updateStory = () => {
+    form.post(route("stories.update", props.story.slug), {
+        errorBag: "updateStory",
+        onSuccess: () => closeModal(),
+    });
+};
+
+const closeModal = () => {
+    form.reset();
+    form.clearErrors();
+    emit("close", true);
+};
 </script>
 
 <style src="@vueform/multiselect/themes/default.css"></style>

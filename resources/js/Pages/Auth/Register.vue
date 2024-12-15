@@ -1,17 +1,17 @@
 <template>
-    <app-head title="Register" />
+    <AppHead title="Register" />
 
-    <jet-authentication-card>
+    <JetAuthenticationCard>
         <template #logo>
-            <jet-authentication-card-logo />
+            <JetAuthenticationCardLogo />
         </template>
 
-        <jet-validation-errors class="mb-4" />
+        <JetValidationErrors class="mb-4" />
 
         <form @submit.prevent="submit">
             <div>
-                <jet-label for="name" value="Name" />
-                <jet-input
+                <JetLabel for="name" value="Name" />
+                <JetInput
                     id="name"
                     v-model="form.name"
                     type="text"
@@ -23,8 +23,8 @@
             </div>
 
             <div class="mt-4">
-                <jet-label for="email" value="Email" />
-                <jet-input
+                <JetLabel for="email" value="Email" />
+                <JetInput
                     id="email"
                     v-model="form.email"
                     type="email"
@@ -34,8 +34,8 @@
             </div>
 
             <div class="mt-4">
-                <jet-label for="password" value="Password" />
-                <jet-input
+                <JetLabel for="password" value="Password" />
+                <JetInput
                     id="password"
                     v-model="form.password"
                     type="password"
@@ -46,11 +46,11 @@
             </div>
 
             <div class="mt-4">
-                <jet-label
+                <JetLabel
                     for="password_confirmation"
                     value="Confirm Password"
                 />
-                <jet-input
+                <JetInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"
                     type="password"
@@ -61,11 +61,11 @@
             </div>
 
             <div class="mt-4">
-                <jet-label
+                <JetLabel
                     for="registration_secret"
                     value="Registration Secret"
                 />
-                <jet-input
+                <JetInput
                     id="registration_secret"
                     v-model="form.registration_secret"
                     type="text"
@@ -74,13 +74,10 @@
                 />
             </div>
 
-            <div
-                v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature"
-                class="mt-4"
-            >
-                <jet-label for="terms">
+            <div v-if="jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
+                <JetLabel for="terms">
                     <div class="flex items-center">
-                        <jet-checkbox
+                        <JetCheckbox
                             id="terms"
                             v-model:checked="form.terms"
                             name="terms"
@@ -103,7 +100,7 @@
                             >
                         </div>
                     </div>
-                </jet-label>
+                </JetLabel>
             </div>
 
             <div class="mt-4 flex items-center justify-end">
@@ -114,20 +111,20 @@
                     Already registered?
                 </Link>
 
-                <base-button
+                <BaseButton
                     class="ml-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Register
-                </base-button>
+                </BaseButton>
             </div>
         </form>
-    </jet-authentication-card>
+    </JetAuthenticationCard>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { usePage, useForm } from "@inertiajs/vue3";
 import JetAuthenticationCard from "@/Base/AuthenticationCard.vue";
 import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
 import JetInput from "@/Base/Input.vue";
@@ -136,37 +133,20 @@ import JetLabel from "@/Base/Label.vue";
 import JetValidationErrors from "@/Base/ValidationErrors.vue";
 import AppHead from "@/Layouts/AppHead.vue";
 
-export default defineComponent({
-    components: {
-        AppHead,
-        JetAuthenticationCard,
-        JetAuthenticationCardLogo,
-        JetInput,
-        JetCheckbox,
-        JetLabel,
-        JetValidationErrors,
-    },
+const jetstream = usePage().props.jetstream;
 
-    data() {
-        return {
-            form: this.$inertia.form({
-                name: "",
-                email: "",
-                password: "",
-                password_confirmation: "",
-                registration_secret: "",
-                terms: false,
-            }),
-        };
-    },
-
-    methods: {
-        submit() {
-            this.form.post(this.route("register"), {
-                onFinish: () =>
-                    this.form.reset("password", "password_confirmation"),
-            });
-        },
-    },
+const form = useForm({
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+    registration_secret: "",
+    terms: false,
 });
+
+const submit = () => {
+    form.post(route("register"), {
+        onFinish: () => form.reset("password", "password_confirmation"),
+    });
+};
 </script>

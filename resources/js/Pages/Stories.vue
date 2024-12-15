@@ -1,5 +1,5 @@
 <template>
-    <app-layout>
+    <AppLayout>
         <template #header> Stories </template>
 
         <div class="mb-5 flex items-center justify-between md:mt-5 md:mb-0">
@@ -9,63 +9,63 @@
                 Stories
             </div>
 
-            <search-input route-name="stories.index" />
+            <SearchInput route-name="stories.index" />
 
-            <sort-dropdown>
-                <dropdown-link
+            <SortDropdown>
+                <DropdownLink
                     :href="
                         route('stories.index', {
                             sort: 'year',
                             order: 'desc',
-                            search: $page.props.search,
+                            search: search,
                         })
                     "
                 >
                     <i class="ri-calendar-fill"></i>
                     <i class="ri-arrow-down-line"></i>
                     Year Written DESC
-                </dropdown-link>
-                <dropdown-link
+                </DropdownLink>
+                <DropdownLink
                     :href="
                         route('stories.index', {
                             sort: 'year',
                             order: 'asc',
-                            search: $page.props.search,
+                            search: search,
                         })
                     "
                 >
                     <i class="ri-calendar-fill"></i>
                     <i class="ri-arrow-up-line"></i>
                     Year Written ASC
-                </dropdown-link>
-                <dropdown-link
+                </DropdownLink>
+                <DropdownLink
                     :href="
                         route('stories.index', {
                             sort: 'created_at',
                             order: 'asc',
-                            search: $page.props.search,
+                            search: search,
                         })
                     "
                 >
                     <i class="ri-calendar-fill"></i>
                     <i class="ri-arrow-up-line"></i>
                     Created ASC
-                </dropdown-link>
-                <dropdown-link
+                </DropdownLink>
+                <DropdownLink
                     :href="
                         route('stories.index', {
                             sort: 'created_at',
                             order: 'desc',
-                            search: $page.props.search,
+                            search: search,
                         })
                     "
                 >
                     <i class="ri-calendar-fill"></i>
                     <i class="ri-arrow-down-line"></i>
                     Created DESC
-                </dropdown-link>
-                <dropdown-link
-                    v-if="$inertia.page.props.user"
+                </DropdownLink>
+                <DropdownLink
+                    v-if="user"
                     :href="
                         route('stories.index', {
                             sort: 'private',
@@ -74,14 +74,14 @@
                     "
                 >
                     <i class="ri-git-repository-private-fill"></i> Private
-                </dropdown-link>
-                <dropdown-link :href="route('stories.index')">
+                </DropdownLink>
+                <DropdownLink :href="route('stories.index')">
                     <i class="ri-filter-off-fill"></i> Clear
-                </dropdown-link>
-            </sort-dropdown>
+                </DropdownLink>
+            </SortDropdown>
         </div>
 
-        <section-border />
+        <SectionBorder />
 
         <div v-if="stories.data.length">
             <StoriesGrid :items="stories" />
@@ -90,11 +90,13 @@
         <div v-else class="text-gray-500 dark:text-indigo-300">
             No stories were found.
         </div>
-    </app-layout>
+    </AppLayout>
     <ScrollTop />
 </template>
 
 <script setup>
+import { usePage } from "@inertiajs/vue3";
+
 import AppLayout from "@/Layouts/AppLayout.vue";
 import SearchInput from "@/Base/SearchInput.vue";
 import SectionBorder from "@/Base/SectionBorder.vue";
@@ -108,4 +110,6 @@ defineProps({
         required: true,
     },
 });
+
+const { user, search } = usePage().props;
 </script>

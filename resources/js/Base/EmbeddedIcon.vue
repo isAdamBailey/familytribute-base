@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="$inertia.page.props.user"
+        v-if="user"
         :class="color"
         class="absolute inset-x-0 top-0 pl-0.5 text-sm"
     >
@@ -9,16 +9,16 @@
     </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { usePage } from "@inertiajs/vue3";
 
-export default defineComponent({
-    props: {
-        item: Object,
-        color: {
-            type: String,
-            default: "text-white",
-        },
+defineProps({
+    item: Object,
+    color: {
+        type: String,
+        default: "text-white",
     },
 });
+
+const user = usePage().props.user;
 </script>

@@ -4,11 +4,11 @@
             <div>
                 <div
                     class="font-header text-6xl font-bold text-gray-700 dark:text-indigo-400 md:text-8xl"
-                    v-html="$inertia.page.props.settings.title"
+                    v-html="settings.title"
                 ></div>
                 <div
                     class="html-content text-l mt-6 text-gray-500 dark:text-indigo-300 md:text-2xl"
-                    v-html="$inertia.page.props.settings.description"
+                    v-html="settings.description"
                 ></div>
             </div>
             <application-mark class="mx-auto mb-6 w-full md:w-1/2 lg:mb-0" />
@@ -95,20 +95,22 @@
     </home-layout>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
 import HomeLayout from "@/Layouts/HomeLayout.vue";
 import ApplicationMark from "@/Base/ApplicationMark.vue";
 import AttentionButton from "@/Base/AttentionButton.vue";
 
-export default defineComponent({
-    components: {
-        AttentionButton,
-        ApplicationMark,
-        HomeLayout,
+defineProps({
+    pictures: {
+        type: Array,
+        required: true,
     },
-    props: {
-        pictures: Array,
-    },
+});
+
+const settings = computed(() => {
+    const { props } = usePage();
+    return props.settings;
 });
 </script>

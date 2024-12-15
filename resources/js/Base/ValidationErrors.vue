@@ -10,18 +10,12 @@
     </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 
-export default defineComponent({
-    computed: {
-        errors() {
-            return this.$page.props.errors;
-        },
-
-        hasErrors() {
-            return Object.keys(this.errors).length > 0;
-        },
-    },
+const errors = computed(() => {
+    usePage().props.errors;
 });
+const hasErrors = computed(() => Object.keys(errors.value).length > 0);
 </script>

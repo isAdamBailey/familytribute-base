@@ -56,20 +56,18 @@
     </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
 
-export default defineComponent({
-    props: {
-        title: String,
-    },
-    computed: {
-        currentPage() {
-            return window.location.href;
-        },
-        description() {
-            return `See ${this.title} on ${this.$inertia.page.props.settings.title} FamilyTribute`;
-        },
-    },
+const props = defineProps({
+    title: String,
 });
+
+const currentPage = computed(() => window.location.href);
+
+const description = computed(
+    () =>
+        `See ${props.title} on ${usePage().props.settings.title} FamilyTribute`,
+);
 </script>

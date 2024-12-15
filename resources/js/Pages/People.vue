@@ -17,7 +17,7 @@
                         route('people.index', {
                             sort: 'last_name',
                             order: 'desc',
-                            search: $page.props.search,
+                            search: search,
                         })
                     "
                 >
@@ -30,7 +30,7 @@
                         route('people.index', {
                             sort: 'last_name',
                             order: 'asc',
-                            search: $page.props.search,
+                            search: search,
                         })
                     "
                 >
@@ -43,7 +43,7 @@
                         route('people.index', {
                             sort: 'death_date',
                             order: 'desc',
-                            search: $page.props.search,
+                            search: search,
                         })
                     "
                 >
@@ -56,7 +56,7 @@
                         route('people.index', {
                             sort: 'death_date',
                             order: 'asc',
-                            search: $page.props.search,
+                            search: search,
                         })
                     "
                 >
@@ -83,6 +83,7 @@
 </template>
 
 <script setup>
+import { usePage } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetDropdownLink from "@/Base/DropdownLink.vue";
 import SearchInput from "@/Base/SearchInput.vue";
@@ -93,4 +94,6 @@ import PeopleGrid from "../Components/PeopleGrid.vue";
 defineProps({
     people: { type: Object, required: true },
 });
+
+const search = usePage().props.search;
 </script>

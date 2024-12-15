@@ -41,39 +41,25 @@
     </jet-authentication-card>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { useForm } from "@inertiajs/vue3";
+
 import JetAuthenticationCard from "@/Base/AuthenticationCard.vue";
 import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
 import AppHead from "@/Layouts/AppHead.vue";
+import { computed } from "vue";
 
-export default defineComponent({
-    components: {
-        AppHead,
-        JetAuthenticationCard,
-        JetAuthenticationCardLogo,
-    },
-
-    props: {
-        status: String,
-    },
-
-    data() {
-        return {
-            form: this.$inertia.form(),
-        };
-    },
-
-    computed: {
-        verificationLinkSent() {
-            return this.status === "verification-link-sent";
-        },
-    },
-
-    methods: {
-        submit() {
-            this.form.post(this.route("verification.send"));
-        },
-    },
+const props = defineProps({
+    status: { type: String, default: null },
 });
+
+const form = useForm();
+
+const verificationLinkSent = computed(
+    () => props.status === "verification-link-sent",
+);
+
+const submit = () => {
+    form.post(route("verification.send"));
+};
 </script>

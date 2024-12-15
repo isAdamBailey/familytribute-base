@@ -1,9 +1,9 @@
 <template>
-    <app-head title="Secure Area" />
+    <AppHead title="Secure Area" />
 
-    <jet-authentication-card>
+    <JetAuthenticationCard>
         <template #logo>
-            <jet-authentication-card-logo />
+            <JetAuthenticationCardLogo />
         </template>
 
         <div class="mb-4 text-sm text-gray-600">
@@ -11,12 +11,12 @@
             password before continuing.
         </div>
 
-        <jet-validation-errors class="mb-4" />
+        <JetValidationErrors class="mb-4" />
 
         <form @submit.prevent="submit">
             <div>
-                <jet-label for="password" value="Password" />
-                <jet-input
+                <JetLabel for="password" value="Password" />
+                <JetInput
                     id="password"
                     v-model="form.password"
                     type="password"
@@ -28,20 +28,20 @@
             </div>
 
             <div class="mt-4 flex justify-end">
-                <base-button
+                <BaseButton
                     class="ml-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Confirm
-                </base-button>
+                </BaseButton>
             </div>
         </form>
-    </jet-authentication-card>
+    </JetAuthenticationCard>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { useForm } from "@inertiajs/vue3";
 import JetAuthenticationCard from "@/Base/AuthenticationCard.vue";
 import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
 import JetInput from "@/Base/Input.vue";
@@ -49,30 +49,13 @@ import JetLabel from "@/Base/Label.vue";
 import JetValidationErrors from "@/Base/ValidationErrors.vue";
 import AppHead from "@/Layouts/AppHead.vue";
 
-export default defineComponent({
-    components: {
-        AppHead,
-        JetAuthenticationCard,
-        JetAuthenticationCardLogo,
-        JetInput,
-        JetLabel,
-        JetValidationErrors,
-    },
-
-    data() {
-        return {
-            form: this.$inertia.form({
-                password: "",
-            }),
-        };
-    },
-
-    methods: {
-        submit() {
-            this.form.post(this.route("password.confirm"), {
-                onFinish: () => this.form.reset(),
-            });
-        },
-    },
+const form = useForm({
+    password: "",
 });
+
+const submit = () => {
+    form.post(route("password.confirm"), {
+        onFinish: () => form.reset(),
+    });
+};
 </script>

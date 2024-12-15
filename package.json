@@ -31,7 +31,7 @@
         "vue-loader": "^16.1.2"
     },
     "dependencies": {
-        "@inertiajs/vue3": "^1.0.15",
+        "@inertiajs/vue3": "^2.0.0",
         "@tailwindcss/line-clamp": "^0.3.0",
         "@tiptap/extension-character-count": "^2.0.0-beta.23",
         "@tiptap/extension-link": "^2.0.0-beta.33",

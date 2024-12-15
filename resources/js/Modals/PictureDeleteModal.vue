@@ -1,5 +1,5 @@
 <template>
-    <jet-confirmation-modal :show="open" @close="closeModal()">
+    <JetConfirmationModal :show="open" @close="closeModal()">
         <template #title> Delete Picture </template>
 
         <template #content>
@@ -9,60 +9,55 @@
         </template>
 
         <template #footer>
-            <jet-secondary-button @click="closeModal()">
+            <JetSecondaryButton @click="closeModal()">
                 Nevermind
-            </jet-secondary-button>
+            </JetSecondaryButton>
 
-            <jet-danger-button
+            <JetDangerButton
                 class="ml-2"
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
                 @click="deletePicture"
             >
                 Delete Picture
-            </jet-danger-button>
+            </JetDangerButton>
         </template>
-    </jet-confirmation-modal>
+    </JetConfirmationModal>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { useForm } from "@inertiajs/vue3";
 import JetConfirmationModal from "@/Base/ConfirmationModal.vue";
 import JetSecondaryButton from "@/Base/SecondaryButton.vue";
 import JetDangerButton from "@/Base/DangerButton.vue";
 
-export default defineComponent({
-    components: { JetConfirmationModal, JetSecondaryButton, JetDangerButton },
-    props: {
-        open: {
-            type: Boolean,
-            default: false,
-        },
-        picture: {
-            type: Object,
-            required: true,
-        },
+const props = defineProps({
+    open: {
+        type: Boolean,
+        default: false,
     },
-    emits: ["close"],
-    data() {
-        return {
-            form: this.$inertia.form({
-                _method: "DELETE",
-            }),
-        };
-    },
-    methods: {
-        deletePicture() {
-            this.form.delete(route("pictures.destroy", this.picture.slug), {
-                errorBag: "destroyPicture",
-                onSuccess: () => this.closeModal(),
-            });
-        },
-        closeModal() {
-            this.form.clearErrors();
-            this.form.reset();
-            this.$emit("close", true);
-        },
+    picture: {
+        type: Object,
+        required: true,
     },
 });
+
+const emit = defineEmits(["close"]);
+
+const form = useForm({
+    _method: "DELETE",
+});
+
+const deletePicture = () => {
+    form.delete(route("pictures.destroy", props.picture.slug), {
+        errorBag: "destroyPicture",
+        onSuccess: () => closeModal(),
+    });
+};
+
+const closeModal = () => {
+    form.clearErrors();
+    form.reset();
+    emit("close", true);
+};
 </script>
