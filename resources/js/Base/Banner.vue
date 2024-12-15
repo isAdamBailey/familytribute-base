@@ -3,8 +3,8 @@
         <div
             v-if="show && message"
             :class="{
-                'bg-indigo-500': style == 'success',
-                'bg-red-700': style == 'danger',
+                'bg-indigo-500': style === 'success',
+                'bg-red-700': style === 'danger',
             }"
         >
             <div class="mx-auto max-w-screen-xl py-2 px-3 sm:px-6 lg:px-8">
@@ -13,12 +13,12 @@
                         <span
                             class="flex rounded-lg p-2"
                             :class="{
-                                'bg-indigo-600': style == 'success',
-                                'bg-red-600': style == 'danger',
+                                'bg-indigo-600': style === 'success',
+                                'bg-red-600': style === 'danger',
                             }"
                         >
                             <svg
-                                v-if="style == 'success'"
+                                v-if="style === 'success'"
                                 class="h-5 w-5 text-white"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -34,7 +34,7 @@
                             </svg>
 
                             <svg
-                                v-if="style == 'danger'"
+                                v-if="style === 'danger'"
                                 class="h-5 w-5 text-white"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -61,9 +61,9 @@
                             class="-mr-1 flex rounded-md p-2 transition focus:outline-none sm:-mr-2"
                             :class="{
                                 'hover:bg-indigo-600 focus:bg-indigo-600':
-                                    style == 'success',
+                                    style === 'success',
                                 'hover:bg-red-600 focus:bg-red-600':
-                                    style == 'danger',
+                                    style === 'danger',
                             }"
                             aria-label="Dismiss"
                             @click.prevent="show = false"
@@ -90,24 +90,16 @@
     </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { usePage } from "@inertiajs/vue3";
+import { computed, ref } from "vue";
 
-export default defineComponent({
-    data() {
-        return {
-            show: true,
-        };
-    },
-
-    computed: {
-        style() {
-            return this.$page.props.jetstream.flash?.bannerStyle || "success";
-        },
-
-        message() {
-            return this.$page.props.jetstream.flash?.banner || "";
-        },
-    },
+const jetstream = usePage().props.jetstream;
+const show = ref(true);
+const style = computed(() => {
+    return jetstream.flash?.bannerStyle || "success";
+});
+const message = computed(() => {
+    return jetstream.flash?.banner || "";
 });
 </script>

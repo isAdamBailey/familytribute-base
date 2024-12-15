@@ -44,7 +44,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import JetAuthenticationCard from "@/Base/AuthenticationCard.vue";
 import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
