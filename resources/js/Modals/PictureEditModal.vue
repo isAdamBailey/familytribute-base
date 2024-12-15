@@ -180,6 +180,7 @@ const form = useForm({
     person_ids: props.picture.person_ids,
 });
 
+const photo = ref(null);
 const photoPreview = ref(null);
 
 const peopleOptions = computed(() => {
