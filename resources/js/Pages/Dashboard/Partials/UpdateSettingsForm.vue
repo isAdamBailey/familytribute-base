@@ -1,5 +1,5 @@
 <template>
-    <jet-form-section :full="true" @submitted="updateSettings">
+    <JetFormSection :full="true" @submitted="updateSettings">
         <template #title>Site Settings</template>
 
         <template #description>
@@ -8,70 +8,70 @@
 
         <template #form>
             <div class="col-span-2">
-                <jet-label for="title" value="Title" />
-                <info-text>
+                <JetLabel for="title" value="Title" />
+                <InfoText>
                     This is the name of the site to your users. It is used at
                     the top of every page, and in emails that are sent from the
                     site. It is also used when sharing pages to social media.
-                </info-text>
-                <jet-input
+                </InfoText>
+                <JetInput
                     id="title"
                     v-model="form.title"
                     type="text"
                     class="mt-1 block w-full"
                     autocomplete="title"
                 />
-                <jet-input-error :message="form.errors.title" class="mt-2" />
+                <JetInputError :message="form.errors.title" class="mt-2" />
             </div>
 
             <div class="col-span-6">
-                <jet-label for="description" value="Description" />
-                <info-text>
+                <JetLabel for="description" value="Description" />
+                <InfoText>
                     This is the text content on the home page. It is also used
                     when sharing pages to social media.
-                </info-text>
+                </InfoText>
                 <wysiwyg v-model="form.description" />
-                <jet-input-error
+                <JetInputError
                     :message="form.errors.description"
                     class="mt-2"
                 />
             </div>
 
             <div class="col-span-6 md:col-span-2">
-                <jet-label for="registration" value="Registration Enabled" />
-                <info-text
+                <JetLabel for="registration" value="Registration Enabled" />
+                <InfoText
                     >Turning this off removes the ability for anyone to register
-                    to the site, even if they were sent an invite.</info-text
+                    to the site, even if they were sent an invite.</InfoText
                 >
-                <checkbox
+                <Checkbox
                     id="registration"
                     v-model:checked="form.registration"
                     name="registration"
                 />
-                <jet-input-error
+                <JetInputError
                     :message="form.errors.registration"
                     class="mt-2"
                 />
             </div>
 
             <div v-if="form.registration" class="col-span-6 md:col-span-2">
-                <jet-label
+                <JetLabel
                     for="registration_secret"
                     value="Registration Secret"
                 />
-                <info-text
+                <InfoText
                     >New users will need to enter this secret in the
                     registration form. This makes sure only people you invite
-                    can register.</info-text
+                    can register.</InfoText
                 >
-                <jet-input
+                <JetInput
                     id="registration_secret"
                     v-model="form.registration_secret"
                     type="text"
                     class="mt-1 block w-full"
                     autocomplete="registration_secret"
                 />
-                <jet-input-error
+                <JetInputError
                     :message="form.errors.registration_secret"
                     class="mt-2"
                 />
@@ -79,22 +79,22 @@
         </template>
 
         <template #actions>
-            <base-button
+            <BaseButton
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing || !form.isDirty"
             >
                 Save
-            </base-button>
+            </BaseButton>
 
-            <jet-action-message :on="form.recentlySuccessful" class="ml-3">
+            <JetActionMessage :on="form.recentlySuccessful" class="ml-3">
                 Saved.
-            </jet-action-message>
+            </JetActionMessage>
         </template>
-    </jet-form-section>
+    </JetFormSection>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { useForm } from "@inertiajs/vue3";
 import JetFormSection from "@/Base/FormSection.vue";
 import JetInput from "@/Base/Input.vue";
 import JetInputError from "@/Base/InputError.vue";
@@ -104,45 +104,26 @@ import Checkbox from "@/Base/Checkbox.vue";
 import Wysiwyg from "@/Base/Wysiwyg.vue";
 import InfoText from "@/Base/InfoText.vue";
 
-export default defineComponent({
-    components: {
-        InfoText,
-        Wysiwyg,
-        Checkbox,
-        JetActionMessage,
-        JetFormSection,
-        JetInput,
-        JetInputError,
-        JetLabel,
-    },
-
-    props: {
-        settings: Object,
-    },
-
-    data() {
-        return {
-            form: this.$inertia.form({
-                _method: "PUT",
-                registration: Boolean(this.settings.registration),
-                registration_secret: this.settings.registration_secret,
-                description: this.settings.description,
-                title: this.settings.title,
-            }),
-        };
-    },
-
-    methods: {
-        updateSettings() {
-            this.form.post(route("site-settings.update", this.settings), {
-                errorBag: "updateSettings",
-                preserveScroll: true,
-                preserveState: false,
-                onSuccess: () => {
-                    this.form.reset();
-                },
-            });
-        },
-    },
+const props = defineProps({
+    settings: Object,
 });
+
+const form = useForm({
+    _method: "PUT",
+    registration: Boolean(props.settings.registration),
+    registration_secret: props.settings.registration_secret,
+    description: props.settings.description,
+    title: props.settings.title,
+});
+
+const updateSettings = () => {
+    form.post(route("site-settings.update", props.settings), {
+        errorBag: "updateSettings",
+        preserveScroll: true,
+        preserveState: false,
+        onSuccess: () => {
+            form.reset();
+        },
+    });
+};
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <jet-form-section :full="true" @submitted="storePicture">
+    <JetFormSection :full="true" @submitted="storePicture">
         <template #title> New Picture </template>
 
         <template #description>
@@ -15,7 +15,7 @@
                     @change="updatePhotoPreview"
                 />
 
-                <jet-label for="photo" value="Photo" />
+                <JetLabel for="photo" value="Photo" />
 
                 <div v-show="photoPreview" class="mt-2">
                     <span
@@ -27,51 +27,51 @@
                     </span>
                 </div>
 
-                <jet-secondary-button
+                <JetSecondaryButton
                     class="mt-2 mr-2"
                     type="button"
                     @click.prevent="selectNewPhoto"
                 >
                     Select A Photo
-                </jet-secondary-button>
+                </JetSecondaryButton>
 
-                <jet-input-error :message="form.errors.photo" class="mt-2" />
+                <JetInputError :message="form.errors.photo" class="mt-2" />
             </div>
 
             <div class="col-span-6">
-                <jet-label for="title" value="Title" />
-                <jet-input
+                <JetLabel for="title" value="Title" />
+                <JetInput
                     id="title"
                     v-model="form.title"
                     type="text"
                     class="mt-1 block w-full"
                     autocomplete="title"
                 />
-                <jet-input-error :message="form.errors.title" class="mt-2" />
+                <JetInputError :message="form.errors.title" class="mt-2" />
             </div>
 
             <div class="col-span-6">
-                <jet-label for="description" value="Description" />
+                <JetLabel for="description" value="Description" />
                 <wysiwyg v-model="form.description" />
-                <jet-input-error
+                <JetInputError
                     :message="form.errors.description"
                     class="mt-2"
                 />
             </div>
 
             <div class="col-span-2">
-                <jet-label for="year" value="Year" />
-                <jet-input
+                <JetLabel for="year" value="Year" />
+                <JetInput
                     id="year"
                     v-model="form.year"
                     type="number"
                     class="mt-1 block w-full"
                 />
-                <jet-input-error :message="form.errors.year" class="mt-2" />
+                <JetInputError :message="form.errors.year" class="mt-2" />
             </div>
 
             <div class="col-span-6">
-                <jet-label for="person_ids" value="Tag People" />
+                <JetLabel for="person_ids" value="Tag People" />
                 <Multiselect
                     id="person_ids"
                     v-model="form.person_ids"
@@ -79,58 +79,56 @@
                     :create-tag="true"
                     :options="peopleOptions"
                 />
-                <jet-input-error
-                    :message="form.errors.person_ids"
-                    class="mt-2"
-                />
+                <JetInputError :message="form.errors.person_ids" class="mt-2" />
             </div>
 
             <div class="col-span-6 mt-2 md:col-span-2">
-                <jet-label for="featured" value="Featured" />
-                <info-text>
+                <JetLabel for="featured" value="Featured" />
+                <InfoText>
                     Featured images are displayed randomly on the home page, and
                     cannot be private.
-                </info-text>
-                <checkbox
+                </InfoText>
+                <Checkbox
                     id="featured"
                     v-model:checked="form.featured"
                     name="featured"
                     :disabled="form.private"
                 />
-                <jet-input-error :message="form.errors.featured" class="mt-2" />
+                <JetInputError :message="form.errors.featured" class="mt-2" />
             </div>
             <div class="col-span-6 mt-2 md:col-span-2">
-                <jet-label for="private" value="Private" />
-                <info-text
+                <JetLabel for="private" value="Private" />
+                <InfoText
                     >Private images will only appear for registered
-                    users</info-text
+                    users</InfoText
                 >
-                <checkbox
+                <Checkbox
                     id="private"
                     v-model:checked="form.private"
                     name="private"
                 />
-                <jet-input-error :message="form.errors.private" class="mt-2" />
+                <JetInputError :message="form.errors.private" class="mt-2" />
             </div>
         </template>
 
         <template #actions>
-            <base-button
+            <BaseButton
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
             >
                 Save
-            </base-button>
+            </BaseButton>
 
-            <jet-action-message :on="form.recentlySuccessful" class="ml-3">
+            <JetActionMessage :on="form.recentlySuccessful" class="ml-3">
                 Saved.
-            </jet-action-message>
+            </JetActionMessage>
         </template>
-    </jet-form-section>
+    </JetFormSection>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref, watch } from "vue";
+import { useForm } from "@inertiajs/vue3";
 import Multiselect from "@vueform/multiselect";
 import JetFormSection from "@/Base/FormSection.vue";
 import JetInput from "@/Base/Input.vue";
@@ -142,88 +140,70 @@ import Wysiwyg from "@/Base/Wysiwyg.vue";
 import Checkbox from "@/Base/Checkbox.vue";
 import InfoText from "@/Base/InfoText.vue";
 
-export default defineComponent({
-    components: {
-        InfoText,
-        Checkbox,
-        JetActionMessage,
-        JetFormSection,
-        JetInput,
-        JetInputError,
-        JetLabel,
-        JetSecondaryButton,
-        Wysiwyg,
-        Multiselect,
-    },
-
-    props: {
-        peopleOptions: Array,
-    },
-
-    data() {
-        return {
-            form: this.$inertia.form({
-                _method: "POST",
-                title: null,
-                description: null,
-                year: null,
-                photo: null,
-                person_ids: null,
-                featured: false,
-                private: false,
-            }),
-
-            photoPreview: null,
-        };
-    },
-
-    watch: {
-        "form.private"() {
-            if (this.form.private) {
-                this.form.featured = false;
-            }
-        },
-    },
-
-    methods: {
-        storePicture() {
-            if (this.$refs.photo) {
-                this.form.photo = this.$refs.photo.files[0];
-            }
-
-            this.form.post(route("pictures.store"), {
-                errorBag: "storePicture",
-                preserveScroll: true,
-                onSuccess: () => {
-                    this.clearPhotoFileInput();
-                    this.form.reset();
-                },
-            });
-        },
-
-        selectNewPhoto() {
-            this.$refs.photo.click();
-        },
-
-        updatePhotoPreview() {
-            const photo = this.$refs.photo.files[0];
-
-            if (!photo) return;
-
-            const reader = new FileReader();
-
-            reader.onload = (e) => {
-                this.photoPreview = e.target.result;
-            };
-
-            reader.readAsDataURL(photo);
-        },
-
-        clearPhotoFileInput() {
-            if (this.$refs.photo?.value) {
-                this.$refs.photo.value = null;
-            }
-        },
-    },
+const props = defineProps({
+    peopleOptions: { type: Array, required: true },
 });
+
+const form = useForm({
+    _method: "POST",
+    title: null,
+    description: null,
+    year: null,
+    photo: null,
+    person_ids: null,
+    featured: false,
+    private: false,
+});
+
+const photoPreview = ref(null);
+
+watch(
+    () => form.private,
+    (newVal) => {
+        if (newVal) {
+            form.featured = false;
+        }
+    },
+);
+
+const storePicture = () => {
+    if (photoInput.value) {
+        form.photo = photoInput.value.files[0];
+    }
+
+    form.post(route("pictures.store"), {
+        errorBag: "storePicture",
+        preserveScroll: true,
+        onSuccess: () => {
+            clearPhotoFileInput();
+            form.reset();
+        },
+    });
+};
+
+const selectNewPhoto = () => {
+    photoInput.value.click();
+};
+
+const updatePhotoPreview = () => {
+    const photo = photoInput.value.files[0];
+
+    if (!photo) return;
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+        photoPreview.value = e.target.result;
+    };
+
+    reader.readAsDataURL(photo);
+};
+
+const clearPhotoFileInput = () => {
+    if (photoInput.value?.value) {
+        photoInput.value.value = null;
+    }
+};
+
+const photoInput = ref(null);
 </script>

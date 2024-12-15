@@ -1,5 +1,5 @@
 <template>
-    <jet-form-section :full="true" @submitted="storeStory">
+    <JetFormSection :full="true" @submitted="storeStory">
         <template #title> New Story </template>
 
         <template #description>
@@ -8,31 +8,31 @@
 
         <template #form>
             <div class="col-span-6">
-                <jet-label for="title" value="Title" />
-                <jet-input
+                <JetLabel for="title" value="Title" />
+                <JetInput
                     id="title"
                     v-model="form.title"
                     type="text"
                     class="mt-1 block w-full"
                     autocomplete="title"
                 />
-                <jet-input-error :message="form.errors.title" class="mt-2" />
+                <JetInputError :message="form.errors.title" class="mt-2" />
             </div>
 
             <div class="col-span-6">
-                <jet-label for="excerpt" value="Excerpt" />
+                <JetLabel for="excerpt" value="Excerpt" />
                 <wysiwyg v-model="form.excerpt" :max-character-count="250" />
-                <jet-input-error :message="form.errors.excerpt" class="mt-2" />
+                <JetInputError :message="form.errors.excerpt" class="mt-2" />
             </div>
 
             <div class="col-span-6">
-                <jet-label for="content" value="Story" />
+                <JetLabel for="content" value="Story" />
                 <wysiwyg v-model="form.content" />
-                <jet-input-error :message="form.errors.content" class="mt-2" />
+                <JetInputError :message="form.errors.content" class="mt-2" />
             </div>
 
             <div class="col-span-6">
-                <jet-label for="person_ids" value="Tag People" />
+                <JetLabel for="person_ids" value="Tag People" />
                 <Multiselect
                     id="person_ids"
                     v-model="form.person_ids"
@@ -40,54 +40,52 @@
                     :create-tag="true"
                     :options="peopleOptions"
                 />
-                <jet-input-error
-                    :message="form.errors.person_ids"
-                    class="mt-2"
-                />
+                <JetInputError :message="form.errors.person_ids" class="mt-2" />
             </div>
 
             <div class="col-span-6 md:col-span-2">
-                <jet-label for="year" value="Year" />
-                <jet-input
+                <JetLabel for="year" value="Year" />
+                <JetInput
                     id="year"
                     v-model="form.year"
                     type="number"
                     class="mt-1 block w-full"
                 />
-                <jet-input-error :message="form.errors.year" class="mt-2" />
+                <JetInputError :message="form.errors.year" class="mt-2" />
             </div>
             <div class="col-span-6 md:col-span-2">
-                <jet-label for="private" value="Private" />
-                <info-text
+                <JetLabel for="private" value="Private" />
+                <InfoText
                     >Private stories will only appear for registered
-                    users</info-text
+                    users</InfoText
                 >
-                <checkbox
+                <Checkbox
                     id="private"
                     v-model:checked="form.private"
                     name="private"
                 />
-                <jet-input-error :message="form.errors.private" class="mt-2" />
+                <JetInputError :message="form.errors.private" class="mt-2" />
             </div>
         </template>
 
         <template #actions>
-            <base-button
+            <BaseButton
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
             >
                 Save
-            </base-button>
+            </BaseButton>
 
-            <jet-action-message :on="form.recentlySuccessful" class="ml-3">
+            <JetActionMessage :on="form.recentlySuccessful" class="ml-3">
                 Saved.
-            </jet-action-message>
+            </JetActionMessage>
         </template>
-    </jet-form-section>
+    </JetFormSection>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
 import JetFormSection from "@/Base/FormSection.vue";
 import JetInput from "@/Base/Input.vue";
 import JetInputError from "@/Base/InputError.vue";
@@ -98,45 +96,25 @@ import Wysiwyg from "@/Base/Wysiwyg.vue";
 import InfoText from "@/Base/InfoText.vue";
 import Checkbox from "@/Base/Checkbox.vue";
 
-export default defineComponent({
-    components: {
-        Checkbox,
-        InfoText,
-        JetActionMessage,
-        JetFormSection,
-        JetInput,
-        JetInputError,
-        JetLabel,
-        Wysiwyg,
-        Multiselect,
-    },
-
-    props: {
-        peopleOptions: Array,
-    },
-
-    data() {
-        return {
-            form: this.$inertia.form({
-                _method: "POST",
-                title: null,
-                excerpt: null,
-                content: null,
-                year: null,
-                private: false,
-                person_ids: null,
-            }),
-        };
-    },
-
-    methods: {
-        storeStory() {
-            this.form.post(route("stories.store"), {
-                errorBag: "storeStory",
-                preserveScroll: true,
-                onSuccess: () => this.form.reset(),
-            });
-        },
-    },
+const props = defineProps({
+    peopleOptions: Array,
 });
+
+const form = useForm({
+    _method: "POST",
+    title: null,
+    excerpt: null,
+    content: null,
+    year: null,
+    private: false,
+    person_ids: null,
+});
+
+const storeStory = () => {
+    form.post(route("stories.store"), {
+        errorBag: "storeStory",
+        preserveScroll: true,
+        onSuccess: () => form.reset(),
+    });
+};
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <jet-dialog-modal :show="open" @close="closeModal()">
+    <JetDialogModal :show="open" @close="closeModal()">
         <template #title> Edit Picture </template>
 
         <template #content>
@@ -11,7 +11,7 @@
                     @change="updatePhotoPreview"
                 />
 
-                <jet-label for="photo" value="Photo" />
+                <JetLabel for="photo" value="Photo" />
 
                 <div v-show="!photoPreview" class="mt-2">
                     <img
@@ -31,31 +31,31 @@
                     </span>
                 </div>
 
-                <jet-secondary-button
+                <JetSecondaryButton
                     class="mt-2 mr-2"
                     type="button"
                     @click.prevent="selectNewPhoto"
                 >
                     Select A New Photo
-                </jet-secondary-button>
+                </JetSecondaryButton>
 
-                <jet-input-error :message="form.errors.photo" class="mt-2" />
+                <JetInputError :message="form.errors.photo" class="mt-2" />
             </div>
 
             <div class="col-span-6 mt-2 sm:col-span-4">
-                <jet-label for="title" value="Title" />
-                <jet-input
+                <JetLabel for="title" value="Title" />
+                <JetInput
                     id="title"
                     v-model="form.title"
                     type="text"
                     class="mt-1 block w-full"
                     autocomplete="title"
                 />
-                <jet-input-error :message="form.errors.title" class="mt-2" />
+                <JetInputError :message="form.errors.title" class="mt-2" />
             </div>
 
             <div class="col-span-6 mt-2 sm:col-span-4">
-                <jet-label for="person_ids" value="Tag People" />
+                <JetLabel for="person_ids" value="Tag People" />
                 <Multiselect
                     id="person_ids"
                     v-model="form.person_ids"
@@ -63,61 +63,58 @@
                     :create-tag="true"
                     :options="peopleOptions"
                 />
-                <jet-input-error
-                    :message="form.errors.person_ids"
-                    class="mt-2"
-                />
+                <JetInputError :message="form.errors.person_ids" class="mt-2" />
             </div>
 
             <div class="col-span-6 mt-2 sm:col-span-4">
-                <jet-label for="description" value="Description" />
+                <JetLabel for="description" value="Description" />
                 <wysiwyg v-model="form.description" />
-                <jet-input-error
+                <JetInputError
                     :message="form.errors.description"
                     class="mt-2"
                 />
             </div>
 
             <div class="col-span-6 mt-2 sm:col-span-4">
-                <jet-label for="year" value="Year" />
-                <jet-input
+                <JetLabel for="year" value="Year" />
+                <JetInput
                     id="year"
                     v-model="form.year"
                     type="number"
                     class="mt-1 block w-full"
                 />
-                <jet-input-error :message="form.errors.year" class="mt-2" />
+                <JetInputError :message="form.errors.year" class="mt-2" />
             </div>
 
             <div class="mt-2 flex">
                 <div class="w-1/2">
-                    <jet-label for="featured" value="Featured" />
-                    <info-text>
+                    <JetLabel for="featured" value="Featured" />
+                    <InfoText>
                         Featured images are displayed randomly on the home page.
-                    </info-text>
-                    <checkbox
+                    </InfoText>
+                    <Checkbox
                         id="featured"
                         v-model:checked="form.featured"
                         name="featured"
                         :disabled="form.private"
                     />
-                    <jet-input-error
+                    <JetInputError
                         :message="form.errors.featured"
                         class="mt-2"
                     />
                 </div>
 
                 <div class="w-1/2">
-                    <jet-label for="private" value="Private" />
-                    <info-text>
+                    <JetLabel for="private" value="Private" />
+                    <InfoText>
                         Private images will only appear for registered users
-                    </info-text>
-                    <checkbox
+                    </InfoText>
+                    <Checkbox
                         id="private"
                         v-model:checked="form.private"
                         name="private"
                     />
-                    <jet-input-error
+                    <JetInputError
                         :message="form.errors.private"
                         class="mt-2"
                     />
@@ -126,24 +123,25 @@
         </template>
 
         <template #footer>
-            <jet-secondary-button @click="closeModal()">
+            <JetSecondaryButton @click="closeModal()">
                 Nevermind
-            </jet-secondary-button>
+            </JetSecondaryButton>
 
-            <base-button
+            <BaseButton
                 class="ml-2"
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing || !form.isDirty"
                 @click="updatePicture"
             >
                 Update Picture
-            </base-button>
+            </BaseButton>
         </template>
-    </jet-dialog-modal>
+    </JetDialogModal>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref, computed, watch } from "vue";
+import { useForm } from "@inertiajs/vue3";
 import Multiselect from "@vueform/multiselect";
 import JetDialogModal from "@/Base/DialogModal.vue";
 import JetSecondaryButton from "@/Base/SecondaryButton.vue";
@@ -154,116 +152,96 @@ import Wysiwyg from "@/Base/Wysiwyg.vue";
 import Checkbox from "@/Base/Checkbox.vue";
 import InfoText from "@/Base/InfoText.vue";
 
-export default defineComponent({
-    components: {
-        InfoText,
-        Checkbox,
-        Wysiwyg,
-        JetDialogModal,
-        JetSecondaryButton,
-        JetInput,
-        JetInputError,
-        JetLabel,
-        Multiselect,
+const props = defineProps({
+    open: {
+        type: Boolean,
+        default: false,
     },
-
-    props: {
-        open: {
-            type: Boolean,
-            default: false,
-        },
-        picture: {
-            type: Object,
-            required: true,
-        },
-        people: {
-            type: Array,
-            required: true,
-        },
+    picture: {
+        type: Object,
+        required: true,
     },
-    emits: ["close"],
-
-    data() {
-        return {
-            form: this.$inertia.form({
-                _method: "PUT",
-                title: this.picture.title,
-                description: this.picture.description,
-                year: this.picture.year,
-                featured: Boolean(this.picture.featured),
-                private: Boolean(this.picture.private),
-                photo: null,
-                person_ids: this.picture.person_ids,
-            }),
-
-            photoPreview: null,
-        };
-    },
-
-    computed: {
-        peopleOptions() {
-            return this.people.map((person) => {
-                return {
-                    value: person.id,
-                    label: person.full_name,
-                };
-            });
-        },
-    },
-
-    watch: {
-        "form.private"() {
-            if (this.form.private) {
-                this.form.featured = false;
-            }
-        },
-    },
-
-    methods: {
-        updatePicture() {
-            if (this.$refs.photo) {
-                this.form.photo = this.$refs.photo.files[0];
-            }
-
-            this.form.post(route("pictures.update", this.picture.slug), {
-                errorBag: "updatePicture",
-                onSuccess: () => this.closeModal(),
-            });
-        },
-
-        selectNewPhoto() {
-            this.$refs.photo.click();
-        },
-
-        updatePhotoPreview() {
-            const photo = this.$refs.photo.files[0];
-
-            if (!photo) return;
-
-            const reader = new FileReader();
-
-            reader.onload = (e) => {
-                this.photoPreview = e.target.result;
-            };
-
-            reader.readAsDataURL(photo);
-        },
-
-        clearPhotoFileInput() {
-            if (this.$refs.photo?.value) {
-                this.$refs.photo.value = null;
-            }
-        },
-
-        closeModal() {
-            this.photoPreview = null;
-            this.clearPhotoFileInput();
-            this.form.clearErrors();
-            this.form.reset();
-            this.$emit("close", true);
-        },
+    people: {
+        type: Array,
+        required: true,
     },
 });
+
+const emit = defineEmits(["close"]);
+
+const form = useForm({
+    _method: "PUT",
+    title: props.picture.title,
+    description: props.picture.description,
+    year: props.picture.year,
+    featured: Boolean(props.picture.featured),
+    private: Boolean(props.picture.private),
+    photo: null,
+    person_ids: props.picture.person_ids,
+});
+
+const photoPreview = ref(null);
+
+const peopleOptions = computed(() => {
+    return props.people.map((person) => {
+        return {
+            value: person.id,
+            label: person.full_name,
+        };
+    });
+});
+
+watch(
+    () => form.private,
+    (newVal) => {
+        if (newVal) {
+            form.featured = false;
+        }
+    },
+);
+
+const updatePicture = () => {
+    if (photo.value) {
+        form.photo = photo.value.files[0];
+    }
+
+    form.post(route("pictures.update", props.picture.slug), {
+        errorBag: "updatePicture",
+        onSuccess: () => closeModal(),
+    });
+};
+
+const selectNewPhoto = () => {
+    photo.value.click();
+};
+
+const updatePhotoPreview = () => {
+    const photoFile = photo.value.files[0];
+
+    if (!photoFile) return;
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+        photoPreview.value = e.target.result;
+    };
+
+    reader.readAsDataURL(photoFile);
+};
+
+const clearPhotoFileInput = () => {
+    if (photo.value?.value) {
+        photo.value.value = null;
+    }
+};
+
+const closeModal = () => {
+    photoPreview.value = null;
+    clearPhotoFileInput();
+    form.clearErrors();
+    form.reset();
+    emit("close", true);
+};
 </script>
 
 <style src="@vueform/multiselect/themes/default.css"></style>

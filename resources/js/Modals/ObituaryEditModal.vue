@@ -1,5 +1,5 @@
 <template>
-    <jet-dialog-modal :show="open" @close="closeModal()">
+    <JetDialogModal :show="open" @close="closeModal()">
         <template #title> Edit Obituary</template>
 
         <template #content>
@@ -13,7 +13,7 @@
                             @change="updatePhotoPreview"
                         />
 
-                        <jet-label for="photo" value="Photo" />
+                        <JetLabel for="photo" value="Photo" />
 
                         <div v-show="!photoPreview" class="mt-2">
                             <img
@@ -35,15 +35,15 @@
                             </span>
                         </div>
 
-                        <jet-secondary-button
+                        <JetSecondaryButton
                             class="mt-2 mr-2"
                             type="button"
                             @click.prevent="selectNewPhoto"
                         >
                             Select A New Photo
-                        </jet-secondary-button>
+                        </JetSecondaryButton>
 
-                        <jet-input-error
+                        <JetInputError
                             :message="form.errors.photo"
                             class="mt-2"
                         />
@@ -56,7 +56,7 @@
                             @change="updateBackgroundPhotoPreview"
                         />
 
-                        <jet-label for="bg_photo" value="Background Photo" />
+                        <JetLabel for="bg_photo" value="Background Photo" />
 
                         <div
                             v-show="
@@ -84,15 +84,15 @@
                             </span>
                         </div>
 
-                        <jet-secondary-button
+                        <JetSecondaryButton
                             class="mt-2 mr-2"
                             type="button"
                             @click.prevent="selectNewBackgroundPhoto"
                         >
                             Select A New Background Photo
-                        </jet-secondary-button>
+                        </JetSecondaryButton>
 
-                        <jet-input-error
+                        <JetInputError
                             :message="form.errors.background_photo"
                             class="mt-2"
                         />
@@ -103,29 +103,29 @@
             <div class="col-span-6 mt-3 sm:col-span-4">
                 <div class="-mx-3 flex flex-wrap">
                     <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
-                        <jet-label for="first_name" value="First Name" />
-                        <jet-input
+                        <JetLabel for="first_name" value="First Name" />
+                        <JetInput
                             id="first_name"
                             v-model="form.first_name"
                             type="text"
                             class="mt-1 w-full"
                             autocomplete="first_name"
                         />
-                        <jet-input-error
+                        <JetInputError
                             :message="form.errors.first_name"
                             class="mt-2"
                         />
                     </div>
                     <div class="w-full px-3 md:w-1/2">
-                        <jet-label for="last_name" value="Last Name" />
-                        <jet-input
+                        <JetLabel for="last_name" value="Last Name" />
+                        <JetInput
                             id="last_name"
                             v-model="form.last_name"
                             type="text"
                             class="mt-1 w-full"
                             autocomplete="last_name"
                         />
-                        <jet-input-error
+                        <JetInputError
                             :message="form.errors.last_name"
                             class="mt-2"
                         />
@@ -136,17 +136,17 @@
             <div class="col-span-6 mt-3 sm:col-span-4">
                 <div class="-mx-3 flex flex-wrap">
                     <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
-                        <jet-label for="birth_date" value="Birth Date" />
-                        <date-picker v-model="form.birth_date" />
-                        <jet-input-error
+                        <JetLabel for="birth_date" value="Birth Date" />
+                        <DatePicker v-model="form.birth_date" />
+                        <JetInputError
                             :message="form.errors.birth_date"
                             class="mt-2"
                         />
                     </div>
                     <div class="w-full px-3 md:w-1/2">
-                        <jet-label for="death_date" value="Death Date" />
-                        <date-picker v-model="form.death_date" />
-                        <jet-input-error
+                        <JetLabel for="death_date" value="Death Date" />
+                        <DatePicker v-model="form.death_date" />
+                        <JetInputError
                             :message="form.errors.death_date"
                             class="mt-2"
                         />
@@ -155,7 +155,7 @@
             </div>
 
             <div class="col-span-6 mt-2 sm:col-span-4">
-                <jet-label for="parent_ids" value="Parents" />
+                <JetLabel for="parent_ids" value="Parents" />
                 <Multiselect
                     id="parent_ids"
                     v-model="form.parent_ids"
@@ -164,38 +164,36 @@
                     :options="peopleOptions"
                     placeholder="Select parents"
                 />
-                <jet-input-error
-                    :message="form.errors.parent_ids"
-                    class="mt-2"
-                />
+                <JetInputError :message="form.errors.parent_ids" class="mt-2" />
             </div>
 
             <div class="col-span-6 mt-3 sm:col-span-4">
-                <jet-label for="content" value="Obituary" />
+                <JetLabel for="content" value="Obituary" />
                 <wysiwyg v-model="form.content" />
-                <jet-input-error :message="form.errors.content" class="mt-2" />
+                <JetInputError :message="form.errors.content" class="mt-2" />
             </div>
         </template>
 
         <template #footer>
-            <jet-secondary-button @click="closeModal()">
+            <JetSecondaryButton @click="closeModal()">
                 Nevermind
-            </jet-secondary-button>
+            </JetSecondaryButton>
 
-            <base-button
+            <BaseButton
                 class="ml-2"
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing || !form.isDirty"
                 @click="updateObituary"
             >
                 Update Obituary
-            </base-button>
+            </BaseButton>
         </template>
-    </jet-dialog-modal>
+    </JetDialogModal>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref, computed } from "vue";
+import { useForm } from "@inertiajs/vue3";
 import { parseISO } from "date-fns";
 import Multiselect from "@vueform/multiselect";
 import JetDialogModal from "@/Base/DialogModal.vue";
@@ -206,138 +204,118 @@ import JetLabel from "@/Base/Label.vue";
 import DatePicker from "@/Base/DatePicker.vue";
 import Wysiwyg from "@/Base/Wysiwyg.vue";
 
-export default defineComponent({
-    components: {
-        Multiselect,
-        Wysiwyg,
-        JetDialogModal,
-        JetSecondaryButton,
-        JetInput,
-        JetInputError,
-        JetLabel,
-        DatePicker,
+const props = defineProps({
+    open: {
+        type: Boolean,
+        default: false,
     },
-
-    props: {
-        open: {
-            type: Boolean,
-            default: false,
-        },
-        person: {
-            type: Object,
-            required: true,
-        },
-        people: {
-            type: Array,
-            required: true,
-        },
+    person: {
+        type: Object,
+        required: true,
     },
-    emits: ["close"],
-
-    data() {
-        return {
-            form: this.$inertia.form({
-                _method: "PUT",
-                first_name: this.person.first_name,
-                last_name: this.person.last_name,
-                content: this.person.obituary.content,
-                birth_date: parseISO(this.person.obituary.birth_date),
-                death_date: parseISO(this.person.obituary.death_date),
-                photo: null,
-                background_photo: null,
-                parent_ids: this.person.parent_ids,
-            }),
-            photoPreview: null,
-            bgPhotoPreview: null,
-        };
-    },
-
-    computed: {
-        peopleOptions() {
-            return this.people.map((person) => {
-                return {
-                    value: person.id,
-                    label: person.full_name,
-                };
-            });
-        },
-    },
-
-    methods: {
-        updateObituary() {
-            if (this.$refs.photo) {
-                this.form.photo = this.$refs.photo.files[0];
-            }
-            if (this.$refs.bg_photo) {
-                this.form.background_photo = this.$refs.bg_photo.files[0];
-            }
-
-            this.form.post(
-                route("obituaries.update", this.person.obituary.id),
-                {
-                    errorBag: "updateObituary",
-                    onSuccess: () => this.closeModal(),
-                }
-            );
-        },
-
-        selectNewPhoto() {
-            this.$refs.photo.click();
-        },
-
-        selectNewBackgroundPhoto() {
-            this.$refs.bg_photo.click();
-        },
-
-        updatePhotoPreview() {
-            const photo = this.$refs.photo.files[0];
-
-            if (!photo) return;
-
-            const reader = new FileReader();
-
-            reader.onload = (e) => {
-                this.photoPreview = e.target.result;
-            };
-
-            reader.readAsDataURL(photo);
-        },
-
-        updateBackgroundPhotoPreview() {
-            const photo = this.$refs.bg_photo.files[0];
-
-            if (!photo) return;
-
-            const reader = new FileReader();
-
-            reader.onload = (e) => {
-                this.bgPhotoPreview = e.target.result;
-            };
-
-            reader.readAsDataURL(photo);
-        },
-
-        clearPhotoFileInput() {
-            this.photoPreview = null;
-            this.bgPhotoPreview = null;
-
-            if (this.$refs.photo?.value) {
-                this.$refs.photo.value = null;
-            }
-
-            if (this.$refs.bg_photo?.value) {
-                this.$refs.bg_photo.value = null;
-            }
-        },
-
-        closeModal() {
-            this.clearPhotoFileInput();
-            this.form.reset();
-            this.form.clearErrors();
-            this.$emit("close", true);
-        },
+    people: {
+        type: Array,
+        required: true,
     },
 });
+
+const emit = defineEmits(["close"]);
+
+const form = useForm({
+    _method: "PUT",
+    first_name: props.person.first_name,
+    last_name: props.person.last_name,
+    content: props.person.obituary.content,
+    birth_date: parseISO(props.person.obituary.birth_date),
+    death_date: parseISO(props.person.obituary.death_date),
+    photo: null,
+    background_photo: null,
+    parent_ids: props.person.parent_ids,
+});
+
+const photo = ref(null);
+const bg_photo = ref(null);
+const photoPreview = ref(null);
+const bgPhotoPreview = ref(null);
+
+const peopleOptions = computed(() => {
+    return props.people.map((person) => {
+        return {
+            value: person.id,
+            label: person.full_name,
+        };
+    });
+});
+
+const updateObituary = () => {
+    if (photo.value) {
+        form.photo = photo.value.files[0];
+    }
+    if (bg_photo.value) {
+        form.background_photo = bg_photo.value.files[0];
+    }
+
+    form.post(route("obituaries.update", props.person.obituary.id), {
+        errorBag: "updateObituary",
+        onSuccess: () => closeModal(),
+    });
+};
+
+const selectNewPhoto = () => {
+    photo.value.click();
+};
+
+const selectNewBackgroundPhoto = () => {
+    bg_photo.value.click();
+};
+
+const updatePhotoPreview = () => {
+    const photoFile = photo.value.files[0];
+
+    if (!photoFile) return;
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+        photoPreview.value = e.target.result;
+    };
+
+    reader.readAsDataURL(photoFile);
+};
+
+const updateBackgroundPhotoPreview = () => {
+    const photoFile = bg_photo.value.files[0];
+
+    if (!photoFile) return;
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+        bgPhotoPreview.value = e.target.result;
+    };
+
+    reader.readAsDataURL(photoFile);
+};
+
+const clearPhotoFileInput = () => {
+    photoPreview.value = null;
+    bgPhotoPreview.value = null;
+
+    if (photo.value?.value) {
+        photo.value.value = null;
+    }
+
+    if (bg_photo.value?.value) {
+        bg_photo.value.value = null;
+    }
+};
+
+const closeModal = () => {
+    clearPhotoFileInput();
+    form.reset();
+    form.clearErrors();
+    emit("close", true);
+};
 </script>
 
 <style src="@vueform/multiselect/themes/default.css"></style>
