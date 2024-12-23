@@ -2,6 +2,7 @@
     <Link
         v-for="(story, index) in items"
         :key="index"
+        prefetch
         :href="route('stories.show', story)"
         :class="fixedWidth ? 'w-60' : ''"
         class="dark:card-text-gradient relative h-48 w-60 snap-start rounded-lg bg-white px-7 py-3 shadow shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"

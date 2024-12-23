@@ -10,7 +10,7 @@
             prefetch
             :key="index"
             :href="route('people.show', person.slug)"
-            class="shrink-0 snap-start rounded-lg bg-white shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
+            class="w-60 shrink-0 snap-start rounded-lg bg-white shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
         >
             <div class="card-text-gradient rounded-t-lg px-3 py-2">
                 <p class="truncate font-bold">

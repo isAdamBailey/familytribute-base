@@ -5,6 +5,7 @@
         <Link
             v-for="(person, index) in reactiveItems.data"
             :key="index"
+            prefetch
             :href="route('people.show', person.slug)"
             class="rounded-lg bg-white shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
         >
@@ -33,8 +34,8 @@
 </template>
 
 <script setup>
-import { format, parseISO } from "date-fns";
 import useInfiniteScroll from "@/composables/useInfiniteScroll.js";
+import { format, parseISO } from "date-fns";
 
 const props = defineProps({
     items: {
