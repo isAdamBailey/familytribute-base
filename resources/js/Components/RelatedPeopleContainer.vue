@@ -7,9 +7,10 @@
     >
         <Link
             v-for="(person, index) in people"
+            prefetch
             :key="index"
             :href="route('people.show', person.slug)"
-            class="w-1/8 shrink-0 snap-start rounded-lg bg-white shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
+            class="shrink-0 snap-start rounded-lg bg-white shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
         >
             <div class="card-text-gradient rounded-t-lg px-3 py-2">
                 <p class="truncate font-bold">
@@ -17,7 +18,7 @@
                 </p>
             </div>
             <img
-                class="h-36 w-full rounded-b-lg object-cover"
+                class="h-60 w-60 rounded-b-lg object-cover"
                 :src="person.photo_url"
                 :alt="person.full_name"
             />

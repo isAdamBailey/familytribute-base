@@ -2,6 +2,7 @@
     <Link
         v-for="(picture, index) in items"
         replace
+        prefetch
         :key="index"
         :href="route('pictures.show', picture)"
         :class="fixedWidth ? 'w-60' : ''"

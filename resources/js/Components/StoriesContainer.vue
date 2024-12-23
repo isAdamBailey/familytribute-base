@@ -4,7 +4,7 @@
         :key="index"
         :href="route('stories.show', story)"
         :class="fixedWidth ? 'w-60' : ''"
-        class="dark:card-text-gradient relative h-36 snap-start rounded-lg bg-white px-7 py-3 shadow shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
+        class="dark:card-text-gradient relative h-48 w-60 snap-start rounded-lg bg-white px-7 py-3 shadow shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
     >
         <embedded-icon :item="story" color="text-gray-900" />
 
@@ -16,7 +16,7 @@
         </div>
         <div class="rounded-b-lg">
             <div
-                class="prose max-w-none text-sm line-clamp-3"
+                class="prose max-w-none text-sm line-clamp-6"
                 v-html="story.excerpt"
             />
         </div>
@@ -24,8 +24,8 @@
 </template>
 
 <script setup>
-import Pill from "@/Base/Pill.vue";
 import EmbeddedIcon from "@/Base/EmbeddedIcon.vue";
+import Pill from "@/Base/Pill.vue";
 
 defineProps({
     items: {
