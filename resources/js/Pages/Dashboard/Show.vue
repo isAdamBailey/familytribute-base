@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="Dashboard">
+    <AppLayout title="Dashboard">
         <template #header> Dashboard </template>
 
         <div
