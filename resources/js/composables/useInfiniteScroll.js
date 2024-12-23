@@ -1,5 +1,5 @@
+import { router, usePage } from "@inertiajs/vue3";
 import { onMounted, reactive, ref } from "vue";
-import { router } from "@inertiajs/vue3";
 
 export default function useInfiniteScroll(items, type = "") {
     const reactiveItems = reactive(items);
@@ -15,6 +15,8 @@ export default function useInfiniteScroll(items, type = "") {
         observer.observe(infiniteScroll.value);
     });
 
+    const initialUrl = usePage().url;
+
     function fetchUploads() {
         if (reactiveItems.links.next) {
             router.get(
@@ -24,6 +26,7 @@ export default function useInfiniteScroll(items, type = "") {
                     preserveState: true,
                     preserveScroll: true,
                     onSuccess: (page) => {
+                        window.history.replaceState({}, "", initialUrl);
                         reactiveItems.data = [
                             ...reactiveItems.data,
                             ...page.props[type].data,

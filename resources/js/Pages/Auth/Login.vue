@@ -69,14 +69,14 @@
 </template>
 
 <script setup>
-import { useForm } from "@inertiajs/vue3";
 import JetAuthenticationCard from "@/Base/AuthenticationCard.vue";
 import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
-import JetInput from "@/Base/Input.vue";
 import JetCheckbox from "@/Base/Checkbox.vue";
+import JetInput from "@/Base/Input.vue";
 import JetLabel from "@/Base/Label.vue";
 import JetValidationErrors from "@/Base/ValidationErrors.vue";
 import AppHead from "@/Layouts/AppHead.vue";
+import { useForm } from "@inertiajs/vue3";
 
 const props = defineProps({
     canResetPassword: Boolean,

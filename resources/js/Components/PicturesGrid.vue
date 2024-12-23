@@ -1,6 +1,6 @@
 <template>
     <div
-        class="mx-auto grid max-w-7xl grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 md:p-4"
+        class="mx-auto grid max-w-7xl grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] gap-2 md:p-4"
     >
         <PicturesContainer :items="reactiveItems.data" />
     </div>

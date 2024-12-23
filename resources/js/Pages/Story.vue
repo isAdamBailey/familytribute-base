@@ -1,5 +1,5 @@
 <template>
-    <app-layout>
+    <AppLayout>
         <template #header>
             <Link :href="route('stories.index')">Stories</Link> /
             {{ story.title }}
@@ -9,26 +9,26 @@
             <h1
                 class="relative font-header text-5xl text-gray-800 dark:text-indigo-400 md:text-7xl"
             >
-                <embedded-icon
+                <EmbeddedIcon
                     :item="story"
                     color="text-gray-900 dark:text-indigo-300"
                 />
                 {{ story.title }}
             </h1>
             <div v-if="authenticated">
-                <jet-danger-button
+                <JetDangerButton
                     class="mr-3"
                     aria-label="Delete Story"
                     @click="storyDeleteModalOpen = true"
                 >
                     <i class="ri-delete-bin-fill"></i>
-                </jet-danger-button>
-                <base-button
+                </JetDangerButton>
+                <BaseButton
                     aria-label="Edit Story"
                     @click="storyEditModalOpen = true"
                 >
                     Edit <i class="ri-edit-2-fill"></i>
-                </base-button>
+                </BaseButton>
             </div>
         </div>
 
@@ -57,9 +57,9 @@
                 title="People in this story"
             />
         </div>
-    </app-layout>
+    </AppLayout>
 
-    <story-edit-modal
+    <StoryEditModal
         v-if="authenticated"
         :open="storyEditModalOpen"
         :story="story"
@@ -67,26 +67,26 @@
         @close="storyEditModalOpen = false"
     />
 
-    <story-delete-modal
+    <StoryDeleteModal
         v-if="authenticated"
         :open="storyDeleteModalOpen"
         :story="story"
         @close="storyDeleteModalOpen = false"
     />
-    <scroll-top />
+    <ScrollTop />
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import AppLayout from "@/Layouts/AppLayout.vue";
-import StoryEditModal from "@/Modals/StoryEditModal.vue";
-import StoryDeleteModal from "@/Modals/StoryDeleteModal.vue";
 import JetDangerButton from "@/Base/DangerButton.vue";
-import SocialShare from "@/Components/SocialShare.vue";
 import EmbeddedIcon from "@/Base/EmbeddedIcon.vue";
 import SectionBorder from "@/Base/SectionBorder.vue";
 import RelatedPeopleContainer from "@/Components/RelatedPeopleContainer.vue";
+import SocialShare from "@/Components/SocialShare.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import StoryDeleteModal from "@/Modals/StoryDeleteModal.vue";
+import StoryEditModal from "@/Modals/StoryEditModal.vue";
 import { usePage } from "@inertiajs/vue3";
+import { computed, ref } from "vue";
 
 defineProps({
     story: { type: Object, required: true },

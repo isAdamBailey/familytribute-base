@@ -1,5 +1,5 @@
 <template>
-    <app-layout>
+    <AppLayout>
         <template #header>
             <Link :href="route('pictures.index')">Pictures</Link> /
             {{ picture.title }}
@@ -13,19 +13,19 @@
             </h1>
 
             <div v-if="authenticated">
-                <jet-danger-button
+                <JetDangerButton
                     class="mr-3"
                     aria-label="Delete Picture"
                     @click="pictureDeleteModalOpen = true"
                 >
                     <i class="ri-delete-bin-fill"></i>
-                </jet-danger-button>
-                <base-button
+                </JetDangerButton>
+                <BaseButton
                     aria-label="Edit Picture"
                     @click="pictureEditModalOpen = true"
                 >
                     Edit <i class="ri-edit-2-fill"></i>
-                </base-button>
+                </BaseButton>
             </div>
         </div>
         <div class="flex flex-wrap items-center justify-between">
@@ -33,7 +33,7 @@
                 Taken in or around
                 <span class="font-semibold">{{ picture.year }}</span>
             </p>
-            <social-share :title="picture.title" />
+            <SocialShare :title="picture.title" />
         </div>
         <div class="relative">
             <img
@@ -41,7 +41,7 @@
                 :src="picture.url"
                 :alt="picture.title"
             />
-            <embedded-icon :item="picture" />
+            <EmbeddedIcon :item="picture" />
         </div>
 
         <div
@@ -50,15 +50,15 @@
         />
 
         <div v-if="picture.people.length">
-            <section-border />
-            <related-people-container
+            <SectionBorder />
+            <RelatedPeopleContainer
                 :people="picture.people"
                 title="People in this picture"
             />
         </div>
-    </app-layout>
+    </AppLayout>
 
-    <picture-edit-modal
+    <PictureEditModal
         v-if="authenticated"
         :open="pictureEditModalOpen"
         :picture="picture"
@@ -66,7 +66,7 @@
         @close="pictureEditModalOpen = false"
     />
 
-    <picture-delete-modal
+    <PictureDeleteModal
         v-if="authenticated"
         :open="pictureDeleteModalOpen"
         :picture="picture"
@@ -76,16 +76,16 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import AppLayout from "@/Layouts/AppLayout.vue";
-import PictureEditModal from "@/Modals/PictureEditModal.vue";
-import PictureDeleteModal from "@/Modals/PictureDeleteModal.vue";
 import JetDangerButton from "@/Base/DangerButton.vue";
-import SocialShare from "@/Components/SocialShare.vue";
 import EmbeddedIcon from "@/Base/EmbeddedIcon.vue";
 import SectionBorder from "@/Base/SectionBorder.vue";
 import RelatedPeopleContainer from "@/Components/RelatedPeopleContainer.vue";
+import SocialShare from "@/Components/SocialShare.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import PictureDeleteModal from "@/Modals/PictureDeleteModal.vue";
+import PictureEditModal from "@/Modals/PictureEditModal.vue";
 import { usePage } from "@inertiajs/vue3";
+import { computed, ref } from "vue";
 
 defineProps({
     picture: { type: Object, required: true },

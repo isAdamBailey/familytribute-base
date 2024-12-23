@@ -6,7 +6,7 @@
             class="border-b border-gray-200 bg-white p-6 dark:border-indigo-300 dark:bg-gray-900 sm:px-20"
         >
             <div class="flex items-baseline">
-                <jet-application-mark class="block h-12 w-auto" />
+                <JetApplicationMark class="block h-12 w-auto" />
                 <div
                     class="ml-3 font-header text-3xl text-gray-800 dark:text-indigo-500 md:text-5xl"
                 >
@@ -19,10 +19,10 @@
                 {{ user.name }}!
             </div>
 
-            <info-text>
+            <InfoText>
                 If nothing has been added to the site yet,
                 <strong>this is where you start!</strong>
-            </info-text>
+            </InfoText>
             <div class="mt-6 text-gray-500 dark:text-indigo-300">
                 <p>
                     Here you can add new stories, photos, obituaries and more!
@@ -52,34 +52,34 @@
         </div>
 
         <div class="mx-auto max-w-7xl py-10 sm:px-6 lg:px-8">
-            <store-picture-form :people-options="peopleOptions" />
-            <jet-section-border />
+            <StorePictureForm :people-options="peopleOptions" />
+            <JetSectionBorder />
 
-            <store-story-form :people-options="peopleOptions" />
-            <jet-section-border />
+            <StoreStoryForm :people-options="peopleOptions" />
+            <JetSectionBorder />
 
-            <store-person-form
+            <StorePersonForm
                 id="new-person"
                 :people-options="peopleOptions"
             />
-            <jet-section-border />
+            <JetSectionBorder />
 
-            <update-settings-form id="site-settings" :settings="settings" />
+            <UpdateSettingsForm id="site-settings" :settings="settings" />
         </div>
-    </app-layout>
+    </AppLayout>
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { usePage } from "@inertiajs/vue3";
-import AppLayout from "@/Layouts/AppLayout.vue";
 import JetApplicationMark from "@/Base/ApplicationMark.vue";
+import InfoText from "@/Base/InfoText.vue";
 import JetSectionBorder from "@/Base/SectionBorder.vue";
-import StorePictureForm from "@/Pages/Dashboard/Partials/StorePictureForm.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
 import StorePersonForm from "@/Pages/Dashboard/Partials/StorePersonForm.vue";
+import StorePictureForm from "@/Pages/Dashboard/Partials/StorePictureForm.vue";
 import StoreStoryForm from "@/Pages/Dashboard/Partials/StoreStoryForm.vue";
 import UpdateSettingsForm from "@/Pages/Dashboard/Partials/UpdateSettingsForm.vue";
-import InfoText from "@/Base/InfoText.vue";
+import { usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 
 const props = defineProps({
     people: Array,

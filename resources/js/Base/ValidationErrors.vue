@@ -15,7 +15,7 @@ import { usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
 
 const errors = computed(() => {
-    usePage().props.errors;
+    return usePage().props?.errors || {};
 });
 const hasErrors = computed(() => Object.keys(errors.value).length > 0);
 </script>

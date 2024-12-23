@@ -9,7 +9,7 @@
         <template #form>
             <div class="col-span-6">
                 <input
-                    ref="photo"
+                    ref="photoInput"
                     type="file"
                     class="hidden"
                     @change="updatePhotoPreview"
@@ -127,18 +127,18 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
-import { useForm } from "@inertiajs/vue3";
-import Multiselect from "@vueform/multiselect";
+import JetActionMessage from "@/Base/ActionMessage.vue";
+import Checkbox from "@/Base/Checkbox.vue";
 import JetFormSection from "@/Base/FormSection.vue";
+import InfoText from "@/Base/InfoText.vue";
 import JetInput from "@/Base/Input.vue";
 import JetInputError from "@/Base/InputError.vue";
 import JetLabel from "@/Base/Label.vue";
-import JetActionMessage from "@/Base/ActionMessage.vue";
 import JetSecondaryButton from "@/Base/SecondaryButton.vue";
 import Wysiwyg from "@/Base/Wysiwyg.vue";
-import Checkbox from "@/Base/Checkbox.vue";
-import InfoText from "@/Base/InfoText.vue";
+import { useForm } from "@inertiajs/vue3";
+import Multiselect from "@vueform/multiselect";
+import { ref, watch } from "vue";
 
 const props = defineProps({
     peopleOptions: { type: Array, required: true },
@@ -156,6 +156,7 @@ const form = useForm({
 });
 
 const photoPreview = ref(null);
+const photoInput = ref(null);
 
 watch(
     () => form.private,
@@ -204,6 +205,4 @@ const clearPhotoFileInput = () => {
         photoInput.value.value = null;
     }
 };
-
-const photoInput = ref(null);
 </script>

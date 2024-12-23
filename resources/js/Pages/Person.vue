@@ -1,5 +1,5 @@
 <template>
-    <app-layout
+    <AppLayout
         :title="person.full_name"
         :description="`${person.full_name}'s obituary`"
     >
@@ -15,19 +15,19 @@
                 {{ person.full_name }}
             </h1>
             <div v-if="authenticated">
-                <jet-danger-button
+                <JetDangerButton
                     class="mr-3"
                     aria-label="Delete Person"
                     @click="obituaryDeleteModalOpen = true"
                 >
                     <i class="ri-delete-bin-fill"></i>
-                </jet-danger-button>
-                <base-button
+                </JetDangerButton>
+                <BaseButton
                     aria-label="Edit Person"
                     @click="obituaryEditModalOpen = true"
                 >
                     Edit <i class="ri-edit-2-fill"></i>
-                </base-button>
+                </BaseButton>
             </div>
         </div>
 
@@ -75,7 +75,7 @@
             <div
                 class="flex snap-x space-x-1 overflow-x-scroll px-3 pb-8 scrollbar scrollbar-thumb-indigo-500 scrollbar-thumb-rounded"
             >
-                <pictures-container
+                <PicturesContainer
                     :items="person.pictures"
                     :fixed-width="true"
                 />
@@ -94,7 +94,7 @@
             <div
                 class="flex snap-x space-x-1 overflow-x-scroll px-3 pb-8 scrollbar scrollbar-thumb-indigo-500 scrollbar-thumb-rounded"
             >
-                <stories-container
+                <StoriesContainer
                     :items="person.stories"
                     :fixed-width="true"
                 />
@@ -113,47 +113,47 @@
         />
 
         <div v-if="person.parents.length">
-            <related-people-container
+            <RelatedPeopleContainer
                 :people="person.parents"
                 title="Parents"
             />
         </div>
         <div v-if="person.children.length">
-            <related-people-container
+            <RelatedPeopleContainer
                 :people="person.children"
                 title="Children"
             />
         </div>
-    </app-layout>
+    </AppLayout>
 
-    <obituary-edit-modal
+    <ObituaryEditModal
         v-if="authenticated"
         :open="obituaryEditModalOpen"
         :person="person"
         :people="people"
         @close="obituaryEditModalOpen = false"
     />
-    <obituary-delete-modal
+    <ObituaryDeleteModal
         v-if="authenticated"
         :open="obituaryDeleteModalOpen"
         :person="person"
         @close="obituaryDeleteModalOpen = false"
     />
-    <scroll-top />
+    <ScrollTop />
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import { format, parseISO } from "date-fns";
-import { usePage } from "@inertiajs/vue3";
-import AppLayout from "@/Layouts/AppLayout.vue";
-import ObituaryEditModal from "@/Modals/ObituaryEditModal.vue";
-import ObituaryDeleteModal from "@/Modals/ObituaryDeleteModal.vue";
 import JetDangerButton from "@/Base/DangerButton.vue";
 import PicturesContainer from "@/Components/PicturesContainer.vue";
-import StoriesContainer from "@/Components/StoriesContainer.vue";
-import SocialShare from "@/Components/SocialShare.vue";
 import RelatedPeopleContainer from "@/Components/RelatedPeopleContainer.vue";
+import SocialShare from "@/Components/SocialShare.vue";
+import StoriesContainer from "@/Components/StoriesContainer.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import ObituaryDeleteModal from "@/Modals/ObituaryDeleteModal.vue";
+import ObituaryEditModal from "@/Modals/ObituaryEditModal.vue";
+import { usePage } from "@inertiajs/vue3";
+import { format, parseISO } from "date-fns";
+import { computed, ref } from "vue";
 
 defineProps({
     person: { type: Object, required: true },

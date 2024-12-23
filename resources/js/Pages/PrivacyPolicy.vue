@@ -5,7 +5,7 @@
         <div class="bg-gray-100 pt-4">
             <div class="flex min-h-screen flex-col items-center pt-6 sm:pt-0">
                 <div>
-                    <jet-authentication-card-logo />
+                    <JetAuthenticationCardLogo />
                 </div>
 
                 <div
@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import { Head } from "@inertiajs/vue3";
 import JetAuthenticationCardLogo from "@/Base/AuthenticationCardLogo.vue";
+import { Head } from "@inertiajs/vue3";
+import { defineComponent } from "vue";
 
 export default defineComponent({
     components: {

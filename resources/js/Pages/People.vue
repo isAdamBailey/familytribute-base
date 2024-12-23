@@ -1,5 +1,5 @@
 <template>
-    <app-layout>
+    <AppLayout>
         <template #header> People </template>
 
         <div class="mb-5 flex items-center justify-between md:mt-5 md:mb-0">
@@ -9,10 +9,10 @@
                 People
             </div>
 
-            <search-input route-name="people.index" />
+            <SearchInput route-name="people.index" />
 
-            <sort-dropdown>
-                <jet-dropdown-link
+            <SortDropdown>
+                <JetDropdownLink
                     :href="
                         route('people.index', {
                             sort: 'last_name',
@@ -24,8 +24,8 @@
                     <i class="ri-empathize-fill"></i>
                     <i class="ri-arrow-down-line"></i>
                     Last Name DESC
-                </jet-dropdown-link>
-                <jet-dropdown-link
+                </JetDropdownLink>
+                <JetDropdownLink
                     :href="
                         route('people.index', {
                             sort: 'last_name',
@@ -37,8 +37,8 @@
                     <i class="ri-empathize-fill"></i>
                     <i class="ri-arrow-up-line"></i>
                     Last Name ASC
-                </jet-dropdown-link>
-                <jet-dropdown-link
+                </JetDropdownLink>
+                <JetDropdownLink
                     :href="
                         route('people.index', {
                             sort: 'death_date',
@@ -50,8 +50,8 @@
                     <i class="ri-calendar-fill"></i>
                     <i class="ri-arrow-down-line"></i>
                     Death Date DESC
-                </jet-dropdown-link>
-                <jet-dropdown-link
+                </JetDropdownLink>
+                <JetDropdownLink
                     :href="
                         route('people.index', {
                             sort: 'death_date',
@@ -63,14 +63,14 @@
                     <i class="ri-calendar-fill"></i>
                     <i class="ri-arrow-up-line"></i>
                     Death Date ASC
-                </jet-dropdown-link>
-                <jet-dropdown-link :href="route('people.index')">
+                </JetDropdownLink>
+                <JetDropdownLink :href="route('people.index')">
                     <i class="ri-filter-off-fill"></i> Clear
-                </jet-dropdown-link>
-            </sort-dropdown>
+                </JetDropdownLink>
+            </SortDropdown>
         </div>
 
-        <section-border />
+        <SectionBorder />
 
         <div v-if="people.data.length">
             <PeopleGrid :items="people" />
@@ -78,17 +78,17 @@
         <div v-else class="text-gray-500 dark:text-indigo-300">
             No people were found.
         </div>
-    </app-layout>
+    </AppLayout>
     <ScrollTop />
 </template>
 
 <script setup>
-import { usePage } from "@inertiajs/vue3";
-import AppLayout from "@/Layouts/AppLayout.vue";
 import JetDropdownLink from "@/Base/DropdownLink.vue";
 import SearchInput from "@/Base/SearchInput.vue";
 import SectionBorder from "@/Base/SectionBorder.vue";
 import SortDropdown from "@/Base/SortDropdown.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import { usePage } from "@inertiajs/vue3";
 import PeopleGrid from "../Components/PeopleGrid.vue";
 
 defineProps({

@@ -1,5 +1,5 @@
 <template>
-    <home-layout>
+    <HomeLayout>
         <div class="mb-5 flex flex-col-reverse md:mb-7 lg:flex-row">
             <div>
                 <div
@@ -11,7 +11,7 @@
                     v-html="settings.description"
                 ></div>
             </div>
-            <application-mark class="mx-auto mb-6 w-full md:w-1/2 lg:mb-0" />
+            <ApplicationMark class="mx-auto mb-6 w-full md:w-1/2 lg:mb-0" />
         </div>
 
         <section class="grid grid-cols-2 gap-1 lg:grid-cols-4">
@@ -92,15 +92,15 @@
                 </attention-button>
             </Link>
         </div>
-    </home-layout>
+    </HomeLayout>
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { usePage } from "@inertiajs/vue3";
-import HomeLayout from "@/Layouts/HomeLayout.vue";
 import ApplicationMark from "@/Base/ApplicationMark.vue";
 import AttentionButton from "@/Base/AttentionButton.vue";
+import HomeLayout from "@/Layouts/HomeLayout.vue";
+import { usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 
 defineProps({
     pictures: {
