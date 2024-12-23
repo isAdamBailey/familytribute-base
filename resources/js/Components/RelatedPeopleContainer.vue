@@ -18,7 +18,7 @@
                 </p>
             </div>
             <img
-                class="h-full h-full rounded-b-lg object-cover"
+                class="h-60 w-60 rounded-b-lg object-cover"
                 :src="person.photo_url"
                 :alt="person.full_name"
             />
