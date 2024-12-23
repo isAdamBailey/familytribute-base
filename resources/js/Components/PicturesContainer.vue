@@ -8,7 +8,7 @@
         class="min-w-50 relative snap-start rounded-lg bg-white shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
     >
         <img
-            class="max-h-60 w-full rounded-t-lg object-cover"
+            class="max-h-60 aspect-[3/2] w-full rounded-t-lg object-cover"
             :src="picture.url"
             :alt="picture.title"
         />
