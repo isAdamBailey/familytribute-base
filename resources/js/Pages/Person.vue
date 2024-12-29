@@ -50,19 +50,13 @@
                 alt="background image"
             />
         </div>
-        <div
-            v-else
-            class="via-trueGray-200 h-80 w-full bg-gradient-to-t from-violet-400 to-transparent"
-        ></div>
-        <div class="flex justify-center">
-            <div class="z-40 -mt-28">
-                <div class="avatar relative h-60 w-60 rounded-full">
-                    <img
-                        class="relative h-full w-full rounded-full border-4 border-gray-900"
-                        :src="person.photo_url"
-                        alt=""
-                    />
-                </div>
+        <div class="flex justify-center" :class="person.obituary.background_photo_url ? '-mt-40' : 'mt-18'">
+            <div class="avatar relative h-80 w-80 rounded-full z-40">
+                <img
+                    class="relative h-full w-full rounded-full border-4 border-gray-900"
+                    :src="person.photo_url"
+                    :alt="person.full_name"
+                />
             </div>
         </div>
 
