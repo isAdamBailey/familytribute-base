@@ -11,7 +11,6 @@
                     v-html="settings.description"
                 ></div>
             </div>
-            <ApplicationMark class="mx-auto mb-6 w-full md:w-1/2 lg:mb-0" />
         </div>
 
         <section class="grid grid-cols-2 gap-1 lg:grid-cols-4">
@@ -96,7 +95,6 @@
 </template>
 
 <script setup>
-import ApplicationMark from "@/Base/ApplicationMark.vue";
 import AttentionButton from "@/Base/AttentionButton.vue";
 import HomeLayout from "@/Layouts/HomeLayout.vue";
 import { usePage } from "@inertiajs/vue3";
