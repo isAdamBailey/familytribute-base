@@ -13,6 +13,21 @@
             </div>
         </div>
 
+        <div class="my-10 flex flex-wrap justify-center md:mb-10">
+            <Link :href="route('people.index')">
+                <attention-button class="mb-5 mr-5">
+                    <i class="ri-user-shared-fill mr-2"></i>
+                    View Obituaries
+                </attention-button>
+            </Link>
+            <Link :href="route('pictures.index')">
+                <attention-button>
+                    <i class="ri-image-2-fill mr-2"></i>
+                    View Pictures
+                </attention-button>
+            </Link>
+        </div>
+
         <section class="grid grid-cols-2 gap-1 lg:grid-cols-4">
             <div v-if="pictures[0]" class="relative lg:col-span-2">
                 <img
@@ -76,21 +91,6 @@
                 ></div>
             </div>
         </section>
-
-        <div class="mt-10 flex flex-wrap justify-center">
-            <Link :href="route('people.index')">
-                <attention-button class="mb-5 mr-5">
-                    <i class="ri-user-shared-fill mr-2"></i>
-                    People
-                </attention-button>
-            </Link>
-            <Link :href="route('pictures.index')">
-                <attention-button>
-                    <i class="ri-image-2-fill mr-2"></i>
-                    Pictures
-                </attention-button>
-            </Link>
-        </div>
     </HomeLayout>
 </template>
 
