@@ -1,5 +1,7 @@
 <template>
-    <div class="flex items-center justify-between space-x-3 md:w-60">
+    <div class="flex flex-col items-center justify-between">
+        <span class="text-sm text-gray-500">Share by clicking the links below</span>
+        <div class="flex items-center justify-between space-x-3 md:w-60">
         <ShareNetwork
             network="facebook"
             :quote="title"
@@ -12,6 +14,17 @@
                 title="Share on Facebook"
                 aria-label="Share on Facebook"
                 class="ri-facebook-circle-fill text-3xl text-indigo-500 hover:text-indigo-700 md:text-4xl"
+            ></i>
+        </ShareNetwork>
+        <ShareNetwork
+            network="messenger"
+            :url="currentPage"
+        >
+            <i
+                role="button"
+                title="Share on Facebook Messenger"
+                aria-label="Share on Facebook Messenger"
+                class="ri-messenger-fill text-3xl text-indigo-500 hover:text-indigo-700 md:text-4xl"
             ></i>
         </ShareNetwork>
         <ShareNetwork
@@ -54,11 +67,12 @@
             ></i>
         </ShareNetwork>
     </div>
+    </div>
 </template>
 
 <script setup>
-import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 
 const props = defineProps({
     title: String,
