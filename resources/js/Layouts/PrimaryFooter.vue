@@ -27,8 +27,8 @@
                         © {{ currentYear }} by
                         <a
                             class="text-indigo-700 decoration-indigo-800 hover:text-indigo-800 hover:underline dark:text-indigo-300 dark:hover:text-indigo-500"
-                            href="https://familytribute.org"
-                            >FamilyTribute</a
+                            href="https://adambailey.io"
+                            >Adam Bailey</a
                         >
                     </p>
                 </div>
@@ -38,8 +38,8 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 
 const page = usePage();
 const user = computed(() => page.props.auth.user);
