@@ -34,11 +34,9 @@ Route::middleware(['auth:sanctum', 'verified', 'team'])->group(function () {
     Route::delete('/stories/{story}', [StoryController::class, 'destroy'])->name('stories.destroy');
     Route::put('/site-settings/{id}', [SiteSettingController::class, 'update'])->name('site-settings.update');
 });
+
 Route::get('/{person}', [PersonController::class, 'show'])->name('people.show');
+
 Route::fallback(function () {
-    // Return plain 404 for Let's Encrypt ACME challenges without any Laravel processing
-    if (request()->is('.well-known/*')) {
-        return response('', 404);
-    }
     return Inertia::render('Error', ['status' => 404]);
-})->name('404.show')->withoutMiddleware(['web']);
+})->name('404.show');

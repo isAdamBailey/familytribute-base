@@ -5,6 +5,10 @@
 
     RewriteEngine On
 
+    # Allow direct access to .well-known directory (for Let's Encrypt)
+    RewriteCond %{REQUEST_URI} ^/.well-known/
+    RewriteRule ^ - [L]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
