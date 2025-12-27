@@ -36,9 +36,9 @@ Route::middleware(['auth:sanctum', 'verified', 'team'])->group(function () {
 });
 Route::get('/{person}', [PersonController::class, 'show'])->name('people.show');
 Route::fallback(function () {
-    // Allow .well-known paths (like Let's Encrypt ACME challenges) to return plain 404
+    // Return plain 404 for Let's Encrypt ACME challenges without any Laravel processing
     if (request()->is('.well-known/*')) {
-        abort(404);
+        return response('', 404);
     }
     return Inertia::render('Error', ['status' => 404]);
-})->name('404.show');
+})->name('404.show')->withoutMiddleware(['web']);
