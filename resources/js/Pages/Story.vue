@@ -46,6 +46,30 @@
         />
 
         <div
+            v-if="story.media_url"
+            class="mt-6 rounded-xl border border-indigo-100 bg-indigo-50 p-4 dark:border-indigo-800 dark:bg-indigo-950/40"
+        >
+            <div class="mb-3 flex items-center gap-2 text-indigo-700 dark:text-indigo-300">
+                <i :class="isVideo ? 'ri-video-line' : 'ri-headphone-line'" class="text-lg"></i>
+                <span class="text-sm font-medium">
+                    {{ isVideo ? 'Video recording' : 'Audio recording' }} of this story being spoken
+                </span>
+            </div>
+            <video
+                v-if="isVideo"
+                :src="story.media_url"
+                controls
+                class="w-full rounded-lg shadow-sm"
+            />
+            <audio
+                v-else
+                :src="story.media_url"
+                controls
+                class="w-full"
+            />
+        </div>
+
+        <div
             class="html-content prose mt-6 max-w-none text-gray-900 dark:text-gray-100"
             v-html="story.content"
         />
@@ -88,7 +112,7 @@ import StoryEditModal from "@/Modals/StoryEditModal.vue";
 import { usePage } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
 
-defineProps({
+const props = defineProps({
     story: { type: Object, required: true },
     people: { type: Array, required: true },
 });
@@ -98,4 +122,9 @@ const storyDeleteModalOpen = ref(false);
 
 const page = usePage();
 const authenticated = computed(() => page.props.auth.user);
+
+const isVideo = computed(() => {
+    if (!props.story.media_url) return false;
+    return /\.(mp4|webm|mov)$/i.test(props.story.media_url);
+});
 </script>

@@ -21,6 +21,7 @@ class StoryResource extends JsonResource
             'content' => $this->content,
             'year' => $this->year,
             'excerpt' => $this->excerpt,
+            'media_url' => $this->media_url,
             'people' => PersonResource::collection($this->whenLoaded('people')),
             $this->mergeWhen(auth()->check(), [
                 'person_ids' => $this->person_ids,

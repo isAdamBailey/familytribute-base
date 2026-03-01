@@ -66,6 +66,19 @@
                 />
                 <JetInputError :message="form.errors.private" class="mt-2" />
             </div>
+
+            <div class="col-span-6">
+                <JetLabel for="media" value="Audio / Video (optional)" />
+                <InfoText>Upload a recording of this story being spoken</InfoText>
+                <input
+                    id="media"
+                    type="file"
+                    accept="audio/*,video/*"
+                    class="mt-1 block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-indigo-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-indigo-700 hover:file:bg-indigo-100 dark:text-gray-300 dark:file:bg-indigo-900 dark:file:text-indigo-300"
+                    @change="onMediaChange"
+                />
+                <JetInputError :message="form.errors.media" class="mt-2" />
+            </div>
         </template>
 
         <template #actions>
@@ -84,7 +97,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import JetFormSection from "@/Base/FormSection.vue";
 import JetInput from "@/Base/Input.vue";
@@ -108,12 +120,18 @@ const form = useForm({
     year: null,
     private: false,
     person_ids: null,
+    media: null,
 });
+
+const onMediaChange = (event) => {
+    form.media = event.target.files[0] ?? null;
+};
 
 const storeStory = () => {
     form.post(route("stories.store"), {
         errorBag: "storeStory",
         preserveScroll: true,
+        forceFormData: true,
         onSuccess: () => form.reset(),
     });
 };

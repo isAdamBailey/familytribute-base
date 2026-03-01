@@ -8,6 +8,8 @@ use App\Models\Story;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
@@ -132,6 +134,8 @@ class StoriesTest extends TestCase
                     ->has('story.content')
                     ->has('story.excerpt')
                     ->has('story.year')
+                    ->has('story.media_url')
+                    ->missing('story.media_path')
                     ->missing('story.private')
                     ->missing('story.person_ids')
                     ->has('people')
@@ -224,6 +228,81 @@ class StoriesTest extends TestCase
             ->exists();
         $this->assertFalse($personHasStory);
 
+        $this->assertModelMissing($story);
+    }
+
+    public function test_story_media_is_stored_on_create()
+    {
+        Storage::fake('s3');
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
+        $file = UploadedFile::fake()->create('recording.mp3', 500, 'audio/mpeg');
+
+        $this->post(route('stories.store'), [
+            'title' => $this->faker->words(2, true),
+            'excerpt' => $this->faker->sentence,
+            'content' => $this->faker->sentences(4, true),
+            'year' => $this->faker->numberBetween(1900, 2000),
+            'private' => false,
+            'media' => $file,
+        ])->assertRedirect()->assertSessionHas('flash.banner');
+
+        $story = Story::first();
+        $this->assertNotNull($story->media_path);
+        $this->assertStringStartsWith('story-media/', $story->media_path);
+        Storage::disk('s3')->assertExists($story->media_path);
+    }
+
+    public function test_story_media_is_replaced_on_update()
+    {
+        Storage::fake('s3');
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
+        $oldPath = 'story-media/old-recording.mp3';
+        Storage::disk('s3')->put($oldPath, 'old content');
+        $story = Story::factory()->create(['media_path' => $oldPath]);
+
+        $newFile = UploadedFile::fake()->create('new-recording.mp3', 500, 'audio/mpeg');
+
+        $this->put(route('stories.update', $story), ['media' => $newFile])
+            ->assertRedirect();
+
+        Storage::disk('s3')->assertMissing($oldPath);
+        $newPath = $story->fresh()->media_path;
+        $this->assertNotNull($newPath);
+        $this->assertNotEquals($oldPath, $newPath);
+        Storage::disk('s3')->assertExists($newPath);
+    }
+
+    public function test_story_media_can_be_removed()
+    {
+        Storage::fake('s3');
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
+        $path = 'story-media/recording.mp3';
+        Storage::disk('s3')->put($path, 'content');
+        $story = Story::factory()->create(['media_path' => $path]);
+
+        $this->put(route('stories.update', $story), ['remove_media' => true])
+            ->assertRedirect();
+
+        Storage::disk('s3')->assertMissing($path);
+        $this->assertNull($story->fresh()->media_path);
+    }
+
+    public function test_story_media_is_deleted_from_s3_on_destroy()
+    {
+        Storage::fake('s3');
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
+        $path = 'story-media/recording.mp3';
+        Storage::disk('s3')->put($path, 'content');
+        $story = Story::factory()->create(['media_path' => $path]);
+
+        $this->delete(route('stories.destroy', $story))
+            ->assertRedirect(route('stories.index'));
+
+        Storage::disk('s3')->assertMissing($path);
         $this->assertModelMissing($story);
     }
 }

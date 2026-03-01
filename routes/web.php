@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ObituaryController;
@@ -8,13 +9,14 @@ use App\Http\Controllers\SiteSettingController;
 use App\Http\Controllers\StoryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-//Route::get('/mailable', function () {
+
+// Route::get('/mailable', function () {
 //    return new App\Mail\UpcomingDates(
 //        App\Models\SiteSetting::first()->title,
 //        App\Models\Obituary::with('person')->inRandomOrder()->limit(3)->get(),
 //        App\Models\Obituary::with('person')->inRandomOrder()->limit(3)->get(),
 //    );
-//});
+// });
 Route::get('/', [HomeController::class, 'show'])->name('home');
 Route::get('/pictures', [PictureController::class, 'index'])->name('pictures.index');
 Route::get('/pictures/{picture}', [PictureController::class, 'show'])->name('pictures.show');

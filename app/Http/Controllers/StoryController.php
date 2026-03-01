@@ -10,6 +10,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -74,15 +75,22 @@ class StoryController extends Controller
             'year' => 'digits:4|nullable',
             'private' => 'required|boolean',
             'person_ids' => 'array|nullable',
+            'media' => 'nullable|file|mimes:mp3,mp4,wav,m4a,aac,ogg,webm,mov|max:102400',
         ]);
 
-        $story = Story::create([
+        $data = [
             'title' => $request->title,
             'excerpt' => $request->excerpt,
             'private' => $request->private,
             'content' => $request->input('content'),
             'year' => $request->year,
-        ]);
+        ];
+
+        if ($request->hasFile('media')) {
+            $data['media_path'] = $request->file('media')->storePublicly('story-media', 's3');
+        }
+
+        $story = Story::create($data);
 
         if ($request->person_ids) {
             $story->people()->sync($request->person_ids);
@@ -100,6 +108,8 @@ class StoryController extends Controller
             'year' => 'digits:4|nullable',
             'private' => 'boolean',
             'person_ids' => 'array|nullable',
+            'media' => 'nullable|file|mimes:mp3,mp4,wav,m4a,aac,ogg,webm,mov|max:102400',
+            'remove_media' => 'nullable|boolean',
         ]);
 
         $story = Story::where('slug', $slug)->first();
@@ -128,6 +138,16 @@ class StoryController extends Controller
             $story->people()->sync($request->person_ids);
         }
 
+        if ($request->hasFile('media')) {
+            if ($story->media_path) {
+                Storage::disk('s3')->delete($story->media_path);
+            }
+            $story->media_path = $request->file('media')->storePublicly('story-media', 's3');
+        } elseif ($request->boolean('remove_media') && $story->media_path) {
+            Storage::disk('s3')->delete($story->media_path);
+            $story->media_path = null;
+        }
+
         $story->save();
 
         return redirect(route('stories.show', $story->fresh()))
@@ -137,6 +157,10 @@ class StoryController extends Controller
     public function destroy($slug): Redirector|Application|RedirectResponse
     {
         $story = Story::where('slug', $slug)->first();
+
+        if ($story->media_path) {
+            Storage::disk('s3')->delete($story->media_path);
+        }
 
         $story->people()->detach();
         $story->delete();

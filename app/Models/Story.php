@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -19,6 +20,7 @@ class Story extends Model
         'content',
         'private',
         'year',
+        'media_path',
     ];
 
     protected $appends = ['person_ids'];
@@ -37,6 +39,15 @@ class Story extends Model
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = strtolower($value);
+    }
+
+    public function getMediaUrlAttribute(): ?string
+    {
+        if (! $this->media_path) {
+            return null;
+        }
+
+        return Storage::url($this->media_path);
     }
 
     public function getPersonIdsAttribute()

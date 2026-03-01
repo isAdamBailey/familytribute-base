@@ -39,6 +39,30 @@
                 <JetInputError :message="form.errors.content" class="mt-2" />
             </div>
 
+            <div class="col-span-6 mt-2 sm:col-span-4">
+                <JetLabel value="Audio / Video" />
+                <div v-if="story.media_url && !form.remove_media" class="mt-1 flex items-center gap-3 rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-700 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300">
+                    <i class="ri-film-line text-indigo-500"></i>
+                    <span class="truncate">{{ currentMediaName }}</span>
+                    <button
+                        type="button"
+                        class="ml-auto text-red-500 hover:text-red-700"
+                        @click="removeMedia"
+                    >
+                        <i class="ri-delete-bin-line"></i> Remove
+                    </button>
+                </div>
+                <input
+                    v-else
+                    id="media"
+                    type="file"
+                    accept="audio/*,video/*"
+                    class="mt-1 block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-indigo-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-indigo-700 hover:file:bg-indigo-100 dark:text-gray-300 dark:file:bg-indigo-900 dark:file:text-indigo-300"
+                    @change="onMediaChange"
+                />
+                <JetInputError :message="form.errors.media" class="mt-2" />
+            </div>
+
             <div class="-mx-3 flex flex-wrap">
                 <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
                     <JetLabel for="private" value="Private" />
@@ -123,6 +147,8 @@ const form = useForm({
     year: props.story.year,
     private: Boolean(props.story.private),
     person_ids: props.story.person_ids,
+    media: null,
+    remove_media: false,
 });
 
 const peopleOptions = computed(() => {
@@ -134,9 +160,25 @@ const peopleOptions = computed(() => {
     });
 });
 
+const currentMediaName = computed(() => {
+    if (!props.story.media_url) return null;
+    return props.story.media_url.split("/").pop();
+});
+
+const onMediaChange = (event) => {
+    form.media = event.target.files[0] ?? null;
+    form.remove_media = false;
+};
+
+const removeMedia = () => {
+    form.media = null;
+    form.remove_media = true;
+};
+
 const updateStory = () => {
     form.post(route("stories.update", props.story.slug), {
         errorBag: "updateStory",
+        forceFormData: true,
         onSuccess: () => closeModal(),
     });
 };
