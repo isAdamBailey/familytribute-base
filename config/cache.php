@@ -96,6 +96,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Serializable Cache Classes
+    |--------------------------------------------------------------------------
+    |
+    | When storing PHP objects in cache, only the classes listed here may be
+    | unserialized. This helps prevent deserialization attacks if your APP_KEY
+    | is leaked. Set to false to disable object caching entirely.
+    |
+    */
+
+    'serializable_classes' => false,
+
+    /*
+    |--------------------------------------------------------------------------
     | Cache Key Prefix
     |--------------------------------------------------------------------------
     |
