@@ -4,70 +4,111 @@
         :description="`${person.full_name}'s obituary`"
     >
         <template #header>
-            <Link :href="route('people.index')">People</Link> /
+            <Link
+                :href="route('people.index')"
+                class="transition-colors hover:text-hearthlight"
+                >People</Link
+            >
+            <span class="mx-1.5 text-gray-400">/</span>
             {{ person.full_name }}
         </template>
 
-        <div class="mt-8 flex flex-wrap-reverse justify-between">
+        <!-- Hero -->
+        <div class="-mx-6 -mt-6 sm:-mx-20">
+            <div
+                v-if="person.obituary.background_photo_url"
+                class="relative h-72 overflow-hidden"
+            >
+                <img
+                    class="h-full w-full object-cover"
+                    :src="person.obituary.background_photo_url"
+                    :alt="`${person.full_name} background photo`"
+                />
+                <div
+                    class="absolute inset-0 bg-gradient-to-b from-transparent via-amber-950/10 to-amber-950/60"
+                ></div>
+            </div>
+            <div
+                v-else
+                class="h-44 bg-gradient-to-br from-amber-50 via-stone-100 to-amber-100 dark:from-stone-800 dark:via-stone-900 dark:to-amber-950"
+            ></div>
+        </div>
+
+        <!-- Avatar -->
+        <div class="-mt-20 flex justify-center">
+            <img
+                class="relative z-10 h-40 w-40 rounded-full border-4 border-white object-cover shadow-xl shadow-amber-200/60 dark:border-gray-800 dark:shadow-amber-900/40"
+                :src="person.photo_url"
+                :alt="person.full_name"
+            />
+        </div>
+
+        <!-- Name, dates, share -->
+        <div class="mt-5 text-center">
             <h1
-                class="font-header text-5xl text-gray-800 dark:text-amber-400 md:text-7xl"
+                class="font-header text-[clamp(2.25rem,5vw,4rem)] font-bold leading-tight text-gray-900 dark:text-amber-400"
+                style="text-wrap: balance"
             >
                 {{ person.full_name }}
             </h1>
-            <div v-if="authenticated">
-                <JetDangerButton
-                    class="mr-3"
-                    aria-label="Delete Person"
-                    @click="obituaryDeleteModalOpen = true"
-                >
-                    <i class="ri-delete-bin-fill"></i>
-                </JetDangerButton>
-                <BaseButton
-                    aria-label="Edit Person"
-                    @click="obituaryEditModalOpen = true"
-                >
-                    Edit <i class="ri-edit-2-fill"></i>
-                </BaseButton>
+            <p
+                v-if="lifeDates"
+                class="mt-2 text-sm font-semibold text-gray-500 dark:text-stone-400"
+            >
+                {{ lifeDates }}
+            </p>
+            <div class="mt-4 flex justify-center">
+                <social-share :title="`${person.full_name}'s obituary`" />
             </div>
         </div>
 
-        <div class="flex flex-wrap items-center justify-between">
-            <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                {{ formatDate(person.obituary.birth_date) }} -
-                {{ formatDate(person.obituary.death_date) }}
-            </div>
-            <social-share :title="`${person.full_name}'s obituary`" />
+        <!-- Admin controls -->
+        <div v-if="authenticated" class="mt-6 flex justify-end gap-2">
+            <BaseButton
+                aria-label="Edit Person"
+                @click="obituaryEditModalOpen = true"
+            >
+                Edit <i class="ri-edit-2-fill ml-1"></i>
+            </BaseButton>
+            <JetDangerButton
+                aria-label="Delete Person"
+                @click="obituaryDeleteModalOpen = true"
+            >
+                <i class="ri-delete-bin-fill"></i>
+            </JetDangerButton>
         </div>
 
-        <div
-            v-if="person.obituary.background_photo_url"
-            class="h-80 w-full rounded bg-cover bg-center bg-no-repeat"
-            :style="`background-image: url(${person.obituary.background_photo_url});`"
-        >
-            <img
-                class="h-full w-full opacity-0"
-                :src="person.obituary.background_photo_url"
-                alt="background image"
+        <!-- Ornamental divider -->
+        <div class="my-10 flex items-center gap-3">
+            <div class="h-px flex-1 bg-gray-100 dark:bg-stone-700"></div>
+            <div class="h-1.5 w-1.5 rounded-full bg-hearthlight/40"></div>
+            <div class="h-px w-8 bg-hearthlight/30"></div>
+            <div class="h-1.5 w-1.5 rounded-full bg-hearthlight/40"></div>
+            <div class="h-px flex-1 bg-gray-100 dark:bg-stone-700"></div>
+        </div>
+
+        <!-- Obituary (promoted above carousels) -->
+        <div class="mx-auto max-w-2xl">
+            <h2
+                class="font-header text-3xl text-gray-800 dark:text-amber-400 md:text-4xl"
+            >
+                Obituary
+            </h2>
+            <div
+                class="html-content prose prose-stone mt-6 max-w-none leading-relaxed text-gray-700 dark:prose-invert dark:text-gray-200"
+                v-html="person.obituary.content"
             />
         </div>
-        <div class="flex justify-center" :class="person.obituary.background_photo_url ? '-mt-40' : 'mt-18'">
-            <div class="avatar relative h-80 w-80 rounded-full z-40">
-                <img
-                    class="relative h-full w-full rounded-full border-4 border-gray-900"
-                    :src="person.photo_url"
-                    :alt="person.full_name"
-                />
-            </div>
-        </div>
 
-        <div v-if="person.pictures.length" class="-mt-16">
-            <h3
-                class="invisible font-header text-3xl text-gray-800 dark:text-amber-400 md:visible"
+        <!-- Pictures carousel -->
+        <div v-if="person.pictures.length" class="mt-14">
+            <h2
+                class="font-header text-3xl text-gray-800 dark:text-amber-400 md:text-4xl"
             >
                 Pictures of {{ person.first_name }}
-            </h3>
+            </h2>
             <div
-                class="flex snap-x space-x-1 overflow-x-scroll px-3 pb-8 scrollbar scrollbar-thumb-amber-600 scrollbar-thumb-rounded"
+                class="mt-4 flex snap-x space-x-1 overflow-x-scroll px-3 pb-8 scrollbar scrollbar-thumb-amber-600 scrollbar-thumb-rounded"
             >
                 <PicturesContainer
                     :items="person.pictures"
@@ -76,17 +117,15 @@
             </div>
         </div>
 
-        <div
-            v-if="person.stories.length"
-            :class="person.pictures.length ? 'mt-5' : '-mt-16'"
-        >
-            <h3
-                class="invisible font-header text-3xl text-gray-800 dark:text-amber-400 md:visible"
+        <!-- Stories / Memories carousel -->
+        <div v-if="person.stories.length" class="mt-14">
+            <h2
+                class="font-header text-3xl text-gray-800 dark:text-amber-400 md:text-4xl"
             >
                 Memories of {{ person.first_name }}
-            </h3>
+            </h2>
             <div
-                class="flex snap-x space-x-1 overflow-x-scroll px-3 pb-8 scrollbar scrollbar-thumb-amber-600 scrollbar-thumb-rounded"
+                class="mt-4 flex snap-x space-x-1 overflow-x-scroll px-3 pb-8 scrollbar scrollbar-thumb-amber-600 scrollbar-thumb-rounded"
             >
                 <StoriesContainer
                     :items="person.stories"
@@ -95,17 +134,7 @@
             </div>
         </div>
 
-        <h1
-            class="mt-10 font-header text-3xl text-gray-800 dark:text-amber-400 md:text-5xl"
-        >
-            Obituary
-        </h1>
-
-        <div
-            class="html-content prose my-10 max-w-none text-gray-700 dark:text-gray-100"
-            v-html="person.obituary.content"
-        />
-
+        <!-- Family connections -->
         <div v-if="person.parents.length">
             <RelatedPeopleContainer
                 :people="person.parents"
@@ -149,14 +178,22 @@ import { usePage } from "@inertiajs/vue3";
 import { format, parseISO } from "date-fns";
 import { computed, ref } from "vue";
 
-defineProps({
+const props = defineProps({
     person: { type: Object, required: true },
     people: { type: Array, required: true },
 });
 
 function formatDate(date) {
+    if (!date) return null;
     return format(parseISO(date), "PPP");
 }
+
+const lifeDates = computed(() => {
+    const birth = formatDate(props.person.obituary.birth_date);
+    const death = formatDate(props.person.obituary.death_date);
+    if (!birth && !death) return null;
+    return `${birth ?? "?"} – ${death ?? "present"}`;
+});
 
 const obituaryEditModalOpen = ref(false);
 const obituaryDeleteModalOpen = ref(false);
