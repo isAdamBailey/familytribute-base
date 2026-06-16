@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-16T00:00:00Z",
+  "title": "Design System: FamilyTribute",
+  "extensions": {
+    "colorMeta": {
+      "hearthlight": {
+        "role": "primary",
+        "displayName": "Hearthlight",
+        "canonical": "oklch(0.61 0.13 60)",
+        "tonalRamp": ["#3d2200", "#5c3510", "#8b5c18", "#a06820", "#bf8028", "#d49e50", "#e8c080", "#f5e0b4", "#fdf5e6"]
+      },
+      "hearthlight-deep": {
+        "role": "primary-hover",
+        "displayName": "Ember Deep",
+        "canonical": "oklch(0.44 0.12 54)",
+        "tonalRamp": ["#2a1600", "#3d2008", "#5c3510", "#6e4012", "#8b5c18", "#a0701e", "#c08840", "#dab878", "#f5e6c8"]
+      },
+      "album-rose": {
+        "role": "secondary",
+        "displayName": "Album Rose",
+        "canonical": "oklch(0.60 0.10 18)",
+        "tonalRamp": ["#3d1010", "#6b2020", "#944040", "#b05858", "#c47070", "#d48888", "#e4aaaa", "#f0cccc", "#fce8e8"]
+      },
+      "inkwell": {
+        "role": "neutral-ink",
+        "displayName": "Inkwell",
+        "canonical": "oklch(0.14 0.02 50)",
+        "tonalRamp": ["#0a0806", "#1c1410", "#2e2018", "#3e2e22", "#584038", "#705450", "#8c7468", "#b0a098", "#e8e0d8"]
+      },
+      "faded-ink": {
+        "role": "neutral-text-secondary",
+        "displayName": "Faded Ink",
+        "canonical": "oklch(0.38 0.05 44)",
+        "tonalRamp": ["#1a0e08", "#302010", "#482e1e", "#584038", "#70503e", "#8c6858", "#a88878", "#c8aA98", "#ecddd4"]
+      },
+      "old-binding": {
+        "role": "neutral-muted",
+        "displayName": "Old Binding",
+        "canonical": "oklch(0.56 0.04 36)",
+        "tonalRamp": ["#1e1410", "#382c26", "#503e36", "#685048", "#8c7468", "#a08878", "#bcaa9a", "#d4c8bc", "#f0eae4"]
+      },
+      "aged-edge": {
+        "role": "neutral-border",
+        "displayName": "Aged Edge",
+        "canonical": "oklch(0.83 0.03 44)",
+        "tonalRamp": ["#3a2c24", "#5c4c40", "#887060", "#a88878", "#c4a890", "#d4c2b4", "#e4d6cc", "#f0e8e2", "#faf6f4"]
+      },
+      "divider": {
+        "role": "neutral-divider",
+        "displayName": "Divider",
+        "canonical": "oklch(0.94 0.01 48)",
+        "tonalRamp": ["#3a3028", "#5c5048", "#807468", "#a09488", "#c0b4a8", "#d8cec4", "#ece8e4", "#f4f2f0", "#fafaf8"]
+      },
+      "surface": {
+        "role": "neutral-surface",
+        "displayName": "White Surface",
+        "canonical": "oklch(1.0 0 0)",
+        "tonalRamp": ["#c8c4c0", "#d8d4d0", "#e4e0dc", "#eeecec", "#f4f2f0", "#f8f6f4", "#fafaf8", "#fdfdfc", "#ffffff"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display — Gwendolyn",
+        "purpose": "Home page hero, the site title in large format. The handwritten identity of FamilyTribute."
+      },
+      "headline": {
+        "displayName": "Headline — Gwendolyn",
+        "purpose": "Person names on detail pages, story titles, major section headings within a page."
+      },
+      "title": {
+        "displayName": "Title — Open Sans Bold",
+        "purpose": "Sub-section labels, card headers, modal titles. First appearance of Open Sans in the hierarchy."
+      },
+      "body": {
+        "displayName": "Body — Open Sans Regular",
+        "purpose": "All prose: obituary text, story content, descriptions. Must breathe at 65–75ch max width."
+      },
+      "label": {
+        "displayName": "Label — Open Sans Semibold",
+        "purpose": "Dates, metadata, navigation links, button text. Never uppercase-tracked."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card-ambient",
+        "value": "0 4px 24px rgba(140, 80, 30, 0.10)",
+        "purpose": "Default elevation for content cards. Warm amber ambient glow."
+      },
+      {
+        "name": "card-hover",
+        "value": "0 8px 40px rgba(140, 80, 30, 0.18)",
+        "purpose": "Lifted hover state on interactive cards (people grid, pictures, stories)."
+      },
+      {
+        "name": "surface-overlay",
+        "value": "0 2px 12px rgba(140, 80, 30, 0.08)",
+        "purpose": "Nav bar and subtle surface separation without strong contrast."
+      },
+      {
+        "name": "modal",
+        "value": "0 20px 60px rgba(28, 20, 16, 0.22)",
+        "purpose": "Modals and dialogs. Inkwell-tinted for heavier presence."
+      },
+      {
+        "name": "button-hover",
+        "value": "0 4px 20px rgba(140, 80, 30, 0.30)",
+        "purpose": "Lifted glow under primary buttons on hover."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Default easing for state transitions (color, shadow, opacity)."
+      },
+      {
+        "name": "ease-out-card",
+        "value": "cubic-bezier(0.0, 0, 0.2, 1)",
+        "purpose": "Card hover lift — fast in, gentle out."
+      },
+      {
+        "name": "duration-fast",
+        "value": "150ms",
+        "purpose": "Button hover, focus ring appearance."
+      },
+      {
+        "name": "duration-standard",
+        "value": "250ms",
+        "purpose": "Card hover, shadow transitions, nav underlines."
+      },
+      {
+        "name": "duration-enter",
+        "value": "350ms",
+        "purpose": "Page content entrance, modal open."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary action. Amber background, sentence case, no uppercase tracking.",
+      "html": "<button class=\"ds-btn-primary\">View Obituaries</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; background-color: #bf8028; color: #ffffff; font-family: 'Open Sans', sans-serif; font-size: 0.9375rem; font-weight: 600; letter-spacing: normal; text-transform: none; padding: 14px 36px; border-radius: 8px; border: none; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.0, 0, 0.2, 1); } .ds-btn-primary:hover { background-color: #8b5c18; box-shadow: 0 4px 20px rgba(140, 80, 30, 0.30); transform: translateY(-1px); } .ds-btn-primary:focus-visible { outline: 3px solid #bf8028; outline-offset: 2px; } .ds-btn-primary:active { transform: translateY(0); box-shadow: none; } .ds-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action. Transparent with amber border and text.",
+      "html": "<button class=\"ds-btn-ghost\">Edit</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; background-color: transparent; color: #bf8028; font-family: 'Open Sans', sans-serif; font-size: 0.9375rem; font-weight: 600; letter-spacing: normal; text-transform: none; padding: 12px 28px; border-radius: 8px; border: 1.5px solid #bf8028; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-ghost:hover { background-color: #bf8028; color: #ffffff; } .ds-btn-ghost:focus-visible { outline: 3px solid #bf8028; outline-offset: 2px; }"
+    },
+    {
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Destructive actions only (delete, remove). Never use for navigation.",
+      "html": "<button class=\"ds-btn-danger\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z\"/></svg></button>",
+      "css": ".ds-btn-danger { display: inline-flex; align-items: center; justify-content: center; background-color: #b91c1c; color: #ffffff; font-family: 'Open Sans', sans-serif; font-size: 0.9375rem; font-weight: 600; padding: 10px 16px; border-radius: 8px; border: none; cursor: pointer; transition: background-color 150ms; gap: 6px; } .ds-btn-danger:hover { background-color: #991b1b; } .ds-btn-danger:focus-visible { outline: 3px solid #b91c1c; outline-offset: 2px; }"
+    },
+    {
+      "name": "Person Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "People grid item. Photo on top, warm gradient footer with name and dates.",
+      "html": "<a class=\"ds-person-card\" href=\"#\"><img class=\"ds-person-card__photo\" src=\"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=192&fit=crop\" alt=\"John Bailey\" /><div class=\"ds-person-card__footer\"><p class=\"ds-person-card__name\">John Bailey</p><p class=\"ds-person-card__dates\">March 4, 1942 — November 12, 2021</p></div></a>",
+      "css": ".ds-person-card { display: block; border-radius: 12px; background: #ffffff; box-shadow: 0 4px 24px rgba(140, 80, 30, 0.10); overflow: hidden; text-decoration: none; color: inherit; transition: box-shadow 250ms cubic-bezier(0.0, 0, 0.2, 1), transform 250ms cubic-bezier(0.0, 0, 0.2, 1); } .ds-person-card:hover { box-shadow: 0 8px 40px rgba(140, 80, 30, 0.18); transform: translateY(-2px); } .ds-person-card__photo { width: 100%; height: 192px; object-fit: cover; display: block; } .ds-person-card__footer { background: linear-gradient(to bottom-left, #fef3c7, #fce7f3); padding: 10px 14px; } .ds-person-card__name { font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 0.9375rem; color: #1c1410; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; } .ds-person-card__dates { font-family: 'Open Sans', sans-serif; font-weight: 600; font-size: 0.75rem; color: #584038; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 2px 0 0; }"
+    },
+    {
+      "name": "Nav Bar",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Primary navigation. White surface, Gwendolyn site title in Hearthlight amber.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav__brand\" href=\"#\">Family Tribute</a><div class=\"ds-nav__links\"><a class=\"ds-nav__link\" href=\"#\">People</a><a class=\"ds-nav__link ds-nav__link--active\" href=\"#\">Pictures</a><a class=\"ds-nav__link\" href=\"#\">Stories</a></div></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 64px; background: #ffffff; border-bottom: 1px solid #ece8e4; } .ds-nav__brand { font-family: 'Gwendolyn', cursive; font-size: 2rem; font-weight: 700; color: #bf8028; text-decoration: none; letter-spacing: -0.01em; } .ds-nav__links { display: flex; gap: 32px; } .ds-nav__link { font-family: 'Open Sans', sans-serif; font-size: 0.9375rem; font-weight: 600; color: #1c1410; text-decoration: none; transition: color 150ms; padding-bottom: 2px; border-bottom: 2px solid transparent; } .ds-nav__link:hover { color: #bf8028; } .ds-nav__link--active { color: #bf8028; border-bottom-color: #bf8028; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Form text input with warm amber focus ring.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-label\" for=\"ex\">Search</label><input class=\"ds-input\" id=\"ex\" type=\"text\" placeholder=\"Search people, stories…\" /></div>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 6px; } .ds-label { font-family: 'Open Sans', sans-serif; font-size: 0.875rem; font-weight: 600; color: #1c1410; } .ds-input { font-family: 'Open Sans', sans-serif; font-size: 1rem; font-weight: 400; color: #1c1410; background: #ffffff; border: 1px solid #d4c2b4; border-radius: 6px; padding: 10px 14px; outline: none; transition: border-color 150ms, box-shadow 150ms; width: 100%; box-sizing: border-box; } .ds-input::placeholder { color: #8c7468; } .ds-input:focus { border-color: #bf8028; box-shadow: 0 0 0 3px rgba(191, 128, 40, 0.15); } .ds-input:disabled { background: #f4f2f0; color: #8c7468; cursor: not-allowed; }"
+    },
+    {
+      "name": "Page Hero Title",
+      "kind": "custom",
+      "refersTo": "display",
+      "description": "Home page hero heading using Gwendolyn at display scale.",
+      "html": "<h1 class=\"ds-hero-title\">The Bailey Family</h1>",
+      "css": ".ds-hero-title { font-family: 'Gwendolyn', cursive; font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; color: #1c1410; margin: 0; text-wrap: balance; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Living Family Album",
+    "overview": "FamilyTribute is a family tribute archive — a place to celebrate lives, share photographs, and pass stories from one generation to the next. The visual system should feel like being handed a well-loved photo album by someone who loved the people in it: warm, intimate, and alive with personality. Not a product. Not a service. A gift.\n\nThe palette is built around hearthlight amber — the color of warm lamplight, old gold frames, and the hour just before sunset. Gwendolyn, a flowing handwritten script, carries the display hierarchy with personal warmth. Open Sans provides clear, readable body prose. Together they evoke the handmade and the human without feeling crafted or kitschy.",
+    "keyCharacteristics": [
+      "Warm amber primary on white surfaces — warmth lives in the accent, not the background",
+      "Script display type (Gwendolyn) paired with humanist sans body (Open Sans)",
+      "Amber-tinted shadows instead of generic gray or indigo",
+      "Photography and content are always the hero — UI elements recede and frame",
+      "Celebratory in tone: every design choice should feel like a story worth telling"
+    ],
+    "rules": [
+      {
+        "name": "The Hearthlight Rule",
+        "body": "Amber is used in ≤20% of any given screen's surface area. Buttons, active states, links — not backgrounds. Its warmth is effective precisely because it's not everywhere.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-Cold-Gray Rule",
+        "body": "The indigo/violet palette the codebase was built on has been retired. No indigo-*, violet-*, or sky-* Tailwind classes on UI surfaces. If something cool-gray slips in, it's a regression.",
+        "section": "colors"
+      },
+      {
+        "name": "The Warm Shadow Rule",
+        "body": "Shadows must always use amber or warm-brown tinting. A cool shadow on a warm surface breaks the album aesthetic immediately.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Warm Float Rule",
+        "body": "Every elevated surface uses amber-tinted shadows. If the shadow reads as gray, it's wrong. The rule catches it immediately: does the page feel like it's lit with warm lamplight, or fluorescent office light? Choose lamplight.",
+        "section": "elevation"
+      },
+      {
+        "name": "The No-Uppercase-Tracking Rule",
+        "body": "The current codebase uses uppercase tracking-widest on primary buttons. That pattern is retired. It reads as a tech product, not a family tribute. Button labels use sentence case or title case, Open Sans 600, no letter-spacing beyond normal.",
+        "section": "typography"
+      },
+      {
+        "name": "The Gwendolyn-Only-at-Scale Rule",
+        "body": "Gwendolyn is a script font — it is illegible below 24px and inappropriate in body context. Never use font-header on text smaller than 1.5rem.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Do use Gwendolyn at display scale (≥1.5rem) for names, titles, and section heads. It is the identity.",
+      "Do let photography do the emotional work. Design frames content; it doesn't compete.",
+      "Do tint every shadow with amber warmth. rgba(140, 80, 30, 0.10) is the shadow base.",
+      "Do use sentence case on button labels. The copy should feel like a person wrote it.",
+      "Do ensure body text passes 4.5:1 contrast. The audience includes older family members.",
+      "Do use white (#ffffff) surfaces. Warmth comes from the amber accent and amber-tinted shadows, not from a tinted background.",
+      "Do keep interactive card hover states tactile: a slight lift (translateY(-2px)) plus shadow deepening signals interactivity without shouting."
+    ],
+    "donts": [
+      "Don't use the indigo or violet palette. The current codebase is being replaced with the Hearthlight amber system. Any remaining indigo is a regression, not a feature.",
+      "Don't make it feel like a clinical obituary site (Legacy.com). No transactional layouts, no form-over-feeling.",
+      "Don't design for grief. Dark backgrounds, heavy silence, desaturated imagery treatments — FamilyTribute celebrates lives. It doesn't mourn.",
+      "Don't use generic SaaS patterns: no uppercase tracked buttons, no eyebrow labels on every section, no identical card grids with icon + heading + text repeated endlessly, no gradient text.",
+      "Don't use Gwendolyn below 1.5rem. It's illegible as a small font and destroys the identity when misused.",
+      "Don't use nested cards. A card inside a card is always wrong.",
+      "Don't use cool-gray shadows. rgba(0,0,0,0.1) shadow on an amber-warm surface breaks the album feel immediately.",
+      "Don't add eyebrow labels (small all-caps above every section heading). One deliberate kicker is voice; one per section is AI grammar.",
+      "Don't use side-stripe borders (border-left: 4px solid) as card or callout accents."
+    ]
+  }
+}
