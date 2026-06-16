@@ -19,6 +19,18 @@ export default {
                 sans: ["OpenSans", ...defaultTheme.fontFamily.sans],
                 header: ["Gwendolyn", ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                hearthlight: {
+                    DEFAULT: '#bf8028',
+                    deep: '#8b5c18',
+                    subtle: '#fdf3e0',
+                },
+                'album-rose': '#c47070',
+                inkwell: '#1c1410',
+                'faded-ink': '#584038',
+                'old-binding': '#8c7468',
+                'aged-edge': '#d4c2b4',
+            },
         },
     },
 

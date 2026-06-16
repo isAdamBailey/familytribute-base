@@ -3,11 +3,11 @@
         <div class="mb-5 flex flex-col-reverse md:mb-7 lg:flex-row">
             <div>
                 <div
-                    class="font-header text-6xl font-bold text-gray-700 dark:text-indigo-400 md:text-8xl"
+                    class="font-header text-6xl font-bold text-gray-800 dark:text-amber-400 md:text-8xl"
                     v-html="settings.title"
                 ></div>
                 <div
-                    class="html-content text-l mt-6 text-gray-500 dark:text-indigo-300 md:text-2xl"
+                    class="html-content text-l mt-6 text-gray-600 dark:text-amber-300 md:text-2xl"
                     v-html="settings.description"
                 ></div>
             </div>

@@ -1,7 +1,7 @@
 <template>
     <home-layout :title="title">
-        <h2 class="text-3xl text-gray-700 dark:text-indigo-500">{{ title }}</h2>
-        <div class="text-xl text-gray-700 dark:text-indigo-300">
+        <h2 class="text-3xl text-gray-700 dark:text-amber-400">{{ title }}</h2>
+        <div class="text-xl text-gray-700 dark:text-amber-300">
             {{ description }}
         </div>
         <div class="flex items-baseline justify-center">

@@ -42,7 +42,7 @@
             <div class="col-span-6 mt-2 sm:col-span-4">
                 <JetLabel value="Audio / Video" />
                 <div v-if="story.media_url && !form.remove_media" class="mt-1 flex items-center gap-3 rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-700 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300">
-                    <i class="ri-film-line text-indigo-500"></i>
+                    <i class="ri-film-line text-hearthlight"></i>
                     <span class="truncate">{{ currentMediaName }}</span>
                     <button
                         type="button"
@@ -57,7 +57,7 @@
                     id="media"
                     type="file"
                     accept="audio/*,video/*"
-                    class="mt-1 block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-indigo-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-indigo-700 hover:file:bg-indigo-100 dark:text-gray-300 dark:file:bg-indigo-900 dark:file:text-indigo-300"
+                    class="mt-1 block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-amber-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-hearthlight-deep hover:file:bg-amber-100 dark:text-gray-300 dark:file:bg-amber-900 dark:file:text-amber-300"
                     @change="onMediaChange"
                 />
                 <JetInputError :message="form.errors.media" class="mt-2" />

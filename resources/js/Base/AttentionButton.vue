@@ -1,7 +1,7 @@
 <template>
     <button
         :type="type"
-        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-500 px-10 py-4 font-semibold uppercase tracking-widest text-white transition hover:bg-indigo-700 hover:bg-gray-800 hover:shadow-xl hover:shadow-indigo-300/50 focus:border-gray-900 focus:outline-none focus:ring focus:ring-gray-300 active:bg-gray-900 disabled:opacity-25 dark:hover:bg-indigo-800 dark:focus:border-indigo-800 dark:focus:ring-indigo-500"
+        class="inline-flex items-center justify-center rounded-md border border-transparent bg-hearthlight px-10 py-4 font-semibold text-white transition hover:bg-hearthlight-deep hover:-translate-y-px hover:shadow-xl hover:shadow-amber-300/40 focus:border-amber-900 focus:outline-none focus:ring focus:ring-amber-200 active:translate-y-0 active:bg-hearthlight-deep disabled:opacity-25 dark:hover:bg-hearthlight-deep dark:focus:border-hearthlight dark:focus:ring-hearthlight/30"
     >
         <slot></slot>
     </button>

@@ -10,7 +10,7 @@
 
         <div class="mt-8 flex flex-wrap-reverse justify-between">
             <h1
-                class="font-header text-5xl text-gray-800 dark:text-indigo-400 md:text-7xl"
+                class="font-header text-5xl text-gray-800 dark:text-amber-400 md:text-7xl"
             >
                 {{ person.full_name }}
             </h1>
@@ -62,12 +62,12 @@
 
         <div v-if="person.pictures.length" class="-mt-16">
             <h3
-                class="invisible font-header text-3xl text-gray-800 dark:text-indigo-400 md:visible"
+                class="invisible font-header text-3xl text-gray-800 dark:text-amber-400 md:visible"
             >
                 Pictures of {{ person.first_name }}
             </h3>
             <div
-                class="flex snap-x space-x-1 overflow-x-scroll px-3 pb-8 scrollbar scrollbar-thumb-indigo-500 scrollbar-thumb-rounded"
+                class="flex snap-x space-x-1 overflow-x-scroll px-3 pb-8 scrollbar scrollbar-thumb-amber-600 scrollbar-thumb-rounded"
             >
                 <PicturesContainer
                     :items="person.pictures"
@@ -81,12 +81,12 @@
             :class="person.pictures.length ? 'mt-5' : '-mt-16'"
         >
             <h3
-                class="invisible font-header text-3xl text-gray-800 dark:text-indigo-400 md:visible"
+                class="invisible font-header text-3xl text-gray-800 dark:text-amber-400 md:visible"
             >
                 Memories of {{ person.first_name }}
             </h3>
             <div
-                class="flex snap-x space-x-1 overflow-x-scroll px-3 pb-8 scrollbar scrollbar-thumb-indigo-500 scrollbar-thumb-rounded"
+                class="flex snap-x space-x-1 overflow-x-scroll px-3 pb-8 scrollbar scrollbar-thumb-amber-600 scrollbar-thumb-rounded"
             >
                 <StoriesContainer
                     :items="person.stories"
@@ -96,7 +96,7 @@
         </div>
 
         <h1
-            class="mt-10 font-header text-3xl text-gray-800 dark:text-indigo-400 md:text-5xl"
+            class="mt-10 font-header text-3xl text-gray-800 dark:text-amber-400 md:text-5xl"
         >
             Obituary
         </h1>

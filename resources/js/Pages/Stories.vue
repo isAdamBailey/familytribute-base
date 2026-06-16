@@ -4,7 +4,7 @@
 
         <div class="mb-5 flex items-center justify-between md:mt-5 md:mb-0">
             <div
-                class="font-header text-3xl text-gray-800 dark:text-indigo-400 md:text-5xl"
+                class="font-header text-3xl text-gray-800 dark:text-amber-400 md:text-5xl"
             >
                 Stories
             </div>
@@ -87,7 +87,7 @@
             <StoriesGrid :items="stories" />
         </div>
 
-        <div v-else class="text-gray-500 dark:text-indigo-300">
+        <div v-else class="text-gray-500 dark:text-amber-300">
             No stories were found.
         </div>
     </AppLayout>

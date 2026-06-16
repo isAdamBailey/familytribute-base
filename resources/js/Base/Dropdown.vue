@@ -4,7 +4,7 @@
             <span v-if="arrowTriggerTitle" class="inline-flex rounded-md">
                 <button
                     type="button"
-                    class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-indigo-300 dark:hover:text-indigo-500"
+                    class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-amber-300 dark:hover:text-amber-400"
                 >
                     {{ arrowTriggerTitle }}
                     <svg

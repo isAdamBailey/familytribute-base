@@ -10,7 +10,7 @@
         <div class="mt-5 md:col-span-2 md:mt-0">
             <form @submit.prevent="$emit('submitted')">
                 <div
-                    class="bg-white px-4 py-5 shadow dark:bg-indigo-300 sm:p-6"
+                    class="bg-white px-4 py-5 shadow dark:bg-gray-700 sm:p-6"
                     :class="
                         hasActions
                             ? 'sm:rounded-tl-md sm:rounded-tr-md'

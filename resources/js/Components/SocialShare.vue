@@ -13,7 +13,7 @@
                 role="button"
                 title="Share on Facebook"
                 aria-label="Share on Facebook"
-                class="ri-facebook-circle-fill text-3xl text-indigo-500 hover:text-indigo-700 md:text-4xl"
+                class="ri-facebook-circle-fill text-3xl text-hearthlight hover:text-hearthlight-deep md:text-4xl"
             ></i>
         </ShareNetwork>
         <ShareNetwork
@@ -24,7 +24,7 @@
                 role="button"
                 title="Share on Facebook Messenger"
                 aria-label="Share on Facebook Messenger"
-                class="ri-messenger-fill text-3xl text-indigo-500 hover:text-indigo-700 md:text-4xl"
+                class="ri-messenger-fill text-3xl text-hearthlight hover:text-hearthlight-deep md:text-4xl"
             ></i>
         </ShareNetwork>
         <ShareNetwork
@@ -37,7 +37,7 @@
                 role="button"
                 title="Share on Twitter"
                 aria-label="Share on Twitter"
-                class="ri-twitter-fill text-3xl text-indigo-500 hover:text-indigo-700 md:text-4xl"
+                class="ri-twitter-fill text-3xl text-hearthlight hover:text-hearthlight-deep md:text-4xl"
             ></i>
         </ShareNetwork>
         <ShareNetwork
@@ -50,7 +50,7 @@
                 role="button"
                 title="Share on email"
                 aria-label="Share on email"
-                class="ri-mail-fill text-3xl text-indigo-500 hover:text-indigo-700 md:text-4xl"
+                class="ri-mail-fill text-3xl text-hearthlight hover:text-hearthlight-deep md:text-4xl"
             ></i>
         </ShareNetwork>
         <ShareNetwork
@@ -63,7 +63,7 @@
                 role="button"
                 title="Share SMS message"
                 aria-label="Share SMS message"
-                class="ri-message-2-fill text-3xl text-indigo-500 hover:text-indigo-700 md:text-4xl"
+                class="ri-message-2-fill text-3xl text-hearthlight hover:text-hearthlight-deep md:text-4xl"
             ></i>
         </ShareNetwork>
     </div>

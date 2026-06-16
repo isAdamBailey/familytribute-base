@@ -5,7 +5,7 @@
         <JetBanner />
 
         <div
-            class="min-h-screen bg-gradient-to-r from-indigo-100 to-gray-100 to-indigo-300 dark:from-indigo-900"
+            class="min-h-screen bg-gradient-to-br from-amber-50 via-stone-50 to-amber-100 dark:from-stone-950 dark:via-stone-900 dark:to-amber-950"
         >
             <PrimaryNav />
 
@@ -15,7 +15,7 @@
                 class="bg-white shadow dark:bg-gray-900"
             >
                 <div
-                    class="mx-auto max-w-7xl py-3 px-4 leading-tight text-gray-800 dark:text-indigo-300 sm:px-6 lg:px-8"
+                    class="mx-auto max-w-7xl py-3 px-4 leading-tight text-gray-800 dark:text-amber-300 sm:px-6 lg:px-8"
                 >
                     <slot name="header"></slot>
                 </div>
@@ -26,10 +26,10 @@
                 <div class="py-5 md:py-12">
                     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                         <div
-                            class="overflow-hidden rounded-lg bg-white shadow-xl shadow-indigo-200/50"
+                            class="overflow-hidden rounded-lg bg-white shadow-xl shadow-amber-200/50"
                         >
                             <div
-                                class="border-b border-gray-200 bg-white p-6 pb-20 dark:border-indigo-300 dark:bg-gray-800 sm:px-20"
+                                class="border-b border-gray-200 bg-white p-6 pb-20 dark:border-stone-700 dark:bg-gray-800 sm:px-20"
                             >
                                 <slot></slot>
                             </div>

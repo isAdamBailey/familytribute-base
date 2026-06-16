@@ -7,7 +7,7 @@
             :key="index"
             prefetch
             :href="route('people.show', person.slug)"
-            class="rounded-lg bg-white shadow-indigo-200/50 transition hover:opacity-80 hover:shadow-xl hover:shadow-indigo-300/50"
+            class="rounded-lg bg-white shadow-amber-200/50 transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-amber-300/50"
         >
             <img
                 class="h-48 w-full rounded-t-lg object-cover"

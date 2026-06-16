@@ -4,7 +4,7 @@
         class="invisible sticky bottom-0 flex w-full justify-end pb-3 pr-5 transition lg:pr-16"
     >
         <div
-            class="cursor-pointer rounded-full text-gray-700 transition hover:text-indigo-600 dark:text-orange-600 dark:hover:text-orange-500"
+            class="cursor-pointer rounded-full text-gray-700 transition hover:text-hearthlight dark:text-amber-500 dark:hover:text-amber-400"
         >
             <button
                 role="button"

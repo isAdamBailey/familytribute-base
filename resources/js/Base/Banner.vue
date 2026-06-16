@@ -3,7 +3,7 @@
         <div
             v-if="show && message"
             :class="{
-                'bg-indigo-500': style === 'success',
+                'bg-emerald-600': style === 'success',
                 'bg-red-700': style === 'danger',
             }"
         >
@@ -13,7 +13,7 @@
                         <span
                             class="flex rounded-lg p-2"
                             :class="{
-                                'bg-indigo-600': style === 'success',
+                                'bg-emerald-700': style === 'success',
                                 'bg-red-600': style === 'danger',
                             }"
                         >
@@ -60,7 +60,7 @@
                             type="button"
                             class="-mr-1 flex rounded-md p-2 transition focus:outline-none sm:-mr-2"
                             :class="{
-                                'hover:bg-indigo-600 focus:bg-indigo-600':
+                                'hover:bg-emerald-700 focus:bg-emerald-700':
                                     style === 'success',
                                 'hover:bg-red-600 focus:bg-red-600':
                                     style === 'danger',

@@ -7,7 +7,7 @@
 
         <div class="mt-8 mb-3 flex flex-wrap-reverse justify-between">
             <h1
-                class="font-header text-5xl text-gray-800 dark:text-indigo-400 md:text-7xl"
+                class="font-header text-5xl text-gray-800 dark:text-amber-400 md:text-7xl"
             >
                 {{ picture.title }}
             </h1>
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="flex flex-wrap items-center justify-between">
-            <p class="text-gray-800 dark:text-indigo-400 md:mb-7">
+            <p class="text-gray-800 dark:text-amber-400 md:mb-7">
                 Taken in or around
                 <span class="font-semibold">{{ picture.year }}</span>
             </p>

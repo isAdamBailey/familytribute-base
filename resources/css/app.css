@@ -5,7 +5,7 @@
 @layer base {
     .html-content a,
     .ProseMirror a {
-        @apply font-bold text-sky-500 underline decoration-sky-500 underline-offset-1 transition hover:decoration-2;
+        @apply font-bold text-hearthlight underline decoration-hearthlight underline-offset-1 transition hover:decoration-2;
     }
 
     .html-content h2,
@@ -19,7 +19,7 @@
     }
 
     .html-content blockquote p {
-        @apply text-gray-800 dark:text-indigo-300;
+        @apply text-gray-800 dark:text-amber-300;
     }
 
     .html-content strong {
@@ -29,6 +29,6 @@
 
 @layer utilities {
     .card-text-gradient {
-        @apply bg-gradient-to-tl from-indigo-200 via-violet-200;
+        @apply bg-gradient-to-tl from-amber-50 via-orange-50;
     }
 }

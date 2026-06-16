@@ -3,18 +3,18 @@
         <template #header> Dashboard </template>
 
         <div
-            class="border-b border-gray-200 bg-white p-6 dark:border-indigo-300 dark:bg-gray-900 sm:px-20"
+            class="border-b border-gray-200 bg-white p-6 dark:border-stone-700 dark:bg-gray-900 sm:px-20"
         >
             <div class="flex items-baseline">
                 <JetApplicationMark class="block h-12 w-auto" />
                 <div
-                    class="ml-3 font-header text-3xl text-gray-800 dark:text-indigo-500 md:text-5xl"
+                    class="ml-3 font-header text-3xl text-gray-800 dark:text-amber-400 md:text-5xl"
                 >
                     {{ page.props.settings.title }}
                 </div>
             </div>
 
-            <div class="mt-8 text-2xl text-gray-800 dark:text-indigo-300">
+            <div class="mt-8 text-2xl text-gray-800 dark:text-amber-300">
                 Welcome to {{ page.props.settings.title }}'s dashboard,
                 {{ user.name }}!
             </div>
@@ -23,7 +23,7 @@
                 If nothing has been added to the site yet,
                 <strong>this is where you start!</strong>
             </InfoText>
-            <div class="mt-6 text-gray-500 dark:text-indigo-300">
+            <div class="mt-6 text-gray-500 dark:text-amber-300">
                 <p>
                     Here you can add new stories, photos, obituaries and more!
                 </p>
@@ -31,7 +31,7 @@
                     <li class="ml-4">
                         We suggest starting by adding
                         <a
-                            class="font-bold text-sky-500 underline decoration-sky-500 underline-offset-1 transition hover:decoration-2"
+                            class="font-bold text-hearthlight underline decoration-hearthlight underline-offset-1 transition hover:decoration-2"
                             href="#new-person"
                             >a person</a
                         >
@@ -42,7 +42,7 @@
                         home page, turn off registration, or change the
                         registration secret, go to
                         <a
-                            class="font-bold text-sky-500 underline decoration-sky-500 underline-offset-1 transition hover:decoration-2"
+                            class="font-bold text-hearthlight underline decoration-hearthlight underline-offset-1 transition hover:decoration-2"
                             href="#site-settings"
                             >site settings</a
                         >.

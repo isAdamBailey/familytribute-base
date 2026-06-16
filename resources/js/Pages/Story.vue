@@ -7,11 +7,11 @@
 
         <div class="mt-8 mb-3 flex flex-wrap-reverse justify-between">
             <h1
-                class="relative font-header text-5xl text-gray-800 dark:text-indigo-400 md:text-7xl"
+                class="relative font-header text-5xl text-gray-800 dark:text-amber-400 md:text-7xl"
             >
                 <EmbeddedIcon
                     :item="story"
-                    color="text-gray-900 dark:text-indigo-300"
+                    color="text-gray-900 dark:text-amber-300"
                 />
                 {{ story.title }}
             </h1>
@@ -33,7 +33,7 @@
         </div>
 
         <div class="flex flex-wrap items-center justify-between">
-            <p v-if="story.year" class="text-gray-800 dark:text-indigo-400">
+            <p v-if="story.year" class="text-gray-800 dark:text-amber-400">
                 Written in or around
                 <span class="font-semibold">{{ story.year }}</span>
             </p>
@@ -47,9 +47,9 @@
 
         <div
             v-if="story.media_url"
-            class="mt-6 rounded-xl border border-indigo-100 bg-indigo-50 p-4 dark:border-indigo-800 dark:bg-indigo-950/40"
+            class="mt-6 rounded-xl border border-amber-100 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950/40"
         >
-            <div class="mb-3 flex items-center gap-2 text-indigo-700 dark:text-indigo-300">
+            <div class="mb-3 flex items-center gap-2 text-hearthlight-deep dark:text-amber-300">
                 <i :class="isVideo ? 'ri-video-line' : 'ri-headphone-line'" class="text-lg"></i>
                 <span class="text-sm font-medium">
                     {{ isVideo ? 'Video recording' : 'Audio recording' }} of this story being spoken

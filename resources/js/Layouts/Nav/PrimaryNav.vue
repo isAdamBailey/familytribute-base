@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="border-b border-gray-100 bg-white dark:border-indigo-900 dark:bg-gray-900"
+        class="border-b border-gray-100 bg-white dark:border-stone-800 dark:bg-gray-900"
     >
         <!-- Primary Navigation Menu -->
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -10,7 +10,7 @@
                     <Link class="flex items-center" :href="route('home')">
                         <jet-application-mark class="block h-9 w-auto" />
                         <div
-                            class="font-header text-3xl font-bold dark:text-indigo-500 md:text-5xl"
+                            class="font-header text-3xl font-bold text-hearthlight md:text-5xl"
                         >
                             {{ page.props.settings.title }}
                         </div>
@@ -158,7 +158,7 @@
                 <!-- Hamburger -->
                 <div class="-mr-2 flex items-center sm:hidden">
                     <button
-                        class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition hover:bg-gray-100 hover:text-gray-500 focus:text-gray-900 focus:outline-none dark:hover:bg-indigo-300 dark:hover:text-gray-900 dark:focus:bg-indigo-300"
+                        class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition hover:bg-gray-100 hover:text-gray-500 focus:text-gray-900 focus:outline-none dark:hover:bg-amber-900/40 dark:hover:text-amber-100 dark:focus:bg-amber-900/40"
                         @click="
                             showingNavigationDropdown =
                                 !showingNavigationDropdown

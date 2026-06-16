@@ -4,7 +4,7 @@
             <div v-if="!user" class="mt-8 flex items-center justify-center">
                 <Link
                     :href="route('login')"
-                    class="text-gray-900 underline hover:text-gray-500 dark:text-indigo-300 dark:hover:text-gray-100"
+                    class="text-gray-900 underline hover:text-gray-500 dark:text-amber-300 dark:hover:text-gray-100"
                 >
                     Log In
                 </Link>
@@ -12,21 +12,21 @@
                 <Link
                     v-if="settings.registration"
                     :href="route('register')"
-                    class="ml-4 text-gray-900 underline hover:text-gray-500 dark:text-indigo-300 dark:hover:text-gray-100"
+                    class="ml-4 text-gray-900 underline hover:text-gray-500 dark:text-amber-300 dark:hover:text-gray-100"
                 >
                     Register
                 </Link>
             </div>
             <div
-                class="mt-16 flex flex-col items-center border-t-2 border-gray-300 dark:border-indigo-300"
+                class="mt-16 flex flex-col items-center border-t-2 border-gray-300 dark:border-amber-900"
             >
                 <div class="py-6 text-center sm:w-2/3">
                     <p
-                        class="mb-2 text-sm font-bold text-indigo-700 dark:text-indigo-300"
+                        class="mb-2 text-sm font-bold text-hearthlight-deep dark:text-amber-300"
                     >
                         © {{ currentYear }} by
                         <a
-                            class="text-indigo-700 decoration-indigo-800 hover:text-indigo-800 hover:underline dark:text-indigo-300 dark:hover:text-indigo-500"
+                            class="text-hearthlight-deep decoration-hearthlight-deep hover:text-hearthlight hover:underline dark:text-amber-300 dark:hover:text-amber-400"
                             href="https://adambailey.io"
                             >Adam Bailey</a
                         >
