@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="editor"
-        class="rounded-md border border-gray-300 bg-white shadow-sm"
+        class="rounded-md border border-gray-200 bg-white shadow-sm focus-within:border-hearthlight/50 focus-within:ring-1 focus-within:ring-hearthlight/20 dark:border-stone-600 dark:bg-gray-800"
     >
         <wysiwyg-button
             icon="ri-paragraph"
@@ -187,7 +187,7 @@ export default {
         this.editor = new Editor({
             editorProps: {
                 attributes: {
-                    class: "prose max-w-full h-48 my-2 mx-5 border-t overflow-y-auto focus:outline-none",
+                    class: "prose max-w-full h-48 my-2 mx-5 border-t border-gray-200 overflow-y-auto focus:outline-none dark:border-stone-600 dark:prose-invert",
                 },
             },
             extensions: [
