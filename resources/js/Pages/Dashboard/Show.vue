@@ -5,13 +5,10 @@
         <div
             class="border-b border-gray-200 bg-white p-6 dark:border-stone-700 dark:bg-gray-900 sm:px-20"
         >
-            <div class="flex items-baseline">
-                <JetApplicationMark class="block h-12 w-auto" />
-                <div
-                    class="ml-3 font-header text-3xl text-gray-800 dark:text-amber-400 md:text-5xl"
-                >
-                    {{ page.props.settings.title }}
-                </div>
+            <div
+                class="font-header text-3xl text-gray-800 dark:text-amber-400 md:text-5xl"
+            >
+                {{ page.props.settings.title }}
             </div>
 
             <div class="mt-8 text-2xl text-gray-800 dark:text-amber-300">
@@ -70,7 +67,6 @@
 </template>
 
 <script setup>
-import JetApplicationMark from "@/Base/ApplicationMark.vue";
 import InfoText from "@/Base/InfoText.vue";
 import JetSectionBorder from "@/Base/SectionBorder.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";

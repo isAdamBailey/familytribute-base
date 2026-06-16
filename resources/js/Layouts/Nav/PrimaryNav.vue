@@ -8,7 +8,6 @@
                 <div class="flex">
                     <!-- Logo -->
                     <Link class="flex items-center" :href="route('home')">
-                        <jet-application-mark class="block h-9 w-auto" />
                         <div
                             class="font-header text-3xl font-bold text-hearthlight md:text-5xl"
                         >
@@ -302,7 +301,6 @@
 <script setup>
 import { ref } from "vue";
 import { usePage, router } from "@inertiajs/vue3";
-import JetApplicationMark from "@/Base/ApplicationMark.vue";
 import JetDropdown from "@/Base/Dropdown.vue";
 import JetDropdownLink from "@/Base/DropdownLink.vue";
 import JetNavLink from "@/Base/NavLink.vue";

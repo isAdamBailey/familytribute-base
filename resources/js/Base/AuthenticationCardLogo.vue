@@ -1,18 +1,15 @@
 <template>
     <Link :href="'/'">
-        <application-mark class="h-20 w-20" />
+        <div
+            class="font-header text-3xl font-bold text-hearthlight md:text-5xl"
+        >
+            {{ page.props.settings.title }}
+        </div>
     </Link>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-import { Link } from "@inertiajs/vue3";
-import ApplicationMark from "@/Base/ApplicationMark.vue";
+<script setup>
+import { Link, usePage } from "@inertiajs/vue3";
 
-export default defineComponent({
-    components: {
-        ApplicationMark,
-        Link,
-    },
-});
+const page = usePage();
 </script>
