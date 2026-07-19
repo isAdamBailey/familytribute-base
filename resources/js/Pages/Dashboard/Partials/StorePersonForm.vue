@@ -1,5 +1,9 @@
 <template>
-    <JetFormSection :full="true" @submitted="storeObituary">
+    <JetFormSection
+        test-id="person-create-form"
+        :full="true"
+        @submitted="storeObituary"
+    >
         <template #title> New Person</template>
 
         <template #description>
@@ -14,6 +18,7 @@
                         <input
                             ref="photo"
                             type="file"
+                            data-testid="person-photo-input"
                             class="hidden"
                             @change="updatePhotoPreview"
                         />
@@ -50,6 +55,7 @@
                         <input
                             ref="bg_photo"
                             type="file"
+                            data-testid="person-background-photo-input"
                             class="hidden"
                             @change="updateBackgroundPhotoPreview"
                         />
@@ -121,7 +127,9 @@
                 <div class="-mx-3 flex flex-wrap">
                     <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
                         <JetLabel for="birth_date" value="Birth Date" />
-                        <DatePicker v-model="form.birth_date" />
+                        <div data-testid="person-birth-date">
+                            <DatePicker v-model="form.birth_date" />
+                        </div>
                         <JetInputError
                             :message="form.errors.birth_date"
                             class="mt-2"
@@ -129,7 +137,9 @@
                     </div>
                     <div class="w-full px-3 md:w-1/2">
                         <JetLabel for="death_date" value="Death Date" />
-                        <DatePicker v-model="form.death_date" />
+                        <div data-testid="person-death-date">
+                            <DatePicker v-model="form.death_date" />
+                        </div>
                         <JetInputError
                             :message="form.errors.death_date"
                             class="mt-2"
@@ -153,13 +163,14 @@
 
             <div class="col-span-6">
                 <JetLabel for="content" value="Obituary" />
-                <wysiwyg v-model="form.content" />
+                <wysiwyg test-id="person-obituary" v-model="form.content" />
                 <JetInputError :message="form.errors.content" class="mt-2" />
             </div>
         </template>
 
         <template #actions>
             <base-button
+                data-testid="person-create-submit"
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
             >

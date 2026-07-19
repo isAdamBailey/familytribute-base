@@ -1,5 +1,9 @@
 <template>
-    <JetFormSection :full="true" @submitted="storePicture">
+    <JetFormSection
+        test-id="picture-create-form"
+        :full="true"
+        @submitted="storePicture"
+    >
         <template #title> New Picture </template>
 
         <template #description>
@@ -11,6 +15,7 @@
                 <input
                     ref="photoInput"
                     type="file"
+                    data-testid="picture-photo-input"
                     class="hidden"
                     @change="updatePhotoPreview"
                 />
@@ -52,7 +57,10 @@
 
             <div class="col-span-6">
                 <JetLabel for="description" value="Description" />
-                <wysiwyg v-model="form.description" />
+                <wysiwyg
+                    test-id="picture-description"
+                    v-model="form.description"
+                />
                 <JetInputError
                     :message="form.errors.description"
                     class="mt-2"
@@ -113,6 +121,7 @@
 
         <template #actions>
             <BaseButton
+                data-testid="picture-create-submit"
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
             >

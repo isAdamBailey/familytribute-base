@@ -8,7 +8,7 @@
         </jet-section-title>
 
         <div class="mt-5 md:col-span-2 md:mt-0">
-            <form @submit.prevent="$emit('submitted')">
+            <form :data-testid="testId" @submit.prevent="$emit('submitted')">
                 <div
                     class="bg-white px-4 py-5 shadow dark:bg-gray-700 sm:p-6"
                     :class="
@@ -48,6 +48,10 @@ export default defineComponent({
         full: {
             type: Boolean,
             default: false,
+        },
+        testId: {
+            type: String,
+            default: null,
         },
     },
 

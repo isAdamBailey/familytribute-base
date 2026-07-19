@@ -30,6 +30,7 @@ Tests use SQLite in-memory (configured in `phpunit.xml`). Only Feature tests exi
 sail test                                            # Run all tests
 sail test --filter PersonTest                        # Run a single test class
 sail test tests/Feature/StoriesTest.php              # Run a single file
+npm run test:e2e                                     # Playwright e2e (see e2e/README.md)
 ```
 
 ### Code Style

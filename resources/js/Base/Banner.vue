@@ -50,7 +50,10 @@
                             </svg>
                         </span>
 
-                        <p class="ml-3 truncate text-sm font-medium text-white">
+                        <p
+                            data-testid="flash-banner"
+                            class="ml-3 truncate text-sm font-medium text-white"
+                        >
                             {{ message }}
                         </p>
                     </div>
@@ -92,14 +95,20 @@
 
 <script setup>
 import { usePage } from "@inertiajs/vue3";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
-const jetstream = usePage().props.jetstream;
+const page = usePage();
 const show = ref(true);
 const style = computed(() => {
-    return jetstream.flash?.bannerStyle || "success";
+    return page.props.jetstream?.flash?.bannerStyle || "success";
 });
 const message = computed(() => {
-    return jetstream.flash?.banner || "";
+    return page.props.jetstream?.flash?.banner || "";
+});
+
+watch(message, (value) => {
+    if (value) {
+        show.value = true;
+    }
 });
 </script>

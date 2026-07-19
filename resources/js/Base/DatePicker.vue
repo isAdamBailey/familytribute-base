@@ -1,7 +1,9 @@
 <template>
     <datepicker
-        :model-value="date"
-        format="PPP"
+        :model-value="modelValue"
+        model-type="yyyy-MM-dd"
+        format="yyyy-MM-dd"
+        text-input
         :enable-time-picker="false"
         :year-range="[1850, 2040]"
         auto-apply
@@ -18,14 +20,17 @@ export default defineComponent({
     components: { Datepicker },
 
     props: {
-        date: String,
+        modelValue: {
+            type: [String, null],
+            default: null,
+        },
     },
 
     emits: ["update:modelValue"],
 
     methods: {
         onUpdateDate(event) {
-            this.$emit("update:modelValue", event);
+            this.$emit("update:modelValue", event || null);
         },
     },
 });

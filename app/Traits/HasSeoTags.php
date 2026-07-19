@@ -75,8 +75,8 @@ trait HasSeoTags
         $twitter = new TwitterCardPackage('twitter');
 
         $twitter->setType($this->getTwitterType())
-            ->setSite(config('meta_tags.twitter.site'))
-            ->setCreator(config('meta_tags.twitter.creator'))
+            ->setSite((string) (config('meta_tags.twitter.site') ?? ''))
+            ->setCreator((string) (config('meta_tags.twitter.creator') ?? ''))
             ->setTitle($this->getTitle())
             ->setDescription($this->getDescription())
             ->setImage($this->getTwitterImage());
@@ -141,7 +141,7 @@ trait HasSeoTags
 
     public function getOgImage(): string
     {
-        return $this->ogImage ?: config('meta_tags.image.default');
+        return $this->ogImage ?: (string) (config('meta_tags.image.default') ?? '');
     }
 
     public function setTwitterImage(string $twitterImage)

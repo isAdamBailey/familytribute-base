@@ -1,5 +1,9 @@
 <template>
-    <JetFormSection :full="true" @submitted="storeStory">
+    <JetFormSection
+        test-id="story-create-form"
+        :full="true"
+        @submitted="storeStory"
+    >
         <template #title> New Story </template>
 
         <template #description>
@@ -21,13 +25,17 @@
 
             <div class="col-span-6">
                 <JetLabel for="excerpt" value="Excerpt" />
-                <wysiwyg v-model="form.excerpt" :max-character-count="250" />
+                <wysiwyg
+                    test-id="story-excerpt"
+                    v-model="form.excerpt"
+                    :max-character-count="250"
+                />
                 <JetInputError :message="form.errors.excerpt" class="mt-2" />
             </div>
 
             <div class="col-span-6">
                 <JetLabel for="content" value="Story" />
-                <wysiwyg v-model="form.content" />
+                <wysiwyg test-id="story-content" v-model="form.content" />
                 <JetInputError :message="form.errors.content" class="mt-2" />
             </div>
 
@@ -72,6 +80,7 @@
                 <InfoText>Upload a recording of this story being spoken</InfoText>
                 <input
                     id="media"
+                    data-testid="story-media-input"
                     type="file"
                     accept="audio/*,video/*"
                     class="mt-1 block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-amber-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-hearthlight-deep hover:file:bg-amber-100 dark:text-gray-300 dark:file:bg-amber-900 dark:file:text-amber-300"
@@ -83,6 +92,7 @@
 
         <template #actions>
             <BaseButton
+                data-testid="story-create-submit"
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
             >

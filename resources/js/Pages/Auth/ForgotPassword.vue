@@ -18,7 +18,7 @@
 
         <JetValidationErrors class="mb-4" />
 
-        <form @submit.prevent="submit">
+        <form data-testid="forgot-password-form" @submit.prevent="submit">
             <div>
                 <JetLabel for="email" value="Email" />
                 <JetInput
@@ -33,6 +33,7 @@
 
             <div class="mt-4 flex items-center justify-end">
                 <BaseButton
+                    data-testid="forgot-password-submit"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >

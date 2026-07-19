@@ -11,6 +11,7 @@
 /vendor
 .env
 .env.backup
+.env.e2e
 .phpunit.result.cache
 .php-cs-fixer.cache
 .eslintcache
@@ -21,3 +22,8 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/database/e2e.sqlite
+/playwright-report
+/test-results
+/blob-report
+/playwright/.cache

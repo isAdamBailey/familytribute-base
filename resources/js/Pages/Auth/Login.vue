@@ -12,7 +12,7 @@
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
+        <form data-testid="login-form" @submit.prevent="submit">
             <div>
                 <JetLabel for="email" value="Email" />
                 <JetInput
@@ -57,6 +57,7 @@
                 </Link>
 
                 <BaseButton
+                    data-testid="login-submit"
                     class="ml-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"

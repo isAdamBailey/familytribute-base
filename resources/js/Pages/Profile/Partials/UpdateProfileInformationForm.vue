@@ -1,5 +1,8 @@
 <template>
-    <JetFormSection @submitted="updateProfileInformation">
+    <JetFormSection
+        test-id="profile-information-form"
+        @submitted="updateProfileInformation"
+    >
         <template #title> Profile Information </template>
 
         <template #description>

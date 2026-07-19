@@ -131,8 +131,15 @@ class ObituaryController extends Controller
         $obituary = Obituary::find($id);
         $person = $obituary->person;
 
-        Storage::disk('s3')->delete($person->photo_url);
-        Storage::disk('s3')->delete($obituary->background_photo_url);
+        $photoPath = $person->getRawOriginal('photo_url');
+        if (is_string($photoPath) && $photoPath !== '' && ! str_starts_with($photoPath, 'https://')) {
+            Storage::disk('s3')->delete($photoPath);
+        }
+
+        $backgroundPath = $obituary->getRawOriginal('background_photo_url');
+        if (is_string($backgroundPath) && $backgroundPath !== '' && ! str_starts_with($backgroundPath, 'https://')) {
+            Storage::disk('s3')->delete($backgroundPath);
+        }
 
         $person->stories()->detach();
         $person->pictures()->detach();

@@ -8,7 +8,7 @@
 
         <JetValidationErrors class="mb-4" />
 
-        <form @submit.prevent="submit">
+        <form data-testid="register-form" @submit.prevent="submit">
             <div>
                 <JetLabel for="name" value="Name" />
                 <JetInput
@@ -112,6 +112,7 @@
                 </Link>
 
                 <BaseButton
+                    data-testid="register-submit"
                     class="ml-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
