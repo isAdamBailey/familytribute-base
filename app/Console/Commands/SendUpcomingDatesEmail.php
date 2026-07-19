@@ -68,13 +68,14 @@ class SendUpcomingDatesEmail extends Command
 
     private function getThisWeeksObituaries($date): Collection|array
     {
-        return Obituary::all()->load('person')->filter(function ($obit) use ($date) {
-            $date = Carbon::parse($obit->$date);
+        $windowStart = now()->startOfDay()->toImmutable();
+        $windowEnd = $windowStart->addWeek();
 
-            return $date->setYear(now()->year)
-                ->between(now()->startOfDay(), now()->startOfDay()->addWeek())
-                || $date->setYear(now()->addWeek()->year)
-                    ->between(now()->startOfDay(), now()->startOfDay()->addWeek());
+        return Obituary::all()->load('person')->filter(function ($obit) use ($date, $windowStart, $windowEnd) {
+            $anniversary = Carbon::parse($obit->$date)->toImmutable();
+
+            return $anniversary->setYear($windowStart->year)->between($windowStart, $windowEnd)
+                || $anniversary->setYear($windowEnd->year)->between($windowStart, $windowEnd);
         });
     }
 }

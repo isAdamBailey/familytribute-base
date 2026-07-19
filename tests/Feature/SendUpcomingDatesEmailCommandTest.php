@@ -5,15 +5,28 @@ namespace Tests\Feature;
 use App\Mail\UpcomingDates;
 use App\Models\Obituary;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class SendUpcomingDatesEmailCommandTest extends TestCase
 {
     use RefreshDatabase;
-    use WithFaker;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Carbon::setTestNow(Carbon::parse('2026-07-15 12:00:00', 'UTC'));
+    }
+
+    protected function tearDown(): void
+    {
+        Carbon::setTestNow();
+
+        parent::tearDown();
+    }
 
     public function test_send_upcoming_dates_if_no_dates_exist()
     {
@@ -35,7 +48,8 @@ class SendUpcomingDatesEmailCommandTest extends TestCase
         User::factory()->count(5)->create();
 
         Obituary::factory()->create([
-            'birth_date' => $this->faker->dateTimeBetween('now', '+1 week'),
+            'birth_date' => '2026-07-18',
+            'death_date' => '1990-01-01',
         ]);
 
         $this->artisan('email:upcoming_dates')
@@ -52,7 +66,8 @@ class SendUpcomingDatesEmailCommandTest extends TestCase
         User::factory()->count(5)->create();
 
         Obituary::factory()->create([
-            'death_date' => $this->faker->dateTimeBetween('now', '+1 week'),
+            'birth_date' => '1990-01-01',
+            'death_date' => '2026-07-20',
         ]);
 
         $this->artisan('email:upcoming_dates')
@@ -69,11 +84,13 @@ class SendUpcomingDatesEmailCommandTest extends TestCase
         User::factory()->count(5)->create();
 
         Obituary::factory()->create([
-            'death_date' => $this->faker->dateTimeBetween('-2 days', '-1 days'),
+            'birth_date' => '1990-01-01',
+            'death_date' => '2026-07-13',
         ]);
 
         Obituary::factory()->create([
-            'birth_date' => $this->faker->dateTimeBetween('+8 days', '+9 days'),
+            'birth_date' => '2026-07-23',
+            'death_date' => '1990-01-01',
         ]);
 
         $this->artisan('email:upcoming_dates')
