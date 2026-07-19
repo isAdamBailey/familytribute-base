@@ -37,7 +37,7 @@ Route::get('/stories', [StoryController::class, 'index'])->name('api.stories.ind
 Route::get('/stories/{story}', [StoryController::class, 'show'])->name('api.stories.show');
 Route::get('/site-settings', [SiteSettingController::class, 'show'])->name('api.site-settings.show');
 
-Route::middleware(['auth:sanctum', 'verified', 'team'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/pictures', [PictureController::class, 'store'])->name('api.pictures.store');
     Route::put('/pictures/{picture}', [PictureController::class, 'update'])->name('api.pictures.update');
     Route::delete('/pictures/{picture}', [PictureController::class, 'destroy'])->name('api.pictures.destroy');
