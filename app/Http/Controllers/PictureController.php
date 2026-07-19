@@ -86,7 +86,7 @@ class PictureController extends Controller
             'year' => $request->year,
             'featured' => $request->featured,
             'private' => $request->private,
-            'url' => $request->file('photo')->storePublicly('pictures'),
+            'url' => $request->file('photo')->storePublicly('pictures', 's3'),
         ]);
 
         if (! empty($request->person_ids)) {
@@ -132,7 +132,7 @@ class PictureController extends Controller
 
         if ($request->file('photo')) {
             Storage::disk('s3')->delete($picture->url);
-            $picture->url = $request->file('photo')->storePublicly('pictures');
+            $picture->url = $request->file('photo')->storePublicly('pictures', 's3');
         }
 
         if (isset($request->person_ids)) {

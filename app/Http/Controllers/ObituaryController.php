@@ -28,11 +28,11 @@ class ObituaryController extends Controller
         ]);
 
         $mainPhotoUrl = $request->file('photo')
-            ? $request->file('photo')->storePublicly('obituaries')
+            ? $request->file('photo')->storePublicly('obituaries', 's3')
             : '';
 
         $backgroundPhotoUrl = $request->file('background_photo')
-            ? $request->file('background_photo')->storePublicly('obituaries')
+            ? $request->file('background_photo')->storePublicly('obituaries', 's3')
             : null;
 
         $person = Person::create([
@@ -89,7 +89,7 @@ class ObituaryController extends Controller
             if (! empty($person->photo_url)) {
                 Storage::disk('s3')->delete($person->photo_url);
             }
-            $person->photo_url = $request->file('photo')->storePublicly('obituaries');
+            $person->photo_url = $request->file('photo')->storePublicly('obituaries', 's3');
         }
 
         if (isset($request->parent_ids)) {
@@ -116,7 +116,7 @@ class ObituaryController extends Controller
             if (! empty($obituary->background_photo_url)) {
                 Storage::disk('s3')->delete($obituary->background_photo_url);
             }
-            $obituary->background_photo_url = $request->file('background_photo')->storePublicly('obituaries');
+            $obituary->background_photo_url = $request->file('background_photo')->storePublicly('obituaries', 's3');
         }
 
         $obituary->save();
