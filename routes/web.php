@@ -7,6 +7,7 @@ use App\Http\Controllers\PersonController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\SiteSettingController;
 use App\Http\Controllers\StoryController;
+use App\Http\Controllers\TeamRouteRemovedController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -45,15 +46,15 @@ Route::get('/{person}', [PersonController::class, 'show'])->name('people.show');
 // so requests 404 instead of reaching the vendor controllers. The Team
 // model, membership plumbing, and EnsureHasTeam middleware stay intact.
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/teams/create', fn () => abort(404));
-    Route::post('/teams', fn () => abort(404));
-    Route::get('/teams/{team}', fn () => abort(404));
-    Route::put('/teams/{team}', fn () => abort(404));
-    Route::delete('/teams/{team}', fn () => abort(404));
-    Route::post('/teams/{team}/members', fn () => abort(404));
-    Route::put('/teams/{team}/members/{user}', fn () => abort(404));
-    Route::delete('/teams/{team}/members/{user}', fn () => abort(404));
-    Route::delete('/team-invitations/{invitation}', fn () => abort(404));
+    Route::get('/teams/create', TeamRouteRemovedController::class);
+    Route::post('/teams', TeamRouteRemovedController::class);
+    Route::get('/teams/{team}', TeamRouteRemovedController::class);
+    Route::put('/teams/{team}', TeamRouteRemovedController::class);
+    Route::delete('/teams/{team}', TeamRouteRemovedController::class);
+    Route::post('/teams/{team}/members', TeamRouteRemovedController::class);
+    Route::put('/teams/{team}/members/{user}', TeamRouteRemovedController::class);
+    Route::delete('/teams/{team}/members/{user}', TeamRouteRemovedController::class);
+    Route::delete('/team-invitations/{invitation}', TeamRouteRemovedController::class);
 });
 
 Route::fallback(function () {
