@@ -1,5 +1,9 @@
 <template>
-    <JetFormSection :full="true" @submitted="updateSettings">
+    <JetFormSection
+        test-id="site-settings-form"
+        :full="true"
+        @submitted="updateSettings"
+    >
         <template #title>Site Settings</template>
 
         <template #description>
@@ -30,7 +34,10 @@
                     This is the text content on the home page. It is also used
                     when sharing pages to social media.
                 </InfoText>
-                <wysiwyg v-model="form.description" />
+                <wysiwyg
+                    test-id="site-settings-description"
+                    v-model="form.description"
+                />
                 <JetInputError
                     :message="form.errors.description"
                     class="mt-2"
@@ -45,6 +52,7 @@
                 >
                 <Checkbox
                     id="registration"
+                    data-testid="registration-enabled"
                     v-model:checked="form.registration"
                     name="registration"
                 />
@@ -80,6 +88,7 @@
 
         <template #actions>
             <BaseButton
+                data-testid="site-settings-submit"
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing || !form.isDirty"
             >

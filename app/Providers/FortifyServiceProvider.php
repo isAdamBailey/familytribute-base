@@ -37,13 +37,27 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         RateLimiter::for('login', function (Request $request) {
+            if ($this->unlimitedForE2e()) {
+                return Limit::none();
+            }
+
             $email = (string) $request->email;
 
             return Limit::perMinute(5)->by($email.$request->ip());
         });
 
         RateLimiter::for('two-factor', function (Request $request) {
+            if ($this->unlimitedForE2e()) {
+                return Limit::none();
+            }
+
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
+    }
+
+    private function unlimitedForE2e(): bool
+    {
+        return filter_var(env('E2E_HELPERS', false), FILTER_VALIDATE_BOOL)
+            || app()->environment('e2e');
     }
 }

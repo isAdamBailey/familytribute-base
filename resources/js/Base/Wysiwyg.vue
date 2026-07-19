@@ -1,6 +1,7 @@
 <template>
     <div
         v-if="editor"
+        :data-testid="testId"
         class="rounded-md border border-gray-200 bg-white shadow-sm focus-within:border-hearthlight/50 focus-within:ring-1 focus-within:ring-hearthlight/20 dark:border-stone-600 dark:bg-gray-800"
     >
         <wysiwyg-button
@@ -150,6 +151,10 @@ export default {
             default: "",
         },
         maxCharacterCount: { type: Number, default: 20000 },
+        testId: {
+            type: String,
+            default: null,
+        },
     },
     emits: ["update:modelValue"],
 

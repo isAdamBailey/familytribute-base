@@ -32,6 +32,7 @@
                 </jet-secondary-button>
 
                 <base-button
+                    data-testid="confirm-password-submit"
                     class="ml-2"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"

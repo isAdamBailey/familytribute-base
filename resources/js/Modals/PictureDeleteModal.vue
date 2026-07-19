@@ -14,6 +14,7 @@
             </JetSecondaryButton>
 
             <JetDangerButton
+                data-testid="confirm-delete-picture"
                 class="ml-2"
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"

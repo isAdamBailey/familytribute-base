@@ -1,5 +1,5 @@
 <template>
-    <JetFormSection @submitted="updatePassword">
+    <JetFormSection test-id="update-password-form" @submitted="updatePassword">
         <template #title> Update Password </template>
 
         <template #description>

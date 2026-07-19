@@ -68,6 +68,7 @@
                     >
                         <base-button
                             type="button"
+                            data-testid="two-factor-enable"
                             :class="{ 'opacity-25': enabling }"
                             :disabled="enabling"
                         >
@@ -99,6 +100,7 @@
                         @confirmed="disableTwoFactorAuthentication"
                     >
                         <jet-danger-button
+                            data-testid="two-factor-disable"
                             :class="{ 'opacity-25': disabling }"
                             :disabled="disabling"
                         >

@@ -20,7 +20,7 @@
 
         <JetValidationErrors class="mb-4" />
 
-        <form @submit.prevent="submit">
+        <form data-testid="two-factor-challenge-form" @submit.prevent="submit">
             <div v-if="!recovery">
                 <JetLabel for="code" value="Code" />
                 <JetInput
@@ -59,6 +59,7 @@
                 </button>
 
                 <BaseButton
+                    data-testid="two-factor-challenge-submit"
                     class="ml-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
