@@ -12,12 +12,12 @@ class DashboardTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_dashboard_component_redirects_if_no_team()
+    public function test_dashboard_component_is_forbidden_if_no_team()
     {
         $this->actingAs(User::factory()->create());
 
         $this->get(route('dashboard'))
-            ->assertRedirect(route('teams.create'));
+            ->assertForbidden();
     }
 
     public function test_dashboard_component()

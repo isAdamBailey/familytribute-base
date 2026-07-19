@@ -39,6 +39,23 @@ Route::middleware(['auth:sanctum', 'verified', 'team'])->group(function () {
 
 Route::get('/{person}', [PersonController::class, 'show'])->name('people.show');
 
+// Team-management is trimmed from this single-team app (Phase 1 of the
+// Nuxt migration, issue #19). These shadow the vendor Jetstream team
+// routes registered in JetstreamServiceProvider (loaded before this file),
+// so requests 404 instead of reaching the vendor controllers. The Team
+// model, membership plumbing, and EnsureHasTeam middleware stay intact.
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/teams/create', fn () => abort(404));
+    Route::post('/teams', fn () => abort(404));
+    Route::get('/teams/{team}', fn () => abort(404));
+    Route::put('/teams/{team}', fn () => abort(404));
+    Route::delete('/teams/{team}', fn () => abort(404));
+    Route::post('/teams/{team}/members', fn () => abort(404));
+    Route::put('/teams/{team}/members/{user}', fn () => abort(404));
+    Route::delete('/teams/{team}/members/{user}', fn () => abort(404));
+    Route::delete('/team-invitations/{invitation}', fn () => abort(404));
+});
+
 Route::fallback(function () {
     return Inertia::render('Error', ['status' => 404]);
 })->name('404.show');

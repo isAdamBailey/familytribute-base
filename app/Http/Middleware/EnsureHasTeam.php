@@ -11,7 +11,7 @@ class EnsureHasTeam
     public function handle(Request $request, Closure $next)
     {
         if (! Team::first()) {
-            return redirect()->route('teams.create');
+            abort(403);
         }
         $this->ensureUserHasCurrentTeamSet();
 

@@ -100,27 +100,6 @@
                                     Dashboard
                                 </jet-dropdown-link>
 
-                                <div v-if="page.props.auth.user.current_team">
-                                    <div
-                                        class="block px-4 py-2 text-xs text-gray-400"
-                                    >
-                                        Manage Team
-                                    </div>
-
-                                    <!-- Team Settings -->
-                                    <jet-dropdown-link
-                                        :href="
-                                            route(
-                                                'teams.show',
-                                                page.props.auth.user
-                                                    .current_team,
-                                            )
-                                        "
-                                    >
-                                        Team Settings
-                                    </jet-dropdown-link>
-                                </div>
-
                                 <!-- Account Management -->
                                 <div
                                     class="block px-4 py-2 text-xs text-gray-400"
@@ -271,19 +250,6 @@
                         :active="route().current('api-tokens.index')"
                     >
                         API Tokens
-                    </jet-responsive-nav-link>
-
-                    <jet-responsive-nav-link
-                        v-if="page.props.auth.user.current_team"
-                        :href="
-                            route(
-                                'teams.show',
-                                page.props.auth.user.current_team,
-                            )
-                        "
-                        :active="route().current('teams.show')"
-                    >
-                        Team Settings
                     </jet-responsive-nav-link>
 
                     <!-- Authentication -->
