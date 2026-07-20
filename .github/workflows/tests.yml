@@ -88,3 +88,61 @@ jobs:
             playwright-report
             test-results
           retention-days: 7
+
+  # Non-gating smoke for the Nuxt frontend migration (issue #19, Phase 2). Boots
+  # the seeded Laravel API + the built Nuxt app and runs the Playwright specs
+  # that already have Nuxt coverage (Home only in Phase 2) against the Nuxt
+  # origin. continue-on-error keeps it OFF the required-checks path: the Inertia
+  # "Playwright e2e" job above remains the release gate. Widen coverage as pages
+  # migrate in later phases; promote to a required check at cutover (Phase 6).
+  e2e-nuxt-smoke:
+    name: Nuxt e2e smoke (non-gating)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, sqlite, pdo_sqlite, gd, bcmath, fileinfo
+          coverage: none
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            frontend/package-lock.json
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Install root npm dependencies (Playwright)
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Install frontend (Nuxt) dependencies
+        run: npm ci
+        working-directory: frontend
+
+      - name: Run Nuxt smoke (Home specs against Nuxt)
+        run: bash e2e/scripts/nuxt-smoke.sh
+        env:
+          CI: true
+          FORCE_COLOR: '0'
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-nuxt
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7
