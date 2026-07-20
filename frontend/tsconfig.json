@@ -1,0 +1,5 @@
+{
+  // https://nuxt.com/docs/guide/concepts/typescript
+  // Nuxt generates the real config under .nuxt; this just references it.
+  "extends": "./.nuxt/tsconfig.json"
+}

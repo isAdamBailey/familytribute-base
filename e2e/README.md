@@ -44,3 +44,31 @@ Use local disk for uploads: leave `AWS_BUCKET` empty so the `s3` disk falls back
 - `php artisan e2e:signed-url password-reset {email}`
 
 Available when `E2E_HELPERS=true` or `APP_ENV` is `local`/`testing`.
+
+## Running against the Nuxt frontend (issue #19 migration)
+
+The suite is `baseURL`-driven, so the same specs can run against either the
+Inertia app or the new Nuxt frontend in `frontend/` (see `frontend/README.md`).
+
+The `default` run (above) is the **release gate** and always targets the
+Inertia app. A separate **non-gating smoke** targets Nuxt for the pages that
+have been migrated (Phase 2: Home only):
+
+```bash
+# Boots seeded Laravel (:8000) + built Nuxt (:3000), runs the Nuxt-covered specs
+bash e2e/scripts/nuxt-smoke.sh
+```
+
+Override coverage as pages migrate: `GREP="home|people" SPEC_FILTER=public.spec.ts bash e2e/scripts/nuxt-smoke.sh`.
+
+To point the suite at an already-running Nuxt server manually:
+
+```bash
+# Nuxt on :3000, seeded Laravel API on :8000
+E2E_BASE_URL=http://localhost:3000 npm run test:e2e -- public.spec.ts --grep "home"
+```
+
+In CI this runs as the `Nuxt e2e smoke (non-gating)` job. It uses
+`continue-on-error`, so a red Nuxt smoke never blocks a merge while the rewrite
+is incomplete — the Inertia `Playwright e2e` job stays the required check until
+cutover (Phase 6).

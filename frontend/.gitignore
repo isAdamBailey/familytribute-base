@@ -1,0 +1,15 @@
+# Nuxt / Node
+node_modules
+*.log*
+.nuxt
+.nitro
+.cache
+.output
+.env
+.env.*
+!.env.example
+.data
+dist
+
+# Self-hosted Google Fonts downloaded at build time
+public/_fonts

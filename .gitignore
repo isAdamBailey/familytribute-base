@@ -27,3 +27,14 @@ yarn-error.log
 /test-results
 /blob-report
 /playwright/.cache
+
+# Nuxt frontend (issue #19 migration) — build artifacts & deps. The frontend/
+# dir also has its own .gitignore; these are duplicated here for git commands
+# run from the repo root.
+/frontend/node_modules
+/frontend/.nuxt
+/frontend/.nitro
+/frontend/.output
+/frontend/.data
+/frontend/dist
+/frontend/.env

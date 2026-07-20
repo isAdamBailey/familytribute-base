@@ -14,6 +14,14 @@ If you are interested in inquiring about FamilyTribute for your family, please c
 - `npm run dev`
 - Navigate to http://localhost/
 
+## Frontend migration (Nuxt 3/4 — in progress)
+
+The frontend is being migrated from Vue 3 + Inertia to a standalone **Nuxt +
+TypeScript** app that consumes the Laravel JSON API (`routes/api.php`). That
+app lives in [`frontend/`](frontend/) and is a work in progress (issue #19); the
+Inertia app in `resources/js` is still the live frontend until cutover. See
+[`frontend/README.md`](frontend/README.md) to run it locally.
+
 
 ## License
 
