@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Nuxt pipeline smoke (issue #19, Phase 2). Boots the seeded Laravel JSON API
+# Nuxt pipeline smoke (issue #19, Phase 2/3). Boots the seeded Laravel JSON API
 # (:8000) plus the built Nuxt frontend (:3000) and runs the Playwright specs
 # that already have Nuxt coverage against the Nuxt origin.
 #
@@ -18,9 +18,10 @@ cd "$ROOT"
 
 NUXT_PORT="${NUXT_PORT:-3000}"
 BACKEND_PORT="${BACKEND_PORT:-8000}"
-# Only Home is migrated to Nuxt in Phase 2.
+# Home (Phase 2) + People/Person/Pictures/Stories/404/SEO (Phase 3) are migrated
+# to Nuxt, i.e. the entire public.spec.ts file — no --grep filter needed.
 SPEC_FILTER="${SPEC_FILTER:-public.spec.ts}"
-GREP="${GREP:-home}"
+GREP="${GREP:-}"
 
 pids=()
 cleanup() {
@@ -85,5 +86,9 @@ until curl -sf "http://127.0.0.1:${BACKEND_PORT}/api/home" >/dev/null 2>&1; do s
 echo "Waiting for Nuxt on :${NUXT_PORT}..."
 until curl -sf -o /dev/null "http://127.0.0.1:${NUXT_PORT}/" >/dev/null 2>&1; do sleep 1; done
 
-echo "Running Nuxt-covered specs (${SPEC_FILTER} --grep ${GREP}) against Nuxt..."
-E2E_BASE_URL="http://localhost:${NUXT_PORT}" npx playwright test "${SPEC_FILTER}" --grep "${GREP}"
+echo "Running Nuxt-covered specs (${SPEC_FILTER}${GREP:+ --grep $GREP}) against Nuxt..."
+if [[ -n "${GREP}" ]]; then
+  E2E_BASE_URL="http://localhost:${NUXT_PORT}" npx playwright test "${SPEC_FILTER}" --grep "${GREP}"
+else
+  E2E_BASE_URL="http://localhost:${NUXT_PORT}" npx playwright test "${SPEC_FILTER}"
+fi

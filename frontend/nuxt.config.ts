@@ -51,10 +51,12 @@ export default defineNuxtConfig({
     // Falls back to the public base when unset. In prod → https://api.familytribute.x/api
     apiBaseServer: '',
     public: {
-      // Browser-facing API base. In prod → https://api.familytribute.x/api
-      apiBase: 'http://localhost:8000/api',
+      // Browser-facing API base. Local dev default matches `sail up` (nginx on
+      // :80, per CLAUDE.md) — not `php artisan serve`'s :8000. In prod →
+      // https://api.familytribute.x/api
+      apiBase: 'http://localhost/api',
       // Origin (no /api) used for the Sanctum CSRF-cookie endpoint.
-      backendOrigin: 'http://localhost:8000',
+      backendOrigin: 'http://localhost',
     },
   },
 

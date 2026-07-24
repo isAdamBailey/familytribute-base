@@ -31,12 +31,15 @@ npm run dev               # Nuxt dev server on http://localhost:3000
 ```
 
 The dev server proxies data from the API base in `.env`
-(`NUXT_PUBLIC_API_BASE`, default `http://localhost:8000/api`).
+(`NUXT_PUBLIC_API_BASE`, default `http://localhost/api` — matches `sail up`'s
+nginx on `:80`; override to `:8000` if running the backend via
+`php artisan serve` instead).
 
 ### Backend config required for cross-origin auth
 
-Because Nuxt (`:3000`) and Laravel (`:8000`) are different origins, the backend
-must trust the Nuxt origin for Sanctum SPA cookie auth. In the Laravel `.env`:
+Because Nuxt (`:3000`) and Laravel (`:80` via Sail) are different origins, the
+backend must trust the Nuxt origin for Sanctum SPA cookie auth. In the Laravel
+`.env`:
 
 ```dotenv
 FRONTEND_URLS=http://localhost:3000          # CORS allow-origin (credentialed)
@@ -73,6 +76,6 @@ Inertia app. Run the Nuxt-covered specs against this app with
 
 | Var | Purpose | Local default |
 |-----|---------|---------------|
-| `NUXT_PUBLIC_API_BASE` | Browser-facing API base (incl. `/api`) | `http://localhost:8000/api` |
-| `NUXT_PUBLIC_BACKEND_ORIGIN` | Origin for the Sanctum CSRF-cookie + Fortify auth routes | `http://localhost:8000` |
+| `NUXT_PUBLIC_API_BASE` | Browser-facing API base (incl. `/api`) | `http://localhost/api` |
+| `NUXT_PUBLIC_BACKEND_ORIGIN` | Origin for the Sanctum CSRF-cookie + Fortify auth routes | `http://localhost` |
 | `NUXT_API_BASE_SERVER` | Optional internal API base for SSR calls | falls back to `NUXT_PUBLIC_API_BASE` |
