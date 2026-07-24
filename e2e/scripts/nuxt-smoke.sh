@@ -63,6 +63,12 @@ export SANCTUM_STATEFUL_DOMAINS="localhost:${NUXT_PORT}"
 
 touch database/e2e.sqlite
 mkdir -p storage/app/public storage/framework/{cache,sessions,views} storage/logs bootstrap/cache
+# The footer Log In/Register links point at the still-live Inertia auth pages
+# (Nuxt has no auth pages until Phase 5), so those pages need a real Vite build
+# too, not just the Nuxt one below.
+if [[ ! -f public/build/manifest.json ]]; then
+  npm run build
+fi
 php artisan config:clear >/dev/null
 php artisan storage:link >/dev/null 2>&1 || true
 php artisan migrate:fresh --seed --force
