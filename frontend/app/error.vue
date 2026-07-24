@@ -23,12 +23,12 @@ function handleBackHome() {
     <p class="mt-4 max-w-md text-faded-ink dark:text-old-binding">
       The page you were looking for could not be found.
     </p>
-    <button
-      type="button"
+    <a
+      href="/"
       class="mt-8 rounded-md bg-hearthlight px-6 py-3 font-semibold text-white shadow-card transition hover:bg-hearthlight-deep hover:shadow-button-hover"
-      @click="handleBackHome"
+      @click.prevent="handleBackHome"
     >
       Back Home
-    </button>
+    </a>
   </div>
 </template>

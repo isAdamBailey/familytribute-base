@@ -13,6 +13,17 @@ const siteDescription = computed(
 )
 const pictures = computed(() => home.value?.pictures ?? [])
 
+// The mosaic's asymmetric layout pins specific picture slots (0-4) to
+// specific grid positions/spans, so each tile needs its own placement class
+// rather than a uniform v-for — this array is what maps slot index to class.
+const mosaicSlots = [
+  { index: 0, class: 'lg:col-span-2' },
+  { index: 1, class: '' },
+  { index: 4, class: 'lg:col-start-4 lg:row-span-2 lg:row-start-1' },
+  { index: 2, class: 'col-span-2 lg:col-span-1 lg:row-start-2' },
+  { index: 3, class: 'lg:col-span-2' },
+]
+
 // Resolve the request URL during setup (calling useRequestURL() lazily inside
 // a useSeoMeta getter runs outside the Nuxt context and throws NUXT_E1001).
 const canonicalUrl = useRequestURL().href
@@ -60,26 +71,24 @@ useSeoMeta({
       </div>
     </section>
 
-    <section v-if="pictures.length" class="mt-16">
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <figure
-          v-for="picture in pictures"
-          :key="picture.url"
-          class="overflow-hidden rounded-lg bg-white shadow-card transition hover:shadow-card-hover dark:bg-inkwell/60"
-        >
-          <img
-            :src="picture.url"
-            :alt="picture.title"
-            class="aspect-[4/3] w-full object-cover"
-            loading="lazy"
-          >
-          <figcaption class="card-text-gradient px-4 py-3 dark:bg-none">
-            <p class="font-semibold text-inkwell dark:text-aged-edge">{{ picture.title }}</p>
-            <p v-if="picture.description" class="mt-1 line-clamp-2 text-sm text-faded-ink dark:text-old-binding">
-              {{ picture.description }}
-            </p>
-          </figcaption>
-        </figure>
+    <section v-if="pictures.length" class="-mx-4 -mb-10 mt-14 sm:-mx-8">
+      <div class="grid grid-cols-2 gap-0.5 lg:grid-cols-4">
+        <template v-for="slot in mosaicSlots" :key="slot.index">
+          <div v-if="pictures[slot.index]" class="group relative overflow-hidden" :class="slot.class">
+            <img
+              :src="pictures[slot.index]!.url"
+              :alt="pictures[slot.index]!.title"
+              loading="lazy"
+              class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+            >
+            <div
+              v-if="pictures[slot.index]!.description"
+              class="absolute inset-x-0 bottom-0 line-clamp-1 bg-hearthlight-deep/60 px-3 py-2.5 text-sm text-hearthlight-subtle backdrop-blur-sm"
+            >
+              {{ pictures[slot.index]!.description }}
+            </div>
+          </div>
+        </template>
       </div>
     </section>
   </div>

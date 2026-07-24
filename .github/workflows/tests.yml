@@ -127,6 +127,12 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
+      - name: Build Inertia frontend
+        # The footer Log In/Register links point at the still-live Inertia
+        # auth pages (Nuxt has no auth pages until Phase 5), so those pages
+        # need a real Vite build here too, not just the Nuxt one below.
+        run: npm run build
+
       - name: Install frontend (Nuxt) dependencies
         run: npm ci
         working-directory: frontend
