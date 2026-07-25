@@ -105,9 +105,9 @@ until curl -sf -o /dev/null "http://127.0.0.1:${NUXT_PORT}/" >/dev/null 2>&1; do
 echo "Running Nuxt-covered specs (${SPEC_FILTER}${GREP:+ --grep $GREP}) against Nuxt..."
 # shellcheck disable=SC2086 # SPEC_FILTER is intentionally a space-separated list of test files.
 if [[ -n "${GREP}" ]]; then
-  E2E_BASE_URL="http://localhost:${NUXT_PORT}" E2E_BACKEND_BASE_URL="http://localhost:${BACKEND_PORT}" \
+  NUXT_E2E=true E2E_BASE_URL="http://localhost:${NUXT_PORT}" E2E_BACKEND_BASE_URL="http://localhost:${BACKEND_PORT}" \
     npx playwright test ${SPEC_FILTER} --grep "${GREP}"
 else
-  E2E_BASE_URL="http://localhost:${NUXT_PORT}" E2E_BACKEND_BASE_URL="http://localhost:${BACKEND_PORT}" \
+  NUXT_E2E=true E2E_BASE_URL="http://localhost:${NUXT_PORT}" E2E_BACKEND_BASE_URL="http://localhost:${BACKEND_PORT}" \
     npx playwright test ${SPEC_FILTER}
 fi
