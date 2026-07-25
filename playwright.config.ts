@@ -4,8 +4,18 @@ import { defineConfig, devices } from '@playwright/test';
 
 const baseURL = process.env.E2E_BASE_URL ?? 'http://127.0.0.1:8000';
 
+// dashboard.spec.ts / account.spec.ts (issue #19, Phase 4) are Nuxt-only —
+// they log in via loginViaApi()/registerViaApi() (no Nuxt login page exists
+// yet, see e2e/helpers/nuxtAuth.ts) and target Nuxt-only routes/testids, so
+// they fail outright against the Inertia app. This config's default target
+// (and CI's gating "Playwright e2e" job, which runs `playwright test` with
+// no file filter) is the Inertia app, so these two are excluded by default.
+// e2e/scripts/nuxt-smoke.sh sets NUXT_E2E=true and passes them explicitly.
+const isNuxtRun = !!process.env.NUXT_E2E;
+
 export default defineConfig({
   testDir: './e2e/tests',
+  testIgnore: isNuxtRun ? undefined : ['**/dashboard.spec.ts', '**/account.spec.ts'],
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,

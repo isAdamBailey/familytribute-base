@@ -12,6 +12,7 @@ export interface User {
   email_verified_at: string | null
   current_team_id?: number | null
   profile_photo_url?: string
+  two_factor_enabled?: boolean
 }
 
 export interface SiteSettings {
@@ -83,6 +84,12 @@ export interface Story {
   // auth-only
   person_ids?: number[]
   private?: boolean
+}
+
+/** Person::allForTagging() — id + name only, auth-only (empty array for guests). */
+export interface TaggingPerson {
+  id: number
+  full_name: string
 }
 
 /** Laravel paginator envelope (lists keep data/links/meta under a named key). */

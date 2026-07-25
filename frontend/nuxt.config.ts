@@ -15,6 +15,13 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
   ],
 
+  // Nuxt's default auto-import prefixes components in subfolders with the
+  // directory name (components/dashboard/CreatePictureForm.vue would become
+  // <DashboardCreatePictureForm>). Phase 4 organizes components into
+  // dashboard/modals/profile subfolders for readability, so pathPrefix is
+  // disabled to keep referencing them by their plain filename everywhere.
+  components: [{ path: '~/components', pathPrefix: false }],
+
   // The Tailwind module owns CSS injection; point it at our entry (which holds
   // the @tailwind directives + ported @layer rules + RemixIcon import) so it
   // isn't double-injected.

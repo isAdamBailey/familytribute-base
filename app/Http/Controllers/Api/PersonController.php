@@ -42,6 +42,13 @@ class PersonController extends Controller
         ]);
     }
 
+    public function tagging(): JsonResponse
+    {
+        return response()->json([
+            'people' => Person::allForTagging(),
+        ]);
+    }
+
     public function show(Person $person): JsonResponse
     {
         $person = $person->load(['obituary', 'pictures', 'stories', 'parents', 'children']);

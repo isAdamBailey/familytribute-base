@@ -1,4 +1,4 @@
-import type { Paginated, Picture } from '~/types/api'
+import type { Paginated, Picture, TaggingPerson } from '~/types/api'
 import type { ListQuery } from '~/composables/useListPage'
 
 /**
@@ -16,7 +16,7 @@ export function usePictures(query: Ref<ListQuery>) {
  * 404s (via Laravel `abort(404)`) when the picture is private and the request is unauthenticated.
  */
 export function usePicture(slug: string) {
-  return useApiFetch<{ picture: Picture }>(`/pictures/${slug}`, {
+  return useApiFetch<{ picture: Picture, people: TaggingPerson[] }>(`/pictures/${slug}`, {
     key: `picture-${slug}`,
   })
 }

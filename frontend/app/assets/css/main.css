@@ -40,3 +40,26 @@
     @apply bg-gradient-to-tl from-amber-50 via-orange-50;
   }
 }
+
+/*
+ * Shared form/button primitives for Phase 4's authenticated CRUD forms
+ * (dashboard create forms, edit/delete modals, profile forms) — centralizes
+ * the Hearthlight styling so each form doesn't repeat long utility strings.
+ */
+@layer components {
+  .btn-primary {
+    @apply rounded-md bg-hearthlight px-4 py-2 text-sm font-semibold text-white shadow-card transition hover:bg-hearthlight-deep disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply rounded-md border border-hearthlight-subtle bg-white px-4 py-2 text-sm font-semibold text-inkwell transition hover:bg-hearthlight-subtle/40 disabled:cursor-not-allowed disabled:opacity-50 dark:border-old-binding/30 dark:bg-inkwell dark:text-aged-edge dark:hover:bg-old-binding/10;
+  }
+
+  .btn-danger {
+    @apply rounded-md bg-red-700 px-4 py-2 text-sm font-semibold text-white shadow-card transition hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .form-input {
+    @apply block w-full rounded-md border border-hearthlight-subtle bg-white px-3 py-2 text-sm text-inkwell shadow-sm focus:border-hearthlight focus:outline-none focus:ring-1 focus:ring-hearthlight dark:border-old-binding/30 dark:bg-inkwell dark:text-aged-edge;
+  }
+}

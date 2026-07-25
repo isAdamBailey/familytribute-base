@@ -57,7 +57,17 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting()
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
+            // The Nuxt frontend (issue #19) hits /api/* far more heavily than the
+            // old Inertia app ever did — every SSR page render fires several
+            // requests (site-settings, tagging options, user, the page's own
+            // resource), so a full e2e run can legitimately clear 60 req/min from
+            // a single IP well before the DB-level assertions it's covering run
+            // out. Raise the ceiling in local/testing/e2e so throttling never
+            // masks real coverage as flaky 429s; production keeps the original
+            // limit.
+            $perMinute = app()->environment(['local', 'testing', 'e2e']) ? 1000 : 60;
+
+            return Limit::perMinute($perMinute)->by(optional($request->user())->id ?: $request->ip());
         });
     }
 }

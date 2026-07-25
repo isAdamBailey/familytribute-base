@@ -13,7 +13,7 @@ const navLinks = [
   { label: 'Stories', to: '/stories' },
 ]
 
-const { isLoggedIn } = useAuth()
+const { user, isLoggedIn, logout } = useAuth()
 const currentYear = new Date().getFullYear()
 
 // Nuxt doesn't have its own Login/Register pages yet (issue #19 Phase 5).
@@ -23,6 +23,13 @@ const currentYear = new Date().getFullYear()
 const config = useRuntimeConfig()
 const loginUrl = computed(() => `${config.public.backendOrigin}/login`)
 const registerUrl = computed(() => `${config.public.backendOrigin}/register`)
+
+const userMenuOpen = ref(false)
+async function handleLogout() {
+  userMenuOpen.value = false
+  await logout()
+  await navigateTo('/')
+}
 </script>
 
 <template>
@@ -53,9 +60,52 @@ const registerUrl = computed(() => `${config.public.backendOrigin}/register`)
               <template #fallback><i class="ri-contrast-2-line"/></template>
             </ClientOnly>
           </button>
+
+          <div v-if="isLoggedIn" class="relative">
+            <button
+              type="button"
+              class="flex rounded-full border-2 border-transparent transition focus:border-hearthlight/50 focus:outline-none"
+              @click="userMenuOpen = !userMenuOpen"
+            >
+              <img
+                :src="user?.profile_photo_url ?? `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name ?? '')}&color=bf8028&background=fbeed9`"
+                :alt="user?.name"
+                class="h-8 w-8 rounded-full object-cover"
+              >
+            </button>
+
+            <div
+              v-if="userMenuOpen"
+              class="absolute right-0 mt-2 w-48 rounded-md border border-hearthlight-subtle bg-white py-1 shadow-card dark:border-old-binding/30 dark:bg-inkwell"
+            >
+              <NuxtLink
+                to="/dashboard"
+                class="block px-4 py-2 text-sm text-inkwell hover:bg-hearthlight-subtle/40 dark:text-aged-edge dark:hover:bg-old-binding/10"
+                @click="userMenuOpen = false"
+              >
+                Dashboard
+              </NuxtLink>
+              <NuxtLink
+                to="/user/profile"
+                class="block px-4 py-2 text-sm text-inkwell hover:bg-hearthlight-subtle/40 dark:text-aged-edge dark:hover:bg-old-binding/10"
+                @click="userMenuOpen = false"
+              >
+                Profile
+              </NuxtLink>
+              <button
+                type="button"
+                class="block w-full px-4 py-2 text-left text-sm text-inkwell hover:bg-hearthlight-subtle/40 dark:text-aged-edge dark:hover:bg-old-binding/10"
+                @click="handleLogout"
+              >
+                Log Out
+              </button>
+            </div>
+          </div>
         </nav>
       </div>
     </header>
+
+    <FlashBanner />
 
     <main class="mx-auto max-w-5xl px-4 py-10">
       <slot />
