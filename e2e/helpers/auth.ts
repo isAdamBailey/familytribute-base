@@ -49,8 +49,8 @@ export async function fillDate(page: Page, wrapperTestId: string, isoDate: strin
   await expect(input).toHaveValue(isoDate);
 }
 
-export async function expectFlash(page: Page, text: string) {
+export async function expectFlash(page: Page, text: string, timeout?: number) {
   const banner = page.getByTestId('flash-banner');
-  await expect(banner).toBeVisible();
-  await expect(banner).toHaveText(text);
+  await expect(banner).toBeVisible({ timeout });
+  await expect(banner).toHaveText(text, { timeout });
 }

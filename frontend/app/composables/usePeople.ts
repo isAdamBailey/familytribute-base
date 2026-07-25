@@ -1,4 +1,4 @@
-import type { Paginated, Person } from '~/types/api'
+import type { Paginated, Person, TaggingPerson } from '~/types/api'
 import type { ListQuery } from '~/composables/useListPage'
 
 /**
@@ -15,7 +15,18 @@ export function usePeople(query: Ref<ListQuery>) {
  * GET /api/people/{slug} → { person: Person, people: PersonRef[] } (allForTagging).
  */
 export function usePerson(slug: string) {
-  return useApiFetch<{ person: Person }>(`/people/${slug}`, {
+  return useApiFetch<{ person: Person, people: TaggingPerson[] }>(`/people/${slug}`, {
     key: `person-${slug}`,
+  })
+}
+
+/**
+ * GET /api/people/tagging → { people: TaggingPerson[] } (allForTagging, no
+ * resource context). Used by the Dashboard's create forms. Auth-only —
+ * resolves to an empty array for guests.
+ */
+export function useTaggingOptions() {
+  return useApiFetch<{ people: TaggingPerson[] }>('/people/tagging', {
+    key: 'people-tagging',
   })
 }

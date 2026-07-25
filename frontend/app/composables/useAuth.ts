@@ -78,15 +78,24 @@ export function useAuth() {
     user.value = null
   }
 
-  /** Load the authenticated user, or null if the session is not valid. */
+  /**
+   * Load the authenticated user, or null if the session is not valid.
+   *
+   * Only a 401 means "not logged in" — any other failure (network blip, 5xx,
+   * a slow response timing out under `php artisan serve`'s single-threaded
+   * dev server during e2e runs) leaves the current `user` state untouched
+   * rather than treating a transient error as a real logout.
+   */
   async function fetchUser() {
     try {
       user.value = await $api<User>('/user')
-    } catch {
-      user.value = null
+    } catch (error) {
+      if (getStatusCode(error) === 401) {
+        user.value = null
+      }
     }
     return user.value
   }
 
-  return { user, isLoggedIn, csrf, login, register, logout, fetchUser }
+  return { user, isLoggedIn, csrf, login, register, logout, fetchUser, backendFetch }
 }

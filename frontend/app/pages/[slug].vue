@@ -2,17 +2,30 @@
 const route = useRoute()
 const slug = route.params.slug as string
 
-const [{ data: settings }, { data, error }] = await Promise.all([
+const { isLoggedIn } = useAuth()
+const [{ data: settings }, { data, error, refresh }] = await Promise.all([
   useSiteSettings(),
   usePerson(slug),
 ])
 throwIfNotFound(error.value, 'Person not found')
 
 const person = computed(() => data.value!.person)
+const peopleOptions = computed(() => data.value?.people ?? [])
 const obituary = computed(() => person.value.obituary)
 const siteTitle = computed(() => settings.value?.settings?.title ?? 'Family Tribute')
 const description = computed(() => stripHtml(obituary.value?.content) || siteTitle.value)
 const canonicalUrl = useRequestURL().href
+
+const editOpen = ref(false)
+const deleteOpen = ref(false)
+
+async function onDeleted() {
+  await navigateTo('/people')
+}
+
+// Matches the old Inertia app's back()-redirect behavior, which silently
+// lands on the new slug's URL after a successful update.
+const onUpdated = useSlugFollow(slug, '', refresh, editOpen)
 
 useSeoMeta({
   title: () => `${person.value.full_name} | ${siteTitle.value}`,
@@ -60,6 +73,15 @@ useSeoMeta({
       </p>
     </div>
 
+    <div v-if="isLoggedIn" class="mt-4 flex justify-center gap-2">
+      <button type="button" aria-label="Edit Person" class="btn-secondary" @click="editOpen = true">
+        Edit <i class="ri-edit-2-fill ml-1" />
+      </button>
+      <button type="button" aria-label="Delete Person" class="btn-danger" @click="deleteOpen = true">
+        <i class="ri-delete-bin-fill" />
+      </button>
+    </div>
+
     <div class="my-10 flex items-center gap-3">
       <div class="h-px flex-1 bg-hearthlight-subtle dark:bg-old-binding/30" />
       <div class="h-1.5 w-1.5 rounded-full bg-hearthlight/40" />
@@ -89,5 +111,21 @@ useSeoMeta({
 
     <RelatedPeople title="Parents" :people="person.parents ?? []" />
     <RelatedPeople title="Children" :people="person.children ?? []" />
+
+    <ObituaryEditModal
+      v-if="isLoggedIn"
+      :open="editOpen"
+      :person="person"
+      :people="peopleOptions"
+      @close="editOpen = false"
+      @updated="onUpdated"
+    />
+    <ObituaryDeleteModal
+      v-if="isLoggedIn"
+      :open="deleteOpen"
+      :person="person"
+      @close="deleteOpen = false"
+      @deleted="onDeleted"
+    />
   </div>
 </template>

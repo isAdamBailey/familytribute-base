@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Nuxt pipeline smoke (issue #19, Phase 2/3). Boots the seeded Laravel JSON API
-# (:8000) plus the built Nuxt frontend (:3000) and runs the Playwright specs
-# that already have Nuxt coverage against the Nuxt origin.
+# Nuxt pipeline smoke (issue #19, Phase 2/3/4). Boots the seeded Laravel JSON
+# API (:8000) plus the built Nuxt frontend (:3000) and runs the Playwright
+# specs that already have Nuxt coverage against the Nuxt origin.
 #
 # This is a NON-GATING complement to the Inertia e2e gate (e2e/scripts/start-app.sh),
 # which is untouched and still points Playwright at the live Inertia app. As
@@ -18,9 +18,12 @@ cd "$ROOT"
 
 NUXT_PORT="${NUXT_PORT:-3000}"
 BACKEND_PORT="${BACKEND_PORT:-8000}"
-# Home (Phase 2) + People/Person/Pictures/Stories/404/SEO (Phase 3) are migrated
-# to Nuxt, i.e. the entire public.spec.ts file — no --grep filter needed.
-SPEC_FILTER="${SPEC_FILTER:-public.spec.ts}"
+# Home (Phase 2) + People/Person/Pictures/Stories/404/SEO (Phase 3) + dashboard
+# CRUD/profile/2FA/sessions/delete-account (Phase 4) are migrated to Nuxt.
+# dashboard.spec.ts / account.spec.ts are Nuxt-native specs (not ports of
+# crud.spec.ts / profile.spec.ts, which stay pointed at the Inertia gate —
+# there's no Nuxt login page yet, see e2e/helpers/nuxtAuth.ts).
+SPEC_FILTER="${SPEC_FILTER:-public.spec.ts dashboard.spec.ts account.spec.ts}"
 GREP="${GREP:-}"
 
 pids=()
@@ -60,6 +63,13 @@ done < .env.e2e
 export E2E_HELPERS=true
 export FRONTEND_URLS="http://localhost:${NUXT_PORT}"
 export SANCTUM_STATEFUL_DOMAINS="localhost:${NUXT_PORT}"
+# .env.e2e's APP_URL is 127.0.0.1, but every other Nuxt-facing URL here uses
+# "localhost" — cookies are host-exact (127.0.0.1 and localhost don't share a
+# jar even though they resolve to the same loopback address). Signed links
+# built with url()/route() (email verification, password reset) must use the
+# same host the browser's session cookie was set on, or Phase 4's
+# register-then-verify e2e flows silently land on a logged-out /login page.
+export APP_URL="http://localhost:${BACKEND_PORT}"
 
 touch database/e2e.sqlite
 mkdir -p storage/app/public storage/framework/{cache,sessions,views} storage/logs bootstrap/cache
@@ -93,8 +103,11 @@ echo "Waiting for Nuxt on :${NUXT_PORT}..."
 until curl -sf -o /dev/null "http://127.0.0.1:${NUXT_PORT}/" >/dev/null 2>&1; do sleep 1; done
 
 echo "Running Nuxt-covered specs (${SPEC_FILTER}${GREP:+ --grep $GREP}) against Nuxt..."
+# shellcheck disable=SC2086 # SPEC_FILTER is intentionally a space-separated list of test files.
 if [[ -n "${GREP}" ]]; then
-  E2E_BASE_URL="http://localhost:${NUXT_PORT}" npx playwright test "${SPEC_FILTER}" --grep "${GREP}"
+  E2E_BASE_URL="http://localhost:${NUXT_PORT}" E2E_BACKEND_BASE_URL="http://localhost:${BACKEND_PORT}" \
+    npx playwright test ${SPEC_FILTER} --grep "${GREP}"
 else
-  E2E_BASE_URL="http://localhost:${NUXT_PORT}" npx playwright test "${SPEC_FILTER}"
+  E2E_BASE_URL="http://localhost:${NUXT_PORT}" E2E_BACKEND_BASE_URL="http://localhost:${BACKEND_PORT}" \
+    npx playwright test ${SPEC_FILTER}
 fi

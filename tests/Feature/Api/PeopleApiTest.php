@@ -53,6 +53,28 @@ class PeopleApiTest extends TestCase
             ]);
     }
 
+    public function test_tagging_options_are_empty_for_guests()
+    {
+        Obituary::factory()->count(3)->create();
+
+        $response = $this->getJson(route('api.people.tagging'));
+
+        $response->assertOk()->assertJson(['people' => []]);
+    }
+
+    public function test_tagging_options_list_all_people_when_authenticated()
+    {
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
+        Obituary::factory()->count(3)->create();
+
+        $response = $this->getJson(route('api.people.tagging'));
+
+        $response->assertOk()
+            ->assertJsonCount(3, 'people')
+            ->assertJsonStructure(['people' => [['id', 'full_name']]]);
+    }
+
     public function test_person_show_by_slug()
     {
         $obituary = Obituary::factory()->create();

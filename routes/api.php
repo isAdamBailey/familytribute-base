@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\ObituaryController;
 use App\Http\Controllers\Api\PersonController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Api\SiteSettingController;
 use App\Http\Controllers\Api\StoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Features;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,11 +27,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    $user = $request->user();
+
+    return array_merge($user->toArray(), [
+        'two_factor_enabled' => Features::enabled(Features::twoFactorAuthentication())
+            && ! is_null($user->two_factor_secret),
+    ]);
 });
 
 Route::get('/home', [HomeController::class, 'show'])->name('api.home');
 Route::get('/people', [PersonController::class, 'index'])->name('api.people.index');
+Route::get('/people/tagging', [PersonController::class, 'tagging'])->name('api.people.tagging');
 Route::get('/people/{person}', [PersonController::class, 'show'])->name('api.people.show');
 Route::get('/pictures', [PictureController::class, 'index'])->name('api.pictures.index');
 Route::get('/pictures/{picture}', [PictureController::class, 'show'])->name('api.pictures.show');
@@ -48,4 +56,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/stories/{story}', [StoryController::class, 'update'])->name('api.stories.update');
     Route::delete('/stories/{story}', [StoryController::class, 'destroy'])->name('api.stories.destroy');
     Route::put('/site-settings/{id}', [SiteSettingController::class, 'update'])->name('api.site-settings.update');
+    Route::get('/user/sessions', [AccountController::class, 'sessions'])->name('api.user.sessions');
+    Route::delete('/user/other-browser-sessions', [AccountController::class, 'destroyOtherSessions'])->name('api.user.other-browser-sessions.destroy');
+    Route::delete('/user', [AccountController::class, 'destroy'])->name('api.user.destroy');
 });

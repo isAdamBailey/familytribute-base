@@ -1,4 +1,4 @@
-import type { Paginated, Story } from '~/types/api'
+import type { Paginated, Story, TaggingPerson } from '~/types/api'
 import type { ListQuery } from '~/composables/useListPage'
 
 /**
@@ -16,7 +16,7 @@ export function useStories(query: Ref<ListQuery>) {
  * 404s (via Laravel `abort(404)`) when the story is private and the request is unauthenticated.
  */
 export function useStory(slug: string) {
-  return useApiFetch<{ story: Story }>(`/stories/${slug}`, {
+  return useApiFetch<{ story: Story, people: TaggingPerson[] }>(`/stories/${slug}`, {
     key: `story-${slug}`,
   })
 }
