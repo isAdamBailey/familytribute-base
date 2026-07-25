@@ -76,6 +76,11 @@ test.describe('Nuxt dashboard CRUD', () => {
     await page.locator('#title').fill(`${title} Edited`);
     await page.getByRole('button', { name: 'Update Picture' }).click();
     await expectFlash(page, 'Picture successfully updated!');
+    // Editing the title regenerates the slug, so this triggers a client-side
+    // navigateTo() to the new URL (see useSlugFollow) — wait for it to settle
+    // before continuing, or the next click can land mid-transition on an
+    // element that's about to be torn down.
+    await expect(page.getByRole('heading', { name: `${title} Edited` })).toBeVisible();
 
     await page.getByLabel('Delete Picture').click();
     await page.getByTestId('confirm-delete-picture').click();
@@ -104,6 +109,11 @@ test.describe('Nuxt dashboard CRUD', () => {
     await page.locator('#title').fill(`${title} Edited`);
     await page.getByRole('button', { name: 'Update Story' }).click();
     await expectFlash(page, 'Story successfully updated!');
+    // Editing the title regenerates the slug, so this triggers a client-side
+    // navigateTo() to the new URL (see useSlugFollow) — wait for it to settle
+    // before continuing, or the next click can land mid-transition on an
+    // element that's about to be torn down.
+    await expect(page.getByRole('heading', { name: `${title} Edited` })).toBeVisible();
 
     await page.getByLabel('Delete Story').click();
     await page.getByTestId('confirm-delete-story').click();
