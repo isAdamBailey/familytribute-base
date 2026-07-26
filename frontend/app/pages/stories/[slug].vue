@@ -44,9 +44,10 @@ useSeoMeta({
       <span v-if="story.year" class="shrink-0 text-lg text-faded-ink dark:text-old-binding">{{ story.year }}</span>
     </div>
 
-    <blockquote class="mt-4 border-l-4 border-hearthlight pl-4 text-lg italic text-faded-ink dark:text-old-binding">
-      {{ story.excerpt }}
-    </blockquote>
+    <blockquote
+      class="html-content mt-4 border-l-4 border-hearthlight pl-4 text-lg italic text-faded-ink dark:text-old-binding"
+      v-html="story.excerpt"
+    />
 
     <div v-if="isLoggedIn && story.private" class="mt-2 flex items-center gap-2 text-sm text-faded-ink dark:text-old-binding">
       <span class="flex items-center gap-1">
