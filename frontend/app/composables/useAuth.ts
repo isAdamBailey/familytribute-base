@@ -14,6 +14,18 @@ interface RegisterPayload {
   registration_secret: string
 }
 
+interface ResetPasswordPayload {
+  token: string
+  email: string
+  password: string
+  password_confirmation: string
+}
+
+interface TwoFactorChallengePayload {
+  code?: string
+  recovery_code?: string
+}
+
 /**
  * Sanctum SPA cookie authentication against Laravel Fortify.
  *
@@ -40,7 +52,16 @@ export function useAuth() {
     return match ? decodeURIComponent(match[2]!) : null
   }
 
-  /** Fetch to the backend origin (for Fortify routes, which are not under /api). */
+  /**
+   * Fetch to the backend origin (for Fortify routes, which are not under /api).
+   *
+   * Only called client-side historically (form submits fire after hydration),
+   * but the email-verification click-through page (/email/verify/[id]/[hash])
+   * calls this during its initial SSR render too — `serverForwardHeaders()`
+   * (shared with plugins/api.ts's `$api`) is what makes that SSR call carry
+   * the visitor's session, since `credentials: 'include'` is a browser fetch
+   * concept and does nothing server-side.
+   */
   function backendFetch<T>(path: string, options: Parameters<typeof $fetch>[1] = {}) {
     const headers = new Headers(options?.headers as HeadersInit)
     headers.set('Accept', 'application/json')
@@ -48,6 +69,9 @@ export function useAuth() {
       const token = readCookie('XSRF-TOKEN')
       if (token) headers.set('X-XSRF-TOKEN', token)
     }
+    const forwarded = serverForwardHeaders()
+    if (forwarded.cookie) headers.set('cookie', forwarded.cookie)
+    if (forwarded.origin) headers.set('origin', forwarded.origin)
     return $fetch<T>(path, {
       baseURL: config.public.backendOrigin,
       credentials: 'include',
@@ -61,9 +85,25 @@ export function useAuth() {
     await backendFetch('/sanctum/csrf-cookie')
   }
 
+  /**
+   * Returns `{ twoFactor: true }` without fetching the user when the account
+   * has 2FA enabled — Fortify's `LoginResponse` establishes a pending
+   * "two-factor" session (still a guest) rather than a real one in that case,
+   * so the caller must route to the two-factor-challenge page next instead
+   * of treating this as a completed login.
+   */
   async function login(credentials: LoginCredentials) {
     await csrf()
-    await backendFetch('/login', { method: 'POST', body: credentials })
+    const response = await backendFetch<{ two_factor?: boolean }>('/login', { method: 'POST', body: credentials })
+    if (response?.two_factor) {
+      return { twoFactor: true }
+    }
+    await fetchUser()
+    return { twoFactor: false }
+  }
+
+  async function twoFactorChallenge(payload: TwoFactorChallengePayload) {
+    await backendFetch('/two-factor-challenge', { method: 'POST', body: payload })
     await fetchUser()
   }
 
@@ -76,6 +116,26 @@ export function useAuth() {
   async function logout() {
     await backendFetch('/logout', { method: 'POST' })
     user.value = null
+  }
+
+  async function forgotPassword(email: string) {
+    await csrf()
+    return backendFetch<{ status: string }>('/forgot-password', { method: 'POST', body: { email } })
+  }
+
+  async function resetPassword(payload: ResetPasswordPayload) {
+    await csrf()
+    return backendFetch<{ status?: string }>('/reset-password', { method: 'POST', body: payload })
+  }
+
+  function resendVerificationEmail() {
+    return backendFetch<{ status: string }>('/email/verification-notification', { method: 'POST' })
+  }
+
+  /** Replays a verification email's id/hash/expires/signature against Fortify's signed route. */
+  function verifyEmail(id: string, hash: string, query: Record<string, string>) {
+    const qs = new URLSearchParams(query).toString()
+    return backendFetch(`/email/verify/${id}/${hash}${qs ? `?${qs}` : ''}`)
   }
 
   /**
@@ -97,5 +157,19 @@ export function useAuth() {
     return user.value
   }
 
-  return { user, isLoggedIn, csrf, login, register, logout, fetchUser, backendFetch }
+  return {
+    user,
+    isLoggedIn,
+    csrf,
+    login,
+    register,
+    logout,
+    fetchUser,
+    backendFetch,
+    twoFactorChallenge,
+    forgotPassword,
+    resetPassword,
+    resendVerificationEmail,
+    verifyEmail,
+  }
 }

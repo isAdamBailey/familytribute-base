@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use App\Support\AuthLinks;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\URL;
 
 class E2eSignedUrlCommand extends Command
 {
@@ -34,20 +34,14 @@ class E2eSignedUrlCommand extends Command
         $type = $this->argument('type');
 
         if ($type === 'verification') {
-            $this->line(URL::temporarySignedRoute(
-                'verification.verify',
-                now()->addMinutes(60),
-                ['id' => $user->id, 'hash' => sha1($user->email)]
-            ));
+            $this->line(AuthLinks::verificationUrl($user));
 
             return self::SUCCESS;
         }
 
         if ($type === 'password-reset') {
             $token = Password::broker()->createToken($user);
-            $this->line(
-                url('/reset-password/'.$token).'?email='.urlencode($user->email)
-            );
+            $this->line(AuthLinks::passwordResetUrl($user->email, $token));
 
             return self::SUCCESS;
         }

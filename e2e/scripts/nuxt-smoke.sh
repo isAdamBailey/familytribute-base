@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Nuxt pipeline smoke (issue #19, Phase 2/3/4). Boots the seeded Laravel JSON
+# Nuxt pipeline smoke (issue #19, Phase 2/3/4/5). Boots the seeded Laravel JSON
 # API (:8000) plus the built Nuxt frontend (:3000) and runs the Playwright
 # specs that already have Nuxt coverage against the Nuxt origin.
 #
@@ -19,11 +19,12 @@ cd "$ROOT"
 NUXT_PORT="${NUXT_PORT:-3000}"
 BACKEND_PORT="${BACKEND_PORT:-8000}"
 # Home (Phase 2) + People/Person/Pictures/Stories/404/SEO (Phase 3) + dashboard
-# CRUD/profile/2FA/sessions/delete-account (Phase 4) are migrated to Nuxt.
-# dashboard.spec.ts / account.spec.ts are Nuxt-native specs (not ports of
-# crud.spec.ts / profile.spec.ts, which stay pointed at the Inertia gate —
-# there's no Nuxt login page yet, see e2e/helpers/nuxtAuth.ts).
-SPEC_FILTER="${SPEC_FILTER:-public.spec.ts dashboard.spec.ts account.spec.ts}"
+# CRUD/profile/2FA/sessions/delete-account (Phase 4) + login/register/forgot-
+# reset-password/email-verification (Phase 5) are migrated to Nuxt.
+# dashboard.spec.ts / account.spec.ts / nuxt-auth.spec.ts are Nuxt-native specs
+# (not ports of crud.spec.ts / profile.spec.ts / auth.spec.ts, which stay
+# pointed at the Inertia gate).
+SPEC_FILTER="${SPEC_FILTER:-public.spec.ts dashboard.spec.ts account.spec.ts nuxt-auth.spec.ts}"
 GREP="${GREP:-}"
 
 pids=()
@@ -73,9 +74,10 @@ export APP_URL="http://localhost:${BACKEND_PORT}"
 
 touch database/e2e.sqlite
 mkdir -p storage/app/public storage/framework/{cache,sessions,views} storage/logs bootstrap/cache
-# The footer Log In/Register links point at the still-live Inertia auth pages
-# (Nuxt has no auth pages until Phase 5), so those pages need a real Vite build
-# too, not just the Nuxt one below.
+# The Inertia frontend (routes/web.php, the 404 fallback, Fortify's own
+# view-rendering routes at the backend origin) still needs a real Vite build
+# to boot even though Nuxt now owns its own auth pages (issue #19 Phase 5),
+# so this build stays required alongside the Nuxt one below.
 if [[ ! -f public/build/manifest.json ]]; then
   npm run build
 fi
