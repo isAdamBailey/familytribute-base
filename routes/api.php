@@ -20,9 +20,9 @@ use Laravel\Fortify\Features;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-| This JSON API is additive: it serves the same data as the Inertia web
-| routes (routes/web.php) via the same Resource classes, for consumption
-| by the future Nuxt frontend. It does not replace or alter web.php.
+| This is the entire HTTP surface this app serves — a JSON API consumed by
+| the Nuxt frontend (a separate deployment, issue #19). There is no server-
+| rendered frontend here anymore; data is shaped through app/Http/Resources/*.
 |
 */
 

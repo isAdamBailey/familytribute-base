@@ -53,7 +53,10 @@ export async function loginViaApi(
 ) {
   const base = backendBaseURL();
 
-  const response = await page.request.post(`${base}/login`, {
+  // Fortify is prefixed with /api (config/fortify.php, issue #19 Phase 6) so
+  // it shares an origin with the JSON API — only sanctum/csrf-cookie stays
+  // unprefixed.
+  const response = await page.request.post(`${base}/api/login`, {
     headers: await csrfHeaders(page, base),
     data: { email: user.email, password: user.password },
   });
@@ -69,7 +72,7 @@ export async function registerViaApi(
 ) {
   const base = backendBaseURL();
 
-  const response = await page.request.post(`${base}/register`, {
+  const response = await page.request.post(`${base}/api/register`, {
     headers: await csrfHeaders(page, base),
     data: {
       name: user.name,

@@ -33,8 +33,6 @@ export async function expectSeo(
     }
   }
 
-  // Prefer property/name tags that Nuxt useSeoMeta will keep. Fall back to whatever
-  // the current Inertia+meta package emits after client hydration.
   const ogTitle = page.locator('meta[property="og:title"]');
   const ogDescription = page.locator('meta[property="og:description"]');
   const ogUrl = page.locator('meta[property="og:url"]');

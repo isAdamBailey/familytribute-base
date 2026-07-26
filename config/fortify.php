@@ -72,9 +72,18 @@ return [
     | that it registers with the application. If necessary, you may change
     | subdomain under which all of the Fortify routes will be available.
     |
+    | Fortify is prefixed with "api" so that every HTTP path this Laravel app
+    | answers on lives under /api/* (plus /sanctum/csrf-cookie). That is what
+    | lets the Nuxt frontend and this API share a single origin at cutover
+    | (issue #19 Phase 6): nginx can route /api and /sanctum to PHP-FPM and
+    | everything else to the Nuxt server on a plain path prefix, with no
+    | method-based rules. Without the prefix, Fortify's POST /login collides
+    | with the Nuxt GET /login page (likewise /register, /forgot-password,
+    | /reset-password, /two-factor-challenge).
+    |
     */
 
-    'prefix' => '',
+    'prefix' => 'api',
 
     'domain' => null,
 
@@ -118,7 +127,10 @@ return [
     |
     */
 
-    'views' => true,
+    // Nuxt renders every auth screen (issue #19 Phase 5), so Fortify's own
+    // Blade view routes are dead weight — and with them disabled there are no
+    // GET routes left to collide with the Nuxt pages of the same name.
+    'views' => false,
 
     /*
     |--------------------------------------------------------------------------

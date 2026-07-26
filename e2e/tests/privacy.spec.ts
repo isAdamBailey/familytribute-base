@@ -7,14 +7,16 @@ test.describe('Privacy', () => {
     await page.goto('/pictures');
     await expect(page.getByText(SEED.pictures.private.title)).toHaveCount(0);
 
+    // Private content 404s at the API layer; Nuxt renders its 404 error page
+    // in place (no redirect) rather than bouncing back to the index.
     await page.goto(SEED.pictures.private.path);
-    await expect(page).toHaveURL('/pictures');
+    await expect(page.getByText('404: Page Not Found')).toBeVisible();
 
     await page.goto('/stories');
     await expect(page.getByText(SEED.stories.private.title)).toHaveCount(0);
 
     await page.goto(SEED.stories.private.path);
-    await expect(page).toHaveURL('/stories');
+    await expect(page.getByText('404: Page Not Found')).toBeVisible();
 
     await page.goto(SEED.people.ada.path);
     await expect(page.getByText(SEED.pictures.private.title)).toHaveCount(0);

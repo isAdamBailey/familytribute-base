@@ -4,15 +4,13 @@ import { loginAs, logout } from '../helpers/auth';
 import { passwordResetUrl, verificationUrl } from '../helpers/artisan';
 import { gotoHydrated, registerViaApi } from '../helpers/nuxtAuth';
 
-// Nuxt equivalent of auth.spec.ts (issue #19, Phase 5). Login/logout,
-// register+verify, and forgot/reset-password now have real Nuxt pages, so
-// this drives them the same way auth.spec.ts drives the Inertia app — the
-// generic loginAs()/logout() helpers work unchanged since both apps share
-// the same field ids and data-testids. Any navigation this file does with a
-// bare `page.goto()` immediately followed by filling in a field (rather than
-// through those shared helpers) uses `gotoHydrated()` instead — a Vue SSR
-// page's hydration can otherwise reconcile a filled-in-early field back to
-// its pre-hydration (usually empty) value, silently discarding it.
+// Auth flow coverage (issue #19, Phase 5): login/logout, register+verify,
+// forgot/reset-password against the real Nuxt pages. Any navigation this file
+// does with a bare `page.goto()` immediately followed by filling in a field
+// (rather than through the shared loginAs()/logout() helpers) uses
+// `gotoHydrated()` instead — a Vue SSR page's hydration can otherwise
+// reconcile a filled-in-early field back to its pre-hydration (usually empty)
+// value, silently discarding it.
 test.describe('Nuxt auth', () => {
   test('login and logout', async ({ page }) => {
     await loginAs(page);

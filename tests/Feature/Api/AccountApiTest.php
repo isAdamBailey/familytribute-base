@@ -12,7 +12,7 @@ class AccountApiTest extends TestCase
 
     public function test_user_endpoint_includes_two_factor_enabled_flag()
     {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = User::factory()->create());
 
         $response = $this->getJson('/api/user');
 
@@ -34,7 +34,7 @@ class AccountApiTest extends TestCase
 
     public function test_sessions_endpoint_returns_shape()
     {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = User::factory()->create());
 
         $response = $this->getJson(route('api.user.sessions'));
 
@@ -43,7 +43,7 @@ class AccountApiTest extends TestCase
 
     public function test_other_browser_sessions_can_be_logged_out()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $response = $this->deleteJson(route('api.user.other-browser-sessions.destroy'), [
             'password' => 'password',
@@ -54,7 +54,7 @@ class AccountApiTest extends TestCase
 
     public function test_other_browser_sessions_requires_correct_password()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $response = $this->deleteJson(route('api.user.other-browser-sessions.destroy'), [
             'password' => 'wrong-password',
@@ -65,7 +65,7 @@ class AccountApiTest extends TestCase
 
     public function test_user_account_can_be_deleted()
     {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = User::factory()->create());
 
         $response = $this->deleteJson(route('api.user.destroy'), [
             'password' => 'password',
@@ -77,7 +77,7 @@ class AccountApiTest extends TestCase
 
     public function test_account_deletion_requires_correct_password()
     {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = User::factory()->create());
 
         $response = $this->deleteJson(route('api.user.destroy'), [
             'password' => 'wrong-password',

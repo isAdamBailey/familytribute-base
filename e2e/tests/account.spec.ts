@@ -5,7 +5,7 @@ import { logout } from '../helpers/auth';
 import { verificationUrl } from '../helpers/artisan';
 import { backendBaseURL, gotoHydrated, loginViaApi, registerViaApi } from '../helpers/nuxtAuth';
 
-// Nuxt equivalent of profile.spec.ts (issue #19, Phase 4). See dashboard.spec.ts
+// Profile/account settings coverage (issue #19, Phase 4). See dashboard.spec.ts
 // for why auth is established via the API rather than a Nuxt login page.
 
 function totpCode(secretKey: string): string {
@@ -72,7 +72,7 @@ test.describe('Nuxt profile and account', () => {
     await page.getByTestId('confirm-password-submit').click();
     await expect(page.getByText('You have enabled two factor authentication.')).toBeVisible();
 
-    const secretResponse = await page.request.get(`${backendBaseURL()}/user/two-factor-secret-key`);
+    const secretResponse = await page.request.get(`${backendBaseURL()}/api/user/two-factor-secret-key`);
     expect(secretResponse.ok()).toBeTruthy();
     const { secretKey } = await secretResponse.json();
     expect(totpCode(secretKey)).toMatch(/^\d{6}$/);

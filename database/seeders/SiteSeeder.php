@@ -7,7 +7,6 @@ use App\Models\Person;
 use App\Models\Picture;
 use App\Models\SiteSetting;
 use App\Models\Story;
-use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -16,6 +15,8 @@ use Illuminate\Database\Seeder;
  *
  * Contract (do not rename without updating e2e/constants.ts):
  * - Users: test@test.com (admin), test2@test.com (editor); password "password"
+ *   ("admin"/"editor" are just seed labels — every verified user has equal
+ *   access, there's no role/team model, see issue #19 Phase 6)
  * - Site: title "Family Tribute", registration on, secret "familytribute"
  * - People: /ada-lovelace, /alan-turing
  * - Pictures: /pictures/public-picnic (public+featured), /pictures/private-portrait (private)
@@ -33,24 +34,15 @@ class SiteSeeder extends Seeder
             'registration_secret' => 'familytribute',
         ]);
 
-        $user = User::factory()->withPersonalTeam()->create([
+        User::factory()->create([
             'name' => 'Test Admin',
             'email' => 'test@test.com',
         ]);
-        $team = Team::first();
 
-        $user2 = User::factory()->create([
+        User::factory()->create([
             'name' => 'Test Editor',
             'email' => 'test2@test.com',
         ]);
-        $user2->switchTeam($team);
-
-        if (is_null($user2->current_team_id)) {
-            $user2->update(['current_team_id' => $team->id]);
-        }
-
-        $team->users()->attach($user, ['role' => 'admin']);
-        $team->users()->attach($user2, ['role' => 'editor']);
 
         $ada = Person::factory()->create([
             'first_name' => 'Ada',

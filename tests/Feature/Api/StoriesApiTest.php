@@ -30,7 +30,7 @@ class StoriesApiTest extends TestCase
 
     public function test_stories_index_includes_private_field_for_authenticated_users()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         Story::factory()->count(5)->create();
 
@@ -51,7 +51,7 @@ class StoriesApiTest extends TestCase
 
     public function test_private_stories_are_shown_to_authenticated_users()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         Story::factory()->create();
         Story::factory()->count(10)->create(['private' => 1]);
@@ -80,7 +80,7 @@ class StoriesApiTest extends TestCase
 
     public function test_private_story_show_is_visible_when_authenticated()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $story = Story::factory()->create(['private' => 1]);
 
@@ -91,7 +91,7 @@ class StoriesApiTest extends TestCase
 
     public function test_new_story_is_stored()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $people = Person::factory()->count(5)->create();
 
@@ -121,7 +121,7 @@ class StoriesApiTest extends TestCase
 
     public function test_all_properties_of_story_can_be_updated()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $story = Story::factory()->create();
         $people = Person::factory()->count(2)->create();
@@ -148,7 +148,7 @@ class StoriesApiTest extends TestCase
 
     public function test_story_can_be_destroyed()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $obituary = Obituary::factory()->create();
         $story = Story::factory()->create();
@@ -163,7 +163,7 @@ class StoriesApiTest extends TestCase
     public function test_story_media_is_stored_on_create()
     {
         Storage::fake('s3');
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $file = UploadedFile::fake()->create('recording.mp3', 500, 'audio/mpeg');
 
@@ -184,7 +184,7 @@ class StoriesApiTest extends TestCase
     public function test_story_media_is_replaced_on_update()
     {
         Storage::fake('s3');
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $oldPath = 'story-media/old-recording.mp3';
         Storage::disk('s3')->put($oldPath, 'old content');
@@ -204,7 +204,7 @@ class StoriesApiTest extends TestCase
     public function test_story_media_can_be_removed()
     {
         Storage::fake('s3');
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $path = 'story-media/recording.mp3';
         Storage::disk('s3')->put($path, 'content');
@@ -220,7 +220,7 @@ class StoriesApiTest extends TestCase
     public function test_story_media_is_deleted_from_s3_on_destroy()
     {
         Storage::fake('s3');
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $path = 'story-media/recording.mp3';
         Storage::disk('s3')->put($path, 'content');

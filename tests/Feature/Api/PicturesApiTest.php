@@ -31,7 +31,7 @@ class PicturesApiTest extends TestCase
 
     public function test_pictures_index_includes_auth_only_fields_for_authenticated_users()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         Picture::factory()->count(5)->create();
 
@@ -55,7 +55,7 @@ class PicturesApiTest extends TestCase
 
     public function test_private_pictures_are_shown_to_authenticated_users()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         Picture::factory()->create();
         Picture::factory()->count(10)->create(['private' => 1]);
@@ -86,7 +86,7 @@ class PicturesApiTest extends TestCase
 
     public function test_private_picture_show_is_visible_when_authenticated()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $picture = Picture::factory()->create(['private' => 1]);
 
@@ -98,7 +98,7 @@ class PicturesApiTest extends TestCase
     public function test_new_picture_is_stored_and_uploaded()
     {
         Storage::fake('s3');
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $people = Person::factory()->count(5)->create();
 
@@ -133,7 +133,7 @@ class PicturesApiTest extends TestCase
     public function test_all_properties_of_picture_can_be_updated()
     {
         Storage::fake('s3');
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $picture = Picture::factory()->create();
         $people = Person::factory()->count(2)->create();
@@ -162,7 +162,7 @@ class PicturesApiTest extends TestCase
     public function test_picture_can_be_destroyed()
     {
         Storage::fake('s3');
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $obituary = Obituary::factory()->create();
         $photo = UploadedFile::fake()->image('photo1.jpg');

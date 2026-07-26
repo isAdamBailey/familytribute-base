@@ -1,13 +1,14 @@
 # FamilyTribute frontend (Nuxt 4)
 
-The Nuxt 4 + TypeScript rewrite of the FamilyTribute frontend (issue #19). It is
-a **standalone SPA/SSR app** that talks to the Laravel backend over the JSON API
-(`routes/api.php`) and authenticates via Sanctum SPA cookie auth. It replaces
-the Vue 3 + Inertia frontend in `../resources/js` at cutover (Phase 6).
+The FamilyTribute frontend — Nuxt 4 + TypeScript, SSR. It is a **standalone
+SPA/SSR app** that talks to the Laravel backend over the JSON API
+(`../routes/api.php`) and authenticates via Sanctum SPA cookie auth. It is the
+only frontend this app has; the earlier Vue 3 + Inertia frontend was removed
+at cutover (issue #19 Phase 6).
 
-Status: **Phase 2 — scaffolding + walking skeleton.** Only the Home page is
-migrated so far; `/people`, `/pictures`, `/stories`, auth, and editor flows land
-in later phases.
+In production it's deployed at the same origin as the Laravel API, with nginx
+routing `/api` and `/sanctum` to PHP-FPM and everything else here — see
+`../DEPLOY.md`.
 
 ## Stack
 
@@ -35,11 +36,13 @@ The dev server proxies data from the API base in `.env`
 nginx on `:80`; override to `:8000` if running the backend via
 `php artisan serve` instead).
 
-### Backend config required for cross-origin auth
+### Backend config required for cross-origin auth (local dev only)
 
-Because Nuxt (`:3000`) and Laravel (`:80` via Sail) are different origins, the
-backend must trust the Nuxt origin for Sanctum SPA cookie auth. In the Laravel
-`.env`:
+Because Nuxt (`:3000`) and Laravel (`:80` via Sail) are different origins in
+local dev, the backend must trust the Nuxt origin for Sanctum SPA cookie auth.
+Production doesn't need this — Nuxt and the API share one origin there (see
+`../DEPLOY.md`), so requests are same-origin and none of this applies. In the
+Laravel `.env`:
 
 ```dotenv
 FRONTEND_URLS=http://localhost:3000          # CORS allow-origin (credentialed)
@@ -65,9 +68,8 @@ run server-to-server. It is only required for login and authenticated calls.
 
 ## e2e coverage
 
-The Playwright suite lives at the repo root (`../e2e`) and is shared with the
-Inertia app. Run the Nuxt-covered specs against this app with
-`bash ../e2e/scripts/nuxt-smoke.sh` (see `../e2e/README.md`).
+The Playwright suite lives at the repo root (`../e2e`) and runs against this
+app. From the repo root: `npm run test:e2e` (see `../e2e/README.md`).
 
 ## Environment
 
@@ -76,6 +78,7 @@ Inertia app. Run the Nuxt-covered specs against this app with
 
 | Var | Purpose | Local default |
 |-----|---------|---------------|
-| `NUXT_PUBLIC_API_BASE` | Browser-facing API base (incl. `/api`) | `http://localhost/api` |
-| `NUXT_PUBLIC_BACKEND_ORIGIN` | Origin for the Sanctum CSRF-cookie + Fortify auth routes | `http://localhost` |
+| `NUXT_PUBLIC_API_BASE` | Browser-facing API base (incl. `/api`) — everything except the CSRF-cookie route, including Fortify | `http://localhost/api` |
+| `NUXT_PUBLIC_BACKEND_ORIGIN` | Origin (no `/api`) for Sanctum's CSRF-cookie route | `http://localhost` |
 | `NUXT_API_BASE_SERVER` | Optional internal API base for SSR calls | falls back to `NUXT_PUBLIC_API_BASE` |
+| `NUXT_BACKEND_ORIGIN_SERVER` | Optional internal backend origin for SSR calls | falls back to `NUXT_PUBLIC_BACKEND_ORIGIN` |

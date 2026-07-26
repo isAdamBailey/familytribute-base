@@ -2,18 +2,16 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
-use App\Http\Middleware\EnsureHasTeam;
-use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\EnsureEmailIsVerified;
 use App\Http\Middleware\PreventRequestForgery;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
-use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Auth\Middleware\RequirePassword;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -24,9 +22,9 @@ use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Routing\Middleware\ValidateSignature;
+use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Laravel\Jetstream\Http\Middleware\AuthenticateSession;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 class Kernel extends HttpKernel
@@ -50,6 +48,12 @@ class Kernel extends HttpKernel
     /**
      * The application's route middleware groups.
      *
+     * This app registers no routes of its own under the "web" group (see
+     * App\Providers\RouteServiceProvider) — it exists only because Fortify's
+     * own route registration defaults to `config('fortify.middleware', ['web'])`
+     * and needs session/cookie/CSRF middleware to run for its (now /api-
+     * prefixed, see config/fortify.php) routes.
+     *
      * @var array<string, array<int, class-string|string>>
      */
     protected $middlewareGroups = [
@@ -61,7 +65,6 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             PreventRequestForgery::class,
             SubstituteBindings::class,
-            HandleInertiaRequests::class,
         ],
 
         'api' => [
@@ -88,6 +91,5 @@ class Kernel extends HttpKernel
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
-        'team' => EnsureHasTeam::class,
     ];
 }

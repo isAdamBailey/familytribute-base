@@ -32,11 +32,12 @@ function loadE2eEnv(): NodeJS.ProcessEnv {
     ) {
       value = value.slice(1, -1);
     }
-    // .env.e2e provides defaults; a value the calling script already exported
-    // into process.env (e.g. nuxt-smoke.sh overriding APP_URL to match the
-    // "localhost" host its Nuxt origin and cookies use, vs. start-app.sh's
-    // 127.0.0.1) takes priority. Without this, whichever script last wrote
-    // to the shared .env.e2e file would silently break the other's run.
+    // .env.e2e provides defaults; a value already in this process's env takes
+    // priority (this loader runs as its own process, spawned directly by the
+    // Playwright test runner rather than as a child of start-api.sh, so it
+    // only ever sees what's on disk in .env.e2e — see .env.e2e.example for
+    // the fixed FRONTEND_URLS/SANCTUM_STATEFUL_DOMAINS/APP_URL values it
+    // relies on).
     if (process.env[key] === undefined) {
       env[key] = value;
     }

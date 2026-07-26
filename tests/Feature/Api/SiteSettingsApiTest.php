@@ -25,7 +25,7 @@ class SiteSettingsApiTest extends TestCase
 
     public function test_all_settings_can_be_updated()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $settings = SiteSetting::first();
 

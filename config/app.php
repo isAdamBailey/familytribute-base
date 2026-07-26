@@ -12,10 +12,9 @@ return [
 
     // First origin from FRONTEND_URLS (same parsing config/cors.php uses for
     // its allowed origins, see App\Support\FrontendUrls). Used by AuthLinks
-    // (issue #19 Phase 5) to build password-reset/email-verification links
-    // that point at the Nuxt frontend once FRONTEND_URLS is configured, while
-    // defaulting to this app's own auth pages (today's Inertia behavior)
-    // everywhere else.
+    // to build the password-reset/email-verification links emailed to users,
+    // pointed at the Nuxt frontend. Falls back to APP_URL when FRONTEND_URLS
+    // is unset.
     'frontend_url' => \App\Support\FrontendUrls::first(),
 
     'asset_url' => env('ASSET_URL', null),
@@ -93,10 +92,8 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\MetaTagsServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
-        App\Providers\JetstreamServiceProvider::class,
 
     ],
 

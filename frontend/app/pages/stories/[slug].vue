@@ -48,6 +48,12 @@ useSeoMeta({
       {{ story.excerpt }}
     </blockquote>
 
+    <div v-if="isLoggedIn && story.private" class="mt-2 flex items-center gap-2 text-sm text-faded-ink dark:text-old-binding">
+      <span class="flex items-center gap-1">
+        <i class="ri-git-repository-private-fill" /> Private
+      </span>
+    </div>
+
     <div v-if="isLoggedIn" class="mt-4 flex gap-2">
       <button type="button" aria-label="Edit Story" class="btn-secondary" @click="editOpen = true">
         Edit <i class="ri-edit-2-fill ml-1" />

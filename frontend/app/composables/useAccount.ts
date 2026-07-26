@@ -1,5 +1,3 @@
-import type { User } from '~/types/api'
-
 export interface SessionInfo {
   agent: { is_desktop: boolean, platform: string | null, browser: string | null }
   ip_address: string | null
@@ -9,55 +7,53 @@ export interface SessionInfo {
 
 /**
  * Authenticated account management: profile info, password, 2FA, browser
- * sessions, account deletion.
- *
- * Fortify's profile/password/2FA endpoints are `wantsJson()`-aware and live
- * at the backend origin (not /api), so they go through useAuth's
- * `backendFetch`. Sessions listing / logout-other-sessions / delete-account
- * are custom JSON endpoints added under /api/user/* (Jetstream's originals
- * only render Inertia), so those use `$api` like the rest of the JSON API.
+ * sessions, account deletion. All of it — Fortify's profile/password/2FA
+ * endpoints and this app's own AccountController endpoints alike — lives
+ * under /api (config/fortify.php's prefix, issue #19 Phase 6), so it all
+ * goes through the same `$api` instance (plugins/api.ts) as the rest of the
+ * JSON API.
  */
 export function useAccount() {
-  const { backendFetch, fetchUser } = useAuth()
+  const { fetchUser } = useAuth()
   const { $api } = useNuxtApp()
 
   async function updateProfileInformation(payload: { name: string, email: string }) {
-    await backendFetch('/user/profile-information', { method: 'PUT', body: payload })
+    await $api('/user/profile-information', { method: 'PUT', body: payload })
     await fetchUser()
   }
 
   async function updatePassword(payload: { current_password: string, password: string, password_confirmation: string }) {
-    await backendFetch('/user/password', { method: 'PUT', body: payload })
+    await $api('/user/password', { method: 'PUT', body: payload })
   }
 
   async function confirmPassword(password: string) {
-    await backendFetch('/user/confirm-password', { method: 'POST', body: { password } })
+    await $api('/user/confirm-password', { method: 'POST', body: { password } })
   }
 
   async function enableTwoFactorAuthentication() {
-    await backendFetch('/user/two-factor-authentication', { method: 'POST' })
+    await $api('/user/two-factor-authentication', { method: 'POST' })
     await fetchUser()
   }
 
   async function disableTwoFactorAuthentication() {
-    await backendFetch('/user/two-factor-authentication', { method: 'DELETE' })
+    await $api('/user/two-factor-authentication', { method: 'DELETE' })
     await fetchUser()
   }
 
   function twoFactorQrCode() {
-    return backendFetch<{ svg: string, url: string }>('/user/two-factor-qr-code')
+    return $api<{ svg: string, url: string }>('/user/two-factor-qr-code')
   }
 
   function twoFactorSecretKey() {
-    return backendFetch<{ secretKey: string }>('/user/two-factor-secret-key')
+    return $api<{ secretKey: string }>('/user/two-factor-secret-key')
   }
 
   function twoFactorRecoveryCodes() {
-    return backendFetch<string[]>('/user/two-factor-recovery-codes')
+    return $api<string[]>('/user/two-factor-recovery-codes')
   }
 
   async function regenerateRecoveryCodes() {
-    await backendFetch('/user/two-factor-recovery-codes', { method: 'POST' })
+    await $api('/user/two-factor-recovery-codes', { method: 'POST' })
   }
 
   function sessions() {
@@ -69,7 +65,7 @@ export function useAccount() {
   }
 
   async function deleteAccount(password: string) {
-    await $api<User>('/user', { method: 'DELETE', body: { password } })
+    await $api<{ status: string }>('/user', { method: 'DELETE', body: { password } })
   }
 
   return {
