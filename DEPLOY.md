@@ -58,10 +58,12 @@ Supervisor restarts the daemon automatically if it crashes; after the *first* de
 
 ## 3. Deploy Script (Forge → site → **App / Deploy Script**)
 
-Replace the existing script (it still has Vite/npm build steps for the removed Inertia frontend) with — substitute `<domain>` for the site you're editing:
+Replace the existing script (it still has Vite/npm build steps for the removed Inertia frontend) with — substitute `<domain>` for the site you're editing. This keeps the `git reset --hard && git clean -df` and Composer/FPM-reload steps from each site's existing script (both sites already had this pattern working before the Nuxt migration):
 
 ```bash
 cd /home/forge/<domain>
+
+git reset --hard && git clean -df
 
 git pull origin $FORGE_SITE_BRANCH
 
@@ -81,10 +83,10 @@ cd frontend
 npm ci
 npm run build
 
-sudo supervisorctl restart <domain>-nuxt:*
+sudo supervisorctl restart daemon-<id>:*
 ```
 
-The `supervisorctl restart` name is whatever Forge names the daemon you created in step 2 for *that* site — check the exact program name on its Daemons tab (Forge shows it once created) and match it here, or the deploy will build a new `.output/` that the running Node process never picks up.
+Forge names each daemon `daemon-<id>` (a numeric id it assigns, e.g. `daemon-974115` — confirmed from a real BACKOFF log on this app, not `<domain>-nuxt` as might be guessed). Get the exact id from that site's Daemons tab once the daemon exists, and use it here — the deploy script needs the *exact* match, or it'll build a fresh `.output/` that the still-running old Node process never picks up.
 
 `route:cache` is safe — verified during Phase 1 (issue #19) that `/api/*` and Fortify's `/api`-prefixed routes cache and resolve correctly.
 
