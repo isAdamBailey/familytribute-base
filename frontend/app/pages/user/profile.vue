@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ middleware: 'auth' })
+definePageMeta({ middleware: ['auth', 'verified'] })
 
 const { data: settings } = await useSiteSettings()
 const siteTitle = computed(() => settings.value?.settings?.title ?? 'Family Tribute')

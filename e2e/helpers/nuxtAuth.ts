@@ -2,14 +2,14 @@ import type { Page } from '@playwright/test';
 import { SEED } from '../constants';
 
 /**
- * Phase 4 (issue #19) authenticated flows ship before Phase 5's Nuxt login
- * page, so there is no Nuxt UI to log in through yet. These specs establish
- * a session the same way the Sanctum SPA flow works from any client: prime
- * the CSRF cookie, then POST credentials with the resulting XSRF header.
- * `page.request` shares the page's browser-context cookie jar, so the
- * session cookie set here is sent automatically once `page.goto()` navigates
- * to the Nuxt origin (both origins share the `localhost` cookie domain in
- * local/CI runs).
+ * A real Nuxt login page exists now (issue #19 Phase 5, see
+ * e2e/tests/nuxt-auth.spec.ts), but dashboard.spec.ts/account.spec.ts don't
+ * care about the login UI itself — they just need a session. This establishes
+ * one the same way the Sanctum SPA flow works from any client: prime the CSRF
+ * cookie, then POST credentials with the resulting XSRF header. `page.request`
+ * shares the page's browser-context cookie jar, so the session cookie set
+ * here is sent automatically once `page.goto()` navigates to the Nuxt origin
+ * (both origins share the `localhost` cookie domain in local/CI runs).
  */
 export function backendBaseURL(): string {
   return process.env.E2E_BACKEND_BASE_URL ?? 'http://localhost:8000';

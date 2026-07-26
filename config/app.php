@@ -10,6 +10,14 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    // First origin from FRONTEND_URLS (same parsing config/cors.php uses for
+    // its allowed origins, see App\Support\FrontendUrls). Used by AuthLinks
+    // (issue #19 Phase 5) to build password-reset/email-verification links
+    // that point at the Nuxt frontend once FRONTEND_URLS is configured, while
+    // defaulting to this app's own auth pages (today's Inertia behavior)
+    // everywhere else.
+    'frontend_url' => \App\Support\FrontendUrls::first(),
+
     'asset_url' => env('ASSET_URL', null),
 
     'timezone' => 'UTC',

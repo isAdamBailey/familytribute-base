@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ middleware: 'auth' })
+definePageMeta({ middleware: ['auth', 'verified'] })
 
 const { user } = useAuth()
 const [{ data: settingsData }, { data: taggingData }] = await Promise.all([
