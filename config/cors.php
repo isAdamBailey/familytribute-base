@@ -15,19 +15,17 @@ return [
     |
     */
 
-    // api/* + sanctum/csrf-cookie cover the JSON API; the rest are Fortify's own
-    // routes (not under api/*) that the Nuxt SPA also calls cross-origin via
-    // the browser's fetch — login/register/logout and profile/password/2FA via
-    // useAccount()'s backendFetch, plus forgot-password/reset-password/email/*
-    // via useAuth()'s backendFetch (issue #19 Phase 5's login/register/forgot-
-    // /reset-password/email-verification pages) — without CORS enabled here
+    // Every path this app answers on: the JSON API and Fortify (now prefixed
+    // with api/, see config/fortify.php) plus Sanctum's CSRF-cookie route.
+    //
+    // In the single-origin production topology (issue #19 Phase 6) CORS never
+    // actually engages — nginx serves Nuxt and this API from one host, so the
+    // browser's requests aren't cross-origin. It still matters for local dev
+    // and CI, where Nuxt runs on :3000 against the API on :8000: without CORS
     // the browser silently blocks reading the response even though Laravel
-    // still sets the session cookie, so the request appears to hang/no-op
-    // from the frontend.
-    'paths' => [
-        'api/*', 'sanctum/csrf-cookie', 'login', 'logout', 'register', 'user/*',
-        'forgot-password', 'reset-password', 'email/*',
-    ],
+    // still sets the session cookie, so requests appear to hang from the
+    // frontend.
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 

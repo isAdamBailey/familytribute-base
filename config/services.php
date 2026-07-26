@@ -30,8 +30,4 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'google' => [
-        'site_tag' => env('GOOGLE_SITE_TAG', ''),
-    ],
-
 ];

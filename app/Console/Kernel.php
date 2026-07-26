@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,9 +14,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('email:upcoming_dates')
-            ->weekly()
-            ->emailOutputOnFailure(User::adminEmails());
+        $command = $schedule->command('email:upcoming_dates')->weekly();
+
+        // No admin/role distinction in this app (every verified user has equal
+        // access — issue #19 Phase 6 dropped the team/role model), so failure
+        // notifications go to a dedicated ops address rather than every family
+        // member's inbox. Skipped entirely if that address isn't configured.
+        if ($adminEmail = config('mail.admin_email')) {
+            $command->emailOutputOnFailure($adminEmail);
+        }
     }
 
     /**

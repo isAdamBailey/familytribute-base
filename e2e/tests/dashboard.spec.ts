@@ -4,11 +4,10 @@ import { FIXTURES, SEED } from '../constants';
 import { expectFlash, fillDate, fillWysiwyg, logout } from '../helpers/auth';
 import { gotoHydrated, loginViaApi } from '../helpers/nuxtAuth';
 
-// Nuxt equivalent of crud.spec.ts (issue #19, Phase 4). Phase 5 (auth pages)
-// hasn't shipped yet, so there's no Nuxt /login page to drive through the UI —
-// loginViaApi() establishes the same Sanctum session a real login would, and
-// the rest of the flow (dashboard forms, edit/delete modals, flash banner)
-// exercises the actual Nuxt UI exactly like crud.spec.ts does for Inertia.
+// Dashboard CRUD coverage (issue #19, Phase 4). loginViaApi() establishes a
+// session directly rather than driving the real login UI — nuxt-auth.spec.ts
+// covers the login page itself, so this test only needs to exercise the
+// dashboard forms, edit/delete modals, and flash banner.
 
 const photo = path.resolve(FIXTURES.photo);
 const audio = path.resolve(FIXTURES.audio);

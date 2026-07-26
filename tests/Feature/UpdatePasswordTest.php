@@ -15,7 +15,7 @@ class UpdatePasswordTest extends TestCase
     {
         $this->actingAs($user = User::factory()->create());
 
-        $response = $this->put('/user/password', [
+        $this->putJson('/api/user/password', [
             'current_password' => 'password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
@@ -28,13 +28,13 @@ class UpdatePasswordTest extends TestCase
     {
         $this->actingAs($user = User::factory()->create());
 
-        $response = $this->put('/user/password', [
+        $response = $this->putJson('/api/user/password', [
             'current_password' => 'wrong-password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
         ]);
 
-        $response->assertSessionHasErrors();
+        $response->assertJsonValidationErrors('current_password');
 
         $this->assertTrue(Hash::check('password', $user->fresh()->password));
     }
@@ -43,13 +43,13 @@ class UpdatePasswordTest extends TestCase
     {
         $this->actingAs($user = User::factory()->create());
 
-        $response = $this->put('/user/password', [
+        $response = $this->putJson('/api/user/password', [
             'current_password' => 'password',
             'password' => 'new-password',
             'password_confirmation' => 'wrong-password',
         ]);
 
-        $response->assertSessionHasErrors();
+        $response->assertJsonValidationErrors('password');
 
         $this->assertTrue(Hash::check('password', $user->fresh()->password));
     }

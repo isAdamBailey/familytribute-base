@@ -2,25 +2,17 @@
 
 namespace App\Models;
 
-use App\Traits\HasNoPersonalTeam;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
-    use HasNoPersonalTeam, HasTeams {
-        HasNoPersonalTeam::ownsTeam insteadof HasTeams;
-        HasNoPersonalTeam::isCurrentTeam insteadof HasTeams;
-    }
-    use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
 
@@ -53,20 +45,4 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'profile_photo_url',
-    ];
-
-    public static function adminEmails(): array
-    {
-        return self::whereHas('teams', function ($query) {
-            $query->whereRole('admin');
-        })->pluck('email')->toArray();
-    }
 }

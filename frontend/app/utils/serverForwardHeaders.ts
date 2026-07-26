@@ -7,8 +7,9 @@
  * `EnsureFrontendRequestsAreStateful` — which keys off Origin/Referer to
  * decide whether to trust the cookie at all — has nothing to match against.
  *
- * Shared by plugins/api.ts's `$api` and useAuth.ts's `backendFetch`, the
- * app's two Laravel-facing fetch instances.
+ * Shared by plugins/api.ts's `$api` and useAuth.ts's `csrf()`, the app's two
+ * Laravel-facing fetch paths (the JSON API base, and Sanctum's bare-origin
+ * CSRF-cookie route).
  */
 export function serverForwardHeaders(): { cookie?: string, origin?: string } {
   if (import.meta.client) return {}

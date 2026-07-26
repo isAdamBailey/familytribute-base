@@ -7,21 +7,31 @@ publicly, and / or privately.
 
 If you are interested in inquiring about FamilyTribute for your family, please contact me, and we can set one up free of charge.
 
+## Architecture
+
+This repo has two apps:
+
+- The Laravel backend (repo root) — a JSON API only (`routes/api.php`), no server-rendered pages.
+- [`frontend/`](frontend/) — the Nuxt 4 + TypeScript frontend, the only UI this app has.
+
+See [`CLAUDE.md`](CLAUDE.md) for the full architecture rundown and [`DEPLOY.md`](DEPLOY.md) for the production (Forge) topology.
+
 ## Local Development
 
-- `sail up`
-- `sail artisan migrate:fresh --seed`
-- `npm run dev`
-- Navigate to http://localhost/
+```bash
+sail up
+sail artisan migrate:fresh --seed
+```
 
-## Frontend migration (Nuxt 3/4 — in progress)
+Then, in a separate terminal, run the frontend (see [`frontend/README.md`](frontend/README.md)):
 
-The frontend is being migrated from Vue 3 + Inertia to a standalone **Nuxt +
-TypeScript** app that consumes the Laravel JSON API (`routes/api.php`). That
-app lives in [`frontend/`](frontend/) and is a work in progress (issue #19); the
-Inertia app in `resources/js` is still the live frontend until cutover. See
-[`frontend/README.md`](frontend/README.md) to run it locally.
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
+Navigate to http://localhost:3000/.
 
 ## License
 

@@ -13,6 +13,6 @@ defineProps<{ story: Story }>()
       <p class="font-semibold text-inkwell dark:text-aged-edge">{{ story.title }}</p>
       <span v-if="story.year" class="shrink-0 text-sm text-faded-ink dark:text-old-binding">{{ story.year }}</span>
     </div>
-    <p class="mt-2 line-clamp-3 text-sm text-faded-ink dark:text-old-binding">{{ story.excerpt }}</p>
+    <div class="html-content mt-2 line-clamp-3 text-sm text-faded-ink dark:text-old-binding" v-html="story.excerpt" />
   </NuxtLink>
 </template>

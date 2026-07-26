@@ -4,7 +4,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   // SSR is required so crawlers/social scrapers get server-rendered meta
-  // tags (this replaces the Laravel-side meta package at cutover — Phase 6).
+  // tags — this replaces the Laravel-side meta package, removed at cutover
+  // (issue #19 Phase 6).
   ssr: true,
 
   modules: [
@@ -53,14 +54,21 @@ export default defineNuxtConfig({
     download: true,
   },
 
+  // Production is single-origin (see ../DEPLOY.md): Nuxt and the Laravel API
+  // are served from the same domain, with nginx routing /api and /sanctum to
+  // PHP-FPM and everything else to this Node process. So in prod apiBase /
+  // backendOrigin are just the site's own URL — set via NUXT_PUBLIC_API_BASE
+  // / NUXT_PUBLIC_BACKEND_ORIGIN, no separate API host needed.
   runtimeConfig: {
     // Server-only: base the Nuxt SSR server uses to reach Laravel directly.
-    // Falls back to the public base when unset. In prod → https://api.familytribute.x/api
+    // Falls back to the public base when unset.
     apiBaseServer: '',
+    // Server-only: origin (no /api) the Nuxt SSR server uses for Sanctum's
+    // CSRF-cookie route. Falls back to the public origin when unset.
+    backendOriginServer: '',
     public: {
       // Browser-facing API base. Local dev default matches `sail up` (nginx on
-      // :80, per CLAUDE.md) — not `php artisan serve`'s :8000. In prod →
-      // https://api.familytribute.x/api
+      // :80, per CLAUDE.md) — not `php artisan serve`'s :8000.
       apiBase: 'http://localhost/api',
       // Origin (no /api) used for the Sanctum CSRF-cookie endpoint.
       backendOrigin: 'http://localhost',

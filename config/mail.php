@@ -98,6 +98,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Ops Notification Address
+    |--------------------------------------------------------------------------
+    |
+    | Where scheduled-command failure output is emailed (see App\Console\Kernel).
+    | Not a user-facing address — this app has no admin/role distinction (every
+    | verified user has equal access), so this is deliberately a separate,
+    | explicitly-configured operator address rather than every registered user.
+    |
+    */
+
+    'admin_email' => env('MAIL_ADMIN_EMAIL'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Markdown Mail Settings
     |--------------------------------------------------------------------------
     |

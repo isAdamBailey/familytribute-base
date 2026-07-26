@@ -64,7 +64,7 @@ class PeopleApiTest extends TestCase
 
     public function test_tagging_options_list_all_people_when_authenticated()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         Obituary::factory()->count(3)->create();
 
@@ -101,7 +101,7 @@ class PeopleApiTest extends TestCase
 
     public function test_person_show_by_slug_includes_auth_only_fields_when_authenticated()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $obituary = Obituary::factory()->create();
 
@@ -131,7 +131,7 @@ class PeopleApiTest extends TestCase
 
     public function test_person_show_reveals_private_pictures_and_stories_when_authenticated()
     {
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $obituary = Obituary::factory()->create();
         $picture = Picture::factory()->create(['private' => 1]);

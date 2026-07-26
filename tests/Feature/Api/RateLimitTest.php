@@ -20,7 +20,7 @@ class RateLimitTest extends TestCase
     {
         $this->assertTrue(app()->environment('testing'));
 
-        $user = User::factory()->withPersonalTeam()->create();
+        $user = User::factory()->create();
 
         $callback = RateLimiter::limiter('api');
         $request = \Illuminate\Http\Request::create('/api/home', 'GET');

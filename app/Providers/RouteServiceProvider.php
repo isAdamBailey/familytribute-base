@@ -38,14 +38,15 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+            // This app is a JSON API with no pages of its own — the Nuxt
+            // frontend is a separate deployment (issue #19 Phase 6). Fortify's
+            // own routes (routes/routes.php in the vendor package) register
+            // themselves independently via FortifyServiceProvider using
+            // config('fortify.prefix')/'middleware', not through here.
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
-
-            Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
         });
     }
 

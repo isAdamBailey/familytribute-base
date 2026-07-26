@@ -34,9 +34,13 @@ interface TwoFactorChallengePayload {
  * so Fortify returns JSON. The resulting session cookie authenticates
  * subsequent auth:sanctum API calls.
  *
- * Auth endpoints (login/register/logout/csrf-cookie) live at the backend
- * ORIGIN, not under /api — so they use $fetch against backendOrigin directly,
- * still with credentials + the XSRF header.
+ * Fortify's endpoints (login/register/logout/password/2FA/verification) live
+ * under the same /api base as the rest of the JSON API — Fortify is prefixed
+ * in config/fortify.php so this app and Nuxt can share one origin in
+ * production (issue #19 Phase 6) — so they go through the same `$api`
+ * instance (plugins/api.ts) as every other API call. Only Sanctum's
+ * CSRF-cookie route sits at the bare backend origin, so `csrf()` below fetches
+ * it directly instead.
  */
 export function useAuth() {
   const config = useRuntimeConfig()
@@ -45,44 +49,22 @@ export function useAuth() {
   const user = useState<User | null>('auth.user', () => null)
   const isLoggedIn = computed(() => user.value !== null)
 
-  /** Read a browser cookie value (client-only). */
-  function readCookie(name: string): string | null {
-    if (import.meta.server) return null
-    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'))
-    return match ? decodeURIComponent(match[2]!) : null
-  }
-
   /**
-   * Fetch to the backend origin (for Fortify routes, which are not under /api).
+   * Prime the CSRF cookie before any state-changing auth request.
    *
-   * Only called client-side historically (form submits fire after hydration),
-   * but the email-verification click-through page (/email/verify/[id]/[hash])
-   * calls this during its initial SSR render too — `serverForwardHeaders()`
-   * (shared with plugins/api.ts's `$api`) is what makes that SSR call carry
-   * the visitor's session, since `credentials: 'include'` is a browser fetch
-   * concept and does nothing server-side.
+   * Mirrors `$api`'s header/cookie-forwarding contract (plugins/api.ts) but
+   * against the bare backend origin rather than the /api base, since
+   * sanctum/csrf-cookie isn't part of the JSON API.
    */
-  function backendFetch<T>(path: string, options: Parameters<typeof $fetch>[1] = {}) {
-    const headers = new Headers(options?.headers as HeadersInit)
-    headers.set('Accept', 'application/json')
-    if (import.meta.client) {
-      const token = readCookie('XSRF-TOKEN')
-      if (token) headers.set('X-XSRF-TOKEN', token)
-    }
+  async function csrf() {
+    const headers = new Headers({ Accept: 'application/json' })
     const forwarded = serverForwardHeaders()
     if (forwarded.cookie) headers.set('cookie', forwarded.cookie)
     if (forwarded.origin) headers.set('origin', forwarded.origin)
-    return $fetch<T>(path, {
-      baseURL: config.public.backendOrigin,
-      credentials: 'include',
-      ...options,
-      headers,
-    })
-  }
-
-  /** Prime the CSRF cookie before any state-changing auth request. */
-  async function csrf() {
-    await backendFetch('/sanctum/csrf-cookie')
+    const baseURL = import.meta.server
+      ? config.backendOriginServer || config.public.backendOrigin
+      : config.public.backendOrigin
+    await $fetch('/sanctum/csrf-cookie', { baseURL, credentials: 'include', headers })
   }
 
   /**
@@ -94,7 +76,7 @@ export function useAuth() {
    */
   async function login(credentials: LoginCredentials) {
     await csrf()
-    const response = await backendFetch<{ two_factor?: boolean }>('/login', { method: 'POST', body: credentials })
+    const response = await $api<{ two_factor?: boolean }>('/login', { method: 'POST', body: credentials })
     if (response?.two_factor) {
       return { twoFactor: true }
     }
@@ -103,39 +85,39 @@ export function useAuth() {
   }
 
   async function twoFactorChallenge(payload: TwoFactorChallengePayload) {
-    await backendFetch('/two-factor-challenge', { method: 'POST', body: payload })
+    await $api('/two-factor-challenge', { method: 'POST', body: payload })
     await fetchUser()
   }
 
   async function register(payload: RegisterPayload) {
     await csrf()
-    await backendFetch('/register', { method: 'POST', body: payload })
+    await $api('/register', { method: 'POST', body: payload })
     await fetchUser()
   }
 
   async function logout() {
-    await backendFetch('/logout', { method: 'POST' })
+    await $api('/logout', { method: 'POST' })
     user.value = null
   }
 
   async function forgotPassword(email: string) {
     await csrf()
-    return backendFetch<{ status: string }>('/forgot-password', { method: 'POST', body: { email } })
+    return $api<{ status: string }>('/forgot-password', { method: 'POST', body: { email } })
   }
 
   async function resetPassword(payload: ResetPasswordPayload) {
     await csrf()
-    return backendFetch<{ status?: string }>('/reset-password', { method: 'POST', body: payload })
+    return $api<{ status?: string }>('/reset-password', { method: 'POST', body: payload })
   }
 
   function resendVerificationEmail() {
-    return backendFetch<{ status: string }>('/email/verification-notification', { method: 'POST' })
+    return $api<{ status: string }>('/email/verification-notification', { method: 'POST' })
   }
 
   /** Replays a verification email's id/hash/expires/signature against Fortify's signed route. */
   function verifyEmail(id: string, hash: string, query: Record<string, string>) {
     const qs = new URLSearchParams(query).toString()
-    return backendFetch(`/email/verify/${id}/${hash}${qs ? `?${qs}` : ''}`)
+    return $api(`/email/verify/${id}/${hash}${qs ? `?${qs}` : ''}`)
   }
 
   /**
@@ -165,7 +147,6 @@ export function useAuth() {
     register,
     logout,
     fetchUser,
-    backendFetch,
     twoFactorChallenge,
     forgotPassword,
     resetPassword,

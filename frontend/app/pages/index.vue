@@ -83,10 +83,9 @@ useSeoMeta({
             >
             <div
               v-if="pictures[slot.index]!.description"
-              class="absolute inset-x-0 bottom-0 line-clamp-1 bg-hearthlight-deep/60 px-3 py-2.5 text-sm text-hearthlight-subtle backdrop-blur-sm"
-            >
-              {{ pictures[slot.index]!.description }}
-            </div>
+              class="html-content absolute inset-x-0 bottom-0 line-clamp-1 bg-hearthlight-deep/60 px-3 py-2.5 text-sm text-hearthlight-subtle backdrop-blur-sm"
+              v-html="pictures[slot.index]!.description"
+            />
           </div>
         </template>
       </div>

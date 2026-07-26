@@ -21,7 +21,7 @@ class ObituariesApiTest extends TestCase
     public function test_new_obituary_is_stored_and_uploaded()
     {
         Storage::fake('s3');
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
         $parents = Person::factory()->count(2)->create();
 
         $request = [
@@ -57,7 +57,7 @@ class ObituariesApiTest extends TestCase
     public function test_all_properties_of_obituary_can_be_updated()
     {
         Storage::fake('s3');
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $obituary = Obituary::factory()->create();
 
@@ -87,7 +87,7 @@ class ObituariesApiTest extends TestCase
     public function test_obituary_can_be_destroyed()
     {
         Storage::fake('s3');
-        $this->actingAs(User::factory()->withPersonalTeam()->create());
+        $this->actingAs(User::factory()->create());
 
         $obituary = Obituary::factory()->create();
         $story = Story::factory()->create();
