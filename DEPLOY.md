@@ -34,15 +34,25 @@ Nothing here needs to change — Laravel still lives at the same path, still boo
 
 ## 2. Add a Daemon for Nuxt (Forge → site → **Daemons**, or Server → Daemons)
 
-Create a new daemon on each site:
+Create a new daemon on each site. Copy the **Command** value from the fenced code block below (not a table — long lines in Markdown tables can get a stray space/line-break inserted when copied from a rendered wide table cell, which breaks the command silently), using **Directory** = that site's `frontend` folder and **User** = `forge`.
 
-| Field | bailey.familytribute.org | hansen.familytribute.org |
-|---|---|---|
-| Command | `env NUXT_PUBLIC_API_BASE=https://bailey.familytribute.org/api NUXT_PUBLIC_BACKEND_ORIGIN=https://bailey.familytribute.org bash deploy/start-nuxt.sh` | `env NUXT_PUBLIC_API_BASE=https://hansen.familytribute.org/api NUXT_PUBLIC_BACKEND_ORIGIN=https://hansen.familytribute.org bash deploy/start-nuxt.sh` |
-| Directory | `/home/forge/bailey.familytribute.org/frontend` | `/home/forge/hansen.familytribute.org/frontend` |
-| User | `forge` | `forge` |
+**bailey.familytribute.org**
+- Directory: `/home/forge/bailey.familytribute.org/frontend`
+- Command:
+  ```
+  env NUXT_PUBLIC_API_BASE=https://bailey.familytribute.org/api NUXT_PUBLIC_BACKEND_ORIGIN=https://bailey.familytribute.org bash deploy/start-nuxt.sh
+  ```
 
-Forge's Daemon feature runs a raw command under Supervisor — it does **not** reliably load the site's `.env` or offer per-daemon env vars in its UI, so rather than depend on that, each site's own domain is set directly on its Command line above. Note the leading `env` — Supervisor execs the command directly with no shell, so bare `VAR=value another=value cmd` (which relies on shell parsing) fails with `can't find command 'VAR=value...'`; `env` is a real binary that sets the vars and execs the rest of the line itself, no shell needed. `frontend/deploy/start-nuxt.sh` (already in the repo) fails loudly if these aren't set, rather than silently booting against the wrong domain.
+**hansen.familytribute.org**
+- Directory: `/home/forge/hansen.familytribute.org/frontend`
+- Command:
+  ```
+  env NUXT_PUBLIC_API_BASE=https://hansen.familytribute.org/api NUXT_PUBLIC_BACKEND_ORIGIN=https://hansen.familytribute.org bash deploy/start-nuxt.sh
+  ```
+
+After pasting, double-check the Command field in Forge shows the full, unbroken domain (`familytribute.org`, not split mid-word) before saving — a stray space or line break anywhere in it will make `env` misparse it (e.g. `env: 'ute.org': No such file or directory` if it splits mid-domain).
+
+Forge's Daemon feature runs a raw command under Supervisor — it does **not** reliably load the site's `.env` or offer per-daemon env vars in its UI, so rather than depend on that, each site's own domain is set directly on its Command line above. The leading `env` matters: Supervisor execs the command directly with no shell, so bare `VAR=value another=value cmd` (which relies on shell parsing) fails with `can't find command 'VAR=value...'`; `env` is a real binary that sets the vars and execs the rest of the line itself, no shell needed. `frontend/deploy/start-nuxt.sh` (already in the repo) fails loudly if these aren't set, rather than silently booting against the wrong domain.
 
 Supervisor restarts the daemon automatically if it crashes; after the *first* deploy on a given site, restart it manually once from the Daemons tab so it picks up the freshly built `.output/`.
 
