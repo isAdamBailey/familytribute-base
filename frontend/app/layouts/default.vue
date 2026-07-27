@@ -122,5 +122,7 @@ async function handleLogout() {
         </p>
       </div>
     </footer>
+
+    <ScrollTop />
   </div>
 </template>
