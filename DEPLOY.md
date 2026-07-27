@@ -61,6 +61,10 @@ Create a new daemon on each site. Copy the **Command** value from the fenced cod
 
 Before saving, check whether a daemon already exists for this site from earlier troubleshooting (STOPPED, FATAL, or otherwise) — **delete it** rather than leaving a duplicate; only one Supervisor program should exist per site's Nuxt process, or you'll get spurious port/spawn errors from the orphaned one.
 
+**Directory must be the `frontend` subfolder, not the site root** — `/home/forge/<domain>/frontend`, never `/home/forge/<domain>/`. The Command is a *relative* path (`bash deploy/start-nuxt.sh`), resolved against whatever Directory sets as the working directory; get this wrong and Supervisor fails with `bash: deploy/start-nuxt.sh: No such file or directory` even though the file exists (it's just looking in the wrong place — confirm with `ls /home/forge/<domain>/frontend/deploy/` if this happens).
+
+**Editing a daemon's fields in Forge's UI appears to create a *new* daemon entry (new `daemon-<id>`) rather than updating the existing one in place** — this is why the id can change every time you edit Directory/Command/Port for the same site (we saw `974115` → `974119` → `974168` for the same Bailey daemon across one troubleshooting session). After *any* edit to a daemon in Forge's UI: (1) re-check its id on the Daemons tab, (2) update that site's Deploy Script (step 3) if the `supervisorctl restart daemon-<id>` line references the old id, (3) delete the now-orphaned old daemon entry so it doesn't linger as a stopped/failed process.
+
 After pasting, double-check the Command field in Forge shows the full, unbroken domain (`familytribute.org`, not split mid-word) before saving — a stray space or line break anywhere in it will make `env` misparse it (e.g. `env: 'ute.org': No such file or directory` if it splits mid-domain).
 
 Forge's Daemon feature runs a raw command under Supervisor — it does **not** reliably load the site's `.env` or offer per-daemon env vars in its UI, so rather than depend on that, each site's own domain is set directly on its Command line above. The leading `env` matters: Supervisor execs the command directly with no shell, so bare `VAR=value another=value cmd` (which relies on shell parsing) fails with `can't find command 'VAR=value...'`; `env` is a real binary that sets the vars and execs the rest of the line itself, no shell needed. `frontend/deploy/start-nuxt.sh` (already in the repo) fails loudly if these aren't set, rather than silently booting against the wrong domain.
@@ -186,3 +190,20 @@ No other Laravel env vars change — DB, S3, mail config are all untouched by th
   - Repeat both for `hansen.familytribute.org`.
   - Log in through the real UI once per site — this exercises the `/api/login` → Sanctum session cookie → same-origin round trip end to end.
 - [ ] Confirm both Nuxt daemons survive a server reboot (Supervisor should restart them automatically; verify via Forge's Daemons tab after any reboot).
+
+## 7. Troubleshooting reference
+
+Every error actually hit setting up Bailey, in the order you're likely to see them, with the exact fix:
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `FATAL can't find command 'NUXT_PUBLIC_API_BASE=...'` | Supervisor execs the command directly, no shell — `VAR=value cmd` needs a shell to parse | Prefix the whole command with `env` (step 2) |
+| `env: 'ute.org': No such file or directory` (domain split mid-word) | Long command copied from a rendered Markdown **table** cell picked up a stray line-break at the visual wrap point | Copy from a fenced code block instead (this doc uses those, not tables, for exactly this reason); after pasting, verify the domain isn't split before saving |
+| `BACKOFF: Exited too quickly` | `.output/` doesn't exist yet — `node .output/server/index.mjs` fails instantly | Run a full deploy first (step 3 builds it), *then* start the daemon |
+| `ERROR (spawn error)` | The daemon was never successfully started even once, or is in a broken state from an earlier attempt | Manually click **Start** on the daemon in Forge's UI and confirm `RUNNING` before relying on `supervisorctl restart` in the deploy script |
+| `bash: deploy/start-nuxt.sh: No such file or directory` | Daemon's **Directory** is the site root, not `.../frontend` — the command's relative path resolves against the wrong cwd | Fix Directory to `/home/forge/<domain>/frontend`; confirm with `ls /home/forge/<domain>/frontend/deploy/` that the file is actually there first |
+| `nginx 502 Bad Gateway` | Nothing is listening on the port nginx is proxying to (daemon not running, or nginx wasn't reloaded after a config edit) | `sudo supervisorctl status` to check the daemon's actually `RUNNING`; `sudo nginx -t && sudo service nginx reload` if you edited nginx config outside Forge's UI |
+| Site loads but shows **a different site's content** | Port collision — nginx reached *something* on that port, just not this app (another site, or an unrelated process like PM2) | `sudo ss -tlnp \| grep :<port>` to see what's actually there; assign this site an unused port instead (see the port table near the top) |
+| `EADDRINUSE: address already in use 127.0.0.1:<port>` | Two processes trying to bind the same port — either a duplicate daemon for this site, or another site/process already using it | `sudo supervisorctl status` for duplicates of this site's daemon (delete the extra); `sudo ss -tlnp \| grep :<port>` to check for unrelated occupants before assuming a port is free |
+
+**General lesson from all of the above**: this server had far more pre-existing occupants of the "obvious" ports (`3000`, `3001`) than expected, and Forge's daemon UI seems to spawn a new `daemon-<id>` on edits rather than updating in place. Verify — don't assume — every port and every daemon id before wiring it into a Deploy Script.
