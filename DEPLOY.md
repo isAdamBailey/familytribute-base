@@ -17,14 +17,14 @@ nginx (<domain> — existing Forge site, domain/SSL unchanged)
   └─ everything else               →  proxy_pass 127.0.0.1:<port>  →  Node (Nuxt .output/server/index.mjs)
 ```
 
-**Both sites live on the same physical Forge server**, confirmed while setting this up — meaning both Nuxt processes run on that one box and **cannot both use port 3000**. Worse, that server already had an unrelated `PM2`-managed process bound to `*:3000` before this migration touched anything, so `3000` isn't even free for the *first* site. Assigned ports, avoiding that collision:
+**Both sites live on the same physical Forge server**, confirmed while setting this up — meaning both Nuxt processes run on that one box and **cannot both use the same port**. That server already had several unrelated things bound in the "common default" 3000s range before this migration touched anything: a PM2 process on `*:3000`, and another pre-existing Forge-managed Node app (a Supervisor daemon, unrelated to this app) on `127.0.0.1:3001`. `sudo ss -tlnp | grep -E ':(300[0-9]|301[0-9]|400[0-9])\b'` confirmed those are the *only* two ports taken in that whole range — everything else scanned (`3002`–`3019`, `4000`–`4009`) was free at the time. Assigned ports, avoiding both:
 
 | Site | Port |
 |---|---|
-| bailey.familytribute.org | `3001` |
-| hansen.familytribute.org | `3002` |
+| bailey.familytribute.org | `3002` |
+| hansen.familytribute.org | `3003` |
 
-If you ever add a third Node-based site to this same server, give it `3003`, and so on — check `sudo lsof -i :<port>` (or `sudo ss -tlnp \| grep :<port>`) first if unsure whether a port's actually free, since Forge/Supervisor won't warn you about a collision with something outside its own management (like that PM2 process).
+If you ever add a third Node-based site to this same server, give it `3004` — but **verify it's actually free first** with `sudo lsof -i :3004` (or `sudo ss -tlnp | grep :3004`) rather than assuming; this server has repeatedly turned out to have more pre-existing occupants in this range than expected, and Forge/Supervisor won't warn you about a collision with something outside its own management.
 
 ## 0. Confirm auto-deploy is on (per site)
 
@@ -45,18 +45,18 @@ Nothing here needs to change — Laravel still lives at the same path, still boo
 
 Create a new daemon on each site. Copy the **Command** value from the fenced code block below (not a table — long lines in Markdown tables can get a stray space/line-break inserted when copied from a rendered wide table cell, which breaks the command silently), using **Directory** = that site's `frontend` folder and **User** = `forge`.
 
-**bailey.familytribute.org** (port `3001`)
+**bailey.familytribute.org** (port `3002`)
 - Directory: `/home/forge/bailey.familytribute.org/frontend`
 - Command:
   ```
-  env PORT=3001 NUXT_PUBLIC_API_BASE=https://bailey.familytribute.org/api NUXT_PUBLIC_BACKEND_ORIGIN=https://bailey.familytribute.org bash deploy/start-nuxt.sh
+  env PORT=3002 NUXT_PUBLIC_API_BASE=https://bailey.familytribute.org/api NUXT_PUBLIC_BACKEND_ORIGIN=https://bailey.familytribute.org bash deploy/start-nuxt.sh
   ```
 
-**hansen.familytribute.org** (port `3002`)
+**hansen.familytribute.org** (port `3003`)
 - Directory: `/home/forge/hansen.familytribute.org/frontend`
 - Command:
   ```
-  env PORT=3002 NUXT_PUBLIC_API_BASE=https://hansen.familytribute.org/api NUXT_PUBLIC_BACKEND_ORIGIN=https://hansen.familytribute.org bash deploy/start-nuxt.sh
+  env PORT=3003 NUXT_PUBLIC_API_BASE=https://hansen.familytribute.org/api NUXT_PUBLIC_BACKEND_ORIGIN=https://hansen.familytribute.org bash deploy/start-nuxt.sh
   ```
 
 Before saving, check whether a daemon already exists for this site from earlier troubleshooting (STOPPED, FATAL, or otherwise) — **delete it** rather than leaving a duplicate; only one Supervisor program should exist per site's Nuxt process, or you'll get spurious port/spawn errors from the orphaned one.
@@ -105,7 +105,7 @@ Forge names each daemon `daemon-<id>` (a numeric id it assigns, e.g. `daemon-974
 
 Forge's default site template puts a catch-all `location / { try_files $uri $uri/ /index.php?$query_string; }` block that sends every request into Laravel. Replace that one block with the ones below. Leave everything else in the file (the `location ~ \.php$` block, SSL directives, `server_name`, etc.) untouched — the `.php$` block is still needed, since `/api`'s `try_files` rewrite still lands on `index.php`.
 
-**Use the port from the table in the intro for whichever site you're editing** (bailey → `3001`, hansen → `3002`) — this is the one piece that differs between the two sites' nginx configs, since they share a server and can't both proxy to `3000`.
+**Use the port from the table in the intro for whichever site you're editing** (bailey → `3002`, hansen → `3003`) — this is the one piece that differs between the two sites' nginx configs, since they share a server and can't both proxy to `3000`.
 
 Before (Forge default):
 ```nginx
@@ -114,7 +114,7 @@ location / {
 }
 ```
 
-After (shown for bailey.familytribute.org — swap `3001` for `3002` on hansen's):
+After (shown for bailey.familytribute.org — swap `3002` for `3003` on hansen's):
 ```nginx
 location /api {
     try_files $uri $uri/ /index.php?$query_string;
@@ -125,13 +125,13 @@ location /sanctum/csrf-cookie {
 }
 
 location /_nuxt/ {
-    proxy_pass http://127.0.0.1:3001;
+    proxy_pass http://127.0.0.1:3002;
     proxy_set_header Host $host;
     add_header Cache-Control "public, max-age=31536000, immutable";
 }
 
 location / {
-    proxy_pass http://127.0.0.1:3001;
+    proxy_pass http://127.0.0.1:3002;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
@@ -174,11 +174,11 @@ No other Laravel env vars change — DB, S3, mail config are all untouched by th
 ## 6. Checklist — repeat for both sites
 
 - [ ] No leftover/duplicate daemon from earlier troubleshooting on either site (`sudo supervisorctl status` on the server — one Nuxt daemon per site, not two).
-- [ ] Daemon created (step 2) on bailey.familytribute.org — `PORT=3001` on the Command line, Directory = its `frontend` folder.
-- [ ] Daemon created (step 2) on hansen.familytribute.org — `PORT=3002` on the Command line, Directory = its `frontend` folder.
+- [ ] Daemon created (step 2) on bailey.familytribute.org — `PORT=3002` on the Command line, Directory = its `frontend` folder.
+- [ ] Daemon created (step 2) on hansen.familytribute.org — `PORT=3003` on the Command line, Directory = its `frontend` folder.
 - [ ] Both daemons manually started at least once from the Daemons tab and confirmed `RUNNING` (not just created — Supervisor won't auto-start a brand new daemon).
 - [ ] Deploy Script updated (step 3) on both sites, each with the correct `supervisorctl restart daemon-<id>` program name for that site's daemon (get the id from its Daemons tab after creating it).
-- [ ] Nginx edited (step 4) on both sites — `/api` and `/sanctum/csrf-cookie` to PHP-FPM, `/` (and `/_nuxt/`) proxied to that site's own port (bailey → `127.0.0.1:3001`, hansen → `127.0.0.1:3002` — **not** the same port on both).
+- [ ] Nginx edited (step 4) on both sites — `/api` and `/sanctum/csrf-cookie` to PHP-FPM, `/` (and `/_nuxt/`) proxied to that site's own port (bailey → `127.0.0.1:3002`, hansen → `127.0.0.1:3003` — **not** the same port on both).
 - [ ] Env vars set (step 5) on both sites.
 - [ ] Deploy both (or trigger a deploy), then smoke-test each:
   - `curl -s -o /dev/null -w '%{http_code}\n' https://bailey.familytribute.org/api/home` → `200`
