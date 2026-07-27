@@ -1,4 +1,3 @@
-import { callWithNuxt } from '#app'
 import type { Paginated } from '~/types/api'
 
 export interface ListQuery {
@@ -24,12 +23,6 @@ interface UseListPageOptions {
  * the URL-sync or scroll behavior applies to all three list pages at once.
  */
 export async function useListPage<T>({ endpoint, dataKey, fetch }: UseListPageOptions) {
-  // Composables that need the Nuxt instance (useApiInfiniteScroll's
-  // useNuxtApp/onMounted) lose access to it after an `await` inside a plain
-  // async function, so the instance is captured up front and calls made
-  // after the await are re-attached to it via callWithNuxt.
-  const nuxtApp = useNuxtApp()
-
   const route = useRoute()
   const router = useRouter()
 
@@ -48,11 +41,18 @@ export async function useListPage<T>({ endpoint, dataKey, fetch }: UseListPageOp
     router.replace({ query: { ...value } })
   }, { deep: true })
 
+  // Register infinite-scroll lifecycle hooks (onMounted / IntersectionObserver)
+  // before awaiting the first page — Vue loses the active component instance
+  // after the first await in an async composable, so hooks registered later
+  // never attach and pagination silently stops working.
+  const page = ref<Paginated<T> | undefined>()
+  const { items, sentinel, hasMore } = useApiInfiniteScroll<T>(endpoint, dataKey, page)
+
   const { data } = await fetch(query)
 
-  return callWithNuxt(nuxtApp, () => {
-    const page = computed(() => data.value?.[dataKey] as Paginated<T> | undefined)
-    const { items, sentinel, hasMore } = useApiInfiniteScroll<T>(endpoint, dataKey, page)
-    return { search, sort, order, items, sentinel, hasMore }
-  })
+  watch(data, (value) => {
+    page.value = value?.[dataKey] as Paginated<T> | undefined
+  }, { immediate: true })
+
+  return { search, sort, order, items, sentinel, hasMore }
 }
