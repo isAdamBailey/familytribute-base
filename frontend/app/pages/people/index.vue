@@ -45,6 +45,6 @@ const sortOptions = [
       <PersonCard v-for="person in items" :key="person.slug" :person="person" />
     </div>
 
-    <div v-if="hasMore" ref="sentinel" class="h-10" />
+    <div v-if="hasMore" ref="sentinel" data-testid="people-infinite-scroll-sentinel" class="h-10" />
   </div>
 </template>

@@ -65,3 +65,13 @@ export function verificationUrl(email: string): string {
 export function passwordResetUrl(email: string): string {
   return runArtisan(['e2e:signed-url', 'password-reset', email]);
 }
+
+/** Ensure at least `count` marked pagination fixtures exist. Returns the resulting marked total. */
+export function ensurePeople(count: number): number {
+  return Number(runArtisan(['e2e:ensure-people', String(count)]));
+}
+
+/** Remove people created by `ensurePeople` so other specs keep the seed contract. */
+export function cleanupPeople(): void {
+  runArtisan(['e2e:ensure-people', '--cleanup']);
+}
