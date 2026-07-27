@@ -95,8 +95,14 @@ if [ -f artisan ]; then
 fi
 
 cd frontend
-npm ci
-npm run build
+# Serialize Nuxt install/build across both sites on this shared Forge box.
+# Without the flock, a single push triggers bailey + hansen npm ci at once and
+# the kernel OOMs (`Killed`) mid-install. maxsockets=1 is also in frontend/.npmrc.
+(
+  flock -w 900 9 || exit 1
+  npm ci
+  NODE_OPTIONS=--max-old-space-size=2048 npm run build
+) 9>/tmp/familytribute-frontend-build.lock
 
 sudo supervisorctl restart daemon-<id>:*
 ```
@@ -202,6 +208,7 @@ Every error actually hit setting up Bailey, in the order you're likely to see th
 | `BACKOFF: Exited too quickly` | `.output/` doesn't exist yet — `node .output/server/index.mjs` fails instantly | Run a full deploy first (step 3 builds it), *then* start the daemon |
 | `ERROR (spawn error)` | The daemon was never successfully started even once, or is in a broken state from an earlier attempt | Manually click **Start** on the daemon in Forge's UI and confirm `RUNNING` before relying on `supervisorctl restart` in the deploy script |
 | `bash: deploy/start-nuxt.sh: No such file or directory` | Daemon's **Directory** is the site root, not `.../frontend` — the command's relative path resolves against the wrong cwd | Fix Directory to `/home/forge/<domain>/frontend`; confirm with `ls /home/forge/<domain>/frontend/deploy/` that the file is actually there first |
+| `npm ci` / deploy ends with `Killed` (or Forge “timed out”) | OOM — Nuxt `npm ci` is heavy, and **both sites share one server** so a single push often runs two installs at once. The `glob@10` deprecation warning is unrelated noise. | Use the memory-safe deploy snippet in step 3 (`maxsockets=1` via `frontend/.npmrc`, `NODE_OPTIONS=--max-old-space-size=2048`, optional shared flock). Add swap on the Forge server if it still OOMs. Do **not** run root `npm ci` on deploy — only `cd frontend && npm ci`. |
 | `nginx 502 Bad Gateway` | Nothing is listening on the port nginx is proxying to (daemon not running, or nginx wasn't reloaded after a config edit) | `sudo supervisorctl status` to check the daemon's actually `RUNNING`; `sudo nginx -t && sudo service nginx reload` if you edited nginx config outside Forge's UI |
 | Site loads but shows **a different site's content** | Port collision — nginx reached *something* on that port, just not this app (another site, or an unrelated process like PM2) | `sudo ss -tlnp \| grep :<port>` to see what's actually there; assign this site an unused port instead (see the port table near the top) |
 | `EADDRINUSE: address already in use 127.0.0.1:<port>` | Two processes trying to bind the same port — either a duplicate daemon for this site, or another site/process already using it | `sudo supervisorctl status` for duplicates of this site's daemon (delete the extra); `sudo ss -tlnp \| grep :<port>` to check for unrelated occupants before assuming a port is free |
