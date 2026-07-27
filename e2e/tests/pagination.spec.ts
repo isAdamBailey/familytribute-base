@@ -56,4 +56,21 @@ test.describe('List pagination', () => {
     await expect(page.getByText(page2OnlyName!, { exact: true })).toBeVisible();
     await expect(page.getByTestId('people-infinite-scroll-sentinel')).toHaveCount(0);
   });
+
+  test('scroll-to-top button appears after scrolling down', async ({ page }) => {
+    ensurePeople(20);
+
+    await page.goto(`/people?search=${MARKER}`);
+    await expect(page.getByRole('heading', { name: 'People' })).toBeVisible();
+
+    const scrollTop = page.getByRole('button', { name: /scroll to top/i });
+    await expect(scrollTop).toBeHidden();
+
+    await page.evaluate(() => window.scrollTo(0, 400));
+    await expect(scrollTop).toBeVisible();
+
+    await scrollTop.click();
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+    await expect(scrollTop).toBeHidden();
+  });
 });
