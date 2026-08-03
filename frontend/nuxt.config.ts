@@ -72,6 +72,10 @@ export default defineNuxtConfig({
       apiBase: 'http://localhost/api',
       // Origin (no /api) used for the Sanctum CSRF-cookie endpoint.
       backendOrigin: 'http://localhost',
+      // GA4 measurement ID (NUXT_PUBLIC_GOOGLE_SITE_TAG). Empty by default, so
+      // the gtag plugin no-ops everywhere it isn't configured; production sets
+      // it per site (each has its own property) — see ../DEPLOY.md step 2.
+      googleSiteTag: '',
     },
   },
 
