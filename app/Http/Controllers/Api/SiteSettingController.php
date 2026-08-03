@@ -13,6 +13,14 @@ class SiteSettingController extends Controller
     {
         return response()->json([
             'settings' => SiteSetting::first()?->only(['id', 'title', 'description', 'registration']),
+            // The analytics tag used to be rendered by resources/views/app.blade.php,
+            // which the Nuxt cutover deleted. Nuxt can't read this site's .env (it
+            // runs as a separate Node daemon), so the ID rides along on the one
+            // request every page already makes. Production-only, matching the
+            // blade template's `@env('production')` guard.
+            'google_site_tag' => app()->isProduction()
+                ? (config('services.google.site_tag') ?: null)
+                : null,
         ]);
     }
 

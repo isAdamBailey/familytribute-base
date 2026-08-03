@@ -65,7 +65,7 @@ The core entities and their relationships:
 - **Obituary** — belongs to one `Person`; holds `birth_date`, `death_date`, rich-text `content`, and an optional `background_photo_url`.
 - **Picture** — belongs-to-many `Person` via `person_picture` pivot. Has `private` flag.
 - **Story** — belongs-to-many `Person` via `person_story` pivot. Has `private` flag, a `year`, rich-text `content`, and an optional `media_path` (audio/video file on S3).
-- **SiteSetting** — singleton model (always use `SiteSetting::first()`). Holds site `title`, `description`, and `registration` toggle. Shared to Nuxt via `GET /api/site-settings`.
+- **SiteSetting** — singleton model (always use `SiteSetting::first()`). Holds site `title`, `description`, and `registration` toggle. Shared to Nuxt via `GET /api/site-settings`, which also carries `google_site_tag` (the GA4 ID from `GOOGLE_SITE_TAG`, production-only) — Nuxt runs as a separate daemon that can't read Laravel's `.env`, so site-level env config reaches the frontend on this endpoint. It's the one request every page already makes.
 
 ### Privacy
 

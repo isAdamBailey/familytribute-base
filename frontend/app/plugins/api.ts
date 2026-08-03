@@ -12,48 +12,54 @@ import type { $Fetch } from 'nitropack'
  *  - Uses `apiBaseServer` for internal SSR calls (direct to Laravel) and the
  *    public `apiBase` in the browser.
  */
-export default defineNuxtPlugin(() => {
-  const config = useRuntimeConfig()
+export default defineNuxtPlugin({
+  // Named so other plugins can declare `dependsOn: ['api']` (see gtag.ts)
+  // instead of relying on filename ordering to get $api before they run.
+  name: 'api',
 
-  const baseURL = import.meta.server
-    ? config.apiBaseServer || config.public.apiBase
-    : config.public.apiBase
+  setup() {
+    const config = useRuntimeConfig()
 
-  const forwarded = serverForwardHeaders()
+    const baseURL = import.meta.server
+      ? config.apiBaseServer || config.public.apiBase
+      : config.public.apiBase
 
-  const api = $fetch.create({
-    baseURL,
-    credentials: 'include',
-    headers: {
-      Accept: 'application/json',
-    },
-    onRequest({ options }) {
-      const headers = new Headers(options.headers)
+    const forwarded = serverForwardHeaders()
 
-      if (forwarded.cookie) {
-        headers.set('cookie', forwarded.cookie)
-      }
+    const api = $fetch.create({
+      baseURL,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      onRequest({ options }) {
+        const headers = new Headers(options.headers)
 
-      if (forwarded.origin) {
-        headers.set('origin', forwarded.origin)
-      }
-
-      if (import.meta.client) {
-        const token = getCookie('XSRF-TOKEN')
-        if (token) {
-          headers.set('X-XSRF-TOKEN', token)
+        if (forwarded.cookie) {
+          headers.set('cookie', forwarded.cookie)
         }
-      }
 
-      options.headers = headers
-    },
-  })
+        if (forwarded.origin) {
+          headers.set('origin', forwarded.origin)
+        }
 
-  return {
-    provide: {
-      api: api as $Fetch,
-    },
-  }
+        if (import.meta.client) {
+          const token = getCookie('XSRF-TOKEN')
+          if (token) {
+            headers.set('X-XSRF-TOKEN', token)
+          }
+        }
+
+        options.headers = headers
+      },
+    })
+
+    return {
+      provide: {
+        api: api as $Fetch,
+      },
+    }
+  },
 })
 
 /** Read a cookie value in the browser (XSRF-TOKEN is URL-encoded by Laravel). */

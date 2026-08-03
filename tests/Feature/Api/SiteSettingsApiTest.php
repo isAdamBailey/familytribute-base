@@ -20,7 +20,37 @@ class SiteSettingsApiTest extends TestCase
         $response->assertOk()
             ->assertJsonStructure([
                 'settings' => ['id', 'title', 'description', 'registration'],
+                'google_site_tag',
             ]);
+    }
+
+    public function test_google_site_tag_is_served_in_production()
+    {
+        $this->app['env'] = 'production';
+        config(['services.google.site_tag' => 'G-ABC1234567']);
+
+        $this->getJson(route('api.site-settings.show'))
+            ->assertOk()
+            ->assertJsonPath('google_site_tag', 'G-ABC1234567');
+    }
+
+    public function test_google_site_tag_is_withheld_outside_production()
+    {
+        config(['services.google.site_tag' => 'G-ABC1234567']);
+
+        $this->getJson(route('api.site-settings.show'))
+            ->assertOk()
+            ->assertJsonPath('google_site_tag', null);
+    }
+
+    public function test_google_site_tag_is_null_when_unconfigured()
+    {
+        $this->app['env'] = 'production';
+        config(['services.google.site_tag' => '']);
+
+        $this->getJson(route('api.site-settings.show'))
+            ->assertOk()
+            ->assertJsonPath('google_site_tag', null);
     }
 
     public function test_all_settings_can_be_updated()

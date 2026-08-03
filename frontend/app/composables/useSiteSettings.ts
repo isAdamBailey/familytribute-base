@@ -1,7 +1,7 @@
-import type { SiteSettings } from '~/types/api'
+import type { SiteSettingsResponse } from '~/types/api'
 
 /**
- * GET /api/site-settings → { settings: SiteSettings | null }.
+ * GET /api/site-settings → SiteSettingsResponse.
  *
  * Backed by useState (not useFetch/useAsyncData) so every call site — the
  * layout's header/footer title, each page's SEO meta, the dashboard's site
@@ -17,11 +17,11 @@ import type { SiteSettings } from '~/types/api'
  * every other consumer) in place.
  */
 export async function useSiteSettings() {
-  const data = useState<{ settings: SiteSettings | null } | null>('site-settings', () => null)
+  const data = useState<SiteSettingsResponse | null>('site-settings', () => null)
   const nuxtApp = useNuxtApp()
 
   async function refresh() {
-    data.value = await nuxtApp.$api<{ settings: SiteSettings | null }>('/site-settings')
+    data.value = await nuxtApp.$api<SiteSettingsResponse>('/site-settings')
   }
 
   if (data.value === null) {

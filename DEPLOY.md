@@ -49,14 +49,14 @@ Create a new daemon on each site. Copy the **Command** value from the fenced cod
 - Directory: `/home/forge/bailey.familytribute.org/frontend`
 - Command:
   ```
-  env PORT=3002 NUXT_PUBLIC_API_BASE=https://bailey.familytribute.org/api NUXT_PUBLIC_BACKEND_ORIGIN=https://bailey.familytribute.org NUXT_PUBLIC_GOOGLE_SITE_TAG=<this site's GA4 ID> bash deploy/start-nuxt.sh
+  env PORT=3002 NUXT_PUBLIC_API_BASE=https://bailey.familytribute.org/api NUXT_PUBLIC_BACKEND_ORIGIN=https://bailey.familytribute.org bash deploy/start-nuxt.sh
   ```
 
 **hansen.familytribute.org** (port `3003`)
 - Directory: `/home/forge/hansen.familytribute.org/frontend`
 - Command:
   ```
-  env PORT=3003 NUXT_PUBLIC_API_BASE=https://hansen.familytribute.org/api NUXT_PUBLIC_BACKEND_ORIGIN=https://hansen.familytribute.org NUXT_PUBLIC_GOOGLE_SITE_TAG=<this site's GA4 ID> bash deploy/start-nuxt.sh
+  env PORT=3003 NUXT_PUBLIC_API_BASE=https://hansen.familytribute.org/api NUXT_PUBLIC_BACKEND_ORIGIN=https://hansen.familytribute.org bash deploy/start-nuxt.sh
   ```
 
 Before saving, check whether a daemon already exists for this site from earlier troubleshooting (STOPPED, FATAL, or otherwise) — **delete it** rather than leaving a duplicate; only one Supervisor program should exist per site's Nuxt process, or you'll get spurious port/spawn errors from the orphaned one.
@@ -68,8 +68,6 @@ Before saving, check whether a daemon already exists for this site from earlier 
 After pasting, double-check the Command field in Forge shows the full, unbroken domain (`familytribute.org`, not split mid-word) before saving — a stray space or line break anywhere in it will make `env` misparse it (e.g. `env: 'ute.org': No such file or directory` if it splits mid-domain).
 
 Forge's Daemon feature runs a raw command under Supervisor — it does **not** reliably load the site's `.env` or offer per-daemon env vars in its UI, so rather than depend on that, each site's own domain is set directly on its Command line above. The leading `env` matters: Supervisor execs the command directly with no shell, so bare `VAR=value another=value cmd` (which relies on shell parsing) fails with `can't find command 'VAR=value...'`; `env` is a real binary that sets the vars and execs the rest of the line itself, no shell needed. `frontend/deploy/start-nuxt.sh` (already in the repo) fails loudly if these aren't set, rather than silently booting against the wrong domain.
-
-`NUXT_PUBLIC_GOOGLE_SITE_TAG` is that site's GA4 measurement ID (`G-XXXXXXXXXX`) — substitute each site's own property for the `<this site's GA4 ID>` placeholder above, since Bailey and Hansen report separately. This is the successor to the old Laravel-side `GOOGLE_SITE_TAG` (the analytics snippet moved into Nuxt when `resources/views/app.blade.php` was deleted at cutover), so the value can be copied straight from that site's existing Laravel `.env`. Unlike the two vars above it's optional: omit it and the site simply serves no analytics tag rather than failing to boot.
 
 Supervisor restarts the daemon automatically if it crashes; after the *first* deploy on a given site, restart it manually once from the Daemons tab so it picks up the freshly built `.output/`.
 
@@ -182,6 +180,8 @@ SESSION_DOMAIN=
 (`NUXT_PUBLIC_API_BASE`/`NUXT_PUBLIC_BACKEND_ORIGIN` are set on each Daemon's Command line — step 2 — not here, since Forge's Environment tab isn't confirmed to reach Daemon processes.)
 
 No other Laravel env vars change — DB, S3, mail config are all untouched by this migration.
+
+**`GOOGLE_SITE_TAG` (each site's GA4 measurement ID) stays where it is, in this Environment tab.** The cutover deleted the blade template that rendered the analytics tag *and* the `services.google` config entry that fed it, leaving the var orphaned in each site's environment; it's wired up again now, so confirm it's still set to that site's own property (Bailey and Hansen report separately). Laravel serves it to Nuxt on `GET /api/site-settings` — deliberately *not* a `NUXT_PUBLIC_*` var on the Daemon command line, so the ID lives in one place per site and analytics needs no daemon reconfiguration. It only ships when `APP_ENV=production`; blank means the site runs without analytics.
 
 ## 6. Checklist — repeat for both sites
 
