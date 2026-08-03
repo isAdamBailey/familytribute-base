@@ -181,6 +181,8 @@ SESSION_DOMAIN=
 
 No other Laravel env vars change — DB, S3, mail config are all untouched by this migration.
 
+**`GOOGLE_SITE_TAG` (each site's GA4 measurement ID) stays where it is, in this Environment tab.** The cutover deleted the blade template that rendered the analytics tag *and* the `services.google` config entry that fed it, leaving the var orphaned in each site's environment; it's wired up again now, so confirm it's still set to that site's own property (Bailey and Hansen report separately). Laravel serves it to Nuxt on `GET /api/site-settings` — deliberately *not* a `NUXT_PUBLIC_*` var on the Daemon command line, so the ID lives in one place per site and analytics needs no daemon reconfiguration. It only ships when `APP_ENV=production`; blank means the site runs without analytics.
+
 ## 6. Checklist — repeat for both sites
 
 - [ ] No leftover/duplicate daemon from earlier troubleshooting on either site (`sudo supervisorctl status` on the server — one Nuxt daemon per site, not two).

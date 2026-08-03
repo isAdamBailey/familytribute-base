@@ -30,4 +30,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        // GA4 measurement ID. Consumed by the Nuxt frontend, which gets it from
+        // GET /api/site-settings — Laravel no longer renders any HTML of its
+        // own, so it can't inject the tag itself (see SiteSettingController).
+        'site_tag' => env('GOOGLE_SITE_TAG', ''),
+    ],
+
 ];

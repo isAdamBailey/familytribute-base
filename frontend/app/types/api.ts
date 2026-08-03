@@ -22,6 +22,17 @@ export interface SiteSettings {
   registration: boolean
 }
 
+/**
+ * GET /api/site-settings. `google_site_tag` is the GA4 measurement ID from the
+ * API's own env (see plugins/gtag.ts) — null outside production, or when the
+ * site runs without analytics. It sits beside `settings` rather than inside it
+ * because it's env config, not a row in the site_settings table.
+ */
+export interface SiteSettingsResponse {
+  settings: SiteSettings | null
+  google_site_tag: string | null
+}
+
 /** Featured picture as returned by GET /api/home (raw array, not a Resource). */
 export interface HomePicture {
   url: string
