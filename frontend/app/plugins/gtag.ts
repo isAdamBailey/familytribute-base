@@ -20,47 +20,33 @@
  * No manual page_view on route change — GA4's enhanced measurement tracks
  * history-based navigation itself, and firing our own would double-count.
  */
-export default defineNuxtPlugin({
-  name: 'gtag',
-  // useSiteSettings calls $api, which the api plugin provides. Filename order
-  // happens to get this right today; saying so explicitly keeps a rename from
-  // silently breaking it.
-  dependsOn: ['api'],
+export default defineNuxtPlugin(async () => {
+  // Belt and braces alongside the API's production check: a dev server
+  // pointed at the production API still must not report page views.
+  if (import.meta.dev) return
 
-  async setup() {
-    // Belt and braces alongside the API's production check: a dev server
-    // pointed at the production API still must not report page views.
-    if (import.meta.dev) return
+  // Analytics must never take the page down, so a failed site-settings fetch
+  // collapses to "no tag" — the layout's own call surfaces a broken API.
+  const siteTag = await useSiteSettings()
+    .then(({ data }) => data.value?.google_site_tag ?? null)
+    .catch(() => null)
 
-    let siteTag: string | null
+  if (!siteTag) return
 
-    try {
-      const { data } = await useSiteSettings()
-      siteTag = data.value?.google_site_tag ?? null
-    }
-    catch {
-      // Analytics must never take the page down. If site-settings failed, the
-      // layout's own call will surface the error; this plugin stays quiet.
-      return
-    }
-
-    if (!siteTag) return
-
-    useHead({
-      script: [
-        {
-          src: `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(siteTag)}`,
-          async: true,
-        },
-        {
-          innerHTML: [
-            'window.dataLayer = window.dataLayer || [];',
-            'function gtag(){dataLayer.push(arguments);}',
-            "gtag('js', new Date());",
-            `gtag('config', ${JSON.stringify(siteTag)});`,
-          ].join(''),
-        },
-      ],
-    })
-  },
+  useHead({
+    script: [
+      {
+        src: `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(siteTag)}`,
+        async: true,
+      },
+      {
+        innerHTML: [
+          'window.dataLayer = window.dataLayer || [];',
+          'function gtag(){dataLayer.push(arguments);}',
+          "gtag('js', new Date());",
+          `gtag('config', ${JSON.stringify(siteTag)});`,
+        ].join(''),
+      },
+    ],
+  })
 })
