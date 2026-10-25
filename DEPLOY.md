@@ -2,7 +2,9 @@
 
 This app has two Forge sites — **bailey.familytribute.org** and **hansen.familytribute.org** — both running this same repo/branch, each with its own database, `.env`, Nuxt daemon and push-to-deploy webhook. One push to the branch deploys both.
 
-> **Moving servers (issue #37).** This document describes the sites as they're set up on the **new** server (`134.199.176.96`, PHP 8.5, Node 24): Forge **zero-downtime** sites, where every deploy builds a fresh release and `current` is switched to it. Until each site's cutover in #37, the **old** server (`167.172.156.79`, PHP 8.3, Node 20) still runs it in the classic layout (code in the site root, deploy script that `git pull`s in place), described by [the previous version of this file](https://github.com/isAdamBailey/familytribute-base/blob/9e5e61c/DEPLOY.md). Follow #37 for the move itself; this file is the steady state afterwards.
+> **Server move (issue #37).** Both sites run on the **new** server (`134.199.176.96`, PHP 8.5, Node 24) as Forge **zero-downtime** sites, where every deploy builds a fresh release and `current` is switched to it: hansen since 2026-10-24, bailey since 2026-10-25. Their copies on the **old** server (`167.172.156.79`) stay in maintenance mode, with push to deploy off, until they're deleted (#37 Phase 7). That old classic layout is described by [the previous version of this file](https://github.com/isAdamBailey/familytribute-base/blob/9e5e61c/DEPLOY.md).
+>
+> **Backups:** Forge database backups are **not** enabled (not on the current Forge plan). The new server's MySQL holds the only live copy of both databases.
 
 Laravel is a JSON API only; Nuxt runs as a Forge daemon behind nginx, Forge's standard pattern for Node apps ([Deploying your Next.js App to Forge](https://laravel.com/blog/deploying-your-nextjs-app-to-forge)).
 
@@ -36,6 +38,7 @@ Both sites share a server with other apps, so each Nuxt process needs its own po
 | `3002` | bailey.familytribute.org |
 | `3003` | hansen.familytribute.org |
 | `3004` | Black Circles (`records.adambailey.io`) — not ours, don't reuse |
+| `2407`, `7700` | Other services on the server (Nightwatch, Meilisearch) — don't reuse |
 
 ## 0. Push to deploy (per site)
 
