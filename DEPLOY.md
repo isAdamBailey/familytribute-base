@@ -2,7 +2,7 @@
 
 This app has two Forge sites — **bailey.familytribute.org** and **hansen.familytribute.org** — both running this same repo/branch, each with its own database, `.env`, Nuxt daemon and push-to-deploy webhook. One push to the branch deploys both.
 
-> **Server move (issue #37).** Both sites run on the **new** server (`134.199.176.96`, PHP 8.5, Node 24) as Forge **zero-downtime** sites, where every deploy builds a fresh release and `current` is switched to it: hansen since 2026-10-24, bailey since 2026-10-25. Their copies on the **old** server (`167.172.156.79`) stay in maintenance mode, with push to deploy off, until they're deleted (#37 Phase 7). That old classic layout is described by [the previous version of this file](https://github.com/isAdamBailey/familytribute-base/blob/9e5e61c/DEPLOY.md).
+> **Server (since issue #37).** Both sites run on `134.199.176.96` (PHP 8.5, Node 24) as Forge **zero-downtime** sites, where every deploy builds a fresh release and `current` is switched to it: hansen since 2026-10-24, bailey since 2026-10-25. The old server's copies were deleted along with their databases on 2026-10-25. Its classic layout is described by [the previous version of this file](https://github.com/isAdamBailey/familytribute-base/blob/9e5e61c/DEPLOY.md).
 >
 > **Backups:** Forge database backups are **not** enabled (not on the current Forge plan). The new server's MySQL holds the only live copy of both databases.
 

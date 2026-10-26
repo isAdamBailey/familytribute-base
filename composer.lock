@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b9ea662ff20d2d5a5d1f91107020579",
+    "content-hash": "a5cf949ccf5a13be87a2a7e03afaabab",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -4273,16 +4273,16 @@
         },
         {
             "name": "spatie/laravel-sluggable",
-            "version": "4.0.2",
+            "version": "4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-sluggable.git",
-                "reference": "82a69be1ef661ce2ff38242b271457ef0b9611dd"
+                "reference": "fe6c0140f6bd1c13afe6fd0cc6d1bd75fed0c5c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/82a69be1ef661ce2ff38242b271457ef0b9611dd",
-                "reference": "82a69be1ef661ce2ff38242b271457ef0b9611dd",
+                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/fe6c0140f6bd1c13afe6fd0cc6d1bd75fed0c5c2",
+                "reference": "fe6c0140f6bd1c13afe6fd0cc6d1bd75fed0c5c2",
                 "shasum": ""
             },
             "require": {
@@ -4339,7 +4339,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-sluggable/issues",
-                "source": "https://github.com/spatie/laravel-sluggable/tree/4.0.2"
+                "source": "https://github.com/spatie/laravel-sluggable/tree/4.0.4"
             },
             "funding": [
                 {
@@ -4347,7 +4347,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-30T17:28:09+00:00"
+            "time": "2026-10-17T07:34:10+00:00"
         },
         {
             "name": "spomky-labs/cbor-php",
@@ -10635,8 +10635,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.3"
+        "php": "^8.5"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

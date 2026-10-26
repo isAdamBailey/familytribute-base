@@ -50,8 +50,8 @@ Seed credentials: `test@test.com` / `test2@test.com`, password `password` (see `
 
 ### Stack
 
-- **Backend**: Laravel 13, PHP 8.5 — a JSON API only, no server-rendered pages. Everything it answers on lives under `/api/*` plus `/sanctum/csrf-cookie`.
-- **Frontend**: Nuxt 4 (Vue 3 + TypeScript), in `frontend/`, deployed separately from the Laravel API. SSR is enabled so public pages serve real server-rendered OG/Twitter meta to crawlers.
+- **Backend**: Laravel 13, PHP 8.5 (`composer.json` requires `^8.5`) — a JSON API only, no server-rendered pages. Everything it answers on lives under `/api/*` plus `/sanctum/csrf-cookie`.
+- **Frontend**: Nuxt 4 (Vue 3 + TypeScript) on Node 24 (`.nvmrc`, `engines.node`), in `frontend/`, deployed separately from the Laravel API. SSR is enabled so public pages serve real server-rendered OG/Twitter meta to crawlers.
 - **Styling**: Tailwind CSS v3, configured independently in `frontend/tailwind.config.ts`.
 - **Auth**: Laravel Fortify (login/register/password reset/email verification/2FA), registered entirely under the `/api` prefix (`config/fortify.php`) so it shares an origin with the JSON API. Sanctum SPA cookie auth — `useAuth()`/`useAccount()` in `frontend/app/composables` wrap the CSRF-cookie + session flow. There is no team/role model: every verified user has equal (editor-level) access, matching the single-family design.
 - **Storage**: AWS S3 for pictures and story media uploads.

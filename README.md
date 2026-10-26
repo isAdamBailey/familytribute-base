@@ -11,8 +11,8 @@ If you are interested in inquiring about FamilyTribute for your family, please c
 
 This repo has two apps:
 
-- The Laravel backend (repo root) — a JSON API only (`routes/api.php`), no server-rendered pages.
-- [`frontend/`](frontend/) — the Nuxt 4 + TypeScript frontend, the only UI this app has.
+- The Laravel backend (repo root) — a JSON API only (`routes/api.php`), no server-rendered pages. Requires PHP 8.5.
+- [`frontend/`](frontend/) — the Nuxt 4 + TypeScript frontend, the only UI this app has. Requires Node 24 (`.nvmrc`).
 
 See [`CLAUDE.md`](CLAUDE.md) for the full architecture rundown and [`DEPLOY.md`](DEPLOY.md) for the production (Forge) topology.
 
